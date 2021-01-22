@@ -5,8 +5,9 @@ class MyTextFormField extends StatelessWidget {
   String hintText;
   String lable;
   TextInputType keyboardType;
-  Icon icon;
+  FormFieldValidator<String> validator;
   int maxLength;
+  Widget hideShowText;
   TextEditingController controller;
   bool isPassword;
 
@@ -14,43 +15,44 @@ class MyTextFormField extends StatelessWidget {
     this.keyboardType,
     this.hintText,
     this.maxLength,
-    this.icon,
     this.lable,
     this.controller,
     this.isPassword = false,
+    this.validator,
+    this.hideShowText
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top:20.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top:4.0,bottom: 4.0),
-            child: Text(lable ?? "",style: fontConstants.formFieldLabel),
+            padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+            child: Text(lable ?? "", style: fontConstants.formFieldLabel),
           ),
           TextFormField(
-
             controller: controller,
             keyboardType: keyboardType,
             style: TextStyle(fontSize: 13),
             maxLength: maxLength,
+            validator: validator,
             obscureText: isPassword,
             decoration: InputDecoration(
               fillColor: Colors.grey[200],
               filled: true,
-              hintText: "${hintText??""}",
+              hintText: "${hintText ?? ""}",
               hintStyle: TextStyle(
                 fontSize: 13,
+                color: Colors.grey
               ),
-
               floatingLabelBehavior: FloatingLabelBehavior.never,
               contentPadding:
                   EdgeInsets.only(left: 15, right: 8, top: 4, bottom: 4),
               counterText: "",
-              prefixIcon: icon,
+              suffix: hideShowText,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(

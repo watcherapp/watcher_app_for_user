@@ -16,7 +16,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     Timer(Duration(seconds: 3), () async {
-      Navigator.push(context, PageTransition(child: Login(), type: PageTransitionType.fade));
+      Navigator.pushReplacement(context, PageTransition(child: Login(), type: PageTransitionType.fade));
     });
   }
 

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/Common/fontStyles.dart';
 import 'package:watcher_app_for_user/Shapes/CircleShape.dart';
+import 'package:watcher_app_for_user/ui/CustomWidgets/CircleDesign.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyTextFormField.dart';
+import 'package:watcher_app_for_user/ui/Screens/SignUp.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,31 +14,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool password = true;
+  GlobalKey _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: appPrimaryMaterialColor,
       body: Column(
         children: [
-          SizedBox(
-            height: 150,
-            child: Stack(fit: StackFit.expand, children: [
-              Positioned(
-                  bottom: 40,
-                  left: 20,
-                  child: Text("Sign In", style: fontConstants.bigTitleWhite)),
-              Positioned(
-                  right: 20,
-                  top: 6,
-                  child: Opacity(
-                      opacity: 0.1, child: CustomPaint(painter: DrawCircle()))),
-              Positioned(
-                  right: -40,
-                  bottom: 25,
-                  child: Opacity(
-                      opacity: 0.1, child: CustomPaint(painter: DrawCircle()))),
-            ]),
-          ),
+          CircleDesign(title: "Sign In"),
           Expanded(
             child: Container(
               height: double.infinity,
@@ -57,18 +46,63 @@ class _LoginState extends State<Login> {
                     SizedBox(
                       height: 20,
                     ),
-                    MyTextFormField(lable: "Mobile No or email"),
-                    MyTextFormField(lable: "Password"),
+
+                    // Email or Mobile Number
+
+                    MyTextFormField(
+                        lable: "Mobile No or email",
+                        validator: (val) {
+                          if (val.isEmpty) {
+                            return "Please Enter Mobile or email";
+                          }
+                          return "";
+                        },
+                        hintText: "Enter mobile or email"),
+
+                    //Passwprd FormField
+
+                    MyTextFormField(
+                      lable: "Password",
+                      hintText: "Enter Password",
+                      isPassword: password,
+                      hideShowText: InkWell(
+                        onTap: () {
+                          setState(() {
+                            password = !password;
+                          });
+                        },
+                        child: Text("${!password ? "Hide" : "Show"}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: appPrimaryMaterialColor)),
+                      ),
+                    ),
+                    InkWell(
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text("Forgot Password ?"),
+                            ],
+                          ),
+                        )),
+                    // Sign In Button
                     MyButton(title: "Sign In", onPressed: () {}),
                     Padding(
-                      padding: const EdgeInsets.only(top:25.0),
+                      padding: const EdgeInsets.only(top: 25.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                              onTap: (){
-
-                              },
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      child: SignUp(),
+                                      type: PageTransitionType.bottomToTop));
+                            },
                             child: RichText(
                                 text: TextSpan(
                                     text: "Don't have an account ? ",
@@ -78,7 +112,7 @@ class _LoginState extends State<Login> {
                                         fontSize: 16),
                                     children: [
                                   TextSpan(
-                                      text: "Sign In",
+                                      text: "Sign Up",
                                       style: TextStyle(
                                           color: appPrimaryMaterialColor,
                                           fontFamily: 'WorkSans Bold',
