@@ -48,7 +48,6 @@ class _LoginState extends State<Login> {
                     ),
 
                     // Email or Mobile Number
-
                     MyTextFormField(
                         lable: "Mobile No or email",
                         validator: (val) {

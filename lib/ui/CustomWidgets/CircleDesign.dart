@@ -4,16 +4,28 @@ import 'package:watcher_app_for_user/Shapes/CircleShape.dart';
 
 class CircleDesign extends StatelessWidget {
   String title;
+  bool backbutton = false;
 
-  CircleDesign({this.title});
+  CircleDesign({this.title, this.backbutton});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 150,
       child: Stack(fit: StackFit.expand, children: [
+        if (backbutton == true) ...[
+          Positioned(
+              top: 35,
+              left: 8,
+              child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {}))
+        ],
         Positioned(
-            bottom: 40,
+            bottom: 30,
             left: 20,
             child: Text("${title ?? ""}", style: fontConstants.bigTitleWhite)),
         Positioned(

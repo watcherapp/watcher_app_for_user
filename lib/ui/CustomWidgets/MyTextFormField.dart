@@ -11,21 +11,20 @@ class MyTextFormField extends StatelessWidget {
   TextEditingController controller;
   bool isPassword;
 
-  MyTextFormField({
-    this.keyboardType,
-    this.hintText,
-    this.maxLength,
-    this.lable,
-    this.controller,
-    this.isPassword = false,
-    this.validator,
-    this.hideShowText
-  });
+  MyTextFormField(
+      {this.keyboardType,
+      this.hintText,
+      this.maxLength,
+      this.lable,
+      this.controller,
+      this.isPassword = false,
+      this.validator,
+      this.hideShowText});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
+      padding: const EdgeInsets.only(top: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,10 +43,7 @@ class MyTextFormField extends StatelessWidget {
               fillColor: Colors.grey[200],
               filled: true,
               hintText: "${hintText ?? ""}",
-              hintStyle: TextStyle(
-                fontSize: 13,
-                color: Colors.grey
-              ),
+              hintStyle: TextStyle(fontSize: 13, color: Colors.grey),
               floatingLabelBehavior: FloatingLabelBehavior.never,
               contentPadding:
                   EdgeInsets.only(left: 15, right: 8, top: 4, bottom: 4),
