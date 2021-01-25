@@ -22,7 +22,9 @@ class CircleDesign extends StatelessWidget {
                     Icons.arrow_back_rounded,
                     color: Colors.white,
                   ),
-                  onPressed: () {}))
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }))
         ],
         Positioned(
             bottom: 30,
