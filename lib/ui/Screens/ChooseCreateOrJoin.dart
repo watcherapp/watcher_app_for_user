@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
+import 'package:watcher_app_for_user/ui/Screens/CreateNewSociety.dart';
 
 class ChooseCreateOrJoin extends StatefulWidget {
   @override
@@ -88,7 +90,13 @@ class _ChooseCreateOrJoinState extends State<ChooseCreateOrJoin> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6)),
                   color: appPrimaryMaterialColor,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            child: CreateNewSociety(),
+                            type: PageTransitionType.fade));
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

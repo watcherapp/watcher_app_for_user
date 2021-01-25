@@ -33,6 +33,7 @@ class MyTextFormField extends StatelessWidget {
             child: Text(lable ?? "", style: fontConstants.formFieldLabel),
           ),
           TextFormField(
+            autofocus: false,
             controller: controller,
             keyboardType: keyboardType,
             style: TextStyle(fontSize: 13),
