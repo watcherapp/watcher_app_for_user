@@ -4,9 +4,10 @@ import 'package:watcher_app_for_user/Common/fontStyles.dart';
 
 class DialogOpenFormField extends StatelessWidget {
   String lable;
+  String value = "";
   VoidCallback onTap;
 
-  DialogOpenFormField({@required this.lable, @required this.onTap});
+  DialogOpenFormField({@required this.lable, @required this.onTap, this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class DialogOpenFormField extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 14.0),
                   child: Text(
-                    "Select Society Type",
+                    "${value ?? "Select Society Type"}",
                   ),
                 ),
                 Padding(

@@ -20,19 +20,33 @@ class _MyDropDownState extends State<MyDropDown> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 10.0, bottom: 10),
-          child: Text("Select ${widget.dropDownTitle ?? ""}",
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: appPrimaryMaterialColor)),
+          padding: const EdgeInsets.only(
+              top: 15.0, bottom: 15, left: 20.0, right: 22),
+          child: Row(
+            children: [
+              GestureDetector(
+                  child: Icon(Icons.backspace_rounded,
+                      size: 22, color: appPrimaryMaterialColor),
+                  onTap: () {}),
+              Expanded(
+                child: Center(
+                  child: Text("Select ${widget.dropDownTitle ?? ""}",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: appPrimaryMaterialColor)),
+                ),
+              ),
+            ],
+          ),
         ),
         Container(
           height: 0.5,
           color: Colors.grey[400],
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+          padding: const EdgeInsets.only(
+              left: 10.0, right: 10.0, top: 10.0, bottom: 8.0),
           child: TextFormField(
             decoration: InputDecoration(
               fillColor: Colors.grey[200],
@@ -62,10 +76,7 @@ class _MyDropDownState extends State<MyDropDown> {
                   padding:
                       const EdgeInsets.only(top: 12.0, left: 16, bottom: 12.0),
                   child: Text(widget.dropDownData[index],
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87)),
+                      style: TextStyle(fontSize: 15, color: Colors.black87)),
                 ),
               );
             }),
