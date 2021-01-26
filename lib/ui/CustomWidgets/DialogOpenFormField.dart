@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/Common/fontStyles.dart';
 
 class DialogOpenFormField extends StatelessWidget {
   String lable;
-  String value = "";
+  String value;
   VoidCallback onTap;
 
-  DialogOpenFormField({@required this.lable, @required this.onTap, this.value});
+  DialogOpenFormField(
+      {@required this.lable, @required this.onTap, @required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class DialogOpenFormField extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 14.0),
                   child: Text(
-                    "${value ?? "Select Society Type"}",
+                    "${value ?? "$lable"}",
                   ),
                 ),
                 Padding(

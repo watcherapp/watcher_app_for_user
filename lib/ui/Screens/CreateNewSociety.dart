@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:watcher_app_for_user/Common/fontStyles.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/DialogOpenFormField.dart';
+import 'package:watcher_app_for_user/ui/CustomWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/Popups/MyDropdown.dart';
 
@@ -10,11 +11,19 @@ class CreateNewSociety extends StatefulWidget {
 }
 
 class _CreateNewSocietyState extends State<CreateNewSociety> {
+  String selectedSocietyType, selectedCountry, selctedState, selectedCity;
   List societyTypeList = [
     "Buildings (Multiple Floors)",
     "Society (Single Floor)",
     "Commercial",
   ];
+
+  List country = ["USA", "India", "Pakistan"];
+
+  List states = ["Gujrat", "Maharastra", "Utter Pradesh"];
+
+  List city = ["Surat", "Rajkot", "Navsari"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +44,21 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
             children: [
               DialogOpenFormField(
                   lable: "Society Type",
+                  value: selectedSocietyType,
                   onTap: () {
                     // print("click");
                     FocusScope.of(context).unfocus();
                     showDialog(
-                        context: context,
-                        child: MyDropDown(
-                            dropDownTitle: "Society Type",
-                            dropDownData: societyTypeList));
+                      context: context,
+                      child: MyDropDown(
+                          dropDownTitle: "Society Type",
+                          dropDownData: societyTypeList,
+                          onSelectValue: (value) {
+                            setState(() {
+                              selectedSocietyType = value;
+                            });
+                          }),
+                    );
                   }),
               MyTextFormField(
                   lable: "Society Name",
@@ -53,6 +69,70 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                     return "";
                   },
                   hintText: "Enter Society Name"),
+              MyTextFormField(
+                  lable: "Total Wings",
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Please Enter Total Wings";
+                    }
+                    return "";
+                  },
+                  hintText: "Enter Total Wings"),
+              DialogOpenFormField(
+                  lable: "Select Country",
+                  value: selectedCountry,
+                  onTap: () {
+                    // print("click");
+                    FocusScope.of(context).unfocus();
+                    showDialog(
+                      context: context,
+                      child: MyDropDown(
+                          dropDownTitle: "Select Country",
+                          dropDownData: country,
+                          onSelectValue: (value) {
+                            setState(() {
+                              selectedCountry = value;
+                            });
+                          }),
+                    );
+                  }),
+              DialogOpenFormField(
+                  lable: "Select State",
+                  value: selctedState,
+                  onTap: () {
+                    // print("click");
+                    FocusScope.of(context).unfocus();
+                    showDialog(
+                      context: context,
+                      child: MyDropDown(
+                          dropDownTitle: "Select State",
+                          dropDownData: states,
+                          onSelectValue: (value) {
+                            setState(() {
+                              selctedState = value;
+                            });
+                          }),
+                    );
+                  }),
+              DialogOpenFormField(
+                  lable: "Select City",
+                  value: selectedCity,
+                  onTap: () {
+                    // print("click");
+                    FocusScope.of(context).unfocus();
+                    showDialog(
+                      context: context,
+                      child: MyDropDown(
+                          dropDownTitle: "Select City",
+                          dropDownData: city,
+                          onSelectValue: (value) {
+                            setState(() {
+                              selectedCity = value;
+                            });
+                          }),
+                    );
+                  }),
+              MyButton(onPressed: () {}, title: "Submit"),
             ],
           ),
         ),
