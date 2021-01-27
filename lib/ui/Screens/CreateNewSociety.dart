@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Common/fontStyles.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/DialogOpenFormField.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/Popups/MyDropdown.dart';
+import 'package:watcher_app_for_user/ui/Screens/SetupWings.dart';
 
 class CreateNewSociety extends StatefulWidget {
   @override
@@ -132,7 +134,15 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                           }),
                     );
                   }),
-              MyButton(onPressed: () {}, title: "Submit"),
+              MyButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            child: SetupWings(),
+                            type: PageTransitionType.fade));
+                  },
+                  title: "Submit"),
             ],
           ),
         ),
