@@ -8,6 +8,7 @@ class MyTextFormField extends StatelessWidget {
   FormFieldValidator<String> validator;
   int maxLength;
   Widget hideShowText;
+  TextCapitalization textCapitalization = TextCapitalization.none;
   ValueChanged<String> onChanged;
   TextEditingController controller;
   bool isPassword;
@@ -20,6 +21,7 @@ class MyTextFormField extends StatelessWidget {
       this.controller,
       this.isPassword = false,
       this.validator,
+      this.textCapitalization,
       this.onChanged,
       this.hideShowText});
 
@@ -36,8 +38,9 @@ class MyTextFormField extends StatelessWidget {
           ),
           TextFormField(
             controller: controller,
+            textCapitalization: textCapitalization ?? TextCapitalization.none,
             keyboardType: keyboardType,
-            style: TextStyle(fontSize: 13),
+            style: TextStyle(fontSize: 15),
             maxLength: maxLength,
             onChanged: onChanged,
             validator: validator,

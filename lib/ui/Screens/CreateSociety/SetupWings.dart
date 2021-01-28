@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:watcher_app_for_user/ui/Screens/ParticularWingSetup.dart';
+import 'package:watcher_app_for_user/ui/Screens/CreateSociety/ParticularWingSetup.dart';
 
 class SetupWings extends StatefulWidget {
   @override

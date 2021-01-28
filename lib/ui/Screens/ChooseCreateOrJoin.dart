@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
-import 'package:watcher_app_for_user/ui/Screens/CreateNewSociety.dart';
+import 'file:///E:/Keval%20Work/watcher_app_for_user/lib/ui/Screens/CreateSociety/CreateNewSociety.dart';
 
 class ChooseCreateOrJoin extends StatefulWidget {
   @override

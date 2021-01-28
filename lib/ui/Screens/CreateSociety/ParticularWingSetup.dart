@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/Common/fontStyles.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyTextFormField.dart';
+import 'package:watcher_app_for_user/ui/Screens/CreateSociety/SetupWingsFinalStep.dart';
 
 class ParticularWingSetup extends StatefulWidget {
-  var WingName;
+  var wingName;
 
-  ParticularWingSetup(this.WingName);
+  ParticularWingSetup(this.wingName);
 
   @override
   _ParticularWingSetupState createState() => _ParticularWingSetupState();
@@ -15,7 +17,10 @@ class ParticularWingSetup extends StatefulWidget {
 
 class _ParticularWingSetupState extends State<ParticularWingSetup> {
   TextEditingController txtWingName = new TextEditingController();
+  TextEditingController txtTotalFloor = new TextEditingController();
+  TextEditingController txtUnitPerWing = new TextEditingController();
   int currentIndex = 0;
+  String wingName;
   List flatNoFormatList = [
     {
       "Id": 1,
@@ -37,7 +42,8 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
 
   setData() {
     setState(() {
-      txtWingName.text = widget.WingName;
+      wingName = widget.wingName;
+      txtWingName.text = widget.wingName;
     });
   }
 
@@ -51,7 +57,7 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Wing - ${txtWingName.text}"),
+        title: Text("Wing - ${wingName}"),
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
@@ -68,8 +74,11 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
               MyTextFormField(
                   controller: txtWingName,
                   lable: "Wing Name",
+                  textCapitalization: TextCapitalization.characters,
                   onChanged: (value) {
-                    txtWingName.text = value;
+                    setState(() {
+                      wingName = value;
+                    });
                   },
                   validator: (val) {
                     if (val.isEmpty) {
@@ -79,6 +88,8 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
                   },
                   hintText: "Enter WingName"),
               MyTextFormField(
+                  controller: txtTotalFloor,
+                  keyboardType: TextInputType.number,
                   lable: "Total Floor",
                   validator: (val) {
                     if (val.isEmpty) {
@@ -88,6 +99,8 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
                   },
                   hintText: "Enter Total Floor"),
               MyTextFormField(
+                  controller: txtUnitPerWing,
+                  keyboardType: TextInputType.number,
                   lable: "Units Per Floor",
                   validator: (val) {
                     if (val.isEmpty) {
@@ -157,7 +170,19 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
-        child: MyButton(onPressed: () {}, title: "Next"),
+        child: MyButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context,
+                  PageTransition(
+                      child: SetupWingsFinalStep(
+                          wingName: wingName,
+                          flatFormatId: currentIndex,
+                          totalFloor: int.parse(txtTotalFloor.text),
+                          totalCountPerFloor: int.parse(txtUnitPerWing.text)),
+                      type: PageTransitionType.fade));
+            },
+            title: "Next"),
       ),
     );
   }
