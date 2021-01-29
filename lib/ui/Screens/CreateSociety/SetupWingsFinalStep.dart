@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
@@ -20,6 +22,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
   List wingFlatData = [];
   final ScrollController _scrollController = new ScrollController();
   int rowsColumn = 0;
+  int total;
   List flatColorsList = [
     appPrimaryMaterialColor,
     Colors.grey,
@@ -30,6 +33,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
 
   @override
   void initState() {
+    total = widget.totalFloor * widget.totalCountPerFloor;
     createGridFlatList();
   }
 
@@ -48,54 +52,61 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
     }
   }
 
+  List<Widget> _buildCells(int count, int temp) {
+    int flatNo = total - (temp * widget.totalCountPerFloor);
+    return List.generate(count, (index) {
+      flatNo++;
+      return Padding(
+        padding: const EdgeInsets.all(6.0),
+        child: SizedBox(
+          height: 40,
+          child: RaisedButton(
+              onPressed: () {},
+              child: Text("$flatNo",
+                  style: Theme.of(context).textTheme.subtitle1)),
+        ),
+      );
+    });
+  }
+
+  List<Widget> _buildRows(int count) {
+    return List.generate(
+      count,
+      (index) => Row(
+        children: _buildCells(widget.totalCountPerFloor, index + 1),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
-    /*24 is for notification bar on Android*/
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
-    final double itemWidth = size.width / 2;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Wing "),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_rounded),
+      appBar: AppBar(),
+      body: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Scrollbar(
+            thickness: 2,
+            controller: _scrollController,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              controller: _scrollController,
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _buildRows(widget.totalFloor),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
-      body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GridView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.all(2),
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 9,
-              crossAxisSpacing: 4.0,
-              mainAxisSpacing: 4.0,
-            ),
-            itemCount: 59,
-            itemBuilder: (context, index) {
-              return Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.green, width: 2),
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                    child: Text(
-                  (index + 1).toString(),
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold),
-                )),
-              );
-            },
-          )),
     );
   }
 }
