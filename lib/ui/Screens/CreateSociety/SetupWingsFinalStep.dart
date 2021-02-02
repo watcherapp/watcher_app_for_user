@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:bidirectional_scroll_view/bidirectional_scroll_view.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
@@ -52,6 +54,16 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
     }
   }
 
+  changeColor({int index}) {
+    setState(() {
+      int colorIndex = flatColorsList.indexOf(wingFlatData[index]["flatColor"]);
+      if (colorIndex <= 3)
+        wingFlatData[index]["flatColor"] = flatColorsList[colorIndex + 1];
+      else
+        wingFlatData[index]["flatColor"] = flatColorsList[0];
+    });
+  }
+
   List<Widget> _buildCells(int count, int temp) {
     int flatNo = total - (temp * widget.totalCountPerFloor);
     return List.generate(count, (index) {
@@ -61,7 +73,10 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         child: SizedBox(
           height: 40,
           child: RaisedButton(
-              onPressed: () {},
+              color: wingFlatData[index]["flatColor"],
+              onPressed: () {
+                changeColor(index: index);
+              },
               child: Text("$flatNo",
                   style: Theme.of(context).textTheme.subtitle1)),
         ),
@@ -81,32 +96,22 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Scrollbar(
-            thickness: 2,
-            controller: _scrollController,
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              controller: _scrollController,
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _buildRows(widget.totalFloor),
-                  ),
-                ),
-              ),
-            ),
+        appBar: AppBar(),
+        body: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: widget.totalCountPerFloor,
           ),
-        ),
-      ),
-    );
+          scrollDirection: Axis.vertical,
+          itemCount: wingFlatData.length,
+          itemBuilder: (c, i) {
+            return Card(
+              child: Container(
+                height: 100,
+                width: 100,
+                child: Center(child: Text("$i")),
+              ),
+            );
+          },
+        ));
   }
 }
