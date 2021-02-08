@@ -5,13 +5,14 @@ import 'package:watcher_app_for_user/Shapes/CircleShape.dart';
 class CircleDesign extends StatelessWidget {
   String title;
   bool backbutton = false;
-
-  CircleDesign({this.title, this.backbutton});
+  double size;
+  Widget child;
+  CircleDesign({this.title, this.backbutton, this.size, this.child});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150,
+      height: size ?? 150,
       child: Stack(fit: StackFit.expand, children: [
         if (backbutton == true) ...[
           Positioned(
@@ -40,6 +41,7 @@ class CircleDesign extends StatelessWidget {
             bottom: 25,
             child: Opacity(
                 opacity: 0.1, child: CustomPaint(painter: DrawCircle()))),
+        Positioned(child: child ?? SizedBox(), right: 12, top: 5),
       ]),
     );
   }
