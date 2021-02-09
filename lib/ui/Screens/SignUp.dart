@@ -7,6 +7,7 @@ import 'package:watcher_app_for_user/ui/CustomWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Common/fontStyles.dart';
 import 'package:watcher_app_for_user/ui/Screens/ChooseCreateOrJoin.dart';
+import 'package:watcher_app_for_user/ui/Screens/SignIn.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -116,7 +117,44 @@ class _SignUpState extends State<SignUp> {
                                           }
                                           return "";
                                         },
-                                        hintText: "Enter Mobile Number")
+                                        hintText: "Enter Mobile Number"),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 25.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  PageTransition(
+                                                      child: SignIn(),
+                                                      type: PageTransitionType
+                                                          .bottomToTop));
+                                            },
+                                            child: RichText(
+                                                text: TextSpan(
+                                                    text:
+                                                        "Already have an account ? ",
+                                                    style: TextStyle(
+                                                        color: Colors.black54,
+                                                        fontFamily: 'WorkSans',
+                                                        fontSize: 16),
+                                                    children: [
+                                                  TextSpan(
+                                                      text: "Sign In",
+                                                      style: TextStyle(
+                                                          color:
+                                                              appPrimaryMaterialColor,
+                                                          fontFamily:
+                                                              'WorkSans Bold',
+                                                          fontSize: 16))
+                                                ])),
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),

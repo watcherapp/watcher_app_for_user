@@ -136,11 +136,11 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                   }),
               MyButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                         context,
                         PageTransition(
                             child: SetupWings(),
-                            type: PageTransitionType.fade));
+                            type: PageTransitionType.rightToLeft));
                   },
                   title: "Submit"),
             ],

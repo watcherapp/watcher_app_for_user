@@ -172,7 +172,7 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
         padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
         child: MyButton(
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   PageTransition(
                       child: SetupWingsFinalStep(
@@ -180,7 +180,7 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
                           flatFormatId: currentIndex,
                           totalFloor: int.parse(txtTotalFloor.text),
                           totalCountPerFloor: int.parse(txtUnitPerWing.text)),
-                      type: PageTransitionType.fade));
+                      type: PageTransitionType.rightToLeft));
             },
             title: "Next"),
       ),

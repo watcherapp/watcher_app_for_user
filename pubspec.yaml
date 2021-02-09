@@ -32,7 +32,6 @@ dependencies:
   progress_stepper: ^0.1.0
   provider: ^4.3.3
   flutter_staggered_grid_view: ^0.3.3
-  bidirectional_scroll_view: ^0.1.1
 
 dev_dependencies:
   flutter_test:

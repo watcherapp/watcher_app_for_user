@@ -5,7 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/ui/Screens/Admin/AdminDashboard.dart';
 import 'package:watcher_app_for_user/ui/Screens/CreateSociety/CreateNewSociety.dart';
-import 'package:watcher_app_for_user/ui/Screens/Login.dart';
+import 'package:watcher_app_for_user/ui/Screens/SignIn.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _SplashState extends State<Splash> {
       Navigator.pushReplacement(
           context,
           PageTransition(
-              child: CreateNewSociety(), type: PageTransitionType.fade));
+              child: SignIn(), type: PageTransitionType.bottomToTop));
     });
   }
 

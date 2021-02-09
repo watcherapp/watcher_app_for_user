@@ -68,7 +68,7 @@ class _SetupWingsState extends State<SetupWings> {
                               context,
                               PageTransition(
                                   child: ParticularWingSetup(wingList[index]),
-                                  type: PageTransitionType.fade));
+                                  type: PageTransitionType.rightToLeft));
                         },
                         child: Stack(
                           children: [

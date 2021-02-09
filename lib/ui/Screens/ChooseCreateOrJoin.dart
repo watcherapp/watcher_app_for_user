@@ -91,11 +91,11 @@ class _ChooseCreateOrJoinState extends State<ChooseCreateOrJoin> {
                       borderRadius: BorderRadius.circular(6)),
                   color: appPrimaryMaterialColor,
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                         context,
                         PageTransition(
                             child: CreateNewSociety(),
-                            type: PageTransitionType.fade));
+                            type: PageTransitionType.rightToLeft));
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

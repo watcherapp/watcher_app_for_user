@@ -6,14 +6,16 @@ import 'package:watcher_app_for_user/Shapes/CircleShape.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/CircleDesign.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyTextFormField.dart';
+import 'package:watcher_app_for_user/ui/Screens/Admin/AdminDashboard.dart';
+import 'package:watcher_app_for_user/ui/Screens/ChooseCreateOrJoin.dart';
 import 'package:watcher_app_for_user/ui/Screens/SignUp.dart';
 
-class Login extends StatefulWidget {
+class SignIn extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _SignInState createState() => _SignInState();
 }
 
-class _LoginState extends State<Login> {
+class _SignInState extends State<SignIn> {
   bool password = true;
   GlobalKey _formKey = GlobalKey<FormState>();
 
@@ -88,7 +90,15 @@ class _LoginState extends State<Login> {
                           ),
                         )),
                     // Sign In Button
-                    MyButton(title: "Sign In", onPressed: () {}),
+                    MyButton(
+                        title: "Sign In",
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              PageTransition(
+                                  child: ChooseCreateOrJoin(),
+                                  type: PageTransitionType.rightToLeft));
+                        }),
                     Padding(
                       padding: const EdgeInsets.only(top: 25.0),
                       child: Row(
