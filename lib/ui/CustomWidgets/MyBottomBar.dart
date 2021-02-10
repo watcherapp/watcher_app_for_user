@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:watcher_app_for_user/Common/Custom_Icons.dart';
+import 'package:watcher_app_for_user/Common/appColors.dart';
 
 class MyBottomBar extends StatefulWidget {
   @override
@@ -17,16 +19,16 @@ class _MyBottomBarState extends State<MyBottomBar> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.white.withAlpha(55),
-      body: Stack(
+    return Container(
+      height: 60,
+      child: Stack(
         children: [
           Positioned(
             bottom: 0,
             left: 0,
             child: Container(
               width: size.width,
-              height: 70,
+              height: 60,
               child: Stack(
                 overflow: Overflow.visible,
                 children: [
@@ -43,7 +45,6 @@ class _MyBottomBarState extends State<MyBottomBar> {
                               const EdgeInsets.only(bottom: 10.0, top: 5.0),
                           child: Image.asset('images/logomini.png'),
                         ),
-                        elevation: 0.1,
                         onPressed: () {}),
                   ),
                   Container(
@@ -54,9 +55,9 @@ class _MyBottomBarState extends State<MyBottomBar> {
                       children: [
                         IconButton(
                           icon: Icon(
-                            Icons.home,
+                            CustomIcons.filled_user_profile,
                             color: currentIndex == 0
-                                ? Colors.orange
+                                ? appPrimaryMaterialColor
                                 : Colors.grey.shade400,
                           ),
                           onPressed: () {
@@ -66,9 +67,9 @@ class _MyBottomBarState extends State<MyBottomBar> {
                         ),
                         IconButton(
                             icon: Icon(
-                              Icons.restaurant_menu,
+                              CustomIcons.filled_icard,
                               color: currentIndex == 1
-                                  ? Colors.orange
+                                  ? appPrimaryMaterialColor
                                   : Colors.grey.shade400,
                             ),
                             onPressed: () {
@@ -79,9 +80,10 @@ class _MyBottomBarState extends State<MyBottomBar> {
                         ),
                         IconButton(
                             icon: Icon(
-                              Icons.bookmark,
+                              CustomIcons.filled_chat,
+                              size: 22,
                               color: currentIndex == 2
-                                  ? Colors.orange
+                                  ? appPrimaryMaterialColor
                                   : Colors.grey.shade400,
                             ),
                             onPressed: () {
@@ -89,9 +91,10 @@ class _MyBottomBarState extends State<MyBottomBar> {
                             }),
                         IconButton(
                             icon: Icon(
-                              Icons.notifications,
+                              CustomIcons.filled_more,
+                              size: 22,
                               color: currentIndex == 3
-                                  ? Colors.orange
+                                  ? appPrimaryMaterialColor
                                   : Colors.grey.shade400,
                             ),
                             onPressed: () {
@@ -118,17 +121,17 @@ class BNBCustomPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     Path path = Path();
-    path.moveTo(0, 20); // Start
+    path.moveTo(0, 10); // Start
     path.quadraticBezierTo(size.width * 0.20, 0, size.width * 0.35, 0);
     path.quadraticBezierTo(size.width * 0.40, 0, size.width * 0.40, 20);
     path.arcToPoint(Offset(size.width * 0.60, 20),
-        radius: Radius.circular(20.0), clockwise: false);
+        radius: Radius.circular(10.0), clockwise: false);
     path.quadraticBezierTo(size.width * 0.60, 0, size.width * 0.65, 0);
-    path.quadraticBezierTo(size.width * 0.80, 0, size.width, 20);
+    path.quadraticBezierTo(size.width * 0.80, 0, size.width, 10);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.lineTo(0, 20);
-    canvas.drawShadow(path, Colors.black, 5, true);
+    canvas.drawShadow(path, Colors.black, 6, true);
     canvas.drawPath(path, paint);
   }
 
