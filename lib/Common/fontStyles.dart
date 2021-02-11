@@ -12,6 +12,11 @@ class fontConstants {
       fontSize: 22,
       fontWeight: FontWeight.bold,
       fontFamily: 'WorkSans Bold');
+  static const listTitles = TextStyle(
+      color: Colors.black87,
+      fontSize: 12,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'WorkSans');
   static const subTitleText = TextStyle(color: Colors.grey, fontSize: 16);
 
   // TextFormField label

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/ui/Screens/Splash.dart';
+import 'package:watcher_app_for_user/ui/Screens/User/SubScreens/UserHomeScreen.dart';
+import 'package:watcher_app_for_user/ui/Screens/User/UserDashboard.dart';
 
 void main() async {
   runApp(MyApp());

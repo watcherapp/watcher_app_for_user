@@ -1,12 +1,11 @@
 import 'dart:developer';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/FlatStatusColorsWithLabel.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyButton.dart';
-import 'package:watcher_app_for_user/ui/Screens/Admin/AdminDashboard.dart';
+import 'file:///E:/Keval%20Work/watcher_app_for_user/lib/ui/Screens/User/UserDashboard.dart';
 
 class SetupWingsFinalStep extends StatefulWidget {
   int flatFormatId, totalFloor, totalCountPerFloor;
@@ -240,7 +239,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
               Navigator.pushReplacement(
                   context,
                   PageTransition(
-                      child: AdminDashboard(),
+                      child: UserDashboard(),
                       type: PageTransitionType.bottomToTop));
             },
             title: "Next"),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:progress_stepper/progress_stepper.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/CircleDesign.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/MyButton.dart';

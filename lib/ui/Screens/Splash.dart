@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
-import 'package:watcher_app_for_user/ui/Screens/Admin/AdminDashboard.dart';
+import 'file:///E:/Keval%20Work/watcher_app_for_user/lib/ui/Screens/User/UserDashboard.dart';
 import 'package:watcher_app_for_user/ui/Screens/CreateSociety/CreateNewSociety.dart';
 import 'package:watcher_app_for_user/ui/Screens/SignIn.dart';
 
