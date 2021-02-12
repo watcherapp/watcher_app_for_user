@@ -15,6 +15,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg"
   ];
 
+  List quickActions = [
+    {"id": 1, "name": "Complaints", "icon": "images/EmergengyIcon.png"},
+    {"id": 2, "name": "Complaints", "icon": "images/EmergengyIcon.png"},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,18 +66,31 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             style: fontConstants.listTitles,
           ),
         ),
-        ListView.builder(
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                width: 100,
-                height: 100,
-                color: Colors.white,
-                child: Center(
-                  child: Text(""),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: quickActions.map((data) {
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Card(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        "${data["icon"]}",
+                        width: 45,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4.0),
+                        child: Text(
+                          "${data["name"]}",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               );
-            })
+            }).toList()),
       ],
     );
   }

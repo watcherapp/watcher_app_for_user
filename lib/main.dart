@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: appPrimaryMaterialColor),
           primaryColor: appPrimaryMaterialColor,
           fontFamily: 'WorkSans'),
-      home: Splash(),
+      home: UserDashboard(),
     );
   }
 }
