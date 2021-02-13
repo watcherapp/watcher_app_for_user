@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:watcher_app_for_user/Common/Custom_Icons.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
+import 'package:watcher_app_for_user/Common/fontStyles.dart';
 
 class MyBottomBar extends StatefulWidget {
   @override
@@ -52,55 +53,62 @@ class _MyBottomBarState extends State<MyBottomBar> {
                     width: size.width,
                     height: 80,
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        IconButton(
-                          icon: Icon(
-                            CustomIcons.filled_user_profile,
-                            color: currentIndex == 0
-                                ? appPrimaryMaterialColor
-                                : Colors.grey.shade400,
-                          ),
-                          onPressed: () {
-                            setBottomBarIndex(0);
-                          },
-                          splashColor: Colors.white,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              CustomIcons.filled_user_profile,
+                              color: currentIndex == 0
+                                  ? appPrimaryMaterialColor
+                                  : Colors.grey.shade400,
+                            ),
+                            Text("Watcher", style: fontConstants.activeFonts)
+                          ],
                         ),
-                        IconButton(
-                            icon: Icon(
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
                               CustomIcons.filled_icard,
                               color: currentIndex == 1
                                   ? appPrimaryMaterialColor
                                   : Colors.grey.shade400,
                             ),
-                            onPressed: () {
-                              setBottomBarIndex(1);
-                            }),
+                            Text("Visitor", style: fontConstants.activeFonts)
+                          ],
+                        ),
                         Container(
                           width: size.width * 0.20,
                         ),
-                        IconButton(
-                            icon: Icon(
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
                               CustomIcons.filled_chat,
                               size: 22,
                               color: currentIndex == 2
                                   ? appPrimaryMaterialColor
                                   : Colors.grey.shade400,
                             ),
-                            onPressed: () {
-                              setBottomBarIndex(2);
-                            }),
-                        IconButton(
-                            icon: Icon(
+                            Text("Hello", style: fontConstants.activeFonts)
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
                               CustomIcons.filled_more,
                               size: 22,
                               color: currentIndex == 3
                                   ? appPrimaryMaterialColor
                                   : Colors.grey.shade400,
                             ),
-                            onPressed: () {
-                              setBottomBarIndex(3);
-                            }),
+                            Text("More", style: fontConstants.activeFonts)
+                          ],
+                        ),
                       ],
                     ),
                   )

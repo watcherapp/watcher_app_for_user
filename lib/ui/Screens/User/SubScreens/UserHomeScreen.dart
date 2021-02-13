@@ -66,31 +66,31 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             style: fontConstants.listTitles,
           ),
         ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: quickActions.map((data) {
-              return Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Card(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        "${data["icon"]}",
-                        width: 45,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          "${data["name"]}",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            }).toList()),
+        // Row(
+        //     mainAxisAlignment: MainAxisAlignment.start,
+        //     children: quickActions.map((data) {
+        //       return Padding(
+        //         padding: const EdgeInsets.all(10.0),
+        //         child: Card(
+        //           child: Column(
+        //             children: [
+        //               Image.asset(
+        //                 "${data["icon"]}",
+        //                 width: 45,
+        //               ),
+        //               Padding(
+        //                 padding: const EdgeInsets.only(left: 4.0),
+        //                 child: Text(
+        //                   "${data["name"]}",
+        //                   style: TextStyle(
+        //                       fontSize: 14, fontWeight: FontWeight.bold),
+        //                 ),
+        //               )
+        //             ],
+        //           ),
+        //         ),
+        //       );
+        //     }).toList()),
       ],
     );
   }
