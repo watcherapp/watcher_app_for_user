@@ -20,102 +20,64 @@ class _MyBottomBarState extends State<MyBottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return Container(
-      height: 60,
-      child: Stack(
+    return BottomAppBar(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: Container(
-              width: size.width,
-              height: 60,
-              child: Stack(
-                overflow: Overflow.visible,
-                children: [
-                  CustomPaint(
-                    size: Size(size.width, 80),
-                    painter: BNBCustomPainter(),
-                  ),
-                  Center(
-                    heightFactor: 0.6,
-                    child: FloatingActionButton(
-                        backgroundColor: Colors.white,
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(bottom: 10.0, top: 5.0),
-                          child: Image.asset('images/logomini.png'),
-                        ),
-                        onPressed: () {}),
-                  ),
-                  Container(
-                    width: size.width,
-                    height: 80,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              CustomIcons.filled_user_profile,
-                              color: currentIndex == 0
-                                  ? appPrimaryMaterialColor
-                                  : Colors.grey.shade400,
-                            ),
-                            Text("Watcher", style: fontConstants.activeFonts)
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              CustomIcons.filled_icard,
-                              color: currentIndex == 1
-                                  ? appPrimaryMaterialColor
-                                  : Colors.grey.shade400,
-                            ),
-                            Text("Visitor", style: fontConstants.activeFonts)
-                          ],
-                        ),
-                        Container(
-                          width: size.width * 0.20,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              CustomIcons.filled_chat,
-                              size: 22,
-                              color: currentIndex == 2
-                                  ? appPrimaryMaterialColor
-                                  : Colors.grey.shade400,
-                            ),
-                            Text("Hello", style: fontConstants.activeFonts)
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              CustomIcons.filled_more,
-                              size: 22,
-                              color: currentIndex == 3
-                                  ? appPrimaryMaterialColor
-                                  : Colors.grey.shade400,
-                            ),
-                            Text("More", style: fontConstants.activeFonts)
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                CustomIcons.filled_user_profile,
+                color: currentIndex == 0
+                    ? appPrimaryMaterialColor
+                    : Colors.grey.shade400,
               ),
-            ),
-          )
+              Text("Watcher", style: fontConstants.activeFonts)
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                CustomIcons.filled_icard,
+                color: currentIndex == 1
+                    ? appPrimaryMaterialColor
+                    : Colors.grey.shade400,
+              ),
+              Text("Visitor", style: fontConstants.activeFonts)
+            ],
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                CustomIcons.filled_chat,
+                size: 22,
+                color: currentIndex == 2
+                    ? appPrimaryMaterialColor
+                    : Colors.grey.shade400,
+              ),
+              Text("Hello", style: fontConstants.activeFonts)
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                CustomIcons.filled_more,
+                size: 22,
+                color: currentIndex == 3
+                    ? appPrimaryMaterialColor
+                    : Colors.grey.shade400,
+              ),
+              Text("More", style: fontConstants.activeFonts)
+            ],
+          ),
         ],
       ),
     );

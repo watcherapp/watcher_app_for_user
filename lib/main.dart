@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           floatingActionButtonTheme: FloatingActionButtonThemeData(
               backgroundColor: appPrimaryMaterialColor),
           primaryColor: appPrimaryMaterialColor,
-          fontFamily: 'WorkSans'),
+          fontFamily: 'Montserrat'),
       home: UserDashboard(),
     );
   }

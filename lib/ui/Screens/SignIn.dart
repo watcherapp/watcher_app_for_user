@@ -117,14 +117,14 @@ class _SignInState extends State<SignIn> {
                                     text: "Don't have an account ? ",
                                     style: TextStyle(
                                         color: Colors.black54,
-                                        fontFamily: 'WorkSans',
+                                        fontFamily: 'Montserrat',
                                         fontSize: 16),
                                     children: [
                                   TextSpan(
                                       text: "Sign Up",
                                       style: TextStyle(
                                           color: appPrimaryMaterialColor,
-                                          fontFamily: 'WorkSans Bold',
+                                          fontFamily: 'Montserrat',
                                           fontSize: 16))
                                 ])),
                           ),

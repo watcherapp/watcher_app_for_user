@@ -1,22 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:watcher_app_for_user/Common/appColors.dart';
 
 class fontConstants {
   static const bigTitleWhite = TextStyle(
       color: Colors.white,
       fontSize: 24,
       fontWeight: FontWeight.bold,
-      fontFamily: 'WorkSans Bold');
+      fontFamily: 'Montserrat');
   static const bigTitleBlack = TextStyle(
       color: Colors.black,
       fontSize: 22,
       fontWeight: FontWeight.bold,
-      fontFamily: 'WorkSans Bold');
+      fontFamily: 'Montserrat');
   static const listTitles = TextStyle(
       color: Colors.black87,
       fontSize: 12,
       fontWeight: FontWeight.bold,
-      fontFamily: 'WorkSans');
+      fontFamily: 'Montserrat');
   static const subTitleText = TextStyle(color: Colors.grey, fontSize: 16);
 
   // TextFormField label
@@ -25,6 +26,22 @@ class fontConstants {
 
   // Bottombar FontStyle
   static const activeFonts = TextStyle(fontSize: 12);
+
+  //Label fontStyle
+  static const labelFonts =
+      TextStyle(fontSize: 12, color: Colors.grey, fontFamily: 'Montserrat');
+  static const valueFonts = TextStyle(
+      fontSize: 15,
+      color: Colors.black87,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Montserrat');
+
+  //ProfilePage Fonts
+  static const titleFonts = TextStyle(
+      fontSize: 14,
+      color: Colors.black87,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Montserrat-Bold');
 }
 
 class paddingConstant {

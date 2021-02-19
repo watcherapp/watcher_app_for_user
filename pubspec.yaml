@@ -31,6 +31,8 @@ dependencies:
   page_transition: ^1.1.7+6
   provider: ^4.3.3
   carousel_pro: ^1.0.0
+  dotted_border: ^1.0.7
+  esys_flutter_share: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +71,12 @@ flutter:
     - family: WorkSans Bold
       fonts:
         - asset: fonts/WorkSans-Bold.ttf
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Regular.ttf
+    - family: Montserrat-Bold
+      fonts:
+        - asset: fonts/Montserrat-Bold.ttf
     - family: CustomIcons
       fonts:
         - asset: fonts/CustomIcons.ttf

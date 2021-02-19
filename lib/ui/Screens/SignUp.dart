@@ -138,7 +138,8 @@ class _SignUpState extends State<SignUp> {
                                                         "Already have an account ? ",
                                                     style: TextStyle(
                                                         color: Colors.black54,
-                                                        fontFamily: 'WorkSans',
+                                                        fontFamily:
+                                                            'Montserrat',
                                                         fontSize: 16),
                                                     children: [
                                                   TextSpan(
@@ -147,7 +148,7 @@ class _SignUpState extends State<SignUp> {
                                                           color:
                                                               appPrimaryMaterialColor,
                                                           fontFamily:
-                                                              'WorkSans Bold',
+                                                              'Montserrat',
                                                           fontSize: 16))
                                                 ])),
                                           ),
