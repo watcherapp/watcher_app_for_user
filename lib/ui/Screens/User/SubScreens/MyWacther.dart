@@ -6,6 +6,7 @@ import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/ui/CustomWidgets/labelWithAddButton.dart';
 import 'package:watcher_app_for_user/ui/Screens/SignIn.dart';
 import 'package:watcher_app_for_user/ui/Screens/User/Components/AddComponent.dart';
+import 'package:watcher_app_for_user/ui/Screens/User/Components/DailyHelperComponent.dart';
 import 'package:watcher_app_for_user/ui/Screens/User/Components/FamilyMemberComponent.dart';
 import 'package:watcher_app_for_user/ui/Screens/User/Components/MyResidentComponent.dart';
 
@@ -109,11 +110,25 @@ class _MyWatcherState extends State<MyWatcher> {
           ),
           LabelWithAddButton(
             icon: Icon(
-              Icons.group,
+              Icons.person,
               size: 20,
             ),
             onPressed: () {},
             title: "Daily Helpers",
+          ),
+          SizedBox(
+            height: 180,
+            child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: length + 1,
+                itemBuilder: (context, index) {
+                  if (index == length) {
+                    return AddComponent(width: 100, onTap: () {});
+                  } else {
+                    return DailyHelperComponent();
+                  }
+                }),
           ),
         ],
       ),
