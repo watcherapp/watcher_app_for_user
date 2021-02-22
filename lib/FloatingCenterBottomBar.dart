@@ -1,10 +1,13 @@
+/*
 import 'package:flutter/material.dart';
+import 'package:watcher_app_for_user/Common/ClassList.dart';
 
-class BottomBarItem {
-  BottomBarItem({this.iconData, this.title});
-  IconData iconData;
-  String title;
-}
+// class BottomBarItem {
+//   BottomBarItem({this.iconData, this.title, this.onTap});
+//   IconData iconData;
+//   Function onTap;
+//   String title;
+// }
 
 class FloatingCenterBottomBar extends StatefulWidget {
   FloatingCenterBottomBar(
@@ -113,3 +116,4 @@ class _FloatingCenterBottomBarState extends State<FloatingCenterBottomBar> {
     );
   }
 }
+*/

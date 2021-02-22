@@ -5,7 +5,9 @@ import 'package:logger/logger.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Common/Custom_Icons.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
+import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
 import 'package:watcher_app_for_user/FloatingCenterBottomBar.dart';
+import 'package:watcher_app_for_user/Common/ClassList.dart';
 import 'package:watcher_app_for_user/ui/Screens/User/SubScreens/MyWacther.dart';
 import 'package:watcher_app_for_user/ui/Screens/User/SubScreens/UsersVisitorlist.dart';
 
@@ -15,45 +17,13 @@ class UserDashboard extends StatefulWidget {
 }
 
 class _UserDashboardState extends State<UserDashboard> {
-  int currentIndex = 3;
-  List<Widget> _list = [
-    Container(
-      color: Colors.teal,
-      child: Center(
-        child: Text("Watcher"),
-      ),
-    ),
-    Container(
-      color: Colors.redAccent,
-      child: Center(
-        child: Text("Visitor"),
-      ),
-    ),
-    Container(
-      color: Colors.grey,
-      child: Center(
-        child: Text("Chat"),
-      ),
-    ),
-    Container(
-      color: Colors.amber,
-      child: Center(
-        child: Text("More"),
-      ),
-    ),
-    Container(
-      color: Colors.blueAccent,
-      child: Center(
-        child: Text("Home"),
-      ),
-    ),
-  ];
+  int currentIndex = 1;
+  List<Widget> _list = [];
 
   void _onItemTapped(int index) {
     setState(() {
       currentIndex = index;
     });
-    print(currentIndex);
   }
 
   @override
@@ -61,25 +31,15 @@ class _UserDashboardState extends State<UserDashboard> {
     return Scaffold(
       appBar: AppBar(),
       body: _list[currentIndex],
-      floatingActionButton: FloatingActionButton(
-        elevation: 2,
-        onPressed: () {
-          _onItemTapped(4);
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: FloatingCenterBottomBar(
-        color: Colors.grey[500],
-        onTabSelected: _onItemTapped,
-        notchedShape: CircularNotchedRectangle(),
-        height: 56,
-        items: [
-          BottomBarItem(iconData: Icons.more_time, title: "Watcher"),
-          BottomBarItem(iconData: Icons.more_time, title: "Visitor"),
-          BottomBarItem(iconData: Icons.more_time, title: "Hello"),
-          BottomBarItem(iconData: Icons.more_time, title: "More"),
-        ],
-      ),
+      bottomNavigationBar: BottomNavigationBarWithFab(
+          selectedColor: appPrimaryMaterialColor,
+          height: 56,
+          items: [
+            BottomBarItem(icon: Icons.add_circle_outline_sharp, title: "Hello"),
+            BottomBarItem(icon: Icons.add_circle_outline_sharp, title: "Hello"),
+            BottomBarItem(icon: Icons.add_circle_outline_sharp, title: "Hello"),
+            BottomBarItem(icon: Icons.add_circle_outline_sharp, title: "Hello"),
+          ]),
     );
   }
 }
