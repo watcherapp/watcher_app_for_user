@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Common/ClassList.dart';
+import 'package:watcher_app_for_user/Providers/BottomNavigationBarProvider.dart';
 
 // ignore: must_be_immutable
 class BottomNavigationBarWithFab extends StatefulWidget {
@@ -23,16 +27,39 @@ class _BottomNavigationBarWithFabState
     extends State<BottomNavigationBarWithFab> {
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<BottomNavigationBarProvider>(context);
     return SizedBox(
       height: widget.height,
       child: BottomAppBar(
         shape: widget.notchedShape,
         child: Row(
-            children: List.generate(4, (index) {
+            children: List.generate(widget.items.length, (index) {
           return Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Icon(widget.items[index].icon)],
+            child: InkWell(
+              onTap: () {
+                provider.currentIndex = index;
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (provider.currentIndex != 2 &&
+                      widget.items[index].imageIcon != null) ...[
+                    Image.asset("${widget.items[index].imageIcon}", width: 45)
+                  ] else ...[
+                    Icon(widget.items[index].icon,
+                        color: provider.currentIndex == index
+                            ? widget.selectedColor
+                            : widget.unSelectedColor),
+                    Text(widget.items[index].title,
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: provider.currentIndex == index
+                                ? widget.selectedColor
+                                : widget.unSelectedColor,
+                            fontWeight: FontWeight.bold)),
+                  ]
+                ],
+              ),
             ),
           );
         })),

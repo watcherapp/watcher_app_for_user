@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:logger/logger.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:watcher_app_for_user/Common/Custom_Icons.dart';
+import 'package:provider/provider.dart';
+import 'package:watcher_app_for_user/Common/ClassList.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
-import 'package:watcher_app_for_user/FloatingCenterBottomBar.dart';
-import 'package:watcher_app_for_user/Common/ClassList.dart';
-import 'package:watcher_app_for_user/ui/Screens/User/SubScreens/MyWacther.dart';
-import 'package:watcher_app_for_user/ui/Screens/User/SubScreens/UsersVisitorlist.dart';
+import 'package:watcher_app_for_user/Providers/BottomNavigationBarProvider.dart';
 
 class UserDashboard extends StatefulWidget {
   @override
@@ -17,29 +11,26 @@ class UserDashboard extends StatefulWidget {
 }
 
 class _UserDashboardState extends State<UserDashboard> {
-  int currentIndex = 1;
-  List<Widget> _list = [];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      currentIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<BottomNavigationBarProvider>(context);
     return Scaffold(
-      appBar: AppBar(),
-      body: _list[currentIndex],
       bottomNavigationBar: BottomNavigationBarWithFab(
-          selectedColor: appPrimaryMaterialColor,
-          height: 56,
-          items: [
-            BottomBarItem(icon: Icons.add_circle_outline_sharp, title: "Hello"),
-            BottomBarItem(icon: Icons.add_circle_outline_sharp, title: "Hello"),
-            BottomBarItem(icon: Icons.add_circle_outline_sharp, title: "Hello"),
-            BottomBarItem(icon: Icons.add_circle_outline_sharp, title: "Hello"),
-          ]),
+        notchedShape: CircularNotchedRectangle(),
+        height: 56,
+        selectedColor: appPrimaryMaterialColor,
+        unSelectedColor: Colors.grey,
+        items: [
+          BottomBarItem(icon: Icons.person, title: "Watcher"),
+          BottomBarItem(icon: Icons.insert_drive_file, title: "Visitors"),
+          BottomBarItem(
+              icon: Icons.home,
+              title: "Home",
+              imageIcon: "images/Watcherlogo.png"),
+          BottomBarItem(icon: Icons.chat, title: "Hello"),
+          BottomBarItem(icon: Icons.add, title: "More"),
+        ],
+      ),
     );
   }
 }

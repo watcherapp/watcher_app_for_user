@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class BottomBarItem {
-  BottomBarItem({this.icon, this.title, this.onTap});
+  BottomBarItem({this.icon, this.imageIcon, this.title});
   IconData icon;
-  Function onTap;
+  String imageIcon;
   String title;
 }
