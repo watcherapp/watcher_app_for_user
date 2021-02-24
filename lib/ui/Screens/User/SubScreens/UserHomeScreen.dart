@@ -10,7 +10,7 @@ class UserHomeScreen extends StatefulWidget {
 
 class _UserHomeScreenState extends State<UserHomeScreen> {
   List bannerList = [
-    "https://codecanyon.img.customer.envatousercontent.com/files/224348627/preview+image.JPG?auto=compress%2Cformat&fit=crop&crop=top&w=590&h=300&s=6382a8066531c8b9d309e3688249f39a",
+    "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
     "https://previews.customer.envatousercontent.com/files/219112782/preview%20image.JPG",
     "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg"
   ];
@@ -30,9 +30,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           width: MediaQuery.of(context).size.width,
           child: Carousel(
             boxFit: BoxFit.cover,
-            autoplay: false,
+            autoplay: true,
             animationCurve: Curves.fastOutSlowIn,
-            animationDuration: Duration(seconds: 2),
+            animationDuration: Duration(seconds: 1),
             dotSize: 4.0,
             dotIncreasedColor: appPrimaryMaterialColor,
             dotBgColor: Colors.transparent,
@@ -66,31 +66,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             style: fontConstants.listTitles,
           ),
         ),
-        // Row(
-        //     mainAxisAlignment: MainAxisAlignment.start,
-        //     children: quickActions.map((data) {
-        //       return Padding(
-        //         padding: const EdgeInsets.all(10.0),
-        //         child: Card(
-        //           child: Column(
-        //             children: [
-        //               Image.asset(
-        //                 "${data["icon"]}",
-        //                 width: 45,
-        //               ),
-        //               Padding(
-        //                 padding: const EdgeInsets.only(left: 4.0),
-        //                 child: Text(
-        //                   "${data["name"]}",
-        //                   style: TextStyle(
-        //                       fontSize: 14, fontWeight: FontWeight.bold),
-        //                 ),
-        //               )
-        //             ],
-        //           ),
-        //         ),
-        //       );
-        //     }).toList()),
       ],
     );
   }

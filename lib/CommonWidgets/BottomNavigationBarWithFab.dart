@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Common/ClassList.dart';
@@ -25,6 +26,7 @@ class BottomNavigationBarWithFab extends StatefulWidget {
 
 class _BottomNavigationBarWithFabState
     extends State<BottomNavigationBarWithFab> {
+  double opaCity = 0;
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
@@ -38,6 +40,9 @@ class _BottomNavigationBarWithFabState
             child: InkWell(
               onTap: () {
                 provider.currentIndex = index;
+                setState(() {
+                  opaCity = 1;
+                });
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

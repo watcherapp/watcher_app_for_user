@@ -6,6 +6,7 @@ import 'package:watcher_app_for_user/Common/ClassList.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
 import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
 import 'package:watcher_app_for_user/Providers/BottomNavigationBarProvider.dart';
+import 'package:watcher_app_for_user/ui/Screens/User/SubScreens/UserHomeScreen.dart';
 
 class UserDashboard extends StatefulWidget {
   @override
@@ -17,6 +18,27 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 80,
+            width: MediaQuery.of(context).size.width,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusDirectional.circular(6.0)),
+              clipBehavior: Clip.antiAlias,
+              child: Image.network(
+                "https://i.ibb.co/qmZJzK5/Whats-App-Image-2021-02-24-at-4-29-17-PM.jpg",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          UserHomeScreen()
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBarWithFab(
         notchedShape: CircularNotchedRectangle(),
         height: 56,
