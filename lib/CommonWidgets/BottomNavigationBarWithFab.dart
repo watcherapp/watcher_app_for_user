@@ -52,7 +52,7 @@ class _BottomNavigationBarWithFabState
                             : widget.unSelectedColor),
                     Text(widget.items[index].title,
                         style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 11,
                             color: provider.currentIndex == index
                                 ? widget.selectedColor
                                 : widget.unSelectedColor,

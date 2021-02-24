@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Common/ClassList.dart';
 import 'package:watcher_app_for_user/Common/appColors.dart';
@@ -21,14 +23,15 @@ class _UserDashboardState extends State<UserDashboard> {
         selectedColor: appPrimaryMaterialColor,
         unSelectedColor: Colors.grey,
         items: [
-          BottomBarItem(icon: Icons.person, title: "Watcher"),
-          BottomBarItem(icon: Icons.insert_drive_file, title: "Visitors"),
+          BottomBarItem(icon: CupertinoIcons.profile_circled, title: "Watcher"),
+          BottomBarItem(icon: CupertinoIcons.person_2_alt, title: "Visitors"),
           BottomBarItem(
-              icon: Icons.home,
+              icon: CupertinoIcons.home,
               title: "Home",
               imageIcon: "images/Watcherlogo.png"),
-          BottomBarItem(icon: Icons.chat, title: "Hello"),
-          BottomBarItem(icon: Icons.add, title: "More"),
+          BottomBarItem(
+              icon: CupertinoIcons.chat_bubble_2_fill, title: "Hello"),
+          BottomBarItem(icon: CupertinoIcons.add, title: "More"),
         ],
       ),
     );
