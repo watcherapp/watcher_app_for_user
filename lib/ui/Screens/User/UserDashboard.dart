@@ -18,11 +18,12 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-      ),
       body: Column(
         children: [
+          Padding(
+            padding:
+                new EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          ),
           SizedBox(
             height: 80,
             width: MediaQuery.of(context).size.width,
