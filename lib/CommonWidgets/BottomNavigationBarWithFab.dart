@@ -31,7 +31,6 @@ class _BottomNavigationBarWithFabState
     return SizedBox(
       height: widget.height,
       child: BottomAppBar(
-        shape: widget.notchedShape,
         child: Row(
             children: List.generate(widget.items.length, (index) {
           return Expanded(
