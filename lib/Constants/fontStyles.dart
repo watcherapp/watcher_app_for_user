@@ -15,9 +15,9 @@ class fontConstants {
       fontFamily: 'Montserrat');
   static const listTitles = TextStyle(
       color: Colors.black87,
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: FontWeight.bold,
-      fontFamily: 'Montserrat');
+      fontFamily: 'Montserrat-Bold');
   static const subTitleText = TextStyle(color: Colors.grey, fontSize: 16);
 
   // TextFormField label

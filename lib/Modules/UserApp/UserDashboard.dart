@@ -27,22 +27,40 @@ class _UserDashboardState extends State<UserDashboard> {
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
     return Scaffold(
+      backgroundColor: Colors.grey[200],
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(50.0), // here the desired height
+          child: AppBar(
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            actions: [
+              IconButton(
+                  icon: Icon(CupertinoIcons.bell),
+                  onPressed: () {},
+                  color: appPrimaryMaterialColor)
+            ],
+            title: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(6.0)),
+                child: Text("Example")),
+          )),
       body: Column(
         children: [
           Padding(
-            padding:
-                new EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          ),
-          SizedBox(
-            height: 80,
-            width: MediaQuery.of(context).size.width,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadiusDirectional.circular(6.0)),
-              clipBehavior: Clip.antiAlias,
-              child: Image.network(
-                "https://i.ibb.co/qmZJzK5/Whats-App-Image-2021-02-24-at-4-29-17-PM.jpg",
-                fit: BoxFit.cover,
+            padding: const EdgeInsets.only(left: 4.0, right: 4.0),
+            child: SizedBox(
+              height: 70,
+              width: MediaQuery.of(context).size.width,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusDirectional.circular(6.0)),
+                clipBehavior: Clip.antiAlias,
+                child: Image.network(
+                  "https://i.ibb.co/qmZJzK5/Whats-App-Image-2021-02-24-at-4-29-17-PM.jpg",
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

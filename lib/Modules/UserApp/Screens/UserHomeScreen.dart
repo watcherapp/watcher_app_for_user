@@ -1,7 +1,10 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVisitorsComponent.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/VisitorComponent.dart';
 
 class UserHomeScreen extends StatefulWidget {
   @override
@@ -16,7 +19,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   ];
 
   List quickActions = [
-    {"id": 1, "name": "Complaints", "icon": "images/icons/Notice.png"},
+    {"id": 0, "icon": CupertinoIcons.number_square, "title": "Notice"},
+    {"id": 0, "icon": Icons.album, "title": "Emergency"},
+    {"id": 0, "icon": CupertinoIcons.number_square, "title": "Advertisement"},
+    {"id": 0, "icon": CupertinoIcons.car_detailed, "title": "Parking"},
   ];
 
   @override
@@ -58,16 +64,75 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 .toList(),
           ),
         ),
+        SizedBox(
+          height: 10,
+        ),
+        Card(
+          elevation: 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 8.0, bottom: 6.0, top: 8.0),
+                child: Text(
+                  "Quick Actions",
+                  style: fontConstants.listTitles,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: quickActions.map((e) {
+                    return Expanded(
+                      child: Column(
+                        children: [
+                          Container(
+                            child: Icon(
+                              e["icon"],
+                              color: Colors.white,
+                            ),
+                            width: 45,
+                            height: 45,
+                            decoration: BoxDecoration(
+                                color: appPrimaryMaterialColor,
+                                borderRadius: BorderRadius.circular(6.0)),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "${e["title"]}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 11),
+                          )
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(left: 8.0, bottom: 6.0, top: 8.0),
           child: Text(
-            "Quick Actions",
+            "My Visitors",
             style: fontConstants.listTitles,
           ),
         ),
-        // ListView.builder(itemBuilder: (context, index) {
-        //   return Card();
-        // })
+        SizedBox(
+          height: 102,
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: 10,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return MyVisitorComponent();
+              }),
+        )
       ],
     );
   }
