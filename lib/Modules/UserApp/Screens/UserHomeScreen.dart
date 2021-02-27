@@ -67,53 +67,44 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         SizedBox(
           height: 10,
         ),
-        Card(
-          elevation: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(left: 8.0, bottom: 6.0, top: 8.0),
-                child: Text(
-                  "Quick Actions",
-                  style: fontConstants.listTitles,
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, bottom: 6.0, top: 8.0),
+          child: Text(
+            "Quick Actions",
+            style: fontConstants.listTitles,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: quickActions.map((e) {
+              return Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "images/complain.png",
+                          width: 35,
+                          color: appPrimaryMaterialColor,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "${e["title"]}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 10),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: quickActions.map((e) {
-                    return Expanded(
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Icon(
-                              e["icon"],
-                              color: Colors.white,
-                            ),
-                            width: 45,
-                            height: 45,
-                            decoration: BoxDecoration(
-                                color: appPrimaryMaterialColor,
-                                borderRadius: BorderRadius.circular(6.0)),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "${e["title"]}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 11),
-                          )
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ],
+              );
+            }).toList(),
           ),
         ),
         Padding(
