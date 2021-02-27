@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:provider/provider.dart';
-import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
+import 'package:flutter/materialmport 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';
@@ -31,20 +28,41 @@ class _UserDashboardState extends State<UserDashboard> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0), // here the desired height
           child: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: appPrimaryMaterialColor,
             centerTitle: true,
             actions: [
               IconButton(
                   icon: Icon(CupertinoIcons.bell),
                   onPressed: () {},
-                  color: appPrimaryMaterialColor)
+                  color: Colors.white)
             ],
             title: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(6.0)),
-                child: Text("Example")),
+              width: 220,
+              child: FlatButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(),
+                      Text(
+                        "Xyz",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down_sharp,
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                          color: Colors.white,
+                          width: 1,
+                          style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(5))),
+            ),
           )),
       body: Column(
         children: [
