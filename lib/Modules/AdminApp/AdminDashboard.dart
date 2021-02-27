@@ -16,7 +16,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     {"label": "Emergency", "img": "images/alarm.png"},
     {"label": "Advertisement", "img": "images/ad-campaign.png"},
     {"label": "Management", "img": "images/team.png"},
-    {"label": "Interaction", "img": "images/chat (1).png"},
+    {"label": "Interaction", "img": "images/chat.png"},
     {"label": "Help Desk", "img": "images/communications.png"},
   ];
 
