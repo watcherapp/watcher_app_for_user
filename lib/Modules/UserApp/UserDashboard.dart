@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/materialmport 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';

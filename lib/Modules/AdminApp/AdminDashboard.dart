@@ -160,7 +160,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               padding:
                                   const EdgeInsets.only(left: 11.0, right: 10),
                               child: Text(
-                                "Share abouve code with building members to join xyz,",
+                                "Share above code with building members to join xyz,",
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                     color: Colors.black,
