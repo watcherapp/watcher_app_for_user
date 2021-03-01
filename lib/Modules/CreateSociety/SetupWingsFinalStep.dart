@@ -240,7 +240,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
                       child: UserDashboard(),
                       type: PageTransitionType.bottomToTop));
             },
-            title: "Next"),
+            title: "Finish"),
       ),
     );
   }

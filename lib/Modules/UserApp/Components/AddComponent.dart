@@ -15,12 +15,15 @@ class AddComponent extends StatelessWidget {
           dashPattern: [4],
           radius: Radius.circular(10.0),
           borderType: BorderType.Rect,
-          child: Container(
-            width: width,
-            child: Center(
-              child: Icon(
-                Icons.add_circle_outline_sharp,
-                size: 20,
+          child: InkWell(
+            onTap: onTap,
+            child: Container(
+              width: width,
+              child: Center(
+                child: Icon(
+                  Icons.add_circle_outline_sharp,
+                  size: 20,
+                ),
               ),
             ),
           )),

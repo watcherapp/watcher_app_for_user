@@ -74,32 +74,37 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             style: fontConstants.listTitles,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        SizedBox(
+          height: 85,
+          child: ListView(
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
             children: quickActions.map((e) {
-              return Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          "images/complain.png",
-                          width: 35,
-                          color: appPrimaryMaterialColor,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "${e["title"]}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 10),
-                        )
-                      ],
+              return Card(
+                child: SizedBox(
+                  width: 85,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "images/complain.png",
+                            width: 35,
+                            color: appPrimaryMaterialColor,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "${e["title"]}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 10),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
