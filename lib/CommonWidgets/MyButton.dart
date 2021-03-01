@@ -4,8 +4,9 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 class MyButton extends StatelessWidget {
   VoidCallback onPressed;
   String title;
+  FocusNode focusNode;
 
-  MyButton({@required this.onPressed, this.title});
+  MyButton({@required this.onPressed, this.title, this.focusNode});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class MyButton extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: 45,
         child: RaisedButton(
+            focusNode: focusNode,
             child: Text("${title ?? ""}",
                 style: TextStyle(
                     color: Colors.white,

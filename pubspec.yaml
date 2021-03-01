@@ -75,7 +75,8 @@ flutter:
     - family: WorkSans Bold
       fonts:
         - asset: fonts/WorkSans-Bold.ttf
-    - family: Montserrat
+    - family: Montserrat.
+
       fonts:
         - asset: fonts/Montserrat-Regular.ttf
     - family: Montserrat-Bold

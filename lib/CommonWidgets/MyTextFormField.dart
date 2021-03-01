@@ -7,10 +7,13 @@ class MyTextFormField extends StatelessWidget {
   TextInputType keyboardType;
   FormFieldValidator<String> validator;
   int maxLength;
+  FocusNode focusNode;
   Widget hideShowText;
   TextCapitalization textCapitalization = TextCapitalization.none;
   ValueChanged<String> onChanged;
+  ValueChanged<String> onFieldSubmitted;
   TextEditingController controller;
+  TextInputAction textInputAction;
   bool isPassword;
 
   MyTextFormField(
@@ -18,10 +21,13 @@ class MyTextFormField extends StatelessWidget {
       this.hintText,
       this.maxLength,
       this.lable,
+      this.focusNode,
       this.controller,
       this.isPassword = false,
       this.validator,
       this.textCapitalization,
+      this.onFieldSubmitted,
+      this.textInputAction,
       this.onChanged,
       this.hideShowText});
 
@@ -42,9 +48,12 @@ class MyTextFormField extends StatelessWidget {
             keyboardType: keyboardType,
             style: TextStyle(fontSize: 15),
             maxLength: maxLength,
+            focusNode: focusNode,
             onChanged: onChanged,
             validator: validator,
+            textInputAction: textInputAction,
             obscureText: isPassword,
+            onFieldSubmitted: onFieldSubmitted,
             decoration: InputDecoration(
               fillColor: Colors.grey[200],
               filled: true,

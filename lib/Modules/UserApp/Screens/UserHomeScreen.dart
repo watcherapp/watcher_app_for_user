@@ -67,37 +67,33 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         SizedBox(
           height: 10,
         ),
-        Card(
-          elevation: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(left: 8.0, bottom: 6.0, top: 8.0),
-                child: Text(
-                  "Quick Actions",
-                  style: fontConstants.listTitles,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: quickActions.map((e) {
-                    return Expanded(
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, bottom: 6.0, top: 8.0),
+          child: Text(
+            "Quick Actions",
+            style: fontConstants.listTitles,
+          ),
+        ),
+        SizedBox(
+          height: 85,
+          child: ListView(
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            children: quickActions.map((e) {
+              return Card(
+                child: SizedBox(
+                  width: 85,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      color: Colors.white,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            child: Icon(
-                              e["icon"],
-                              color: Colors.white,
-                            ),
-                            width: 45,
-                            height: 45,
-                            decoration: BoxDecoration(
-                                color: appPrimaryMaterialColor,
-                                borderRadius: BorderRadius.circular(6.0)),
+                          Image.asset(
+                            "images/complain.png",
+                            width: 35,
+                            color: appPrimaryMaterialColor,
                           ),
                           SizedBox(
                             height: 5,
@@ -105,15 +101,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           Text(
                             "${e["title"]}",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 11),
+                                fontWeight: FontWeight.bold, fontSize: 10),
                           )
                         ],
                       ),
-                    );
-                  }).toList(),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              );
+            }).toList(),
           ),
         ),
         Padding(
