@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
-import 'package:watcher_app_for_user/Modules/Authentication/Splash.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 import 'package:watcher_app_for_user/Providers/BottomNavigationBarProvider.dart';
+
+import 'Constants/appColors.dart';
 
 void main() async {
   runApp(MyApp());

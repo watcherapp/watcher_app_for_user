@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:share/share.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ComplaintsScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/EmergencyScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/InteractionScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyProfile.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyProperties.dart';
@@ -16,19 +19,48 @@ class _AdminDashboardState extends State<AdminDashboard> {
     {
       "label": "Complaints",
       "img": "images/complain.png",
+      "screenName": ComplaintsScreen(),
     },
-    {"label": "Directory", "img": "images/directory1.png"},
-    {"label": "Parking", "img": "images/car.png"},
-    {"label": "My Building", "img": "images/building.png"},
-    {"label": "Emergency", "img": "images/alarm.png"},
-    {"label": "Advertisement", "img": "images/ad-campaign.png"},
-    {"label": "Management", "img": "images/team.png"},
+    {
+      "label": "Directory",
+      "img": "images/directory1.png",
+      "screenName": InteractionScreen(),
+    },
+    {
+      "label": "Parking",
+      "img": "images/car.png",
+      "screenName": InteractionScreen(),
+    },
+    {
+      "label": "My Building",
+      "img": "images/building.png",
+      "screenName": InteractionScreen(),
+    },
+    {
+      "label": "Emergency",
+      "img": "images/alarm.png",
+      "screenName": EmergencyScreen(),
+    },
+    {
+      "label": "Advertisement",
+      "img": "images/ad-campaign.png",
+      "screenName": InteractionScreen(),
+    },
+    {
+      "label": "Management",
+      "img": "images/team.png",
+      "screenName": InteractionScreen(),
+    },
     {
       "label": "Interaction",
       "img": "images/chat.png",
-      "screenName": "/InteractionScreen",
+      "screenName": InteractionScreen(),
     },
-    {"label": "Help Desk", "img": "images/communications.png"},
+    {
+      "label": "Help Desk",
+      "img": "images/communications.png",
+      "screenName": InteractionScreen(),
+    },
   ];
 
   @override
@@ -132,66 +164,74 @@ class _AdminDashboardState extends State<AdminDashboard> {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 13.0, right: 13),
-              child: Container(
-                  height: 95,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.white, width: 1.5),
-                      borderRadius: BorderRadius.all(Radius.circular(9.0)),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            blurRadius: 2.0,
-                            spreadRadius: 2.0,
-                            offset: Offset(3.0, 5.0))
-                      ]),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 11.0),
-                              child: Text(
-                                "0160203220",
-                                style: TextStyle(
-                                    color: appPrimaryMaterialColor,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat'),
+            GestureDetector(
+              onTap: () {
+                Share.share(
+                  '02541655 Share above code with building members to join xyz.',
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 13.0, right: 13),
+                child: Container(
+                    height: 95,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.white, width: 1.5),
+                        borderRadius: BorderRadius.all(Radius.circular(9.0)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              blurRadius: 2.0,
+                              spreadRadius: 2.0,
+                              offset: Offset(3.0, 5.0))
+                        ]),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 11.0),
+                                child: Text(
+                                  "0160203220",
+                                  style: TextStyle(
+                                      color: appPrimaryMaterialColor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Montserrat'),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 11.0, right: 10),
-                              child: Text(
-                                "Share above code with building members to join xyz,",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat'),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 11.0, right: 10),
+                                child: Text(
+                                  "Share above code with building members to join xyz,",
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'Montserrat'),
+                                ),
                               ),
-                            ),
-                          ],
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            ],
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          ),
                         ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(right: 25.0, left: 8),
-                          child: Icon(
-                            Icons.share,
-                            color: appPrimaryMaterialColor,
-                            size: 32,
-                          )),
-                    ],
-                  )),
+                        Padding(
+                            padding:
+                                const EdgeInsets.only(right: 25.0, left: 8),
+                            child: Icon(
+                              Icons.share,
+                              color: appPrimaryMaterialColor,
+                              size: 32,
+                            )),
+                      ],
+                    )),
+              ),
             ),
             GridView.builder(
               shrinkWrap: true,
@@ -448,14 +488,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
     );
   }
 
-  Widget dashBox(String label, String img, String screenName) {
+  Widget dashBox(String label, String img, Widget screenName) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             PageTransition(
-                child: InteractionScreen(),
-                type: PageTransitionType.rightToLeft));
+                child: screenName, type: PageTransitionType.rightToLeft));
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 5.0, bottom: 5, right: 3, left: 3),
