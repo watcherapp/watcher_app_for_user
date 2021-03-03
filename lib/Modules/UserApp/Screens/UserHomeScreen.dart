@@ -81,6 +81,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             scrollDirection: Axis.horizontal,
             children: quickActions.map((e) {
               return Card(
+                elevation: 0,
                 child: SizedBox(
                   width: 85,
                   child: Padding(
@@ -101,7 +102,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           Text(
                             "${e["title"]}",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 10),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10,
+                                color: Colors.black54),
                           )
                         ],
                       ),

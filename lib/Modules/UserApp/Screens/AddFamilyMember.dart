@@ -50,7 +50,15 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+        title: Text("Add FamliyMember"),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 12.0, right: 12.0),

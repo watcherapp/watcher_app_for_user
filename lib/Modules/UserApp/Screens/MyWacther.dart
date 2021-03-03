@@ -9,6 +9,7 @@ import 'package:watcher_app_for_user/Modules/UserApp/Components/DailyHelperCompo
 import 'package:watcher_app_for_user/Modules/UserApp/Components/FamilyMemberComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyResidentComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddFamilyMember.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddMyStaff.dart';
 
 class MyWatcher extends StatefulWidget {
   @override
@@ -122,7 +123,7 @@ class _MyWatcherState extends State<MyWatcher> {
               size: 20,
             ),
             onPressed: () {},
-            title: "Daily Helpers",
+            title: "My Staff",
           ),
           SizedBox(
             height: 180,
@@ -132,7 +133,15 @@ class _MyWatcherState extends State<MyWatcher> {
                 itemCount: length + 1,
                 itemBuilder: (context, index) {
                   if (index == length) {
-                    return AddComponent(width: 100, onTap: () {});
+                    return AddComponent(
+                        width: 100,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: AddMyStaff(),
+                                  type: PageTransitionType.rightToLeft));
+                        });
                   } else {
                     return DailyHelperComponent();
                   }
