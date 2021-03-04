@@ -61,6 +61,23 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
                   ),
                 ),
               ),
+              Column(
+                children: [
+                  Icon(
+                    Icons.edit,
+                    size: 21,
+                    color: Colors.grey,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Icon(
+                      Icons.delete,
+                      size: 22,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),

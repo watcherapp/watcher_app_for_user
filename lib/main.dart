@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
 import 'package:watcher_app_for_user/Providers/BottomNavigationBarProvider.dart';
 
 import 'Constants/appColors.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: UserDashboard(),
+        home: AdminDashboard(),
       ),
     );
   }

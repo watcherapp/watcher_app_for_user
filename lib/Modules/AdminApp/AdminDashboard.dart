@@ -343,9 +343,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   child: Row(
                     children: [
                       Image.asset(
-                        "images/user1.png",
+                        "images/d1user.png",
                         width: 18,
-                        color: Colors.black45,
+                        color: appPrimaryMaterialColor,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
@@ -377,9 +377,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 child: Row(
                   children: [
                     Image.asset(
-                      "images/list.png",
+                      "images/dfile.png",
                       width: 19,
-                      color: Colors.black45,
+                      color: appPrimaryMaterialColor,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
@@ -410,9 +410,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 child: Row(
                   children: [
                     Image.asset(
-                      "images/log.png",
+                      "images/logout.png",
                       width: 18,
-                      color: Colors.black45,
+                      color: appPrimaryMaterialColor,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
