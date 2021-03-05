@@ -5,6 +5,7 @@ import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
 import 'package:watcher_app_for_user/Providers/BottomNavigationBarProvider.dart';
 
 import 'Constants/appColors.dart';
+import 'Modules/UserApp/UserDashboard.dart';
 
 void main() async {
   runApp(MyApp());
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: AdminDashboard(),
+        home: UserDashboard(),
       ),
     );
   }
