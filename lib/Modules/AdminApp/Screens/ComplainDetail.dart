@@ -11,6 +11,12 @@ class _ComplainDetailState extends State<ComplainDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          "Complaints Detail",
+          style: TextStyle(fontFamily: 'Montserrat'),
+        ),
+        centerTitle: true,
+        elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
       body: SingleChildScrollView(
@@ -66,9 +72,10 @@ class _ComplainDetailState extends State<ComplainDetail> {
                     child: Container(
                       height: 30,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Colors.amber,
-                          border: Border.all(color: Colors.amber, width: 2)),
+                        borderRadius: BorderRadius.circular(4),
+                        color: Colors.amber[400],
+                        /*border: Border.all(color: Colors.amber, width: 2)*/
+                      ),
                       child: Align(
                         alignment: Alignment.center,
                         child: Text("REQUESTED",
@@ -86,9 +93,10 @@ class _ComplainDetailState extends State<ComplainDetail> {
                     child: Container(
                       height: 30,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Colors.red,
-                          border: Border.all(color: Colors.red, width: 2)),
+                        borderRadius: BorderRadius.circular(4),
+                        color: Colors.red[400],
+                        /* border: Border.all(color: Colors.red[200], width: 2)*/
+                      ),
                       child: Align(
                         alignment: Alignment.center,
                         child: Text("REJECTED",
@@ -113,10 +121,11 @@ class _ComplainDetailState extends State<ComplainDetail> {
                     child: Container(
                       height: 30,
                       decoration: BoxDecoration(
-                          color: appPrimaryMaterialColor,
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(
-                              color: appPrimaryMaterialColor, width: 2)),
+                        color: appPrimaryMaterialColor[400],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      /*border: Border.all(
+                              color: appPrimaryMaterialColor[100], width: 2)),*/
                       child: Align(
                         alignment: Alignment.center,
                         child: Text("START TAKING ACTIONS",
@@ -134,9 +143,11 @@ class _ComplainDetailState extends State<ComplainDetail> {
                     child: Container(
                       height: 30,
                       decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: Colors.green, width: 2)),
+                        color: Colors.green[400],
+                        borderRadius: BorderRadius.circular(4),
+                        /* border:
+                              Border.all(color: Colors.green[200], width: 2)*/
+                      ),
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(

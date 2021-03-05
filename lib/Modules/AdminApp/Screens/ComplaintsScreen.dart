@@ -92,6 +92,12 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
       child: Scaffold(
           backgroundColor: Colors.grey[100],
           appBar: AppBar(
+            title: Text(
+              "Complaints",
+              style: TextStyle(fontFamily: 'Montserrat'),
+            ),
+            centerTitle: true,
+            elevation: 0,
             backgroundColor: appPrimaryMaterialColor,
           ),
           body: Column(
