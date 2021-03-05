@@ -167,8 +167,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             GestureDetector(
               onTap: () {
                 Share.share(
-                  '02541655 Share above code with building members to join xyz.',
-                );
+                    '02541655 Share above code with building members to join xyz.');
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 13.0, right: 13),
