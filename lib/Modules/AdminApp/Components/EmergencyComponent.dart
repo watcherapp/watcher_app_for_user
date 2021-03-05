@@ -1,15 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/Components/GetPass.dart';
 
-class VisitorComponent extends StatefulWidget {
+class EmergencyComponent extends StatefulWidget {
   @override
-  _VisitorComponentState createState() => _VisitorComponentState();
+  _EmergencyComponentState createState() => _EmergencyComponentState();
 }
 
-class _VisitorComponentState extends State<VisitorComponent> {
+class _EmergencyComponentState extends State<EmergencyComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,22 +22,9 @@ class _VisitorComponentState extends State<VisitorComponent> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 7.0),
-                child: Container(
-                  width: 57.0,
-                  height: 57.0,
-                  child: Image.asset(
-                    "images/police.png",
-                    width: 65,
-                  ),
-                  decoration: new BoxDecoration(
-                    color: Color(0x22888888),
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(90.0)),
-                    border: new Border.all(
-                      color: Colors.grey,
-                      width: 0.5,
-                    ),
-                  ),
+                child: Image.asset(
+                  "images/police.png",
+                  width: 60,
                 ),
               ),
               /* Image.asset(
@@ -49,7 +32,7 @@ class _VisitorComponentState extends State<VisitorComponent> {
                 width: 70,
               ),*/
               Padding(
-                padding: const EdgeInsets.only(left: 17.0),
+                padding: const EdgeInsets.only(left: 20.0),
                 child: Container(
                   width: 1,
                   height: 72,
@@ -61,39 +44,39 @@ class _VisitorComponentState extends State<VisitorComponent> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                  padding: const EdgeInsets.only(left: 15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text("Keval Mangroliya",
+                      Text("Police Station",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("9429828152",
+                        child: Text("101",
                             style: TextStyle(fontSize: 15, color: Colors.grey)),
                       ),
                     ],
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return GetPass();
-                      });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 12),
-                  child: Icon(
-                    Icons.share,
-                    color: appPrimaryMaterialColor,
-                    size: 24,
+              Column(
+                children: [
+                  Icon(
+                    Icons.edit,
+                    size: 21,
+                    color: Colors.grey,
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Icon(
+                      Icons.delete,
+                      size: 22,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
               )
             ],
           ),
