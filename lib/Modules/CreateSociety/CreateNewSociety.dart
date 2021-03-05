@@ -51,16 +51,17 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                     // print("click");
                     FocusScope.of(context).unfocus();
                     showDialog(
-                      context: context,
-                      child: MyDropDown(
-                          dropDownTitle: "Society Type",
-                          dropDownData: societyTypeList,
-                          onSelectValue: (value) {
-                            setState(() {
-                              selectedSocietyType = value;
-                            });
-                          }),
-                    );
+                        context: context,
+                        builder: (context) {
+                          return MyDropDown(
+                              dropDownTitle: "Society Type",
+                              dropDownData: societyTypeList,
+                              onSelectValue: (value) {
+                                setState(() {
+                                  selectedSocietyType = value;
+                                });
+                              });
+                        });
                   }),
               MyTextFormField(
                   lable: "Society Name",
@@ -87,16 +88,17 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                     // print("click");
                     FocusScope.of(context).unfocus();
                     showDialog(
-                      context: context,
-                      child: MyDropDown(
-                          dropDownTitle: "Select Country",
-                          dropDownData: country,
-                          onSelectValue: (value) {
-                            setState(() {
-                              selectedCountry = value;
-                            });
-                          }),
-                    );
+                        context: context,
+                        builder: (context) {
+                          return MyDropDown(
+                              dropDownTitle: "Select Country",
+                              dropDownData: country,
+                              onSelectValue: (value) {
+                                setState(() {
+                                  selectedCountry = value;
+                                });
+                              });
+                        });
                   }),
               DialogOpenFormField(
                   lable: "Select State",
@@ -105,16 +107,17 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                     // print("click");
                     FocusScope.of(context).unfocus();
                     showDialog(
-                      context: context,
-                      child: MyDropDown(
-                          dropDownTitle: "Select State",
-                          dropDownData: states,
-                          onSelectValue: (value) {
-                            setState(() {
-                              selctedState = value;
-                            });
-                          }),
-                    );
+                        context: context,
+                        builder: (context) {
+                          return MyDropDown(
+                              dropDownTitle: "Select State",
+                              dropDownData: states,
+                              onSelectValue: (value) {
+                                setState(() {
+                                  selctedState = value;
+                                });
+                              });
+                        });
                   }),
               DialogOpenFormField(
                   lable: "Select City",
@@ -123,16 +126,17 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                     // print("click");
                     FocusScope.of(context).unfocus();
                     showDialog(
-                      context: context,
-                      child: MyDropDown(
-                          dropDownTitle: "Select City",
-                          dropDownData: city,
-                          onSelectValue: (value) {
-                            setState(() {
-                              selectedCity = value;
-                            });
-                          }),
-                    );
+                        context: context,
+                        builder: (context) {
+                          return MyDropDown(
+                              dropDownTitle: "Select City",
+                              dropDownData: city,
+                              onSelectValue: (value) {
+                                setState(() {
+                                  selectedCity = value;
+                                });
+                              });
+                        });
                   }),
               MyButton(
                   onPressed: () {

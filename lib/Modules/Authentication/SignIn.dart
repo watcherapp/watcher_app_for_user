@@ -20,7 +20,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: appPrimaryMaterialColor,
       body: Column(
         children: [

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Dialogs/EntryConformationPopup.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserHomeScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UsersVisitorlist.dart';
@@ -22,6 +23,21 @@ class _UserDashboardState extends State<UserDashboard> {
     Container(),
     Container()
   ];
+
+  _showDialog() async {
+    await Future.delayed(Duration(milliseconds: 5));
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return EntryConfirmationPopup();
+        });
+  }
+
+  @override
+  void initState() {
+    _showDialog();
+  }
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
@@ -36,7 +52,7 @@ class _UserDashboardState extends State<UserDashboard> {
             height: 60,
             width: MediaQuery.of(context).size.width,
             child: Image.network(
-              "https://i.ibb.co/qmZJzK5/Whats-App-Image-2021-02-24-at-4-29-17-PM.jpg",
+              "https://i.ibb.co/tcxqCQx/Whats-App-Image-2021-02-24-at-4-29-21-PM.jpg",
               fit: BoxFit.cover,
             ),
           ),
