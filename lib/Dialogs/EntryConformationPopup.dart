@@ -1,7 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-import 'package:watcher_app_for_user/CommonWidgets/RoundButton.dart';
-import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 
 class EntryConfirmationPopup extends StatefulWidget {
   @override
