@@ -16,12 +16,6 @@ class _ChooseCreateOrJoinState extends State<ChooseCreateOrJoin> {
       appBar: AppBar(
         title: Text("Watcher"),
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_rounded),
-        ),
       ),
       body: Column(
         children: [

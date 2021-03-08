@@ -125,7 +125,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           ),
         ),
         SizedBox(
-          height: 102,
+          height: 180,
           child: ListView.builder(
               shrinkWrap: true,
               itemCount: 10,

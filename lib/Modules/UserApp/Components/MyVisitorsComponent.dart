@@ -9,8 +9,7 @@ class _MyVisitorComponentState extends State<MyVisitorComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
-      width: 200,
+      width: MediaQuery.of(context).size.width,
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(4.0),
@@ -56,7 +55,7 @@ class _MyVisitorComponentState extends State<MyVisitorComponent> {
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  " Approved",
+                                  "Approved",
                                   style: TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold,
