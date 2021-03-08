@@ -134,19 +134,20 @@ class _AddMyStaffState extends State<AddMyStaff> {
                       // print("click");
                       FocusScope.of(context).unfocus();
                       showDialog(
-                        context: context,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 4.0),
-                          child: MyDropDown(
-                              dropDownTitle: "Identity",
-                              dropDownData: idProof,
-                              onSelectValue: (value) {
-                                setState(() {
-                                  idProofData = value;
-                                });
-                              }),
-                        ),
-                      );
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: MyDropDown(
+                                  dropDownTitle: "Identity",
+                                  dropDownData: idProof,
+                                  onSelectValue: (value) {
+                                    setState(() {
+                                      idProofData = value;
+                                    });
+                                  }),
+                            );
+                          });
                     }),
               ),
               SizedBox(

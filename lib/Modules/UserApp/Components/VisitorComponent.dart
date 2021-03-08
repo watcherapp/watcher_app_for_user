@@ -80,7 +80,11 @@ class _VisitorComponentState extends State<VisitorComponent> {
               ),
               GestureDetector(
                 onTap: () {
-                  showDialog(context: context, child: GetPass());
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return GetPass();
+                      });
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8.0, right: 12),
