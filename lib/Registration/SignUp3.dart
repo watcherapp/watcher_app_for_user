@@ -20,7 +20,7 @@ class _SignUp3State extends State<SignUp3> {
   Widget build(BuildContext context) {
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         backgroundColor: appPrimaryMaterialColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,

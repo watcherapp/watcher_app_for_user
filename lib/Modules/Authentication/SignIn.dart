@@ -5,6 +5,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Forgotpassword/VerifyScreen.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/ChooseCreateOrJoin.dart';
 import 'package:watcher_app_for_user/Registration/SignUp1.dart';
 
@@ -16,6 +17,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   bool password = true;
   GlobalKey _formKey = GlobalKey<FormState>();
+  bool isVerify = true;
 
   @override
   Widget build(BuildContext context) {
@@ -77,14 +79,31 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text("Forgot Password ?"),
-                            ],
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: VerifyScreen(),
+                                  type: PageTransitionType.rightToLeft));
+                        },
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                PageTransition(
+                                    child: VerifyScreen(
+                                      verifyData: isVerify,
+                                    ),
+                                    type: PageTransitionType.rightToLeft));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text("Forgot Password ?"),
+                              ],
+                            ),
                           ),
                         )),
                     // Sign In Button

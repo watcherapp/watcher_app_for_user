@@ -1,8 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
+import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Forgotpassword/PasswordScreen.dart';
+
+import 'SignUp3.dart';
 
 class OTPScreen extends StatefulWidget {
   var otpData;
@@ -15,7 +22,7 @@ class _OTPScreenState extends State<OTPScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: appPrimaryMaterialColor,
       body: Column(
         children: [
@@ -81,7 +88,6 @@ class _OTPScreenState extends State<OTPScreen> {
                     SizedBox(
                       height: 30,
                     ),
-/*
                     MyButton(
                         title: "Verify",
                         onPressed: () {
@@ -98,7 +104,7 @@ class _OTPScreenState extends State<OTPScreen> {
                                     child: SignUp3(),
                                     type: PageTransitionType.rightToLeft));
                           }
-                          widget.otpData
+                          /*       widget.otpData
                               ? Navigator.push(
                                   context,
                                   PageTransition(
@@ -108,9 +114,8 @@ class _OTPScreenState extends State<OTPScreen> {
                                   context,
                                   PageTransition(
                                       child: SignUp3(),
-                                      type: PageTransitionType.rightToLeft));
+                                      type: PageTransitionType.rightToLeft));*/
                         }),
-*/
                     SizedBox(
                       height: 35,
                     ),
@@ -130,16 +135,7 @@ class _OTPScreenState extends State<OTPScreen> {
                                   style: TextStyle(
                                       color: Colors.black54,
                                       fontFamily: 'WorkSans',
-                                      fontSize: 16),
-                                  children: [
-                                /* TextSpan(
-                                    text: "Sign in",
-                                    style: TextStyle(
-                                        color: appPrimaryMaterialColor,
-                                        fontFamily: 'WorkSans Bold',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16))*/
-                              ])),
+                                      fontSize: 16))),
                           Padding(
                             padding: const EdgeInsets.only(top: 2.0),
                             child: Text("Resend",

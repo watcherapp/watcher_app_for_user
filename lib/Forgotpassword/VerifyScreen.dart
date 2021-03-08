@@ -4,16 +4,18 @@ import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Constants/fontStyles.dart';
-import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 import 'package:watcher_app_for_user/Registration/OTPScreen.dart';
+import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 
-class SignUp1 extends StatefulWidget {
+class VerifyScreen extends StatefulWidget {
+  var verifyData;
+  VerifyScreen({this.verifyData});
+
   @override
-  _SignUp1State createState() => _SignUp1State();
+  _VerifyScreenState createState() => _VerifyScreenState();
 }
 
-class _SignUp1State extends State<SignUp1> {
+class _VerifyScreenState extends State<VerifyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +23,7 @@ class _SignUp1State extends State<SignUp1> {
       backgroundColor: appPrimaryMaterialColor,
       body: Column(
         children: [
-          CircleDesign(title: "Create account", backbutton: true),
+          CircleDesign(title: "Verify Mobile"),
           Expanded(
             child: Container(
               height: double.infinity,
@@ -40,83 +42,56 @@ class _SignUp1State extends State<SignUp1> {
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("Enter Your Mobile Number",
+                        child: Text("Enter Mobile Number",
                             style: fontConstants.bigTitleBlack),
                       ),
                     ),
-                    Padding(
+                    /* Padding(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Text(
-                        "We will send the OTP ( One Time Password )",
+                        "We have sent a verification code on",
                         style: fontConstants.smallText,
                         textAlign: TextAlign.center,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 3.0),
+                      padding: const EdgeInsets.only(top: 4.0),
                       child: Text(
-                        "to verify a number",
+                        "+ 9429828152",
                         style: fontConstants.smallText,
                         textAlign: TextAlign.center,
                       ),
+                    ),*/
+                    SizedBox(
+                      height: 40,
+                    ),
+                    MyTextFormField(
+                      lable: "Mobile Number",
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "Please Enter Mobile Number";
+                        }
+                        return "";
+                      },
+                      hintText: "Enter mobile number",
                     ),
                     SizedBox(
                       height: 30,
                     ),
-                    MyTextFormField(
-                        lable: "Mobile No",
-                        validator: (val) {
-                          if (val.isEmpty) {
-                            return "Please Enter Mobile or email";
-                          }
-                          return "";
-                        },
-                        hintText: "Enter mobile"),
-                    SizedBox(
-                      height: 20,
-                    ),
                     MyButton(
-                        title: "Send OTP",
+                        title: "Next",
                         onPressed: () {
                           Navigator.push(
                               context,
                               PageTransition(
-                                  child: OTPScreen(),
+                                  child: OTPScreen(
+                                    otpData: widget.verifyData,
+                                  ),
                                   type: PageTransitionType.rightToLeft));
                         }),
                     SizedBox(
                       height: 35,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: SignIn(),
-                                    type: PageTransitionType.bottomToTop));
-                          },
-                          child: RichText(
-                              text: TextSpan(
-                                  text: "Already have an account ? ",
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontFamily: 'WorkSans',
-                                      fontSize: 16),
-                                  children: [
-                                TextSpan(
-                                    text: "Sign in",
-                                    style: TextStyle(
-                                        color: appPrimaryMaterialColor,
-                                        fontFamily: 'WorkSans Bold',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16))
-                              ])),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),

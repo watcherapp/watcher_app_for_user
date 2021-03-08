@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Providers/BottomNavigationBarProvider.dart';
-
+import 'package:watcher_app_for_user/Modules/Authentication/Splash.dart';
 import 'Constants/appColors.dart';
+import 'Data/Providers/BottomNavigationBarProvider.dart';
 import 'Modules/UserApp/UserDashboard.dart';
 
 void main() async {
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: UserDashboard(),
+        home: Splash(),
       ),
     );
   }
