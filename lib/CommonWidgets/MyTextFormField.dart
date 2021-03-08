@@ -15,23 +15,26 @@ class MyTextFormField extends StatelessWidget {
   TextEditingController controller;
   TextInputAction textInputAction;
   bool isPassword;
+  Widget icon;
   int maxLines;
 
-  MyTextFormField(
-      {this.keyboardType,
-      this.hintText,
-      this.maxLength,
-      this.lable,
-      this.focusNode,
-      this.controller,
-      this.isPassword = false,
-      this.validator,
-      this.textCapitalization,
-      this.onFieldSubmitted,
-      this.textInputAction,
-      this.onChanged,
-      this.hideShowText,
-      this.maxLines});
+  MyTextFormField({
+    this.keyboardType,
+    this.hintText,
+    this.maxLength,
+    this.lable,
+    this.focusNode,
+    this.controller,
+    this.isPassword = false,
+    this.validator,
+    this.textCapitalization,
+    this.onFieldSubmitted,
+    this.textInputAction,
+    this.onChanged,
+    this.hideShowText,
+    this.maxLines,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +69,7 @@ class MyTextFormField extends StatelessWidget {
                   EdgeInsets.only(left: 15, right: 8, top: 4, bottom: 4),
               counterText: "",
               suffix: hideShowText,
+              prefixIcon: icon,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide(

@@ -3,8 +3,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/CommonWidgets/DialogOpenFormField.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
-import 'package:watcher_app_for_user/Dialogs/MyDropdown.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Dialogs/MyDropdown.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 
 class CreateNewSociety extends StatefulWidget {
@@ -73,14 +73,14 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                   },
                   hintText: "Enter Society Name"),
               MyTextFormField(
-                  lable: "Total Wings",
+                  lable: "Total Wings or Apartment buildings",
                   validator: (val) {
                     if (val.isEmpty) {
-                      return "Please Enter Total Wings";
+                      return "Please Enter Total Wings or Apartment buildings";
                     }
                     return "";
                   },
-                  hintText: "Enter Total Wings"),
+                  hintText: "Enter Total Wings or Apartment buildings"),
               DialogOpenFormField(
                   lable: "Select Country",
                   value: selectedCountry,
@@ -138,6 +138,15 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                               });
                         });
                   }),
+              MyTextFormField(
+                  lable: "Zip or Code",
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Please Enter Zip or code";
+                    }
+                    return "";
+                  },
+                  hintText: "Enter zip or code"),
               MyButton(
                   onPressed: () {
                     Navigator.push(

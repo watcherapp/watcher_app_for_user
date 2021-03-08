@@ -10,7 +10,7 @@ class FlatStatusColorsWithLabel extends StatefulWidget {
 class _FlatStatusColorsWithLabelState extends State<FlatStatusColorsWithLabel> {
   List dataList = [
     {"label": "Owner", "Color": appPrimaryMaterialColor},
-    {"label": "Closed", "Color": Colors.grey[500]},
+    {"label": "Vacant", "Color": Colors.lightGreen},
     {"label": "Rent", "Color": Colors.amber},
     {"label": "Closed", "Color": Colors.red[300]},
   ];

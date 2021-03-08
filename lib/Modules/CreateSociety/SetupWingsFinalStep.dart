@@ -31,10 +31,9 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
   int colorIndex = 0;
   List flatColorsList = [
     appPrimaryMaterialColor,
-    Colors.grey,
+    Colors.lightGreen,
     Colors.orange,
-    Colors.black,
-    Colors.blueAccent,
+    Colors.red[300]
   ];
 
   @override
@@ -190,7 +189,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
                                                 color: floorData['statusColor'],
                                                 onPressed: () {
                                                   setState(() {
-                                                    if (colorIndex == 4) {
+                                                    if (colorIndex == 3) {
                                                       colorIndex = 0;
                                                       floorData["statusColor"] =
                                                           flatColorsList[

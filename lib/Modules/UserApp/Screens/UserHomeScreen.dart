@@ -32,39 +32,42 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         SizedBox(
           height: 150.0,
           width: MediaQuery.of(context).size.width,
-          child: Carousel(
-            boxFit: BoxFit.cover,
-            autoplay: true,
-            animationCurve: Curves.fastOutSlowIn,
-            animationDuration: Duration(seconds: 1),
-            dotSize: 4.0,
-            dotIncreasedColor: appPrimaryMaterialColor,
-            dotBgColor: Colors.transparent,
-            dotPosition: DotPosition.bottomCenter,
-            dotVerticalPadding: 10.0,
-            showIndicator: true,
-            indicatorBgPadding: 7.0,
-            images: bannerList
-                .map(
-                  (item) => Card(
-                    semanticContainer: true,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Image.network(
-                      "$item",
-                      fit: BoxFit.fitWidth,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 3.0),
+            child: Carousel(
+              boxFit: BoxFit.cover,
+              autoplay: true,
+              animationCurve: Curves.fastOutSlowIn,
+              animationDuration: Duration(seconds: 1),
+              dotSize: 4.0,
+              dotIncreasedColor: appPrimaryMaterialColor,
+              dotBgColor: Colors.transparent,
+              dotPosition: DotPosition.bottomCenter,
+              dotVerticalPadding: 10.0,
+              showIndicator: true,
+              indicatorBgPadding: 7.0,
+              images: bannerList
+                  .map(
+                    (item) => Card(
+                      semanticContainer: true,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: Image.network(
+                        "$item",
+                        fit: BoxFit.fitWidth,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      elevation: 2,
+                      margin: EdgeInsets.all(4),
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
-                    ),
-                    elevation: 2,
-                    margin: EdgeInsets.all(4),
-                  ),
-                )
-                .toList(),
+                  )
+                  .toList(),
+            ),
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 7,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8.0, bottom: 6.0, top: 8.0),

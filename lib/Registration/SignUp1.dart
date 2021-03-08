@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
@@ -63,7 +64,33 @@ class _SignUp1State extends State<SignUp1> {
                     SizedBox(
                       height: 30,
                     ),
-                    MyTextFormField(
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: MyTextFormField(
+                              lable: "Mobile No",
+                              keyboardType: TextInputType.number,
+                              maxLength: 10,
+                              validator: (val) {
+                                if (val.isEmpty) {
+                                  return "Please Enter Mobile No";
+                                }
+                                return "";
+                              },
+                              icon: CountryCodePicker(
+                                // onChanged: _onCountryChange,
+                                initialSelection: 'IN',
+                                favorite: ['+91', 'IN'],
+                                showCountryOnly: true, showFlag: true,
+                                showOnlyCountryWhenClosed: false,
+                                alignLeft: false,
+                              ),
+                              hintText: "Enter mobile No"),
+                        ),
+                      ],
+                    ),
+                    /* MyTextFormField(
                         lable: "Mobile No",
                         validator: (val) {
                           if (val.isEmpty) {
@@ -71,7 +98,15 @@ class _SignUp1State extends State<SignUp1> {
                           }
                           return "";
                         },
-                        hintText: "Enter mobile"),
+                        icon: CountryCodePicker(
+                          // onChanged: _onCountryChange,
+                          initialSelection: 'IT',
+                          favorite: ['+91', 'IN'],
+                          showCountryOnly: false, showFlag: true,
+                          showOnlyCountryWhenClosed: false,
+                          alignLeft: false,
+                        ),
+                        hintText: "Enter mobile"),*/
                     SizedBox(
                       height: 20,
                     ),

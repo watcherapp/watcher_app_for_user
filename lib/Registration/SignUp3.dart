@@ -106,6 +106,15 @@ class _SignUp3State extends State<SignUp3> {
                                     },
                                     hintText: "Enter first name"),
                                 MyTextFormField(
+                                    lable: "Middle Name",
+                                    validator: (val) {
+                                      if (val.isEmpty) {
+                                        return "Please Enter Middle Name";
+                                      }
+                                      return "";
+                                    },
+                                    hintText: "Enter middle name"),
+                                MyTextFormField(
                                     lable: "Last Name",
                                     validator: (val) {
                                       if (val.isEmpty) {
@@ -115,10 +124,10 @@ class _SignUp3State extends State<SignUp3> {
                                     },
                                     hintText: "Enter last name"),
                                 MyTextFormField(
-                                    lable: "email (optional)",
+                                    lable: "Email",
                                     validator: (val) {
                                       if (val.isEmpty) {
-                                        return "Please Enter Last Name";
+                                        return "Please Enter Email";
                                       }
                                       return "";
                                     },
