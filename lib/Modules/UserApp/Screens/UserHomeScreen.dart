@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVisitorsComponent.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/Components/VisitorComponent.dart';
 
 class UserHomeScreen extends StatefulWidget {
   @override

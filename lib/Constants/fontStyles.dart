@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:watcher_app_for_user/Constants/appColors.dart';
 
 class fontConstants {
   static const bigTitleWhite = TextStyle(
@@ -42,6 +41,11 @@ class fontConstants {
       color: Colors.black87,
       fontWeight: FontWeight.bold,
       fontFamily: 'Montserrat-Bold');
+  static const smallText = TextStyle(
+    color: Colors.grey,
+    fontSize: 14,
+    fontFamily: 'WorkSans',
+  );
 }
 
 class paddingConstant {
