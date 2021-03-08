@@ -15,6 +15,7 @@ class MyTextFormField extends StatelessWidget {
   TextEditingController controller;
   TextInputAction textInputAction;
   bool isPassword;
+  int maxLines;
 
   MyTextFormField(
       {this.keyboardType,
@@ -29,7 +30,8 @@ class MyTextFormField extends StatelessWidget {
       this.onFieldSubmitted,
       this.textInputAction,
       this.onChanged,
-      this.hideShowText});
+      this.hideShowText,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {

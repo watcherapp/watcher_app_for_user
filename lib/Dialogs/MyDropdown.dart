@@ -6,8 +6,9 @@ class MyDropDown extends StatefulWidget {
   String dropDownTitle;
   List dropDownData = [];
   Function onSelectValue;
+  bool isSearchable = true;
 
-  MyDropDown({this.dropDownTitle, this.dropDownData, this.onSelectValue});
+  MyDropDown({this.dropDownTitle, this.dropDownData, this.onSelectValue,this.isSearchable});
 
   @override
   _MyDropDownState createState() => _MyDropDownState();
@@ -45,28 +46,30 @@ class _MyDropDownState extends State<MyDropDown> {
             height: 0.5,
             color: Colors.grey[400],
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 10.0, right: 10.0, top: 10.0, bottom: 8.0),
-            child: TextFormField(
-              decoration: InputDecoration(
-                fillColor: Colors.grey[200],
-                filled: true,
-                prefixIcon: Icon(Icons.search_outlined, size: 20),
-                hintText: "Search",
-                hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
-                contentPadding:
-                    EdgeInsets.only(left: 15, right: 8, top: 10, bottom: 10),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(
-                    width: 0,
-                    style: BorderStyle.none,
+          if (widget.isSearchable == true || widget.isSearchable == null) ...[
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 10.0, right: 10.0, top: 10.0, bottom: 8.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  fillColor: Colors.grey[200],
+                  filled: true,
+                  prefixIcon: Icon(Icons.search_outlined, size: 20),
+                  hintText: "Search",
+                  hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                  contentPadding:
+                  EdgeInsets.only(left: 15, right: 8, top: 10, bottom: 10),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
           ListView.builder(
               shrinkWrap: true,
               itemCount: widget.dropDownData.length ?? 0,
