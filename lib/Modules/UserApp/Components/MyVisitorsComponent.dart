@@ -10,6 +10,7 @@ class _MyVisitorComponentState extends State<MyVisitorComponent> {
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
+
   @override
   void initState() {
     _controller = VideoPlayerController.network(
