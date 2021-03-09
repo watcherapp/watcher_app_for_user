@@ -8,6 +8,7 @@ import 'package:watcher_app_for_user/Modules/UserApp/Components/AddComponent.dar
 import 'package:watcher_app_for_user/Modules/UserApp/Components/DailyHelperComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/FamilyMemberComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyResidentComponent.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVehicleComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddFamilyMember.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddMyStaff.dart';
 
@@ -146,6 +147,159 @@ class _MyWatcherState extends State<MyWatcher> {
                     return DailyHelperComponent();
                   }
                 }),
+          ),
+          LabelWithAddButton(
+            icon: Icon(
+              Icons.directions_car_outlined,
+              size: 22,
+            ),
+            onPressed: () {},
+            title: "My Vehicle",
+          ),
+          SizedBox(
+            height: 90,
+            child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: length + 1,
+                itemBuilder: (context, index) {
+                  if (index == length) {
+                    return AddComponent(width: 100, onTap: () {});
+                  } else {
+                    return MyVehicleComponent();
+                  }
+                }),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Image.asset("images/set.png", width: 21),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Text('Preferences',
+                          //overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: "Montserrat",
+                              color: Colors.black87)),
+                    ),
+                  ],
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 15,
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Image.asset("images/emcall.png", width: 24),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Text('Emergency Contact',
+                          //overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: "Montserrat",
+                              color: Colors.black87)),
+                    ),
+                  ],
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 15,
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 18),
+            child: Row(
+              children: [
+                Image.asset("images/star.png", width: 21),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Text('Support  &  Feedback',
+                      //overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "Montserrat",
+                          color: Colors.black87)),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 18),
+            child: Row(
+              children: [
+                Image.asset("images/share.png", width: 21),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Text('Tell a friend about Wather',
+                      //overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "Montserrat",
+                          color: Colors.black87)),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 12.0, right: 10, top: 18, bottom: 15),
+            child: Row(
+              children: [
+                Image.asset("images/logout1.png", width: 21),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Text('Logout',
+                      //overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "Montserrat",
+                          color: Colors.black87)),
+                ),
+              ],
+            ),
+          ),
+          Center(
+              child: Image.asset(
+            "images/Watcherlogo.png",
+            width: 90,
+          )),
+          Row(
+            children: [
+              Text('Terms & Conditions',
+                  //overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w600,
+                      color: appPrimaryMaterialColor)),
+              Container(
+                height: 10,
+                color: appPrimaryMaterialColor,
+              ),
+              Text('Terms & Conditions',
+                  //overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w600,
+                      color: appPrimaryMaterialColor)),
+            ],
           ),
         ],
       ),

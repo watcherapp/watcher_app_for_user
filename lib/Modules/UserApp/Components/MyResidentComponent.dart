@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watcher_app_for_user/Constants/appColors.dart';
 
 class MyResidentComponent extends StatefulWidget {
   @override
@@ -12,7 +13,8 @@ class _MyResidentComponentState extends State<MyResidentComponent> {
       padding: const EdgeInsets.all(6.0),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.grey[200], borderRadius: BorderRadius.circular(6.0)),
+            color: appPrimaryMaterialColor[100],
+            borderRadius: BorderRadius.circular(6.0)),
         width: 200,
         child: Row(
           children: [
