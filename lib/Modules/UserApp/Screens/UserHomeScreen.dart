@@ -18,7 +18,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   @override
   void initState() {
     _controller = VideoPlayerController.network(
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
     );
 
     _initializeVideoPlayerFuture = _controller.initialize();
