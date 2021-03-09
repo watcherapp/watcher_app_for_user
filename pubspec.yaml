@@ -42,6 +42,7 @@ dependencies:
   share: ^0.6.5+4
   pin_code_text_field: ^1.6.0
   country_code_picker: ^1.7.0
+  video_player: any
 
 dev_dependencies:
   flutter_test:
