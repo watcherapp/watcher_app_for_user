@@ -139,13 +139,12 @@ class _SignUp1State extends State<SignUp1> {
                                   style: TextStyle(
                                       color: Colors.black54,
                                       fontFamily: 'WorkSans',
-                                      fontSize: 16),
+                                      fontSize: 18),
                                   children: [
                                 TextSpan(
                                     text: "Sign in",
                                     style: TextStyle(
                                         color: appPrimaryMaterialColor,
-                                        fontFamily: 'WorkSans Bold',
                                         fontWeight: FontWeight.w700,
                                         fontSize: 16))
                               ])),
