@@ -30,7 +30,7 @@ class _VisitorComponentState extends State<VisitorComponent> {
                   width: 57.0,
                   height: 57.0,
                   child: Image.asset(
-                    "images/police.png",
+                    "images/user.png",
                     width: 65,
                   ),
                   decoration: new BoxDecoration(
