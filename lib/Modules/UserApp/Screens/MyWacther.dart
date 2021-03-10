@@ -274,11 +274,11 @@ class _MyWatcherState extends State<MyWatcher> {
               ],
             ),
           ),
-          Center(
+          /*Center(
               child: Image.asset(
             "images/Watcherlogo.png",
             width: 90,
-          )),
+          )),*/
           Row(
             children: [
               Text('Terms & Conditions',
