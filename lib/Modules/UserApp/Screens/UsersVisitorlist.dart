@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/VisitorComponent.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MySearchField.dart';
 
@@ -24,9 +25,12 @@ class _UserVisitorListState extends State<UserVisitorList> {
           child: Column(
             children: [
               MySearchField(
-                icon: Icon(Icons.search_rounded,),
-                hintText: "search",
-
+                icon: Icon(
+                  Icons.search_rounded,
+                  color: appPrimaryMaterialColor,
+                  size: 20,
+                ),
+                hintText: "Search",
               ),
               Expanded(
                 child: ListView.builder(
