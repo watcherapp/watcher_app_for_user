@@ -145,8 +145,8 @@ class _SignUp1State extends State<SignUp1> {
                                     text: "Sign in",
                                     style: TextStyle(
                                         color: appPrimaryMaterialColor,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16))
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17))
                               ])),
                         ),
                       ],
