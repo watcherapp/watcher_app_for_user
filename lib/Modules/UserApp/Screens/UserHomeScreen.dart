@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVisitorsComponent.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVisitorListComponent.dart';
 
 class UserHomeScreen extends StatefulWidget {
   @override
@@ -151,11 +151,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             ),
           ),
           SizedBox(
-              height: 100,
+              height: 300,
               child: PageView.builder(
                   itemCount: 10,
                   itemBuilder: (context, index) {
-                    return MyVisitorComponent();
+                    return MyVisitorListComponent();
                   })
               /*ListView.builder(
                 shrinkWrap: true,
@@ -165,7 +165,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   return MyVisitorComponent();
                 }),*/
               ),
-          SizedBox(
+          /* SizedBox(
             height: 8,
           ),
           FutureBuilder(
@@ -201,7 +201,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             child: Icon(
               _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
             ),
-          )
+          )*/
         ],
       ),
     );

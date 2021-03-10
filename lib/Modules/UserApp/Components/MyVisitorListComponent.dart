@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class MyVisitorComponent extends StatefulWidget {
+class MyVisitorListComponent extends StatefulWidget {
   @override
-  _MyVisitorComponentState createState() => _MyVisitorComponentState();
+  _MyVisitorListComponentState createState() => _MyVisitorListComponentState();
 }
 
-class _MyVisitorComponentState extends State<MyVisitorComponent> {
+class _MyVisitorListComponentState extends State<MyVisitorListComponent> {
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
