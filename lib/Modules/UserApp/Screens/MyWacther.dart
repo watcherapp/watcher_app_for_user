@@ -274,32 +274,43 @@ class _MyWatcherState extends State<MyWatcher> {
               ],
             ),
           ),
-          /*Center(
+          /*  Center(
               child: Image.asset(
             "images/Watcherlogo.png",
             width: 90,
           )),*/
-          Row(
-            children: [
-              Text('Terms & Conditions',
-                  //overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w600,
-                      color: appPrimaryMaterialColor)),
-              Container(
-                height: 10,
-                color: appPrimaryMaterialColor,
-              ),
-              Text('Terms & Conditions',
-                  //overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w600,
-                      color: appPrimaryMaterialColor)),
-            ],
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0, bottom: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Terms & Conditions',
+                    //overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w600,
+                        color: appPrimaryMaterialColor)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 7.0, right: 7),
+                  child: Container(
+                    height: 12,
+                    width: 1,
+                    color: appPrimaryMaterialColor,
+                  ),
+                ),
+                Text('Privacy Policy',
+                    //overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w600,
+                        color: appPrimaryMaterialColor)),
+              ],
+            ),
           ),
         ],
       ),
