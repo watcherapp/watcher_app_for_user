@@ -151,7 +151,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             ),
           ),
           SizedBox(
-              height: 300,
+              height: 310,
               child: PageView.builder(
                   itemCount: 10,
                   itemBuilder: (context, index) {

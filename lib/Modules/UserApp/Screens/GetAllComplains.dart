@@ -227,7 +227,6 @@ class _GetAllComplainsState extends State<GetAllComplains> {
                         children: [
                           SizedBox(
                             width: 10,
-
                           ),
                           Text(
                             "12 jan 2021",
@@ -278,6 +277,7 @@ class _GetAllComplainsState extends State<GetAllComplains> {
                           size: 20,
                           color: appPrimaryMaterialColor,
                         ),
+                        
                         SizedBox(
                           width: 5,
                         ),

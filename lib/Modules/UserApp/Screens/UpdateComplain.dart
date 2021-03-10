@@ -3,7 +3,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:watcher_app_for_user/CommonWidgets/DialogOpenFormField.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
-import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Dialogs/MyDropdown.dart';
 
@@ -31,19 +30,6 @@ class _UpdateComplainState extends State<UpdateComplain> {
             onPressed: () {
               Navigator.of(context).pop();
             }),
-        actions: [
-          // FlatButton(
-          //   textColor: Colors.white,
-          //   onPressed: () {},
-          //   child:Icon(Icons.delete_outline_outlined),
-          //   shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
-          // ),
-          IconButton(
-            icon: Icon(Icons.delete_outline_outlined),
-            onPressed: () {
-            },
-          ),
-        ],
         title: Text("Update Complain"),
       ),
       body: SingleChildScrollView(
@@ -64,7 +50,7 @@ class _UpdateComplainState extends State<UpdateComplain> {
                       FocusScope.of(context).unfocus();
                       showDialog(
                         context: context,
-                        child: Padding(
+                        builder: (context) =>  Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: MyDropDown(
                             dropDownTitle: "Complains Category",
@@ -102,48 +88,47 @@ class _UpdateComplainState extends State<UpdateComplain> {
                 children: [
                   containerdash,
                   SizedBox(height: 20),
-                  Text("Select New Photo", style: fontConstants.smallText),
+                  Text("Select Photo Proof", style: fontConstants.smallText),
                 ],
               ),
-              SizedBox(height: 20,),
+              MyButton(onPressed: () {
+
+              },title: "Update Complain",),
               // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   // mainAxisSize: MainAxisSize.min,
+              //   // crossAxisAlignment: CrossAxisAlignment.,
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   mainAxisSize: MainAxisSize.min,
               //   children: [
               //     SizedBox(
-              //       width: 150,
+              //       width: 100,
               //       height: 40,
               //       child: RaisedButton(
-              //           child: Text("Delete",
+              //           child: Text("Report",
               //               style: TextStyle(
               //                   color: Colors.white,
               //                   fontSize: 17,
               //                   fontWeight: FontWeight.bold)),
               //           shape: RoundedRectangleBorder(
               //               borderRadius: BorderRadius.circular(6)),
-              //           color: appPrimaryMaterialColor,
+              //           // color: appPrimaryMaterialColor,
               //           onPressed: () {}),
               //     ),
               //     SizedBox(
-              //       width: 150,
+              //       width: 100,
               //       height: 40,
               //       child: RaisedButton(
-              //           child: Text("Update",
+              //           child: Text("Report",
               //               style: TextStyle(
               //                   color: Colors.white,
               //                   fontSize: 17,
               //                   fontWeight: FontWeight.bold)),
               //           shape: RoundedRectangleBorder(
               //               borderRadius: BorderRadius.circular(6)),
-              //           color: appPrimaryMaterialColor,
+              //           // color: appPrimaryMaterialColor,
               //           onPressed: () {}),
               //     )
               //   ],
               // )
-              MyButton(
-                onPressed: () {},
-                title: "Update Complains",
-              ),
             ],
           ),
         ),

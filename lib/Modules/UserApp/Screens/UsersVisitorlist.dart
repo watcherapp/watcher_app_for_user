@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/VisitorComponent.dart';
+import 'package:watcher_app_for_user/CommonWidgets/MySearchField.dart';
 
 class UserVisitorList extends StatefulWidget {
   @override
@@ -21,13 +21,23 @@ class _UserVisitorListState extends State<UserVisitorList> {
           onRefresh: () {
             return getReport();
           },
-          child: ListView.builder(
-            physics: BouncingScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) {
-              return VisitorComponent();
-            },
+          child: Column(
+            children: [
+              MySearchField(
+                icon: Icon(Icons.search_rounded,),
+                hintText: "search",
+              ),
+              Expanded(
+                child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return VisitorComponent();
+                  },
+                ),
+              ),
+            ],
           ),
         ));
   }

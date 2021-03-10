@@ -113,11 +113,12 @@ class _MyVisitorListComponentState extends State<MyVisitorListComponent> {
                 ],
               ),
             ),
+            SizedBox(height: 5,),
             Stack(
               alignment: Alignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 4.0, right: 4, top: 10),
+                  padding: const EdgeInsets.only(left: 4.0, right: 4, top: 4,),
                   child: FutureBuilder(
                     future: _initializeVideoPlayerFuture,
                     builder: (context, snapshot) {

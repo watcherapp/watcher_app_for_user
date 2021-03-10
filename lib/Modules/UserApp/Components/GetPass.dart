@@ -53,7 +53,7 @@ class _GetPassState extends State<GetPass> {
                   child: FlutterTicketWidget(
                     isCornerRounded: true,
                     width: MediaQuery.of(context).size.width,
-                    height: 500,
+                    height: 510,
                     child: Column(
                       children: [
                         Container(
@@ -88,7 +88,7 @@ class _GetPassState extends State<GetPass> {
                                   dashPattern: [4],
                                   padding: EdgeInsets.all(6.0),
                                   child: Text(
-                                    "845956",
+                                    "8SF459GH56",
                                     style: TextStyle(
                                         fontSize: 30,
                                         color: appPrimaryMaterialColor,
@@ -123,6 +123,7 @@ class _GetPassState extends State<GetPass> {
                             ],
                           ),
                         ),
+
                         Expanded(
                           child: Container(
                             child: Column(
@@ -142,6 +143,10 @@ class _GetPassState extends State<GetPass> {
                                           "17 Feb 2020",
                                           style: fontConstants.valueFonts,
                                         ),
+                                        Text(
+                                          "12 AM",
+                                          style: fontConstants.activeFonts,
+                                        ),
                                       ],
                                     ),
                                     Column(
@@ -153,6 +158,10 @@ class _GetPassState extends State<GetPass> {
                                         Text(
                                           "20 Feb 2020",
                                           style: fontConstants.valueFonts,
+                                        ),
+                                        Text(
+                                          "12 AM",
+                                          style: fontConstants.activeFonts,
                                         ),
                                       ],
                                     )
@@ -167,7 +176,7 @@ class _GetPassState extends State<GetPass> {
                                   child: RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
-                                      text: "Kindly show this",
+                                      text: "Please show this",
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.grey),
                                       children: [
@@ -178,12 +187,13 @@ class _GetPassState extends State<GetPass> {
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold)),
                                         TextSpan(
-                                            text:
-                                                "to Security Guard at the Society Gate for hassle free entry",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.grey,
-                                                fontWeight: FontWeight.normal)),
+                                          text:
+                                              "to Security Guard at the Society Gate for hassle free entry",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.normal),
+                                        ),
                                       ],
                                     ),
                                   ),

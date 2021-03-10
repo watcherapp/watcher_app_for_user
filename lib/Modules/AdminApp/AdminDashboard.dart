@@ -282,7 +282,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: Text(
-                            "Gate Keeper",
+                            "Watcher",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: appPrimaryMaterialColor,
