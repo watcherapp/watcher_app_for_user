@@ -42,7 +42,8 @@ class _SignUp3State extends State<SignUp3> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Tell us more about you !",
+                      Text(
+                          "${selectedIndex > 1 ? "Create Password" : "Tell us more about you !"}",
                           style: fontConstants.bigTitleBlack),
                       Text("Sign Up to Continue",
                           style: fontConstants.subTitleText),
