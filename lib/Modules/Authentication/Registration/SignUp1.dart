@@ -6,8 +6,8 @@ import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/Registration/OTPScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
-import 'package:watcher_app_for_user/Registration/OTPScreen.dart';
 
 class SignUp1 extends StatefulWidget {
   @override

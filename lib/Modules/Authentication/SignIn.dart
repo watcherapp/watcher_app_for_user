@@ -5,9 +5,9 @@ import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
-import 'package:watcher_app_for_user/Forgotpassword/VerifyScreen.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/VerifyScreen.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/Registration/SignUp1.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/ChooseCreateOrJoin.dart';
-import 'package:watcher_app_for_user/Registration/SignUp1.dart';
 
 class SignIn extends StatefulWidget {
   @override

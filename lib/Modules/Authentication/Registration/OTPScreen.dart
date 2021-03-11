@@ -7,7 +7,7 @@ import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
-import 'package:watcher_app_for_user/Forgotpassword/PasswordScreen.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/PasswordScreen.dart';
 
 import 'SignUp3.dart';
 
