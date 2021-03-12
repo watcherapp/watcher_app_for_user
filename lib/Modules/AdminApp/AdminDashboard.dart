@@ -8,6 +8,7 @@ import 'package:watcher_app_for_user/Modules/AdminApp/Screens/EmergencyScreen.da
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/InteractionScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyProfile.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyProperties.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ParkingScreen.dart';
 
 class AdminDashboard extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     {
       "label": "Parking",
       "img": "images/car.png",
-      "screenName": InteractionScreen(),
+      "screenName": ParkingScreen(),
     },
     {
       "label": "My Building",
@@ -67,54 +68,55 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        backgroundColor: appPrimaryMaterialColor,
-        title: Container(
-          width: 220,
-          child: FlatButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: MyProperties(),
-                        type: PageTransitionType.bottomToTop));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(),
-                  Text(
-                    "Xyz",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    color: Colors.white,
-                  )
-                ],
-              ),
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                      color: Colors.white, width: 1, style: BorderStyle.solid),
-                  borderRadius: BorderRadius.circular(5))),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 4.0),
-            child: IconButton(
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.white,
-                ),
-                onPressed: () {}),
-          )
-        ],
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: appPrimaryMaterialColor,
+      //   title: Container(
+      //     width: 220,
+      //     child: FlatButton(
+      //         onPressed: () {
+      //           Navigator.push(
+      //               context,
+      //               PageTransition(
+      //                   child: MyProperties(),
+      //                   type: PageTransitionType.bottomToTop));
+      //         },
+      //         child: Row(
+      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //           // crossAxisAlignment: CrossAxisAlignment.center,
+      //           children: [
+      //             SizedBox(),
+      //             Text(
+      //               "Xyz",
+      //               style: TextStyle(
+      //                   color: Colors.white, fontWeight: FontWeight.bold),
+      //             ),
+      //             Icon(
+      //               Icons.keyboard_arrow_down_sharp,
+      //               color: Colors.white,
+      //             )
+      //           ],
+      //         ),
+      //         shape: RoundedRectangleBorder(
+      //             side: BorderSide(
+      //                 color: Colors.white, width: 1, style: BorderStyle.solid),
+      //             borderRadius: BorderRadius.circular(5))),
+      //   ),
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 4.0),
+      //       child: IconButton(
+      //           icon: Icon(
+      //             Icons.notifications,
+      //             color: Colors.white,
+      //           ),
+      //           onPressed: () {}),
+      //     )
+      //   ],
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height: 10,),
             /* Padding(
               padding: const EdgeInsets.only(left: 13.0, right: 13, top: 20),
               child: Container(

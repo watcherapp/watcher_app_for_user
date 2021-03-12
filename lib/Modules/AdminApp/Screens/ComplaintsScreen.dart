@@ -10,6 +10,12 @@ class ComplaintsScreen extends StatefulWidget {
 class _ComplaintsScreenState extends State<ComplaintsScreen>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  List dateSortList = [
+    {"icon": "", "date": ""},
+    {"icon": "", "date": ""},
+    {"icon": "", "date": ""},
+    {"icon": "", "date": ""},
+  ];
   List<Widget> tabs = [
     Tab(
       child: Container(
@@ -96,6 +102,24 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
               "Complaints",
               style: TextStyle(fontFamily: 'Montserrat'),
             ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.filter_list),
+                onPressed: () {
+                  showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      context: context,
+                      builder: (builder) {
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: BottomSheet(),
+                        );
+                      });
+                },
+              ),
+            ],
             centerTitle: true,
             elevation: 0,
             backgroundColor: appPrimaryMaterialColor,
@@ -139,6 +163,291 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
               ),
             ],
           )),
+    );
+  }
+}
+
+class BottomSheet extends StatefulWidget {
+  @override
+  _BottomSheetState createState() => _BottomSheetState();
+}
+
+class _BottomSheetState extends State<BottomSheet> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 300.0,
+      color: Colors.transparent,
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {},
+                ),
+                SizedBox(
+                  width: 90,
+                ),
+                Text(
+                  "Filter by Date",
+                  style: TextStyle(
+                    color: appPrimaryMaterialColor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                color: Colors.transparent,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.date_range,
+                        color: appPrimaryMaterialColor,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Today",
+                            style: TextStyle(
+                              color: appPrimaryMaterialColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Aug 26",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 12,
+                              // fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                color: Colors.transparent,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    // mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Icon(
+                        Icons.date_range,
+                        color: appPrimaryMaterialColor,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Yesterday",
+                            style: TextStyle(
+                              color: appPrimaryMaterialColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Aug 25",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 12,
+                              // fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                color: Colors.transparent,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.date_range,
+                        color: appPrimaryMaterialColor,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Last Week",
+                            style: TextStyle(
+                              color: appPrimaryMaterialColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Aug 19-25",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 12,
+                              // fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                color: Colors.transparent,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.date_range,
+                        color: appPrimaryMaterialColor,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Last Month",
+                            style: TextStyle(
+                              color: appPrimaryMaterialColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "July 1-31",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 12,
+                              // fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            // Container(
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(8.0),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.start,
+            //       children: [
+            //         Icon(
+            //           Icons.date_range,
+            //           color: appPrimaryMaterialColor,
+            //         ),
+            //         SizedBox(
+            //           width: 10,
+            //         ),
+            //         Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             Text(
+            //               "Custom Range",
+            //               style: TextStyle(
+            //                 color: appPrimaryMaterialColor,
+            //                 fontSize: 14,
+            //                 fontWeight: FontWeight.w600,
+            //               ),
+            //             ),
+            //             SizedBox(
+            //               height: 5,
+            //             ),
+            //           ],
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
+      ),
     );
   }
 }

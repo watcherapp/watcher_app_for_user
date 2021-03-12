@@ -36,7 +36,7 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            // mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
@@ -54,22 +54,28 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4),
-                  itemBuilder: (_, index) => Card(
-                      color: isSelected == false
-                          ? Colors.white
-                          : appPrimaryMaterialColor,
-                      child: new Center(
-                        child: new Text(
-                          bloodGroupList[index],
-                          style: TextStyle(
-                            color: isSelected == true
-                                ? Colors.white
-                                : appPrimaryMaterialColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
+                  itemBuilder: (_, index) => GestureDetector(
+                    onTap: () {
+                      print("${bloodGroupList[index]}");
+                    },
+
+                    child: Card(
+                        color: isSelected == false
+                            ? Colors.white
+                            : appPrimaryMaterialColor,
+                        child: new Center(
+                          child: new Text(
+                            bloodGroupList[index],
+                            style: TextStyle(
+                              color: isSelected
+                                  ? Colors.white
+                                  : appPrimaryMaterialColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
                           ),
-                        ),
-                      )),
+                        )),
+                  ),
                   itemCount: 8,
                 ),
               ),
