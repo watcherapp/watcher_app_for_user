@@ -46,6 +46,7 @@ dependencies:
   dio: ^3.0.10
   fluttertoast: ^7.1.6
 
+  shared_preferences: any
 
 dev_dependencies:
   flutter_test:

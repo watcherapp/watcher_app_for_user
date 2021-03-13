@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
@@ -7,9 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
-import 'dart:ui' as ui;
-
-import 'package:watcher_app_for_user/Constants/appColors.dart';
 
 class GetPass extends StatefulWidget {
   @override
@@ -103,16 +101,18 @@ class _GetPassState extends State<GetPass> {
                                 text: TextSpan(
                                   text: "Keval Mangroliya\nA-105\n",
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       color: appPrimaryMaterialColor,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Montserrat'),
                                   children: [
                                     TextSpan(
                                         text: 'has invited you',
                                         style: TextStyle(
                                             fontSize: 15,
                                             color: Colors.grey,
-                                            fontWeight: FontWeight.normal)),
+                                            fontWeight: FontWeight.normal,
+                                            fontFamily: 'Montserrat')),
                                   ],
                                 ),
                               ),
@@ -123,7 +123,6 @@ class _GetPassState extends State<GetPass> {
                             ],
                           ),
                         ),
-
                         Expanded(
                           child: Container(
                             child: Column(
@@ -178,7 +177,9 @@ class _GetPassState extends State<GetPass> {
                                     text: TextSpan(
                                       text: "Please show this",
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.grey),
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                          fontFamily: 'Montserrat'),
                                       children: [
                                         TextSpan(
                                             text: " QR Code ",
@@ -219,7 +220,9 @@ class _GetPassState extends State<GetPass> {
                   borderRadius: BorderRadius.circular(6)),
               highlightedBorderColor: Colors.white,
               borderSide: BorderSide(color: Colors.white, width: 1.5),
-              onPressed: () {},
+              onPressed: () {
+                convertWidgetToImage();
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
