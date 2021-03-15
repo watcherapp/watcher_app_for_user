@@ -21,11 +21,43 @@ class AdminDashboard extends StatefulWidget {
 
 class _AdminDashboardState extends State<AdminDashboard> {
   List screenList = [
-    Container(),
-    Container(),
+    Container(
+      child: Center(
+        child: Text(
+          "Watcher",
+          style: TextStyle(
+              color: appPrimaryMaterialColor, fontWeight: FontWeight.bold),
+        ),
+      ),
+    ),
+    Container(
+      child: Center(
+        child: Text(
+          "Visitors",
+          style: TextStyle(
+              color: appPrimaryMaterialColor, fontWeight: FontWeight.bold),
+        ),
+      ),
+    ),
     AdminDashbordComponent(),
-    Container(),
-    Container(),
+    Container(
+      child: Center(
+        child: Text(
+          "Hello",
+          style: TextStyle(
+              color: appPrimaryMaterialColor, fontWeight: FontWeight.bold),
+        ),
+      ),
+    ),
+    Container(
+      child: Center(
+        child: Text(
+          "More",
+          style: TextStyle(
+              color: appPrimaryMaterialColor, fontWeight: FontWeight.bold),
+        ),
+      ),
+    ),
   ];
   List dashFields = [
     {
@@ -79,7 +111,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      // backgroundColor: Colors.grey[300],
       // appBar: AppBar(
       //   backgroundColor: appPrimaryMaterialColor,
       //   title: Container(
@@ -791,7 +823,8 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
                 Navigator.push(
                     context,
                     PageTransition(
-                        child: WatcherScreen(), type: PageTransitionType.rightToLeft));
+                        child: WatcherScreen(),
+                        type: PageTransitionType.rightToLeft));
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 13.0, right: 13),
