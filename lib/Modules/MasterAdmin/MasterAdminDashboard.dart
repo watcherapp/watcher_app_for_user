@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Modules/MasterAdmin/PropertyManagers.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Screens/CategoryScreen.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Screens/GuestCategory.dart';
+import 'package:watcher_app_for_user/Modules/MasterAdmin/Screens/PropertyManagersDetail.dart';
 
 class MasterAdminDashboard extends StatefulWidget {
   @override
@@ -62,6 +64,8 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("Admin", style: TextStyle(fontFamily: 'Montserrat')),
+        centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
@@ -75,28 +79,37 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      height: 100,
-                      child: Card(
-                        elevation: 1,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "images/manager.png",
-                              width: 34,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: Text(
-                                "Property Manager's",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontFamily: 'Montserrat'),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: PropertyManagers(),
+                                type: PageTransitionType.rightToLeft));
+                      },
+                      child: Container(
+                        height: 100,
+                        child: Card(
+                          elevation: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "images/manager.png",
+                                width: 34,
                               ),
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Text(
+                                  "Property Manager's",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontFamily: 'Montserrat'),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -374,7 +387,14 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                                         // side: BorderSide(color: Colors.red)
                                       ),
                                       color: appPrimaryMaterialColor[100],
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                child: PropertyManagersDetail(),
+                                                type: PageTransitionType
+                                                    .rightToLeft));
+                                      },
                                       child: Text(
                                         "View",
                                         style: TextStyle(
@@ -394,16 +414,25 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                     ),
                   );
                 }),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Text(
-                  "See All",
-                  style: TextStyle(
-                      // fontFamily: 'Montserrat',
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: PropertyManagers(),
+                        type: PageTransitionType.rightToLeft));
+              },
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    "See All",
+                    style: TextStyle(
+                        // fontFamily: 'Montserrat',
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
                 ),
               ),
             ),
