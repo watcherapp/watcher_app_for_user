@@ -54,7 +54,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
         child: Text(
           "More",
           style: TextStyle(
-              color: appPrimaryMaterialColor, fontWeight: FontWeight.bold),
+            color: appPrimaryMaterialColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     ),
