@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1017572077836",
+    "project_id": "watcherapp-78138",
+    "storage_bucket": "watcherapp-78138.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017572077836:android:cebb3e1ac9835a870bd929",
+        "android_client_info": {
+          "package_name": "com.watcher_app_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017572077836-69qjlht97afg0evjp4897vjirn5lgtve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHw7CS_OchJRe_Si1y-UvuUSLlp2seqyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017572077836-69qjlht97afg0evjp4897vjirn5lgtve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
