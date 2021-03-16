@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
-import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
-import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/BottomNavigationBarProvider.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
@@ -28,8 +25,6 @@ class _UserDashboardState extends State<UserDashboard> {
     Container(),
     MoreScreen()
   ];
-
-
 
   @override
   Widget build(BuildContext context) {

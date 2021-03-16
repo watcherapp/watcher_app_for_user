@@ -71,15 +71,11 @@ class _SignInState extends State<SignIn> {
                           controller: txtEmailOrMobile,
                           lable: "Mobile No or email",
                           validator: (input) {
-                            if(isNumeric(input)){
-
-                            }
-                            else{
-
-                            }
+                            if (isNumeric(input)) {
+                            } else {}
                             if (input.isValidEmail())
                               return "";
-                              else
+                            else
                               return "Invalid email address";
                           },
                           hintText: "Enter mobile or email"),
