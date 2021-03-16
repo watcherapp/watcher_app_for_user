@@ -34,7 +34,9 @@ class Services {
       }
     } catch (e) {
       debugPrint("Catch Error-> ${e.toString()}");
-      throw Exception("Catch Error->${e.toString()}");
+      throw Exception(
+        "Catch Error->${e.toString()}",
+      );
     }
   }
 

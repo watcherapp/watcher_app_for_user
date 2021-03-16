@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/UserPrefrences.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 
 import 'Constants/appColors.dart';
@@ -25,19 +26,20 @@ class MyApp extends StatelessWidget {
             create: (context) => UserPreferenceProvider()),
       ],
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-              appBarTheme: AppBarTheme(
-                  color: appPrimaryMaterialColor,
-                  centerTitle: true,
-                  textTheme: TextTheme(
-                      // ignore: deprecated_member_use
-                      title: TextStyle(color: Colors.white, fontSize: 18))),
-              floatingActionButtonTheme: FloatingActionButtonThemeData(
-                  backgroundColor: appPrimaryMaterialColor),
-              primaryColor: appPrimaryMaterialColor,
-              fontFamily: 'Montserrat'),
-          home: SignIn()),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            appBarTheme: AppBarTheme(
+                color: appPrimaryMaterialColor,
+                centerTitle: true,
+                textTheme: TextTheme(
+                    // ignore: deprecated_member_use
+                    title: TextStyle(color: Colors.white, fontSize: 18))),
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
+                backgroundColor: appPrimaryMaterialColor),
+            primaryColor: appPrimaryMaterialColor,
+            fontFamily: 'Montserrat'),
+        home: AdminDashboard(),
+      ),
     );
   }
 }

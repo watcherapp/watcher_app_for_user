@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ComplainDetail.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/DailyHelperScreen.dart';
 
 class ComplainComponent extends StatefulWidget {
   @override
@@ -60,16 +61,16 @@ class _ComplainComponentState extends State<ComplainComponent> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            PageTransition(
-                child: ComplainDetail(), type: PageTransitionType.rightToLeft));
+        // Navigator.push(
+        //     context,
+        //     PageTransition(
+        //         child: ComplainDetail(), type: PageTransitionType.rightToLeft));
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 4.0, right: 4),
         child: Container(
           height: 100,
-          child: Stack(
+          child: Column(
             children: [
               Card(
                 shape: RoundedRectangleBorder(
@@ -144,106 +145,124 @@ class _ComplainComponentState extends State<ComplainComponent> {
                             height: 65,
                           ),
                         ),
-                        Expanded(
-                            child: Padding(
-                          padding: const EdgeInsets.only(left: 15),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12),
                           child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Waste Disposal management Event",
-                                  //'${widget.notification["Title"]}',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Complain By  :  ",
-                                        //'${widget.notification["Title"]}',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                        "Solanki Meghana (A-101)",
-                                        //'${widget.notification["Title"]}',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 13,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w300),
-                                      ),
-                                    ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Waste Disposal management Event",
+                              //'${widget.notification["Title"]}',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Complain By  :  ",
+                                    //'${widget.notification["Title"]}',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w400),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 2.0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Priority  :  ",
-                                        //'${widget.notification["Title"]}',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                        "High",
-                                        //'${widget.notification["Title"]}',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 13,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w300),
-                                      ),
-                                    ],
+                                  Text(
+                                    "Solanki Meghana (A-101)",
+                                    //'${widget.notification["Title"]}',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w300),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 2.0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Status  :  ",
-                                        //'${widget.notification["Title"]}',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      Text(
-                                        "New / In Progress / Complete",
-                                        //'${widget.notification["Title"]}',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 13,
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w300),
-                                      ),
-                                    ],
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Priority  :  ",
+                                    //'${widget.notification["Title"]}',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w400),
                                   ),
-                                ),
+                                  Text(
+                                    "High",
+                                    //'${widget.notification["Title"]}',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Status  :  ",
+                                    //'${widget.notification["Title"]}',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(
+                                    "New / In Progress / Complete",
+                                    //'${widget.notification["Title"]}',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ],
+                              ),
+                            ),
 
-                                /* Text(
-                                                    // '${widget.notification["Description"]}',
-                                                    "Waste disposal management event in our society so please sir take any action",
-                                                    style: TextStyle(
-                                                        color: Colors.grey[500],
-                                                        fontSize: 14),
-                                                  ),*/
-                              ]),
-                        )),
+                            /* Text(
+                                                // '${widget.notification["Description"]}',
+                                                "Waste disposal management event in our society so please sir take any action",
+                                                style: TextStyle(
+                                                    color: Colors.grey[500],
+                                                    fontSize: 14),
+                                              ),*/
+                          ]),
+                        ),
+                        SizedBox(width: 10,),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: ComplainDetail(),
+                                  type: PageTransitionType.rightToLeft),
+                            );
+                          },
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            child: Image.asset(
+                              "images/rightArrow.png",
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                        ),
                       ],
                     )
                   ],

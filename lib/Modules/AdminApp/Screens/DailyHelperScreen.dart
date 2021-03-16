@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
@@ -29,11 +30,11 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
           ),
           child: GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      child: DailyHelperSubScreen(),
-                      type: PageTransitionType.rightToLeft));
+              // Navigator.push(
+              //     context,
+              //     PageTransition(
+              //         child: DailyHelperSubScreen(),
+              //         type: PageTransitionType.rightToLeft));
               // showDialog(
               //     context: context,
               //     builder: (BuildContext context) => ShowDialog());
@@ -76,14 +77,37 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
                       ],
                     ),
                     SizedBox(
-                      width: 130,
+                      width: 105,
                     ),
                     IconButton(
+                      onPressed: () {
+                        print("8735069293");
+                      },
                       icon: Icon(
                         Icons.call,
                         color: Colors.green,
                       ),
                       iconSize: 25,
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: DailyHelperSubScreen(),
+                                type: PageTransitionType.rightToLeft));
+                      },
+                      child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "images/rightArrow.png",
+                          color: appPrimaryMaterialColor,
+                        ),
+                      ),
                     ),
                   ],
                 ),

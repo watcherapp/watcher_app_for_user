@@ -49,17 +49,18 @@ class _AdminDashboardState extends State<AdminDashboard> {
         ),
       ),
     ),
-    Container(
-      child: Center(
-        child: Text(
-          "More",
-          style: TextStyle(
-            color: appPrimaryMaterialColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    ),
+    MyProfile(),
+    // Container(
+    //   child: Center(
+    //     child: Text(
+    //       "More",
+    //       style: TextStyle(
+    //         color: appPrimaryMaterialColor,
+    //         fontWeight: FontWeight.bold,
+    //       ),
+    //     ),
+    //   ),
+    // ),
   ];
   List dashFields = [
     {
@@ -350,185 +351,185 @@ class _AdminDashboardState extends State<AdminDashboard> {
         children: [
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 6.0, right: 6.0),
+              padding: EdgeInsets.only(left: 0.0, right: 0.0),
               child: screenList[provider.currentIndex],
             ),
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-//          padding: EdgeInsets.zero,
-          children: <Widget>[
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Image.asset(
-                    "images/perso-outline.png",
-                    color: Colors.white,
-                    width: 160,
-                  ),
-                  Text("Megha Solanki",
-                      style: (TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600))),
-                ],
-              ),
-              color: appPrimaryMaterialColor,
-              height: MediaQuery.of(context).size.height / 3.2,
-              width: MediaQuery.of(context).size.width,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: MyProfile(),
-                        type: PageTransitionType.rightToLeft));
-              },
-              child: Container(
-                color: Colors.white,
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 22.0, top: 25, bottom: 15),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        "images/d1user.png",
-                        width: 18,
-                        color: appPrimaryMaterialColor,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Text(
-                          "Profile",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            //fontFamily: 'Montserrat',
-                            fontSize: 14,
-                            // color: Colors.black),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Divider(
-              height: 0.5,
-              indent: 20,
-              color: Colors.grey,
-            ),
-            Container(
-              color: Colors.white,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 22.0, top: 18, bottom: 15),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      "images/dfile.png",
-                      width: 19,
-                      color: appPrimaryMaterialColor,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        "Tearms and Condition",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          //fontFamily: 'Montserrat',
-                          fontSize: 14,
-                          // color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Divider(
-              height: 0.5,
-              indent: 20,
-              color: Colors.grey,
-            ),
-            Container(
-              color: Colors.white,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 22.0, top: 18, bottom: 15),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      "images/logout.png",
-                      width: 18,
-                      color: appPrimaryMaterialColor,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        "Logout",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          //fontFamily: 'Montserrat',
-                          fontSize: 14,
-                          // color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Divider(
-              height: 0.5,
-              indent: 20,
-              color: Colors.grey,
-            )
-
-            /* ListTile(
-              leading: Icon(Icons.home, color: Colors.grey[700]),
-              title: Text(
-                "Home",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black),
-              ),
-            ),
-            Divider(
-              thickness: 1,
-            ),
-            ListTile(
-              leading: Icon(Icons.filter_none, color: Colors.grey[700]),
-              title: Text(
-                "Tearm & Condition",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.filter_none, color: Colors.grey[700]),
-              title: Text(
-                "Logout",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black),
-              ),
-            ),*/
-          ],
-        ),
-      ),
+//       drawer: Drawer(
+//         child: ListView(
+// //          padding: EdgeInsets.zero,
+//           children: <Widget>[
+//             Container(
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.center,
+//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                 children: [
+//                   Image.asset(
+//                     "images/perso-outline.png",
+//                     color: Colors.white,
+//                     width: 160,
+//                   ),
+//                   Text("Megha Solanki",
+//                       style: (TextStyle(
+//                           color: Colors.white,
+//                           fontSize: 17,
+//                           fontFamily: 'Montserrat',
+//                           fontWeight: FontWeight.w600))),
+//                 ],
+//               ),
+//               color: appPrimaryMaterialColor,
+//               height: MediaQuery.of(context).size.height / 3.2,
+//               width: MediaQuery.of(context).size.width,
+//             ),
+//             InkWell(
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//                 Navigator.push(
+//                     context,
+//                     PageTransition(
+//                         child: MyProfile(),
+//                         type: PageTransitionType.rightToLeft));
+//               },
+//               child: Container(
+//                 color: Colors.white,
+//                 width: MediaQuery.of(context).size.width,
+//                 child: Padding(
+//                   padding:
+//                       const EdgeInsets.only(left: 22.0, top: 25, bottom: 15),
+//                   child: Row(
+//                     children: [
+//                       Image.asset(
+//                         "images/d1user.png",
+//                         width: 18,
+//                         color: appPrimaryMaterialColor,
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.only(left: 20.0),
+//                         child: Text(
+//                           "Profile",
+//                           style: TextStyle(
+//                             fontWeight: FontWeight.w600,
+//                             //fontFamily: 'Montserrat',
+//                             fontSize: 14,
+//                             // color: Colors.black),
+//                           ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             Divider(
+//               height: 0.5,
+//               indent: 20,
+//               color: Colors.grey,
+//             ),
+//             Container(
+//               color: Colors.white,
+//               width: MediaQuery.of(context).size.width,
+//               child: Padding(
+//                 padding: const EdgeInsets.only(left: 22.0, top: 18, bottom: 15),
+//                 child: Row(
+//                   children: [
+//                     Image.asset(
+//                       "images/dfile.png",
+//                       width: 19,
+//                       color: appPrimaryMaterialColor,
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.only(left: 20.0),
+//                       child: Text(
+//                         "Tearms and Condition",
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.w600,
+//                           //fontFamily: 'Montserrat',
+//                           fontSize: 14,
+//                           // color: Colors.black),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//             Divider(
+//               height: 0.5,
+//               indent: 20,
+//               color: Colors.grey,
+//             ),
+//             Container(
+//               color: Colors.white,
+//               width: MediaQuery.of(context).size.width,
+//               child: Padding(
+//                 padding: const EdgeInsets.only(left: 22.0, top: 18, bottom: 15),
+//                 child: Row(
+//                   children: [
+//                     Image.asset(
+//                       "images/logout.png",
+//                       width: 18,
+//                       color: appPrimaryMaterialColor,
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.only(left: 20.0),
+//                       child: Text(
+//                         "Logout",
+//                         style: TextStyle(
+//                           fontWeight: FontWeight.w600,
+//                           //fontFamily: 'Montserrat',
+//                           fontSize: 14,
+//                           // color: Colors.black),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//             Divider(
+//               height: 0.5,
+//               indent: 20,
+//               color: Colors.grey,
+//             )
+//
+//             /* ListTile(
+//               leading: Icon(Icons.home, color: Colors.grey[700]),
+//               title: Text(
+//                 "Home",
+//                 style: TextStyle(
+//                     fontWeight: FontWeight.w600,
+//                     fontFamily: 'Montserrat',
+//                     color: Colors.black),
+//               ),
+//             ),
+//             Divider(
+//               thickness: 1,
+//             ),
+//             ListTile(
+//               leading: Icon(Icons.filter_none, color: Colors.grey[700]),
+//               title: Text(
+//                 "Tearm & Condition",
+//                 style: TextStyle(
+//                     fontWeight: FontWeight.w600,
+//                     fontFamily: 'Montserrat',
+//                     color: Colors.black),
+//               ),
+//             ),
+//             ListTile(
+//               leading: Icon(Icons.filter_none, color: Colors.grey[700]),
+//               title: Text(
+//                 "Logout",
+//                 style: TextStyle(
+//                     fontWeight: FontWeight.w600,
+//                     fontFamily: 'Montserrat',
+//                     color: Colors.black),
+//               ),
+//             ),*/
+//           ],
+//         ),
+//       ),
       bottomNavigationBar: BottomNavigationBarWithFab(
         notchedShape: CircularNotchedRectangle(),
         height: 56,

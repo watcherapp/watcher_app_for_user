@@ -145,6 +145,58 @@ class _MyProfileState extends State<MyProfile> {
               color: Colors.grey,
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 6.0),
+            child: ListTile(
+              leading: Image.asset(
+                "images/dfile.png",
+                width: 20,
+                color: appPrimaryMaterialColor,
+              ),
+              title: Text(
+                "Tearms and Condition",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                  fontSize: 14,
+                  // color: Colors.black),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Divider(
+              height: 0.5,
+              color: Colors.grey,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 6.0),
+            child: ListTile(
+              leading: Image.asset(
+                "images/logout.png",
+                width: 20,
+                color: appPrimaryMaterialColor,
+              ),
+              title: Text(
+                "Logout",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                  fontSize: 14,
+                  // color: Colors.black),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Divider(
+              height: 0.5,
+              color: Colors.grey,
+            ),
+          ),
         ],
       ),
     );
