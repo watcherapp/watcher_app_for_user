@@ -70,11 +70,17 @@ class _SignInState extends State<SignIn> {
                       MyTextFormField(
                           controller: txtEmailOrMobile,
                           lable: "Mobile No or email",
-                          validator: (val) {
-                            if (val.isEmpty) {
-                              return "Mobile No or Email can't be empty";
+                          validator: (input) {
+                            if(isNumeric(input)){
+
                             }
-                            return "";
+                            else{
+
+                            }
+                            if (input.isValidEmail())
+                              return "";
+                              else
+                              return "Invalid email address";
                           },
                           hintText: "Enter mobile or email"),
 
@@ -134,7 +140,12 @@ class _SignInState extends State<SignIn> {
                       MyButton(
                           title: "Sign In",
                           onPressed: () {
-                            _userLogin();
+                            if (_formKey.currentState.validate()) {
+                              print("email is validate");
+                            } else {
+                              print("error");
+                            }
+                            //_userLogin();
                           }),
                       Padding(
                         padding: const EdgeInsets.only(top: 25.0),
