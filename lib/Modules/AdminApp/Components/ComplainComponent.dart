@@ -22,7 +22,7 @@ class _ComplainComponentState extends State<ComplainComponent> {
   funDate() {
     dateData = "04/03/2021";
     date = dateData.split('/');
-    print("-------------------->${date[1]}");
+
     funMonth("${date[1]}");
   }
 

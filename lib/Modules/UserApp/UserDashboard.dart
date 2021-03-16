@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
-import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/BottomNavigationBarProvider.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserHomeScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UsersVisitorlist.dart';
@@ -16,6 +18,7 @@ class UserDashboard extends StatefulWidget {
 }
 
 class _UserDashboardState extends State<UserDashboard> {
+  String Id;
   List screenList = [
     MyWatcher(),
     UserVisitorList(),
@@ -24,18 +27,25 @@ class _UserDashboardState extends State<UserDashboard> {
     Container()
   ];
 
-  _showDialog() async {
-    await Future.delayed(Duration(milliseconds: 5));
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return LoadingIndicator();
-        });
-  }
+  // _showDialog() async {
+  //   await Future.delayed(Duration(milliseconds: 5));
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return LoadingIndicator();
+  //       });
+  // }
 
   @override
   void initState() {
-    //   _showDialog();
+    getData();
+  }
+
+  getData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      Id = sharedPreferences.getString(Session.memberId);
+    });
   }
 
   @override
@@ -43,6 +53,7 @@ class _UserDashboardState extends State<UserDashboard> {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
     return Scaffold(
       backgroundColor: Colors.grey[200],
+      appBar: AppBar(title: Text("${sharedPrefs.userRole}")),
       body: Column(
         children: [
           Padding(

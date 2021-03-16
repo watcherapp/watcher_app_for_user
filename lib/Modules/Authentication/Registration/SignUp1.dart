@@ -79,12 +79,17 @@ class _SignUp1State extends State<SignUp1> {
                                 return "";
                               },
                               icon: CountryCodePicker(
-                                // onChanged: _onCountryChange,
+                                onChanged: (CountryCode code) {
+                                  print("${code.code}");
+                                },
                                 initialSelection: 'IN',
                                 favorite: ['+91', 'IN'],
-                                showCountryOnly: true, showFlag: true,
+                                showCountryOnly: true,
+                                showFlag: true,
                                 showOnlyCountryWhenClosed: false,
                                 alignLeft: false,
+                                textStyle: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
                               ),
                               hintText: "Enter mobile No"),
                         ),

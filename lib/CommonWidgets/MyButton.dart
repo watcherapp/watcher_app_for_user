@@ -20,7 +20,7 @@ class MyButton extends StatelessWidget {
             child: Text("${title ?? ""}",
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold)),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -30,7 +30,3 @@ class MyButton extends StatelessWidget {
     );
   }
 }
-
-
-
-

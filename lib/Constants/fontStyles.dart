@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class fontConstants {
   static const bigTitleWhite = TextStyle(
       color: Colors.white,
-      fontSize: 24,
+      fontSize: 22,
       fontWeight: FontWeight.bold,
       fontFamily: 'Montserrat');
   static const bigTitleBlack = TextStyle(

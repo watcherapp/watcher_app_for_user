@@ -4,8 +4,8 @@ import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 
 class PasswordScreen extends StatefulWidget {
   @override
@@ -34,6 +34,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               child: Padding(
                 padding: paddingConstant.authScreenContentPadding,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       height: 15,
@@ -57,7 +58,45 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         },
                         hintText: "Re-enter Password"),
                     SizedBox(
-                      height: 30,
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 4.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.lock,
+                            size: 13,
+                            color: Colors.grey,
+                          ),
+                          Text(
+                            "  Password must contain :",
+                            style:
+                                TextStyle(fontSize: 11, color: Colors.black87),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "○ at least 8 characters",
+                          style: TextStyle(fontSize: 11, color: Colors.black87),
+                        ),
+                        Text(
+                          "○ at least 1 symbol like ( ! , \$ , # , & )",
+                          style: TextStyle(fontSize: 11, color: Colors.black87),
+                        ),
+                        Text(
+                          "○ both uppercase and lowercase",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
                     ),
                     MyButton(
                       onPressed: () {

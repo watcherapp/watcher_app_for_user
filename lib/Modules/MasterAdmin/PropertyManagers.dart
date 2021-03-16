@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 
 class PropertyManagers extends StatefulWidget {
@@ -23,7 +22,6 @@ class _PropertyManagersState extends State<PropertyManagers> {
   funDate() {
     dateData = "12/03/2021";
     date = dateData.split('/');
-    print("-------------------->${date[1]}");
     funMonth("${date[1]}");
   }
 

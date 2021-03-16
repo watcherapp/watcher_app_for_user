@@ -55,11 +55,11 @@ class Services {
       }
       if (response.statusCode == 200) {
         ResponseDataClass responseData = new ResponseDataClass(
-            Message: "No Data", IsSuccess: false, Data: 0.toString());
+            Message: "No Data", IsSuccess: false, Data: "");
         var data = response.data;
-        responseData.Message = data["message"];
+        responseData.Message = data["Message"];
         responseData.IsSuccess = data["IsSuccess"];
-        responseData.Data = data["Data"].toString();
+        responseData.Data = data["Data"];
 
         return responseData;
       } else {

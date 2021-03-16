@@ -50,10 +50,11 @@ class MyTextFormField extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 2.0),
             child: TextFormField(
+              autofocus: false,
               controller: controller,
               textCapitalization: textCapitalization ?? TextCapitalization.none,
               keyboardType: keyboardType,
-              style: TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: 14),
               maxLength: maxLength,
               focusNode: focusNode,
               onChanged: onChanged,
@@ -68,7 +69,7 @@ class MyTextFormField extends StatelessWidget {
                 hintStyle: TextStyle(fontSize: 13, color: Colors.grey),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 contentPadding:
-                    EdgeInsets.only(left: 15, right: 8, top: 4, bottom: 4),
+                    EdgeInsets.only(left: 20, right: 8, top: 4, bottom: 4),
                 counterText: "",
                 suffix: hideShowText,
                 prefixIcon: icon,
