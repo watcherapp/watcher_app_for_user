@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
+import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/BottomNavigationBarProvider.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/MoreScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserHomeScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UsersVisitorlist.dart';
@@ -24,29 +26,10 @@ class _UserDashboardState extends State<UserDashboard> {
     UserVisitorList(),
     UserHomeScreen(),
     Container(),
-    Container()
+    MoreScreen()
   ];
 
-  // _showDialog() async {
-  //   await Future.delayed(Duration(milliseconds: 5));
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return LoadingIndicator();
-  //       });
-  // }
 
-  @override
-  void initState() {
-    getData();
-  }
-
-  getData() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      Id = sharedPreferences.getString(Session.memberId);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

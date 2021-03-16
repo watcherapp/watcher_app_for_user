@@ -237,14 +237,14 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Surat',
+                          'India',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w500),
                           textScaleFactor: 1,
                         ),
                         Text(
-                          'City',
+                          'Country',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -282,14 +282,14 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'India',
+                          'Surat',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w500),
                           textScaleFactor: 1,
                         ),
                         Text(
-                          'Country',
+                          'City',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -309,6 +309,81 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
               color: Colors.grey[300],
               indent: 20,
               endIndent: 20,
+            ),
+          ),
+          SizedBox(height: 25),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      // side: BorderSide(color: Colors.red)
+                    ),
+                    height: 35,
+                    color: appPrimaryMaterialColor,
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.done,
+                          color: Colors.white,
+                          size: 19,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 3.0),
+                          child: Text(
+                            "Accept",
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      // side: BorderSide(color: Colors.red)
+                    ),
+                    height: 35,
+                    color: appPrimaryMaterialColor,
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 19,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 3.0),
+                          child: Text(
+                            "Reject",
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
