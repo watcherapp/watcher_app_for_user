@@ -6,6 +6,7 @@ import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/BottomNavigationBarProvider.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/MoreScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserHomeScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UsersVisitorlist.dart';
@@ -21,7 +22,7 @@ class _UserDashboardState extends State<UserDashboard> {
     UserVisitorList(),
     UserHomeScreen(),
     Container(),
-    Container()
+    MoreScreen()
   ];
 
   _showDialog() async {
