@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ComplainDetail.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/DailyHelperScreen.dart';
 
 class ComplainComponent extends StatefulWidget {
+  var getAllComplain;
+
+  ComplainComponent({
+    this.getAllComplain,
+  });
+
   @override
   _ComplainComponentState createState() => _ComplainComponentState();
 }
@@ -19,10 +26,10 @@ class _ComplainComponentState extends State<ComplainComponent> {
     funDate();
   }
 
-  funDate() {
-    dateData = "04/03/2021";
+  String funDate() {
+    dateData = "${widget.getAllComplain["dateTime"][0]}";
     date = dateData.split('/');
-
+    print(date);
     funMonth("${date[1]}");
   }
 
@@ -67,207 +74,266 @@ class _ComplainComponentState extends State<ComplainComponent> {
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 4.0, right: 4),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            /* side: BorderSide(
-                                  width: 0.50, color: appPrimaryMaterialColor),*/
-            borderRadius: BorderRadius.circular(
-              4.0,
-            ),
-          ),
+        child: Container(
+          height: 100,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 4,
-                    height: 86,
-                    decoration: BoxDecoration(
-                        color: appPrimaryMaterialColor,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(4),
-                          bottomLeft: Radius.circular(4),
-                        )),
+            children: [
+              Card(
+                shape: RoundedRectangleBorder(
+                  /* side: BorderSide(
+                                        width: 0.50, color: appPrimaryMaterialColor),*/
+                  borderRadius: BorderRadius.circular(
+                    4.0,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 5),
-                    child: Column(
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          " ${date[0]}",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600),
+                        Container(
+                          width: 4,
+                          height: 86,
+                          decoration: BoxDecoration(
+                              color: appPrimaryMaterialColor,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(4),
+                                bottomLeft: Radius.circular(4),
+                              )),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 3.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          padding: const EdgeInsets.only(left: 15.0, right: 5),
+                          child: Column(
                             children: <Widget>[
                               Text(
-                                "Mon",
-                                //  '${new DateFormat.MMM().format(DateTime.parse(DateFormat("yyyy-MM-dd").parse(widget.notification["Date"].toString().substring(0,10)).toString()))},${widget.notification["Date"].substring(0, 4)}',
+                                " ${date}",
                                 style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black45,
+                                    color: Colors.black,
+                                    fontSize: 17,
                                     fontWeight: FontWeight.w600),
                               ),
-                              /*Text(
-                                                  " ${date[2]}",
-                                                  //  '${new DateFormat.MMM().format(DateTime.parse(DateFormat("yyyy-MM-dd").parse(widget.notification["Date"].toString().substring(0,10)).toString()))},${widget.notification["Date"].substring(0, 4)}',
-                                                  style: TextStyle(
-                                                      fontSize: 11,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                )*/
+                              Padding(
+                                padding: const EdgeInsets.only(top: 3.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      "Mon",
+                                      //  '${new DateFormat.MMM().format(DateTime.parse(DateFormat("yyyy-MM-dd").parse(widget.notification["Date"].toString().substring(0,10)).toString()))},${widget.notification["Date"].substring(0, 4)}',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black45,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    /*Text(
+                                                        " ${date[2]}",
+                                                        //  '${new DateFormat.MMM().format(DateTime.parse(DateFormat("yyyy-MM-dd").parse(widget.notification["Date"].toString().substring(0,10)).toString()))},${widget.notification["Date"].substring(0, 4)}',
+                                                        style: TextStyle(
+                                                            fontSize: 11,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w600),
+                                                      )*/
+                                  ],
+                                ),
+                              ),
                             ],
+                            mainAxisAlignment: MainAxisAlignment.center,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Container(
+                            color: Colors.grey,
+                            width: 0.8,
+                            height: 65,
+                          ),
+                        ),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: Text(
+                                      "${widget.getAllComplain["discription"]}",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      //'${widget.notification["Title"]}',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat',
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Complain By  :  ",
+                                          //'${widget.notification["Title"]}',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                              fontFamily: 'Montserrat',
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Text(
+                                          "${widget.getAllComplain["complainBy"]}",
+                                          //'${widget.notification["Title"]}',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                              fontFamily: 'Montserrat',
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 3.0, right: 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Priority  :  ",
+                                              //'${widget.notification["Title"]}',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            Text(
+                                              "High",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              //'${widget.notification["Title"]}',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 13,
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w300),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Status  :  ",
+                                              //'${widget.notification["Title"]}',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            Text(
+                                              "${widget.getAllComplain["complainStatus"]}",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              //'${widget.notification["Title"]}',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 13,
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w300),
+                                            ),
+                                          ],
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child: ComplainDetail(),
+                                                  type: PageTransitionType
+                                                      .rightToLeft),
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 20,
+                                            width: 20,
+                                            child: Image.asset(
+                                              "images/rightArrow.png",
+                                              color: Colors.grey[400],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  /* Text(
+                                                  // '${widget.notification["Description"]}',
+                                                  "Waste disposal management event in our society so please sir take any action",
+                                                  style: TextStyle(
+                                                      color: Colors.grey[500],
+                                                      fontSize: 14),
+                                                ),*/
+                                ]),
                           ),
                         ),
                       ],
-                      mainAxisAlignment: MainAxisAlignment.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Container(
-                      color: Colors.grey,
-                      width: 0.8,
-                      height: 65,
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              "Waste Disposal management Event",
-                              //'${widget.notification["Title"]}',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Complain By  :  ",
-                                    //'${widget.notification["Title"]}',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Text(
-                                    "Solanki Meghana (A-101)",
-                                    //'${widget.notification["Title"]}',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 13,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 2.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Priority  :  ",
-                                    //'${widget.notification["Title"]}',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Text(
-                                    "High",
-                                    //'${widget.notification["Title"]}',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 13,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 2.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Status  :  ",
-                                    //'${widget.notification["Title"]}',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Text(
-                                    "✓ Resolved",
-                                    //'${widget.notification["Title"]}',
-                                    style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 13,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            /* Text(
-                                            // '${widget.notification["Description"]}',
-                                            "Waste disposal management event in our society so please sir take any action",
-                                            style: TextStyle(
-                                                color: Colors.grey[500],
-                                                fontSize: 14),
-                                          ),*/
-                          ]),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                            child: ComplainDetail(),
-                            type: PageTransitionType.rightToLeft),
-                      );
-                    },
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "images/rightArrow.png",
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ),
-                ],
-              )
+                    )
+                  ],
+                ),
+              ),
+              // Align(
+              //   alignment: Alignment.,
+              //   child: Container(
+              //     color: appPrimaryMaterialColor,
+              //     child: Text(
+              //       "data",
+              //       style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: 14,
+              //         fontWeight: FontWeight.w600,
+              //       ),
+              //     ),
+              //   ),
+              // )
+              // Positioned(
+              //   right: 5.0,
+              //   bottom: 4.0,
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       color: appPrimaryMaterialColor,
+              //         borderRadius: BorderRadius.only(
+              //           bottomRight: Radius.circular(5),
+              //           bottomLeft: Radius.circular(5),
+              //           topLeft:Radius.circular(5),
+              //           topRight: Radius.circular(5),
+              //         ),),
+              //
+              //     child: Padding(
+              //       padding: const EdgeInsets.only(top: 5,bottom: 5,right: 8,left: 10),
+              //       child: Text(
+              //         "  A-101  ",
+              //         style: TextStyle(
+              //           color: Colors.white,
+              //           fontSize: 14,
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),
       ),
+
     );
   }
 }

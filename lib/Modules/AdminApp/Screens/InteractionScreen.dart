@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddPollingQuestion.dart';
 
 class InteractionScreen extends StatefulWidget {
   @override
@@ -8,21 +10,43 @@ class InteractionScreen extends StatefulWidget {
 
 class _InteractionScreenState extends State<InteractionScreen> {
   List interFields = [
+    // {
+    //   "label": "Society Meetings",
+    //   "img": "images/clock.png",
+    // },
     {
-      "label": "Society Meetings",
-      "img": "images/clock.png",
+      "label": "Notice",
+      "img": "images/microphone.png",
+      "screenName" : AddPollingQuestion(),
     },
-    {"label": "Announcements", "img": "images/microphone.png"},
-    {"label": "Event", "img": "images/calendar.png"},
-    {"label": "Voting", "img": "images/ballot.png"},
-    {"label": "Society Resources", "img": "images/building.png"},
-    {"label": "Proposal", "img": "images/approval.png"},
-    {"label": "Suggestions", "img": "images/good.png"},
+    // {
+    //   "label": "Event",
+    //   "img": "images/calendar.png",
+    // },
     {
-      "label": "Tasks",
-      "img": "images/checklists.png",
+      "label": "Polling",
+      "img": "images/ballot.png",
+      "screenName" : AddPollingQuestion(),
     },
+    {
+      "label": " Amenities",
+      "img": "images/building.png",
+      "screenName" : AddPollingQuestion(),
+    },
+    // {
+    //   "label": "Proposal",
+    //   "img": "images/approval.png",
+    // },
+    // {
+    //   "label": "Suggestions",
+    //   "img": "images/good.png",
+    // },
+    // {
+    //   "label": "Tasks",
+    //   "img": "images/checklists.png",
+    // },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +73,7 @@ class _InteractionScreenState extends State<InteractionScreen> {
           return dashBox(
             interFields[index]["label"],
             interFields[index]["img"],
-            //interFields[index]["screenName"],
+            interFields[index]["screenName"],
           );
         },
         itemCount: interFields.length,
@@ -60,49 +84,58 @@ class _InteractionScreenState extends State<InteractionScreen> {
   Widget dashBox(
     String label,
     String img,
+    Widget screenName,
   ) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5.0, bottom: 5, right: 4, left: 4),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.10,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.white, width: 1.5),
-            borderRadius: BorderRadius.all(Radius.circular(7.0)),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  blurRadius: 2.0,
-                  spreadRadius: 2.0,
-                  offset: Offset(3.0, 5.0))
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              img,
-              width: 30,
-              color: appPrimaryMaterialColor,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: FittedBox(
-                // fit: BoxFit.contain,
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Text(
-                    label,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: appPrimaryMaterialColor,
-                        fontSize: 12,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            PageTransition(
+                child: screenName, type: PageTransitionType.rightToLeft));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 5.0, bottom: 5, right: 4, left: 4),
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.10,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.white, width: 1.5),
+              borderRadius: BorderRadius.all(Radius.circular(7.0)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 2.0,
+                    spreadRadius: 2.0,
+                    offset: Offset(3.0, 5.0))
+              ]),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                img,
+                width: 30,
+                color: appPrimaryMaterialColor,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: FittedBox(
+                  // fit: BoxFit.contain,
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Text(
+                      label,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: appPrimaryMaterialColor,
+                          fontSize: 12,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

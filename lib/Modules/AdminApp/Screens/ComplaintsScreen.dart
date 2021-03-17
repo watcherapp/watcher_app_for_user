@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/ValidationClass.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/ComplainComponent.dart';
 
 class ComplaintsScreen extends StatefulWidget {
@@ -10,6 +16,7 @@ class ComplaintsScreen extends StatefulWidget {
 class _ComplaintsScreenState extends State<ComplaintsScreen>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
   List dateSortList = [
     {"icon": "", "date": ""},
     {"icon": "", "date": ""},
@@ -90,12 +97,106 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
       ),
     ),
   ];
+  bool isLoading = false;
+  List getAllComplaintList = [];
+
+  @override
+  void initState() {
+    _getAllComplains();
+  }
+
+  _getAllComplains() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      //LoadingIndicator.show(context);
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {"societyId": "601a7269a585c6079c1d21f8"};
+        print("$body");
+        Services.postForSave(
+                apiName: "api/admin/getAllSocietyComplain", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            print(responseData.Data);
+            getAllComplaintList = responseData.Data;
+            // LoadingIndicator.close(context);
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            print(responseData);
+            //LoadingIndicator.close(context);
+            // ignore: deprecated_member_use
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   SnackBar(
+            //     behavior: SnackBarBehavior.floating,
+            //     backgroundColor: Colors.red,
+            //     content: Text("${responseData.Message}"),
+            //   ),
+            // );
+            Fluttertoast.showToast(
+                msg: "${responseData.Message}",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                // textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          //LoadingIndicator.close(context);
+          Fluttertoast.showToast(
+              msg: "Error $error",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              // textColor: Colors.white,
+              fontSize: 16.0);
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     behavior: SnackBarBehavior.floating,
+          //     backgroundColor: Colors.red,
+          //     content: Text("Error $error"),
+          //   ),
+          // );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      //LoadingIndicator.close(context);
+      Fluttertoast.showToast(
+          msg: "You aren't connected to the Internet !",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          // textColor: Colors.white,
+          fontSize: 16.0);
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: Colors.red,
+      //     content: Text("You aren't connected to the Internet !"),
+      //   ),
+      // );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
+          key: scaffoldKey,
           backgroundColor: Colors.grey[100],
           appBar: AppBar(
             title: Text(
@@ -124,45 +225,57 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
             elevation: 0,
             backgroundColor: appPrimaryMaterialColor,
           ),
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 5, left: 4, right: 4),
-                child: Container(
-                  height: 35,
-                  child: TabBar(
-                      controller: _tabController,
-                      labelPadding: EdgeInsets.only(left: 9.0, right: 9.0),
-                      // indicatorSize: TabBarIndicatorSize.label,
-                      unselectedLabelColor: Colors.grey[600],
-                      labelColor: Colors.white,
-                      isScrollable: true,
-                      indicatorColor: appPrimaryMaterialColor,
-                      indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: appPrimaryMaterialColor),
-                      onTap: (index) {},
-                      tabs: tabs),
-                ),
-              ),
-              Expanded(
-                child: TabBarView(physics: BouncingScrollPhysics(), children: [
-                  ListView.builder(
-                      padding: EdgeInsets.only(top: 5, bottom: 18),
-                      scrollDirection: Axis.vertical,
-                      itemCount: 10,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ComplainComponent();
-                      }),
-                  Container(),
-                  Container(),
-                  Container(),
-                  Container(),
-                  Container(),
-                ]),
-              ),
-            ],
-          )),
+          body: isLoading == true
+              ? Center(
+                  child: CircularProgressIndicator(
+                  // backgroundColor: Colors.red,
+                    valueColor: new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+                ))
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5, left: 4, right: 4),
+                      child: Container(
+                        height: 35,
+                        child: TabBar(
+                            controller: _tabController,
+                            labelPadding:
+                                EdgeInsets.only(left: 9.0, right: 9.0),
+                            // indicatorSize: TabBarIndicatorSize.label,
+                            unselectedLabelColor: Colors.grey[600],
+                            labelColor: Colors.white,
+                            isScrollable: true,
+                            indicatorColor: appPrimaryMaterialColor,
+                            indicator: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: appPrimaryMaterialColor),
+                            onTap: (index) {},
+                            tabs: tabs),
+                      ),
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                          physics: BouncingScrollPhysics(),
+                          children: [
+                            ListView.builder(
+                                padding: EdgeInsets.only(top: 5, bottom: 18),
+                                scrollDirection: Axis.vertical,
+                                itemCount: getAllComplaintList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ComplainComponent(
+
+                                    getAllComplain: getAllComplaintList[index],
+                                  );
+                                }),
+                            Container(),
+                            Container(),
+                            Container(),
+                            Container(),
+                            Container(),
+                          ]),
+                    ),
+                  ],
+                )),
     );
   }
 }

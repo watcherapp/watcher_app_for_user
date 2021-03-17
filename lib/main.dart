@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: UserDashboard(),
+        home: AdminDashboard(),
       ),
     );
   }

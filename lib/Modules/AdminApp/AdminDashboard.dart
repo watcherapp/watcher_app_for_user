@@ -50,17 +50,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
       ),
     ),
     MyProfile(),
-    // Container(
-    //   child: Center(
-    //     child: Text(
-    //       "More",
-    //       style: TextStyle(
-    //         color: appPrimaryMaterialColor,
-    //         fontWeight: FontWeight.bold,
-    //       ),
-    //     ),
-    //   ),
-    // ),
   ];
   List dashFields = [
     {
@@ -919,10 +908,11 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
                       label,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: appPrimaryMaterialColor,
-                          fontSize: 12,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600),
+                        color: appPrimaryMaterialColor,
+                        fontSize: 12,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

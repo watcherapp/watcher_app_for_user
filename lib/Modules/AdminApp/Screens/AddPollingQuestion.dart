@@ -31,7 +31,7 @@ class _AddPollingQuestionState extends State<AddPollingQuestion> {
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController;
-  static List<String> friendsList = [null];
+  static List<String> questionList = [null];
 
   @override
   void initState() {
@@ -214,7 +214,7 @@ class _AddPollingQuestionState extends State<AddPollingQuestion> {
   /// get firends text-fields
   List<Widget> _getFriends() {
     List<Widget> friendsTextFields = [];
-    for (int i = 0; i < friendsList.length; i++) {
+    for (int i = 0; i < questionList.length; i++) {
       friendsTextFields.add(Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Row(
@@ -228,7 +228,7 @@ class _AddPollingQuestionState extends State<AddPollingQuestion> {
               width: 6,
             ),
             // we need add button at last friends row
-            _addRemoveButton(i == friendsList.length - 1, i),
+            _addRemoveButton(i == questionList.length - 1, i),
           ],
         ),
       ));
@@ -242,9 +242,9 @@ class _AddPollingQuestionState extends State<AddPollingQuestion> {
       onTap: () {
         if (add) {
           // add new text-fields at the top of all friends textfields
-          friendsList.insert(0, null);
+          questionList.insert(0, null);
         } else
-          friendsList.removeAt(index);
+          questionList.removeAt(index);
         setState(() {});
       },
       child: Container(
@@ -291,12 +291,12 @@ class _QuestionTextFieldsState extends State<QuestionTextFields> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _nameController.text =
-          _AddPollingQuestionState.friendsList[widget.index] ?? '';
+          _AddPollingQuestionState.questionList[widget.index] ?? '';
     });
 
     return TextFormField(
       controller: _nameController,
-      onChanged: (v) => _AddPollingQuestionState.friendsList[widget.index] = v,
+      onChanged: (v) => _AddPollingQuestionState.questionList[widget.index] = v,
       decoration: InputDecoration(hintText: 'Enter your Option'),
       validator: (v) {
         if (v.trim().isEmpty) return 'Please enter Option${widget.index}';
