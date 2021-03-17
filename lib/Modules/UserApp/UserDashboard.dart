@@ -31,7 +31,7 @@ class _UserDashboardState extends State<UserDashboard> {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: AppBar(title: Text("${sharedPrefs.userRole}")),
+      /*appBar: AppBar(title: Text("${sharedPrefs.memberId}")),*/
       body: Column(
         children: [
           Padding(

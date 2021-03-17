@@ -11,6 +11,7 @@ import 'package:watcher_app_for_user/Modules/UserApp/Components/MyResidentCompon
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVehicleComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddFamilyMember.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddMyStaff.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/VehicleScreen.dart';
 
 class MyWatcher extends StatefulWidget {
   @override
@@ -164,14 +165,22 @@ class _MyWatcherState extends State<MyWatcher> {
                 itemCount: length + 1,
                 itemBuilder: (context, index) {
                   if (index == length) {
-                    return AddComponent(width: 100, onTap: () {});
+                    return AddComponent(
+                        width: 100,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  child: VehicleScreen(),
+                                  type: PageTransitionType.rightToLeft));
+                        });
                   } else {
                     return MyVehicleComponent();
                   }
                 }),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 18),
+            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 23),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -197,7 +206,7 @@ class _MyWatcherState extends State<MyWatcher> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 18),
+            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 23),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -223,7 +232,7 @@ class _MyWatcherState extends State<MyWatcher> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 18),
+            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 23),
             child: Row(
               children: [
                 Image.asset("images/star.png", width: 21),
@@ -240,7 +249,24 @@ class _MyWatcherState extends State<MyWatcher> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 18),
+            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 23),
+            child: Row(
+              children: [
+                Image.asset("images/feedback.png", width: 23),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Text('Complaint',
+                      //overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "Montserrat",
+                          color: Colors.black87)),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 10, top: 22),
             child: Row(
               children: [
                 Image.asset("images/share.png", width: 21),
@@ -258,7 +284,7 @@ class _MyWatcherState extends State<MyWatcher> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-                left: 12.0, right: 10, top: 18, bottom: 15),
+                left: 12.0, right: 10, top: 23, bottom: 15),
             child: Row(
               children: [
                 Image.asset("images/logout1.png", width: 21),

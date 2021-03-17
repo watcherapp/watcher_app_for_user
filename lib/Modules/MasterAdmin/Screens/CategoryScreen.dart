@@ -38,7 +38,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     },
     {
       "label": "Vendor Category",
-      "img": "images/vendor.png",
+      "img": "images/seller.png",
       "screenName": VendorCategory(),
     },
     {
@@ -60,59 +60,61 @@ class _CategoryScreenState extends State<CategoryScreen> {
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(top: 8, left: 11, right: 11),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.2,
-                  crossAxisSpacing: 5.0,
-                  mainAxisSpacing: 4.0),
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: catFields[index]["screenName"],
-                            type: PageTransitionType.rightToLeft));
-                  },
-                  child: Container(
-                      height: 130,
-                      child: Card(
-                        elevation: 1,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              catFields[index]["img"],
-                              color: appPrimaryMaterialColor,
-                              width: 37,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Text(
-                                catFields[index]["label"],
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.black,
-                                    //  fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.only(top: 8, left: 11, right: 11),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.2,
+                    crossAxisSpacing: 5.0,
+                    mainAxisSpacing: 4.0),
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: catFields[index]["screenName"],
+                              type: PageTransitionType.rightToLeft));
+                    },
+                    child: Container(
+                        height: 130,
+                        child: Card(
+                          elevation: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                catFields[index]["img"],
+                                color: appPrimaryMaterialColor,
+                                width: 42,
                               ),
-                            )
-                          ],
-                        ),
-                      )),
-                );
-              },
-              itemCount: catFields.length),
-        ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Text(
+                                  catFields[index]["label"],
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black,
+                                      //  fontWeight: FontWeight.bold,
+                                      fontFamily: 'Montserrat'),
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
+                  );
+                },
+                itemCount: catFields.length),
+          ],
+        ),
       ),
     );
   }
