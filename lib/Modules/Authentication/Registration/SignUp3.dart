@@ -193,6 +193,7 @@ class _SignUp3State extends State<SignUp3> {
                             child: SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
                                 height: 15,
@@ -216,7 +217,48 @@ class _SignUp3State extends State<SignUp3> {
                                   },
                                   hintText: "Re-enter Password"),
                               SizedBox(
-                                height: 30,
+                                height: 10,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, bottom: 4.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.lock,
+                                      size: 13,
+                                      color: Colors.grey,
+                                    ),
+                                    Text(
+                                      "  Password must contain :",
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.black87),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "○ at least 8 characters",
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black87),
+                                  ),
+                                  Text(
+                                    "○ at least 1 symbol like ( ! , \$ , # , & )",
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black87),
+                                  ),
+                                  Text(
+                                    "○ both uppercase and lowercase",
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ],
                               ),
                               MyButton(
                                 onPressed: () {

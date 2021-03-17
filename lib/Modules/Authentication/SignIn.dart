@@ -11,6 +11,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Data/ValidationClass.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/VerifyScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/SignUp1.dart';
@@ -71,8 +72,6 @@ class _SignInState extends State<SignIn> {
                           controller: txtEmailOrMobile,
                           lable: "Mobile No or email",
                           validator: (input) {
-                            if (isNumeric(input)) {
-                            } else {}
                             if (input.isValidEmail())
                               return "";
                             else
@@ -86,12 +85,7 @@ class _SignInState extends State<SignIn> {
                         lable: "Password",
                         hintText: "Enter Password",
                         isPassword: password,
-                        validator: (val) {
-                          if (val.isEmpty) {
-                            return "Password can't be empty";
-                          }
-                          return "";
-                        },
+                        validator: validatePassword,
                         hideShowText: InkWell(
                           onTap: () {
                             setState(() {
@@ -188,6 +182,7 @@ class _SignInState extends State<SignIn> {
   }
 
   _saveDataToSession(var sessionData) async {
+    sharedPrefs.memberId = "${sessionData[0]["_id"]}";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(Session.memberId, sessionData[0]["_id"] ?? "");
     prefs.setString(Session.memberNo, sessionData[0]["memberNo"] ?? "");
