@@ -11,6 +11,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Data/ValidationClass.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/VerifyScreen.dart';
@@ -26,7 +27,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   bool password = true;
   bool isLoading = false;
-  var _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey();
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
   bool isVerify = true;
   TextEditingController txtEmailOrMobile = new TextEditingController();
@@ -71,17 +72,13 @@ class _SignInState extends State<SignIn> {
                       MyTextFormField(
                           controller: txtEmailOrMobile,
                           lable: "Mobile No or email",
-                          validator: (input) {
-                            if (input.isValidEmail())
-                              return "";
-                            else
-                              return "Invalid email address";
-                          },
+                          validator: validateEmail,
                           hintText: "Enter mobile or email"),
 
                       //Password FormField
 
                       MyTextFormField(
+                        controller: txtPassword,
                         lable: "Password",
                         hintText: "Enter Password",
                         isPassword: password,
@@ -131,9 +128,7 @@ class _SignInState extends State<SignIn> {
                           title: "Sign In",
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
-                              print("email is validate");
-                            } else {
-                              print("error");
+                              _userLogin();
                             }
                             //_userLogin();
                           }),
@@ -211,7 +206,7 @@ class _SignInState extends State<SignIn> {
 
   _userLogin() async {
     try {
-      //LoadingIndicator.show(context);
+      LoadingIndicator.show(context);
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
@@ -224,26 +219,26 @@ class _SignInState extends State<SignIn> {
           "fcmToken": "vgwcvd"
         };
         print("$body");
-        // Services.postForSave(apiName: "api/member/memberSignIn", body: body)
-        //     .then((responseData) {
-        //   if (responseData.Data.length > 0) {
-        //     LoadingIndicator.close(context);
-        //     _saveDataToSession(responseData.Data);
-        //   } else {
-        //     print(responseData);
-        //     LoadingIndicator.close(context);
-        //     scaffoldKey.currentState.showSnackBar(SnackBar(
-        //         behavior: SnackBarBehavior.floating,
-        //         backgroundColor: Colors.red,
-        //         content: Text("${responseData.Message}")));
-        //   }
-        // }).catchError((error) {
-        //   LoadingIndicator.close(context);
-        //   scaffoldKey.currentState.showSnackBar(SnackBar(
-        //       behavior: SnackBarBehavior.floating,
-        //       backgroundColor: Colors.red,
-        //       content: Text("Error $error")));
-        // });
+        Services.postForSave(apiName: "api/member/memberSignIn", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            LoadingIndicator.close(context);
+            _saveDataToSession(responseData.Data);
+          } else {
+            print(responseData);
+            LoadingIndicator.close(context);
+            scaffoldKey.currentState.showSnackBar(SnackBar(
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.red,
+                content: Text("${responseData.Message}")));
+          }
+        }).catchError((error) {
+          LoadingIndicator.close(context);
+          scaffoldKey.currentState.showSnackBar(SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.red,
+              content: Text("Error $error")));
+        });
       }
     } catch (e) {
       LoadingIndicator.close(context);
