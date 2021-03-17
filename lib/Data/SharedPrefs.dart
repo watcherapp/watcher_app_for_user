@@ -13,6 +13,11 @@ class SharedPrefs {
   }
 
   String get memberId => _sharedPrefs.getString(Session.memberId) ?? "";
+
+  set memberId(String value) {
+    _sharedPrefs.setString(Session.memberId, value);
+  }
+
   String get memberNo => _sharedPrefs.getString(Session.memberNo) ?? "";
   String get userRole => _sharedPrefs.getString(Session.userRole) ?? "";
   String get societyId => _sharedPrefs.getString(Session.societyId) ?? "";

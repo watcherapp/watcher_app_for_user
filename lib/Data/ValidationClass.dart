@@ -12,3 +12,22 @@ extension EmailValidator on String {
         .hasMatch(this);
   }
 }
+
+extension PasswordValidator on String {
+  bool isValidPassword() {
+    return RegExp(
+            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+        .hasMatch(this);
+  }
+}
+
+String validatePassword(String value) {
+  if (value.isEmpty) {
+    return "Password can't be empty";
+  } else if (value.length < 8) {
+    return "Password should be atleast 8 characters";
+  } else if (value.isValidPassword()) {
+    return "Password Upercase Lowercase missing";
+  } else
+    return null;
+}

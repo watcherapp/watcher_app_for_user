@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ComplainDetail.dart';
-import 'package:watcher_app_for_user/Modules/AdminApp/Screens/DailyHelperScreen.dart';
 
 class ComplainComponent extends StatefulWidget {
   @override
@@ -68,86 +67,83 @@ class _ComplainComponentState extends State<ComplainComponent> {
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 4.0, right: 4),
-        child: Container(
-          height: 100,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            /* side: BorderSide(
+                                  width: 0.50, color: appPrimaryMaterialColor),*/
+            borderRadius: BorderRadius.circular(
+              4.0,
+            ),
+          ),
           child: Column(
-            children: [
-              Card(
-                shape: RoundedRectangleBorder(
-                  /* side: BorderSide(
-                                        width: 0.50, color: appPrimaryMaterialColor),*/
-                  borderRadius: BorderRadius.circular(
-                    4.0,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 4,
+                    height: 86,
+                    decoration: BoxDecoration(
+                        color: appPrimaryMaterialColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(4),
+                          bottomLeft: Radius.circular(4),
+                        )),
                   ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 5),
+                    child: Column(
                       children: <Widget>[
-                        Container(
-                          width: 4,
-                          height: 86,
-                          decoration: BoxDecoration(
-                              color: appPrimaryMaterialColor,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(4),
-                                bottomLeft: Radius.circular(4),
-                              )),
+                        Text(
+                          " ${date[0]}",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 15.0, right: 5),
-                          child: Column(
+                          padding: const EdgeInsets.only(top: 3.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                " ${date[0]}",
+                                "Mon",
+                                //  '${new DateFormat.MMM().format(DateTime.parse(DateFormat("yyyy-MM-dd").parse(widget.notification["Date"].toString().substring(0,10)).toString()))},${widget.notification["Date"].substring(0, 4)}',
                                 style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 17,
+                                    fontSize: 12,
+                                    color: Colors.black45,
                                     fontWeight: FontWeight.w600),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 3.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "Mon",
-                                      //  '${new DateFormat.MMM().format(DateTime.parse(DateFormat("yyyy-MM-dd").parse(widget.notification["Date"].toString().substring(0,10)).toString()))},${widget.notification["Date"].substring(0, 4)}',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black45,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    /*Text(
-                                                        " ${date[2]}",
-                                                        //  '${new DateFormat.MMM().format(DateTime.parse(DateFormat("yyyy-MM-dd").parse(widget.notification["Date"].toString().substring(0,10)).toString()))},${widget.notification["Date"].substring(0, 4)}',
-                                                        style: TextStyle(
-                                                            fontSize: 11,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.w600),
-                                                      )*/
-                                  ],
-                                ),
-                              ),
+                              /*Text(
+                                                  " ${date[2]}",
+                                                  //  '${new DateFormat.MMM().format(DateTime.parse(DateFormat("yyyy-MM-dd").parse(widget.notification["Date"].toString().substring(0,10)).toString()))},${widget.notification["Date"].substring(0, 4)}',
+                                                  style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                )*/
                             ],
-                            mainAxisAlignment: MainAxisAlignment.center,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Container(
-                            color: Colors.grey,
-                            width: 0.8,
-                            height: 65,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12),
-                          child: Column(
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Container(
+                      color: Colors.grey,
+                      width: 0.8,
+                      height: 65,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
@@ -223,91 +219,51 @@ class _ComplainComponentState extends State<ComplainComponent> {
                                         fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    "New / In Progress / Complete",
+                                    "✓ Resolved",
                                     //'${widget.notification["Title"]}',
                                     style: TextStyle(
-                                        color: Colors.black,
+                                        color: Colors.green,
                                         fontSize: 13,
                                         fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w300),
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
                             ),
 
                             /* Text(
-                                                // '${widget.notification["Description"]}',
-                                                "Waste disposal management event in our society so please sir take any action",
-                                                style: TextStyle(
-                                                    color: Colors.grey[500],
-                                                    fontSize: 14),
-                                              ),*/
+                                            // '${widget.notification["Description"]}',
+                                            "Waste disposal management event in our society so please sir take any action",
+                                            style: TextStyle(
+                                                color: Colors.grey[500],
+                                                fontSize: 14),
+                                          ),*/
                           ]),
-                        ),
-                        SizedBox(width: 10,),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: ComplainDetail(),
-                                  type: PageTransitionType.rightToLeft),
-                            );
-                          },
-                          child: Container(
-                            height: 20,
-                            width: 20,
-                            child: Image.asset(
-                              "images/rightArrow.png",
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              // Align(
-              //   alignment: Alignment.,
-              //   child: Container(
-              //     color: appPrimaryMaterialColor,
-              //     child: Text(
-              //       "data",
-              //       style: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.w600,
-              //       ),
-              //     ),
-              //   ),
-              // )
-              // Positioned(
-              //   right: 5.0,
-              //   bottom: 4.0,
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       color: appPrimaryMaterialColor,
-              //         borderRadius: BorderRadius.only(
-              //           bottomRight: Radius.circular(5),
-              //           bottomLeft: Radius.circular(5),
-              //           topLeft:Radius.circular(5),
-              //           topRight: Radius.circular(5),
-              //         ),),
-              //
-              //     child: Padding(
-              //       padding: const EdgeInsets.only(top: 5,bottom: 5,right: 8,left: 10),
-              //       child: Text(
-              //         "  A-101  ",
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //           fontSize: 14,
-              //           fontWeight: FontWeight.w600,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // )
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                            child: ComplainDetail(),
+                            type: PageTransitionType.rightToLeft),
+                      );
+                    },
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "images/rightArrow.png",
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
