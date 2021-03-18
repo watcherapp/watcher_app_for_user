@@ -9,12 +9,19 @@ String validateEmail(String value) {
   Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   RegExp regex = new RegExp(pattern);
-  if (value.isEmpty)
-    return "Email can't be empty";
-  else if (!regex.hasMatch(value))
-    return "Invalid Email";
-  else
-    return null;
+  if (isNumeric(value)) {
+    if (value.isEmpty)
+      return "Mobile Number can't be empty";
+    else
+      return null;
+  } else {
+    if (value.isEmpty)
+      return "Email can't be empty";
+    else if (!regex.hasMatch(value))
+      return "Invalid Email";
+    else
+      return null;
+  }
 }
 
 String validatePassword(String value) {

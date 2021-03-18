@@ -3,10 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/UserPrefrences.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
-import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
-import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 
 import 'Constants/appColors.dart';
 import 'Data/Providers/BottomNavigationBarProvider.dart';
@@ -40,7 +37,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: AdminDashboard(),
+        home: SignIn(),
       ),
     );
   }

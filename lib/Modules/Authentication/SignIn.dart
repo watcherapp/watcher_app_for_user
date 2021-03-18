@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
@@ -227,25 +228,16 @@ class _SignInState extends State<SignIn> {
           } else {
             print(responseData);
             LoadingIndicator.close(context);
-            scaffoldKey.currentState.showSnackBar(SnackBar(
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: Colors.red,
-                content: Text("${responseData.Message}")));
+            Fluttertoast.showToast(msg: "${responseData.Message}");
           }
         }).catchError((error) {
           LoadingIndicator.close(context);
-          scaffoldKey.currentState.showSnackBar(SnackBar(
-              behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.red,
-              content: Text("Error $error")));
+          Fluttertoast.showToast(msg: "${error}");
         });
       }
     } catch (e) {
       LoadingIndicator.close(context);
-      scaffoldKey.currentState.showSnackBar(SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red,
-          content: Text("You aren't connected to the Internet !")));
+      Fluttertoast.showToast(msg: "${e}");
     }
   }
 }

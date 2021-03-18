@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
@@ -19,6 +17,8 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
+  //final FirebaseAuth _firebaseAuth=new FirebaseAuth.instanceFor(app: );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
