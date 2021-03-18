@@ -15,6 +15,8 @@ class SignUp1 extends StatefulWidget {
 }
 
 class _SignUp1State extends State<SignUp1> {
+  TextEditingController txtMobile = new TextEditingController();
+  String dialCode = "+91";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,27 +71,34 @@ class _SignUp1State extends State<SignUp1> {
                       children: [
                         Expanded(
                           child: MyTextFormField(
+                              controller: txtMobile,
                               lable: "Mobile No",
                               keyboardType: TextInputType.number,
-                              maxLength: 10,
                               validator: (val) {
                                 if (val.isEmpty) {
                                   return "Please Enter Mobile No";
                                 }
                                 return "";
                               },
-                              icon: CountryCodePicker(
-                                onChanged: (CountryCode code) {
-                                  print("${code.code}");
-                                },
-                                initialSelection: 'IN',
-                                favorite: ['+91', 'IN'],
-                                showCountryOnly: true,
-                                showFlag: true,
-                                showOnlyCountryWhenClosed: false,
-                                alignLeft: false,
-                                textStyle: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
+                              icon: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 5.0, right: 5.0),
+                                child: CountryCodePicker(
+                                  onChanged: (CountryCode code) {
+                                    setState(() {
+                                      dialCode = code.dialCode;
+                                    });
+                                  },
+                                  initialSelection: 'IN',
+                                  favorite: ['+91', 'IN'],
+                                  showCountryOnly: true,
+                                  showFlag: true,
+                                  showOnlyCountryWhenClosed: false,
+                                  alignLeft: false,
+                                  textStyle: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                               hintText: "Enter mobile No"),
                         ),
@@ -121,7 +130,9 @@ class _SignUp1State extends State<SignUp1> {
                           Navigator.push(
                               context,
                               PageTransition(
-                                  child: OTPScreen(),
+                                  child: OTPScreen(
+                                      dialCode: dialCode,
+                                      mobileNo: txtMobile.text),
                                   type: PageTransitionType.rightToLeft));
                         }),
                     SizedBox(

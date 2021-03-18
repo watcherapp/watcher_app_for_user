@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'file:///E:/Keval%20Work/watcher_app_for_user/lib/Modules/MasterAdmin/Screens/PropertyManagers.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Screens/CategoryScreen.dart';
+import 'package:watcher_app_for_user/Modules/MasterAdmin/Screens/PropertyManagers.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Screens/PropertyManagersDetail.dart';
 
 class MasterAdminDashboard extends StatefulWidget {

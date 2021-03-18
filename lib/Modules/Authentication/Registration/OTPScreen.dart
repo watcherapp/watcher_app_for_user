@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
@@ -11,13 +14,75 @@ import 'SignUp3.dart';
 
 class OTPScreen extends StatefulWidget {
   var otpData;
-  OTPScreen({this.otpData});
+  var mobileNo;
+  var dialCode;
+  OTPScreen({this.otpData, this.mobileNo, this.dialCode});
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  //final FirebaseAuth _firebaseAuth=new FirebaseAuth.instanceFor(app: );
+  final FirebaseAuth _firebaseAuth =
+      new FirebaseAuth.instanceFor(app: Firebase.app());
+  String _verificationId;
+
+  @override
+  void initState() {
+    _sendOTP();
+  }
+
+  _sendOTP() async {
+    final PhoneVerificationCompleted phoneVerificationCompleted =
+        (AuthCredential authCredential) {
+      _firebaseAuth
+          .signInWithCredential(authCredential)
+          .then((UserCredential value) {
+        if (value.user != null) {
+          debugPrint("Otp Sent Successfully");
+        } else {
+          debugPrint("${value.user}");
+        }
+      }).catchError((error) {
+        debugPrint("${error}");
+      });
+    };
+
+    // On verificationFailed
+
+    final PhoneVerificationFailed verificationFailed =
+        (FirebaseAuthException authException) {
+      Fluttertoast.showToast(msg: authException.message);
+    };
+
+    // On codeSent
+
+    final PhoneCodeSent codeSent =
+        (String verificationId, [int forceResendingToken]) async {
+      _verificationId = verificationId;
+      setState(() {
+        _verificationId = verificationId;
+      });
+    };
+
+    // codeAutoRetrievalTimeout
+
+    final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
+        (String verificationId) {
+      _verificationId = verificationId;
+      setState(() {
+        _verificationId = verificationId;
+      });
+    };
+    // TODO: Change country code
+
+    await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: "${widget.dialCode}" + "${widget.mobileNo}",
+        timeout: const Duration(seconds: 60),
+        verificationCompleted: phoneVerificationCompleted,
+        verificationFailed: verificationFailed,
+        codeSent: codeSent,
+        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +125,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 4.0),
                       child: Text(
-                        "+ 9429828152",
+                        "${widget.dialCode}" + "${widget.mobileNo}",
                         style: fontConstants.smallText,
                         textAlign: TextAlign.center,
                       ),
@@ -120,13 +185,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       height: 35,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        /*Navigator.push(
-                            context,
-                            PageTransition(
-                                child: Login(),
-                                type: PageTransitionType.bottomToTop));*/
-                      },
+                      onTap: () {},
                       child: Column(
                         children: [
                           RichText(
