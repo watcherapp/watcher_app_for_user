@@ -116,7 +116,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {"societyId": "601a7269a585c6079c1d21f8"};
         print("$body");
-        Services.postForSave(
+        Services.responseHandler(
                 apiName: "api/admin/getAllSocietyComplain", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
@@ -229,7 +229,8 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
               ? Center(
                   child: CircularProgressIndicator(
                   // backgroundColor: Colors.red,
-                    valueColor: new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                      appPrimaryMaterialColor),
                 ))
               : Column(
                   children: [
@@ -263,7 +264,6 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
                                 itemCount: getAllComplaintList.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return ComplainComponent(
-
                                     getAllComplain: getAllComplaintList[index],
                                   );
                                 }),

@@ -17,22 +17,20 @@ class _VehicleScreenState extends State<VehicleScreen> {
           SizedBox(
             height: 35,
           ),
-          GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 15,
-              padding:
-                  EdgeInsets.only(top: 25, left: 11, right: 11, bottom: 10),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
-                  childAspectRatio: 0.8,
-                  crossAxisSpacing: 3.5,
-                  mainAxisSpacing: 3.0),
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 6.0, right: 6, top: 8),
-                  child: Transform(
-                    transform: Matrix4.skewY(0.3)..rotateZ(3.14 / 4.0),
+          Expanded(
+            child: GridView.builder(
+                shrinkWrap: true,
+                itemCount: 15,
+                padding:
+                    EdgeInsets.only(top: 25, left: 11, right: 11, bottom: 10),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    childAspectRatio: 1,
+                    crossAxisSpacing: 0.5,
+                    mainAxisSpacing: 0.5),
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 7, right: 3, left: 3),
                     child: Container(
                       color: Colors.grey[200],
                       child: Padding(
@@ -42,7 +40,6 @@ class _VehicleScreenState extends State<VehicleScreen> {
                             dashPattern: [4],
                             //padding: EdgeInsets.all(6.0),
                             child: Container(
-                                height: 200.0,
                                 decoration: BoxDecoration(
                                   // borderRadius: BorderRadius.circular(30),
                                   shape: BoxShape.rectangle,
@@ -58,9 +55,9 @@ class _VehicleScreenState extends State<VehicleScreen> {
                                 ))),
                       ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+          ),
         ],
       ),
     );
@@ -83,3 +80,4 @@ class MyVerticleText extends StatelessWidget {
     );
   }
 }
+//transform: Matrix4.skewX(0.1)..rotateX(3.14 / 8.0),

@@ -59,36 +59,45 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
             ),
           ),
           SizedBox(
-            height: 60,
+            height: 40,
           ),
-          ListTile(
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: Icon(
-                Icons.person,
-                size: 20,
-                color: Colors.black54,
-              ),
-            ),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Meghana Solanki',
-                  style: TextStyle(
-                      fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
-                  textScaleFactor: 1,
+          Divider(
+            height: 2,
+            color: Colors.grey[300],
+            indent: 20,
+            endIndent: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: ListTile(
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: Icon(
+                  Icons.person,
+                  size: 20,
+                  color: Colors.black54,
                 ),
-                Text(
-                  'Property Manager',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey,
-                    fontSize: 13,
+              ),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Meghana Solanki',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat', fontWeight: FontWeight.w500),
+                    textScaleFactor: 1,
                   ),
-                )
-              ],
+                  Text(
+                    'Property Manager',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                      fontSize: 13,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           Padding(
@@ -313,7 +322,7 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
           ),
           SizedBox(height: 25),
           Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8),
+            padding: const EdgeInsets.only(left: 15.0, right: 15),
             child: Row(
               children: [
                 Expanded(
@@ -322,7 +331,7 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
                       borderRadius: BorderRadius.circular(5.0),
                       // side: BorderSide(color: Colors.red)
                     ),
-                    height: 35,
+                    height: 38,
                     color: appPrimaryMaterialColor,
                     onPressed: () {},
                     child: Row(
@@ -357,7 +366,7 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
                       borderRadius: BorderRadius.circular(5.0),
                       // side: BorderSide(color: Colors.red)
                     ),
-                    height: 35,
+                    height: 38,
                     color: appPrimaryMaterialColor,
                     onPressed: () {},
                     child: Row(

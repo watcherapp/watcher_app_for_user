@@ -1,6 +1,10 @@
 const String API_URL = "https://watcher03.herokuapp.com/";
 const String Access_Token = "RvHiQ6J4QJoAMeA0ysCw-HJklmBHklmnknNJn-hghJUdksjH";
 
+class Messages {
+  static const String message = "You Are Not Connected To Internet";
+}
+
 class Session {
   static const String memberId = "MemberId";
   static const String memberNo = "MemberNo";
