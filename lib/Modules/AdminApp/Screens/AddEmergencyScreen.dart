@@ -1,12 +1,17 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
 
 class AddEmergencyScreen extends StatefulWidget {
   @override
@@ -14,8 +19,13 @@ class AddEmergencyScreen extends StatefulWidget {
 }
 
 class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
-  String stringImagepath;
+  File imagePath;
   File _image;
+  bool isLoading = false;
+  List addEmergencyList = [];
+
+  TextEditingController txtName = new TextEditingController();
+  TextEditingController txtNumber = new TextEditingController();
 
   Future getFromCamera() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -35,21 +45,104 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
     }
   }
 
-  setImage(var image) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        stringImagepath = image;
-      });
-    });
-    print(stringImagepath);
+  getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('$path');
+
+    var file = File('${(await getTemporaryDirectory()).path}/$path');
+    await file.writeAsBytes(
+      byteData.buffer.asUint8List(
+        byteData.offsetInBytes,
+        byteData.lengthInBytes,
+      ),
+    );
+
+    print(file.toString());
   }
 
   void _settingModalBottomSheet() {
     showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return EmergencyBottomSheet(setImagePath: setImage);
+      context: context,
+      builder: (BuildContext bc) {
+        return EmergencyBottomSheet(
+          setImagePath: getImageFileFromAssets,
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    // _addEmergency();
+  }
+
+  _addEmergency() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        String fileName = imagePath.path.split('/').last;
+
+        FormData formData = FormData.fromMap({
+          "societyId": "60129950e19dc51744dd7cfe",
+          "contactName": txtName.text,
+          "contactNo": txtNumber.text,
+          "Image": await MultipartFile.fromFile(
+            imagePath.path,
+            filename: fileName,
+          ),
         });
+        print("$formData");
+        Services.postForSave(
+                apiName: "api/admin/addEmergencyNumber", body: formData)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            print(responseData.Data);
+            addEmergencyList = responseData.Data;
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            print(responseData);
+
+            Fluttertoast.showToast(
+                msg: "${responseData.Message}",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                // textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+              msg: "Error $error",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              // textColor: Colors.white,
+              fontSize: 16.0);
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+          msg: "You aren't connected to the Internet !",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          // textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   @override
@@ -98,7 +191,7 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
                           _settingModalBottomSheet();
                         },
                         child: Center(
-                          child: stringImagepath != null
+                          child: imagePath != null
                               ? Container(
                                   height: 200.0,
                                   decoration: BoxDecoration(
@@ -108,8 +201,8 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
                                         width: 0.2,
                                         color: appPrimaryMaterialColor),*/
                                     image: DecorationImage(
-                                        image: AssetImage(
-                                          stringImagepath,
+                                        image: FileImage(
+                                          imagePath,
                                         ),
                                         fit: BoxFit.contain),
                                   ),
@@ -139,7 +232,9 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: MyButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _addEmergency();
+                  },
                   title: "Add",
                 ),
               )
@@ -172,6 +267,7 @@ class EmergencyBottomSheet extends StatefulWidget {
   Function setImagePath;
 
   EmergencyBottomSheet({this.setImagePath});
+
   @override
   _EmergencyBottomSheetState createState() => _EmergencyBottomSheetState();
 }
@@ -273,7 +369,7 @@ class _EmergencyBottomSheetState extends State<EmergencyBottomSheet> {
     );
   }
 
-  /*Widget bottomBox(
+/*Widget bottomBox(
     String label,
     String img,
   ) {

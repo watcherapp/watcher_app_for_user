@@ -19,6 +19,7 @@ class _ComplainComponentState extends State<ComplainComponent> {
   String dateData;
   List<String> date;
   String month;
+  String mydate;
 
   @override
   void initState() {
@@ -28,12 +29,17 @@ class _ComplainComponentState extends State<ComplainComponent> {
 
   String funDate() {
     dateData = "${widget.getAllComplain["dateTime"][0]}";
-    date = dateData.split('/');
-    print(date);
-    funMonth("${date[1]}");
+    var date_month = dateData.split('/');
+    var date_date = dateData.split('/');
+    mydate = date_date[0];
+
+    // print("${date_month[1]}");
+    // print("${date_date[0]}");
+    funMonth("${date_month[1]}");
   }
 
   funMonth(String mon) {
+    print("month-${mon}");
     if (mon == "01") {
       month = "Jan";
     } else if (mon == "02") {
@@ -61,6 +67,7 @@ class _ComplainComponentState extends State<ComplainComponent> {
     } else {
       month = "";
     }
+    return month;
   }
 
   @override
@@ -108,7 +115,7 @@ class _ComplainComponentState extends State<ComplainComponent> {
                           child: Column(
                             children: <Widget>[
                               Text(
-                                " ${date}",
+                                " ${mydate}",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 17,
@@ -120,7 +127,7 @@ class _ComplainComponentState extends State<ComplainComponent> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      "Mon",
+                                      " ${month}",
                                       //  '${new DateFormat.MMM().format(DateTime.parse(DateFormat("yyyy-MM-dd").parse(widget.notification["Date"].toString().substring(0,10)).toString()))},${widget.notification["Date"].substring(0, 4)}',
                                       style: TextStyle(
                                           fontSize: 12,
@@ -203,30 +210,26 @@ class _ComplainComponentState extends State<ComplainComponent> {
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "Priority  :  ",
-                                              //'${widget.notification["Title"]}',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12,
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                            Text(
-                                              "High",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              //'${widget.notification["Title"]}',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 13,
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.w300),
-                                            ),
-                                          ],
-                                        ),
+                                        // Text(
+                                        //   "Priority  :  ",
+                                        //   //'${widget.notification["Title"]}',
+                                        //   style: TextStyle(
+                                        //       color: Colors.black,
+                                        //       fontSize: 12,
+                                        //       fontFamily: 'Montserrat',
+                                        //       fontWeight: FontWeight.w400),
+                                        // ),
+                                        // Text(
+                                        //   "High",
+                                        //   maxLines: 1,
+                                        //   overflow: TextOverflow.ellipsis,
+                                        //   //'${widget.notification["Title"]}',
+                                        //   style: TextStyle(
+                                        //       color: Colors.black,
+                                        //       fontSize: 13,
+                                        //       fontFamily: 'Montserrat',
+                                        //       fontWeight: FontWeight.w300),
+                                        // ),
                                         Row(
                                           children: [
                                             Text(
@@ -239,7 +242,19 @@ class _ComplainComponentState extends State<ComplainComponent> {
                                                   fontWeight: FontWeight.w400),
                                             ),
                                             Text(
-                                              "${widget.getAllComplain["complainStatus"]}",
+                                              widget.getAllComplain[
+                                              "complainStatus"] ==
+                                                  "0"
+                                                  ? "REQUESTED"
+                                                  : widget.getAllComplain[
+                                              "complainStatus"] ==
+                                                  "1"
+                                                  ? "REJECTED"
+                                                  : widget.getAllComplain[
+                                              "complainStatus"] ==
+                                                  "2"
+                                                  ? "START TAKING ACTIONS"
+                                                  : "RESOLVED",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               //'${widget.notification["Title"]}',
