@@ -17,7 +17,6 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
   List allEmergencyList = [];
   bool isLoading = false;
 
-
   @override
   void initState() {
     // _getAllEmergency();
@@ -31,11 +30,9 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-       var body = {
-         "societyId" : "60129950e19dc51744dd7cfe"
-       };
-        Services.postForSave(
-            apiName: "api/admin/addEmergencyNumber", body: body)
+        var body = {"societyId": "60129950e19dc51744dd7cfe"};
+        Services.responseHandler(
+                apiName: "api/admin/addEmergencyNumber", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -83,6 +80,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
           fontSize: 16.0);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

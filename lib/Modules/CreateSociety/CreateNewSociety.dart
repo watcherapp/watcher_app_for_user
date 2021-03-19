@@ -1,16 +1,13 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:watcher_app_for_user/CommonWidgets/DialogOpenFormField.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyCustomDropDown.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
-import 'package:watcher_app_for_user/Dialogs/MyDropdown.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 
 class CreateNewSociety extends StatefulWidget {
@@ -39,7 +36,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        Services.postForSave(
+        Services.responseHandler(
           apiName: "api/society/getAllSocietyCategory",
         ).then((responseData) {
           if (responseData.Data.length > 0) {
@@ -117,7 +114,8 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           "categoryId": "600574f31afece007c40804e"
         };
         print("$body");
-        Services.postForSave(apiName: "api/society/createSociety", body: body)
+        Services.responseHandler(
+                apiName: "api/society/createSociety", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -183,7 +181,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        Services.postForSave(
+        Services.responseHandler(
           apiName: "api/admin/getAllCountry",
         ).then((responseData) {
           if (responseData.Data.length > 0) {
@@ -255,7 +253,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           "countryCode": selectedCountry,
         };
         print("$body");
-        Services.postForSave(
+        Services.responseHandler(
           apiName: "api/admin/getState",
           body: body,
         ).then((responseData) {
@@ -325,7 +323,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           "countryCode": "IN",
           "stateCode": "GJ",
         };
-        Services.postForSave(
+        Services.responseHandler(
           apiName: "api/admin/getCity",
           body: body,
         ).then((responseData) {

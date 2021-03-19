@@ -28,7 +28,7 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   void initState() {
-    _sendOTP();
+    // _sendOTP();
   }
 
   _sendOTP() async {

@@ -1,12 +1,21 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
+import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Data/ClassList/Gender.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/ChooseCreateOrJoin.dart';
 
 class SignUp3 extends StatefulWidget {
@@ -16,6 +25,29 @@ class SignUp3 extends StatefulWidget {
 
 class _SignUp3State extends State<SignUp3> {
   int selectedIndex = 0;
+  TextEditingController txtFirstName = TextEditingController();
+  TextEditingController txtMiddleName = TextEditingController();
+  TextEditingController txtLastName = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPassword = TextEditingController();
+  TextEditingController txtConfirmPassword = TextEditingController();
+
+  List<Gender> genderList = [
+    Gender(icon: "images/male.png", name: "Male", isSelected: false),
+    Gender(icon: "images/female.png", name: "Female", isSelected: false),
+    Gender(icon: "images/other.png", name: "Other", isSelected: false),
+  ];
+  String selectedGender = "";
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      genderList.forEach((gender) => gender.isSelected = false);
+      genderList[0].isSelected = true;
+      selectedGender = genderList[0].name;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
@@ -93,6 +125,7 @@ class _SignUp3State extends State<SignUp3> {
                           child: SingleChildScrollView(
                             physics: BouncingScrollPhysics(),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
                                   height: 15,
@@ -134,8 +167,65 @@ class _SignUp3State extends State<SignUp3> {
                                     },
                                     hintText: "Enter email"),
                                 SizedBox(
-                                  height: 30,
+                                  height: 12,
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 4.0, bottom: 4.0),
+                                  child: Text("Gender",
+                                      style: fontConstants.formFieldLabel),
+                                ),
+                                Row(
+                                  children: genderList.map((value) {
+                                    int index = genderList.indexOf(value);
+                                    return Padding(
+                                      padding: const EdgeInsets.only(left: 2.0),
+                                      child: SizedBox(
+                                        width: 90,
+                                        child: OutlinedButton(
+                                            style: ButtonStyle(),
+                                            onPressed: () {
+                                              setState(() {
+                                                genderList.forEach((gender) =>
+                                                    gender.isSelected = false);
+                                                genderList[index].isSelected =
+                                                    true;
+                                                selectedGender =
+                                                    genderList[index].name;
+                                              });
+                                              print(selectedGender);
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(6.0),
+                                              child: Column(
+                                                children: [
+                                                  Image.asset(
+                                                    genderList[index].icon,
+                                                    color: genderList[index]
+                                                            .isSelected
+                                                        ? appPrimaryMaterialColor
+                                                        : Colors.grey,
+                                                    width: 18,
+                                                  ),
+                                                  Text(genderList[index].name,
+                                                      style: TextStyle(
+                                                          fontSize: 11,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: genderList[
+                                                                      index]
+                                                                  .isSelected
+                                                              ? appPrimaryMaterialColor
+                                                              : Colors.grey)),
+                                                ],
+                                              ),
+                                            )),
+                                      ),
+                                    );
+                                  }).toList(),
+                                )
+
                                 /* MyButton(
                                     title: "Next",
                                     onPressed: () {
@@ -419,5 +509,57 @@ class _SignUp3State extends State<SignUp3> {
         ),
       ),
     );
+  }
+
+  _saveDataToSession(var sessionData) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(Session.memberId, sessionData[0]["_id"] ?? "");
+    prefs.setString(Session.memberNo, sessionData[0]["memberNo"] ?? "");
+    prefs.setString(
+        Session.userRole, sessionData[0]["userRole"].toString() ?? "");
+    Navigator.pushReplacement(
+        context,
+        PageTransition(
+            child: ChooseCreateOrJoin(), type: PageTransitionType.leftToRight));
+  }
+
+  _userSignUp() async {
+    try {
+      LoadingIndicator.show(context);
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = FormData.fromMap({
+          "firstName": txtFirstName.text,
+          "lastName": txtLastName.text,
+          "mobileNo1": "1234567890",
+          "emailId": txtEmail.text,
+          "password": txtPassword.text,
+          "userRole": "",
+          "fcmToken": "d5dff5d5d5s5d",
+          "refferBy": "",
+          "deviceType": Platform.isAndroid ? "android" : "ios",
+          "gender": selectedGender,
+          "identityProof": "6038e235eecaca08c8744d57"
+        });
+        Services.responseHandler(apiName: "api/member/memberSignIn", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            LoadingIndicator.close(context);
+            _saveDataToSession(responseData.Data);
+          } else {
+            print(responseData);
+            LoadingIndicator.close(context);
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          LoadingIndicator.close(context);
+          Fluttertoast.showToast(msg: "$error");
+        });
+      }
+    } catch (e) {
+      LoadingIndicator.close(context);
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
   }
 }

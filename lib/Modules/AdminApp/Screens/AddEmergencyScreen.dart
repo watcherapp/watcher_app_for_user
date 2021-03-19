@@ -95,7 +95,7 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
           ),
         });
         print("$formData");
-        Services.postForSave(
+        Services.responseHandler(
                 apiName: "api/admin/addEmergencyNumber", body: formData)
             .then((responseData) {
           if (responseData.Data.length > 0) {
