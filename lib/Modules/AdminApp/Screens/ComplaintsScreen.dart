@@ -110,7 +110,6 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
       setState(() {
         isLoading = true;
       });
-      //LoadingIndicator.show(context);
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
@@ -122,21 +121,12 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
           if (responseData.Data.length > 0) {
             print(responseData.Data);
             getAllComplaintList = responseData.Data;
-            // LoadingIndicator.close(context);
             setState(() {
               isLoading = false;
             });
           } else {
             print(responseData);
-            //LoadingIndicator.close(context);
-            // ignore: deprecated_member_use
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   SnackBar(
-            //     behavior: SnackBarBehavior.floating,
-            //     backgroundColor: Colors.red,
-            //     content: Text("${responseData.Message}"),
-            //   ),
-            // );
+
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
                 toastLength: Toast.LENGTH_SHORT,
@@ -150,7 +140,6 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
           setState(() {
             isLoading = false;
           });
-          //LoadingIndicator.close(context);
           Fluttertoast.showToast(
               msg: "Error $error",
               toastLength: Toast.LENGTH_SHORT,
@@ -159,20 +148,12 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
               backgroundColor: Colors.red,
               // textColor: Colors.white,
               fontSize: 16.0);
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     behavior: SnackBarBehavior.floating,
-          //     backgroundColor: Colors.red,
-          //     content: Text("Error $error"),
-          //   ),
-          // );
         });
       }
     } catch (e) {
       setState(() {
         isLoading = false;
       });
-      //LoadingIndicator.close(context);
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
           toastLength: Toast.LENGTH_SHORT,
@@ -181,13 +162,6 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
           backgroundColor: Colors.red,
           // textColor: Colors.white,
           fontSize: 16.0);
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     behavior: SnackBarBehavior.floating,
-      //     backgroundColor: Colors.red,
-      //     content: Text("You aren't connected to the Internet !"),
-      //   ),
-      // );
     }
   }
 

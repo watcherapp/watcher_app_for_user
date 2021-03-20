@@ -5,10 +5,11 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 class MyDropDown extends StatefulWidget {
   String dropDownTitle;
   List dropDownData = [];
+  double myHeight;
   Function onSelectValue;
   bool isSearchable = true;
 
-  MyDropDown({this.dropDownTitle, this.dropDownData, this.onSelectValue,this.isSearchable});
+  MyDropDown({this.dropDownTitle, this.dropDownData, this.onSelectValue,this.isSearchable,this.myHeight});
 
   @override
   _MyDropDownState createState() => _MyDropDownState();
@@ -70,23 +71,28 @@ class _MyDropDownState extends State<MyDropDown> {
               ),
             ),
           ],
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: widget.dropDownData.length ?? 0,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    widget.onSelectValue(widget.dropDownData[index]);
-                    Navigator.of(context).pop();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 12.0, left: 16, bottom: 12.0),
-                    child: Text(widget.dropDownData[index],
-                        style: TextStyle(fontSize: 15, color: Colors.black87)),
-                  ),
-                );
-              }),
+          SingleChildScrollView(
+            child: Container(
+              height: widget.myHeight,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.dropDownData.length ?? 0,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        widget.onSelectValue(widget.dropDownData[index]);
+                        Navigator.of(context).pop();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 12.0, left: 16, bottom: 12.0),
+                        child: Text(widget.dropDownData[index],
+                            style: TextStyle(fontSize: 15, color: Colors.black87)),
+                      ),
+                    );
+                  }),
+            ),
+          ),
           SizedBox(
             height: 8,
           )
