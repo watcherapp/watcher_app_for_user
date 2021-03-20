@@ -5,21 +5,25 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 
 class PropertyManagerProvider extends ChangeNotifier {
-  List ManagerDetailList = [];
+  List ManagerDatailList = [];
 
   PropertyManagerProvider() {
     getManagerData();
   }
 
-  Future<int> getManagerData() async {
+  Future<int> getManagerData([var status]) async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        var body = {
+          "requestStatusCode": 3,
+        };
         Services.responseHandler(
-                apiName: 'api/admin/getListOfRequestPropertyManager')
+                apiName: 'api/admin/getListOfRequestPropertyManager',
+                body: body)
             .then((responselist) async {
           if (responselist.Data.length > 0) {
-            ManagerDetailList = responselist.Data;
+            ManagerDatailList = responselist.Data;
             notifyListeners();
           }
           return 0;

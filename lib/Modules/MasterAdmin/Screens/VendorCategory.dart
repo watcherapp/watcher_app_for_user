@@ -1,7 +1,13 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Modules/MasterAdmin/Components/VendorComponent.dart';
 
 class VendorCategory extends StatefulWidget {
   @override
@@ -10,12 +16,17 @@ class VendorCategory extends StatefulWidget {
 
 class _VendorCategoryState extends State<VendorCategory> {
   bool isAdd = false;
-  final TextEditingController txtguestname = new TextEditingController();
+  final TextEditingController txtvendorname = new TextEditingController();
   List tempList = [];
+  bool isLoading = false;
+  bool isDLoading = false;
+  List VendorCatList = [];
+  bool isSLoading = false;
 
   @override
   void initState() {
     print("${isAdd}");
+    _getVendorCategory();
   }
 
   @override
@@ -30,13 +41,11 @@ class _VendorCategoryState extends State<VendorCategory> {
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          isAdd == true
-              ? Column(
+      body: isAdd == true
+          ? SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0, right: 10),
@@ -45,42 +54,43 @@ class _VendorCategoryState extends State<VendorCategory> {
                         children: [
                           Flexible(
                             child: MyTextFormField(
-                                controller: txtguestname,
-                                lable: "Business Name",
+                                controller: txtvendorname,
+                                lable: "Vendor Name",
                                 validator: (val) {
                                   if (val.isEmpty) {
-                                    return "Please Enter Business Name";
+                                    return "Please Enter Vendor Name";
                                   }
                                   return "";
                                 },
-                                hintText: "Type Business Name"),
+                                hintText: "Type Vendor Name"),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 7.0, top: 29),
+                            padding: const EdgeInsets.only(left: 7.0, top: 36),
                             child: Container(
                               width: 90,
-                              child: FlatButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  // side: BorderSide(color: Colors.red)
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: appPrimaryMaterialColor,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(3))),
                                 ),
-                                height: 32,
-                                color: appPrimaryMaterialColor,
                                 onPressed: () {
-                                  if (txtguestname.text != "") {
+                                  if (txtvendorname.text != "") {
                                     setState(() {
-                                      tempList.add(txtguestname.text);
-                                      txtguestname.text = "";
+                                      tempList.add(txtvendorname.text);
+                                      txtvendorname.text = "";
                                     });
                                     Fluttertoast.showToast(
                                         msg: "Data Added Successfully");
                                   }
                                 },
                                 child: Text(
-                                  "Add",
+                                  'Add',
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontSize: 13,
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
                               ),
@@ -102,6 +112,7 @@ class _VendorCategoryState extends State<VendorCategory> {
                               ),
                             ),
                         shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.only(top: 5, bottom: 18),
                         scrollDirection: Axis.vertical,
                         itemCount: tempList.length,
@@ -138,94 +149,41 @@ class _VendorCategoryState extends State<VendorCategory> {
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 1.3,
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          color: appPrimaryMaterialColor,
-                          onPressed: () {},
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Save",
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
-                            ],
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: appPrimaryMaterialColor,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(3))),
                           ),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              : Column(
-                  children: [
-                    ListView.separated(
-                        separatorBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10.0, right: 10, top: 13),
-                              child: Divider(
-                                color: Colors.grey,
-                                height: 1,
-                              ),
-                            ),
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(top: 5, bottom: 18),
-                        scrollDirection: Axis.vertical,
-                        itemCount: 5,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: 15.0, right: 15, top: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("megha solanki"),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Icon(
-                                    Icons.remove_circle,
-                                    color: Colors.black54,
-                                    size: 18,
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Center(
-                      child: Container(
-                        width: 120,
-                        child: FlatButton(
-                          height: 32,
-                          color: Colors.grey[200],
                           onPressed: () {
-                            setState(() {
-                              isAdd = true;
-                            });
+                            _addVendorCategory();
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add_circle_outline_sharp,
-                                  color: appPrimaryMaterialColor, size: 17),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 4.0),
-                                child: Text(
-                                  "Add More",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 13,
-                                      color: appPrimaryMaterialColor),
-                                ),
-                              ),
+                              isSLoading == true
+                                  ? Center(
+                                      child: SizedBox(
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 3,
+                                          valueColor:
+                                              new AlwaysStoppedAnimation<Color>(
+                                                  Colors.white),
+                                          //backgroundColor: Colors.white54,
+                                        ),
+                                        height: 26,
+                                        width: 34,
+                                      ),
+                                    )
+                                  : Text(
+                                      "Save",
+                                      style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
                             ],
                           ),
                         ),
@@ -233,8 +191,182 @@ class _VendorCategoryState extends State<VendorCategory> {
                     )
                   ],
                 ),
-        ],
-      ),
+              ),
+            )
+          : isLoading == true
+              ? Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                        appPrimaryMaterialColor),
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 25.0),
+                    child: Column(
+                      children: [
+                        VendorCatList.length > 0
+                            ? ListView.separated(
+                                separatorBuilder: (context, index) => Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10.0, right: 10, top: 13),
+                                      child: Divider(
+                                        color: Colors.grey,
+                                        height: 1,
+                                      ),
+                                    ),
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.only(top: 5, bottom: 18),
+                                scrollDirection: Axis.vertical,
+                                itemCount: VendorCatList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return VendorComponent(
+                                    vandorData: VendorCatList[index],
+                                    onremove: () {
+                                      _getVendorCategory();
+                                    },
+                                  );
+                                })
+                            : Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 20.0),
+                                  child: Text(
+                                    "No Data Found...",
+                                    style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 12,
+                                        //fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+                        SizedBox(
+                          height: 70,
+                        ),
+                        Center(
+                          child: Container(
+                            width: 120,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.grey[200],
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(1))),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isAdd = true;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.add_circle_outline_sharp,
+                                      color: appPrimaryMaterialColor, size: 17),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4.0),
+                                    child: Text(
+                                      "Add More",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 13,
+                                          color: appPrimaryMaterialColor),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
     );
+  }
+
+  _getVendorCategory() async {
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        setState(() {
+          isLoading = true;
+        });
+        Services.responseHandler(apiName: "api/vendor/getAllVendorCategory")
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              VendorCatList = responseData.Data;
+              isLoading = false;
+            });
+            print(responseData.Data);
+          } else {
+            print(responseData);
+            setState(() {
+              VendorCatList = responseData.Data;
+              isLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
+
+  _addVendorCategory() async {
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {"vendorCategoryName": tempList};
+        log(tempList.toString());
+        setState(() {
+          isSLoading = true;
+        });
+        Services.responseHandler(
+                apiName: "api/vendor/addVendorCategory", body: body)
+            .then((responseData) {
+          if (responseData.Data == 1) {
+            print(responseData);
+            setState(() {
+              isAdd = false;
+              isSLoading = false;
+            });
+            tempList.clear();
+            _getVendorCategory();
+            print(responseData.Data);
+          } else {
+            print(responseData);
+            setState(() {
+              isSLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            isSLoading = false;
+          });
+          Fluttertoast.showToast(msg: "$error");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isSLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
   }
 }

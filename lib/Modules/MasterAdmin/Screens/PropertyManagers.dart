@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Data/Providers/PropertyManagerDetail.dart';
+import 'package:watcher_app_for_user/Data/Providers/PropertyManagerProvider.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Components/PropertyManagerComponent.dart';
 
 class PropertyManagers extends StatefulWidget {
@@ -15,6 +15,25 @@ class _PropertyManagersState extends State<PropertyManagers> {
   String dateData;
   List<String> date;
   String month;
+
+  List tabList = [
+    {
+      "tabName": "Pending",
+      "status": "0",
+    },
+    {
+      "tabName": "Approved",
+      "status": "1",
+    },
+    {
+      "tabName": "Denied",
+      "status": "2",
+    },
+    {
+      "tabName": "All",
+      "status": "3",
+    },
+  ];
 
   @override
   void initState() {
@@ -62,7 +81,7 @@ class _PropertyManagersState extends State<PropertyManagers> {
   Widget build(BuildContext context) {
     var provider = Provider.of<PropertyManagerProvider>(context);
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
@@ -75,7 +94,7 @@ class _PropertyManagersState extends State<PropertyManagers> {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 7, right: 7),
+              padding: const EdgeInsets.only(top: 10.0, left: 4, right: 4),
               child: Container(
                 height: 38,
                 child: TabBar(
@@ -88,21 +107,33 @@ class _PropertyManagersState extends State<PropertyManagers> {
                   //isScrollable: true,
                   indicatorColor: appPrimaryMaterialColor,
                   indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(22),
                       color: appPrimaryMaterialColor),
                   onTap: (index) {},
                   tabs: <Widget>[
                     Tab(
                       child: Text(
-                        "All",
-                        style: TextStyle(fontSize: 15),
+                        "Pending",
+                        style: TextStyle(fontSize: 13),
                       ),
                     ),
                     Tab(
-                      child: Text("Approval"),
+                      child: Text(
+                        "Approved",
+                        style: TextStyle(fontSize: 13),
+                      ),
                     ),
                     Tab(
-                      child: Text("Denied "),
+                      child: Text(
+                        "Denied ",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        "All",
+                        style: TextStyle(fontSize: 13),
+                      ),
                     ),
                   ],
                 ),
@@ -111,18 +142,22 @@ class _PropertyManagersState extends State<PropertyManagers> {
             Expanded(
               child: TabBarView(
                 children: [
+                  Icon(Icons.directions_transit),
+                  Icon(Icons.directions_bike),
+                  Icon(Icons.directions_bike),
                   Padding(
                     padding: const EdgeInsets.only(top: 12.0, bottom: 7),
                     child: ListView.builder(
                         physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: provider.ManagerDetailList.length,
+                        itemCount: provider.ManagerDatailList.length,
                         itemBuilder: (context, index) {
-                          return PropertyManagetComponent();
+                          return PropertyManagetComponent(
+                            propertyManagerData:
+                                provider.ManagerDatailList[index],
+                          );
                         }),
                   ),
-                  Icon(Icons.directions_transit),
-                  Icon(Icons.directions_bike),
                 ],
               ),
             ),

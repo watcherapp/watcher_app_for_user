@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Data/Providers/PropertyManagerDetail.dart';
+import 'package:watcher_app_for_user/Data/Providers/PropertyManagerProvider.dart';
 import 'package:watcher_app_for_user/Data/Providers/UserPrefrences.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
