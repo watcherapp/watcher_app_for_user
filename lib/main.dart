@@ -11,7 +11,7 @@ import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.da
 import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 
 import 'Constants/appColors.dart';
-import 'Data/Providers/BottomNavigationBarProvider.dart';
+import 'Data/Providers/IndexCountProvider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<BottomNavigationBarProvider>(
-            create: (context) => BottomNavigationBarProvider()),
+        ChangeNotifierProvider<IndexCountProvider>(
+            create: (context) => IndexCountProvider()),
         ChangeNotifierProvider<UserPreferenceProvider>(
             create: (context) => UserPreferenceProvider()),
         ChangeNotifierProvider<PropertyManagerProvider>(

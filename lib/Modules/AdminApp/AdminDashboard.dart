@@ -6,13 +6,13 @@ import 'package:share/share.dart';
 import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Data/Providers/BottomNavigationBarProvider.dart';
+import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ComplaintsScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/EmergencyScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/InteractionScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyProfile.dart';
-import 'package:watcher_app_for_user/Modules/AdminApp/Screens/WatcherScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ParkingScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/WatcherScreen.dart';
 
 class AdminDashboard extends StatefulWidget {
   @override
@@ -101,7 +101,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<BottomNavigationBarProvider>(context);
+    var provider = Provider.of<IndexCountProvider>(context);
     return Scaffold(
       // backgroundColor: Colors.grey[300],
       // appBar: AppBar(
@@ -341,7 +341,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(left: 0.0, right: 0.0),
-              child: screenList[provider.currentIndex],
+              child: screenList[provider.bottomBarCurrentIndex],
             ),
           ),
         ],

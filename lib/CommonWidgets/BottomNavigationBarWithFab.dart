@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
-import 'package:watcher_app_for_user/Data/Providers/BottomNavigationBarProvider.dart';
+import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
 
 // ignore: must_be_immutable
 class BottomNavigationBarWithFab extends StatefulWidget {
@@ -27,7 +27,7 @@ class _BottomNavigationBarWithFabState
   double opaCity = 0;
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<BottomNavigationBarProvider>(context);
+    var provider = Provider.of<IndexCountProvider>(context);
     return SizedBox(
       height: widget.height,
       child: BottomAppBar(
@@ -36,7 +36,7 @@ class _BottomNavigationBarWithFabState
           return Expanded(
             child: InkWell(
               onTap: () {
-                provider.currentIndex = index;
+                provider.bottomBarCurrentIndex = index;
                 setState(() {
                   opaCity = 1;
                 });
@@ -44,18 +44,18 @@ class _BottomNavigationBarWithFabState
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (provider.currentIndex != 2 &&
+                  if (provider.bottomBarCurrentIndex != 2 &&
                       widget.items[index].imageIcon != null) ...[
                     Image.asset("${widget.items[index].imageIcon}", width: 45)
                   ] else ...[
                     Icon(widget.items[index].icon,
-                        color: provider.currentIndex == index
+                        color: provider.bottomBarCurrentIndex == index
                             ? widget.selectedColor
                             : widget.unSelectedColor),
                     Text(widget.items[index].title,
                         style: TextStyle(
                             fontSize: 11,
-                            color: provider.currentIndex == index
+                            color: provider.bottomBarCurrentIndex == index
                                 ? widget.selectedColor
                                 : widget.unSelectedColor,
                             fontWeight: FontWeight.bold)),

@@ -71,8 +71,18 @@ class MyTextFormField extends StatelessWidget {
                 contentPadding:
                     EdgeInsets.only(left: 20, right: 8, top: 4, bottom: 4),
                 counterText: "",
+                errorStyle:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                 suffix: hideShowText,
                 prefixIcon: icon,
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    width: 1.5,
+                    color: Colors.red,
+                    style: BorderStyle.solid,
+                  ),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(

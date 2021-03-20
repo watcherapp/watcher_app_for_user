@@ -4,8 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
 import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
@@ -15,6 +18,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/ClassList/Gender.dart';
+import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/ChooseCreateOrJoin.dart';
 
@@ -32,6 +36,10 @@ class _SignUp3State extends State<SignUp3> {
   TextEditingController txtPassword = TextEditingController();
   TextEditingController txtConfirmPassword = TextEditingController();
 
+  GlobalKey<FormState> _basicDetail = GlobalKey();
+  GlobalKey<FormState> _photoDetail = GlobalKey();
+  GlobalKey<FormState> _passwordDetail = GlobalKey();
+
   List<Gender> genderList = [
     Gender(icon: "images/male.png", name: "Male", isSelected: false),
     Gender(icon: "images/female.png", name: "Female", isSelected: false),
@@ -48,8 +56,14 @@ class _SignUp3State extends State<SignUp3> {
     });
   }
 
+  File _userProfile, _identityProof;
+  String _userFileName, _identityFileName;
+  String _userFilePath, _identityFilePath;
+  final picker = ImagePicker();
+
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<IndexCountProvider>(context);
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -75,7 +89,7 @@ class _SignUp3State extends State<SignUp3> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          "${selectedIndex > 1 ? "Create Password" : "Tell us more about you !"}",
+                          "${provider.stepCurrentIndex > 1 ? "Create Password" : "Tell us more about you !"}",
                           style: fontConstants.bigTitleBlack),
                       Text("Sign Up to Continue",
                           style: fontConstants.subTitleText),
@@ -89,7 +103,7 @@ class _SignUp3State extends State<SignUp3> {
                             height: 3,
                             width: 30,
                             decoration: BoxDecoration(
-                                color: selectedIndex == 0
+                                color: provider.stepCurrentIndex == 0
                                     ? appPrimaryMaterialColor
                                     : Colors.grey,
                                 borderRadius: BorderRadius.circular(6.0)),
@@ -100,7 +114,7 @@ class _SignUp3State extends State<SignUp3> {
                               height: 3,
                               width: 30,
                               decoration: BoxDecoration(
-                                  color: selectedIndex == 1
+                                  color: provider.stepCurrentIndex == 1
                                       ? appPrimaryMaterialColor
                                       : Colors.grey,
                                   borderRadius: BorderRadius.circular(6.0)),
@@ -112,7 +126,7 @@ class _SignUp3State extends State<SignUp3> {
                               height: 3,
                               width: 30,
                               decoration: BoxDecoration(
-                                  color: selectedIndex == 2
+                                  color: provider.stepCurrentIndex == 2
                                       ? appPrimaryMaterialColor
                                       : Colors.grey,
                                   borderRadius: BorderRadius.circular(6.0)),
@@ -120,161 +134,153 @@ class _SignUp3State extends State<SignUp3> {
                           )
                         ],
                       ),
-                      if (selectedIndex == 0) ...[
+                      if (provider.stepCurrentIndex == 0) ...[
                         Expanded(
                           child: SingleChildScrollView(
                             physics: BouncingScrollPhysics(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                MyTextFormField(
-                                    lable: "First Name",
-                                    validator: (val) {
-                                      if (val.isEmpty) {
-                                        return "Please Enter First Name";
-                                      }
-                                      return "";
-                                    },
-                                    hintText: "Enter first name"),
-                                MyTextFormField(
-                                    lable: "Middle Name",
-                                    validator: (val) {
-                                      if (val.isEmpty) {
-                                        return "Please Enter Middle Name";
-                                      }
-                                      return "";
-                                    },
-                                    hintText: "Enter middle name"),
-                                MyTextFormField(
-                                    lable: "Last Name",
-                                    validator: (val) {
-                                      if (val.isEmpty) {
-                                        return "Please Enter Last Name";
-                                      }
-                                      return "";
-                                    },
-                                    hintText: "Enter last name"),
-                                MyTextFormField(
-                                    lable: "Email",
-                                    validator: (val) {
-                                      if (val.isEmpty) {
-                                        return "Please Enter Email";
-                                      }
-                                      return "";
-                                    },
-                                    hintText: "Enter email"),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 4.0, bottom: 4.0),
-                                  child: Text("Gender",
-                                      style: fontConstants.formFieldLabel),
-                                ),
-                                Row(
-                                  children: genderList.map((value) {
-                                    int index = genderList.indexOf(value);
-                                    return Padding(
-                                      padding: const EdgeInsets.only(left: 2.0),
-                                      child: SizedBox(
-                                        width: 90,
-                                        child: OutlinedButton(
-                                            style: ButtonStyle(),
-                                            onPressed: () {
-                                              setState(() {
-                                                genderList.forEach((gender) =>
-                                                    gender.isSelected = false);
-                                                genderList[index].isSelected =
-                                                    true;
-                                                selectedGender =
-                                                    genderList[index].name;
-                                              });
-                                              print(selectedGender);
-                                            },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(6.0),
-                                              child: Column(
-                                                children: [
-                                                  Image.asset(
-                                                    genderList[index].icon,
-                                                    color: genderList[index]
-                                                            .isSelected
-                                                        ? appPrimaryMaterialColor
-                                                        : Colors.grey,
-                                                    width: 18,
-                                                  ),
-                                                  Text(genderList[index].name,
-                                                      style: TextStyle(
-                                                          fontSize: 11,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: genderList[
-                                                                      index]
-                                                                  .isSelected
-                                                              ? appPrimaryMaterialColor
-                                                              : Colors.grey)),
-                                                ],
-                                              ),
-                                            )),
-                                      ),
-                                    );
-                                  }).toList(),
-                                )
-
-                                /* MyButton(
-                                    title: "Next",
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          PageTransition(
-                                              child: SignUp3(),
-                                              type: PageTransitionType
-                                                  .bottomToTop));
-                                    }),*/
-                              ],
+                            child: Form(
+                              key: _basicDetail,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  MyTextFormField(
+                                      controller: txtFirstName,
+                                      lable: "First Name",
+                                      validator: (val) {
+                                        if (val.isEmpty) {
+                                          return "Please Enter First Name";
+                                        }
+                                        return null;
+                                      },
+                                      hintText: "Enter first name"),
+                                  MyTextFormField(
+                                      controller: txtMiddleName,
+                                      lable: "Middle Name",
+                                      validator: (val) {
+                                        if (val.isEmpty) {
+                                          return "Please Enter Middle Name";
+                                        }
+                                        return null;
+                                      },
+                                      hintText: "Enter middle name"),
+                                  MyTextFormField(
+                                      controller: txtLastName,
+                                      lable: "Last Name",
+                                      validator: (val) {
+                                        if (val.isEmpty) {
+                                          return "Please Enter Last Name";
+                                        }
+                                        return null;
+                                      },
+                                      hintText: "Enter last name"),
+                                  MyTextFormField(
+                                      controller: txtEmail,
+                                      lable: "Email",
+                                      // validator: validateEmail,
+                                      hintText: "Enter email"),
+                                  SizedBox(
+                                    height: 12,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 4.0, bottom: 4.0),
+                                    child: Text("Gender",
+                                        style: fontConstants.formFieldLabel),
+                                  ),
+                                  Row(
+                                    children: genderList.map((value) {
+                                      int index = genderList.indexOf(value);
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 2.0),
+                                        child: SizedBox(
+                                          width: 90,
+                                          child: OutlinedButton(
+                                              style: ButtonStyle(),
+                                              onPressed: () {
+                                                setState(() {
+                                                  genderList.forEach((gender) =>
+                                                      gender.isSelected =
+                                                          false);
+                                                  genderList[index].isSelected =
+                                                      true;
+                                                  selectedGender =
+                                                      genderList[index].name;
+                                                });
+                                                print(selectedGender);
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(6.0),
+                                                child: Column(
+                                                  children: [
+                                                    Image.asset(
+                                                      genderList[index].icon,
+                                                      color: genderList[index]
+                                                              .isSelected
+                                                          ? appPrimaryMaterialColor
+                                                          : Colors.grey,
+                                                      width: 18,
+                                                    ),
+                                                    Text(genderList[index].name,
+                                                        style: TextStyle(
+                                                            fontSize: 11,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: genderList[
+                                                                        index]
+                                                                    .isSelected
+                                                                ? appPrimaryMaterialColor
+                                                                : Colors.grey)),
+                                                  ],
+                                                ),
+                                              )),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         )
-                      ] else if (selectedIndex == 1) ...[
+                      ] else if (provider.stepCurrentIndex == 1) ...[
                         Expanded(
                             child: SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
                             children: [
-                              SizedBox(
-                                height: 35,
-                              ),
-                              Container(
-                                width: 130.0,
-                                height: 130.0,
-                                child: Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                  size: 110,
-                                ),
-                                decoration: new BoxDecoration(
-                                  color: Color(0x22888888),
-                                  borderRadius: new BorderRadius.all(
-                                      new Radius.circular(90.0)),
-                                  border: new Border.all(
-                                    color: appPrimaryMaterialColor[700],
-                                    width: 3,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 24),
-                              Text("Click or Select Profile Photo",
-                                  style: fontConstants.smallText),
-                              SizedBox(height: 40),
-                              containerdash,
-                              SizedBox(height: 24),
-                              Text("Select Identity Proof",
-                                  style: fontConstants.smallText),
+                              FlatButton(
+                                  onPressed: () async {
+                                    final pickedFile = await picker.getImage(
+                                        source: ImageSource.camera);
+
+                                    setState(() {
+                                      if (pickedFile != null) {
+                                        _userProfile = File(pickedFile.path);
+                                      } else {
+                                        print('No image selected.');
+                                      }
+                                    });
+                                  },
+                                  child: Text("Click")),
+                              FlatButton(
+                                  onPressed: () async {
+                                    final pickedFile = await picker.getImage(
+                                        source: ImageSource.camera);
+
+                                    setState(() {
+                                      if (pickedFile != null) {
+                                        _identityProof = File(pickedFile.path);
+                                      } else {
+                                        print('No image selected.');
+                                      }
+                                    });
+                                  },
+                                  child: Text("Click"))
                             ],
                           ),
                         ))
@@ -352,12 +358,7 @@ class _SignUp3State extends State<SignUp3> {
                               ),
                               MyButton(
                                 onPressed: () {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      PageTransition(
-                                          child: ChooseCreateOrJoin(),
-                                          type: PageTransitionType.rightToLeft),
-                                      (route) => false);
+                                  _userSignUp();
                                 },
                                 title: "Sign Up",
                               )
@@ -376,7 +377,7 @@ class _SignUp3State extends State<SignUp3> {
             ? null
             : Stack(
                 children: <Widget>[
-                  selectedIndex == 1
+                  provider.stepCurrentIndex == 1
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -388,9 +389,7 @@ class _SignUp3State extends State<SignUp3> {
                                     backgroundColor: appPrimaryMaterialColor,
                                     mini: true,
                                     onPressed: () {
-                                      setState(() {
-                                        selectedIndex = 0;
-                                      });
+                                      provider.stepCurrentIndex = 0;
                                     },
                                     heroTag: null,
                                     child: Icon(Icons.arrow_back_ios_rounded)),
@@ -404,9 +403,7 @@ class _SignUp3State extends State<SignUp3> {
                                     backgroundColor: appPrimaryMaterialColor,
                                     mini: true,
                                     onPressed: () {
-                                      setState(() {
-                                        selectedIndex = 2;
-                                      });
+                                      provider.stepCurrentIndex = 2;
                                     },
                                     heroTag: null,
                                     child:
@@ -416,15 +413,16 @@ class _SignUp3State extends State<SignUp3> {
                           ],
                         )
                       : SizedBox(),
-                  selectedIndex == 0
+                  provider.stepCurrentIndex == 0
                       ? Align(
                           alignment: Alignment.bottomRight,
                           child: FloatingActionButton(
                             backgroundColor: appPrimaryMaterialColor,
                             onPressed: () {
-                              setState(() {
-                                selectedIndex = 1;
-                              });
+                              if (_basicDetail.currentState.validate()) {
+                                provider.stepCurrentIndex = 1;
+                              }
+                              print("First Click");
                             },
                             mini: true,
                             heroTag: null,
@@ -432,7 +430,7 @@ class _SignUp3State extends State<SignUp3> {
                           ),
                         )
                       : SizedBox(),
-                  selectedIndex == 2
+                  provider.stepCurrentIndex == 2
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -444,31 +442,12 @@ class _SignUp3State extends State<SignUp3> {
                                     backgroundColor: appPrimaryMaterialColor,
                                     mini: true,
                                     onPressed: () {
-                                      setState(() {
-                                        selectedIndex = 1;
-                                      });
+                                      provider.stepCurrentIndex = 1;
                                     },
                                     heroTag: null,
                                     child: Icon(Icons.arrow_back_ios_rounded)),
                               ),
                             ),
-                            /*Padding(
-                              padding: EdgeInsets.only(left: 31),
-                              child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: FloatingActionButton(
-                                    backgroundColor: appPrimaryMaterialColor,
-                                    mini: true,
-                                    onPressed: () {
-                                      setState(() {
-                                        selectedIndex = 0;
-                                      });
-                                    },
-                                    heroTag: null,
-                                    child:
-                                        Icon(Icons.arrow_forward_ios_rounded)),
-                              ),
-                            ),*/
                           ],
                         )
                       : SizedBox(),
@@ -529,18 +508,56 @@ class _SignUp3State extends State<SignUp3> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
+        String userFileName, identityFileName = "";
+        String userFilePath, identityFilePath = "";
+        File userCompressedFile, identityCompressedFile;
+
+        if (_userProfile != null && _identityProof != null) {
+          ImageProperties userprofileProperties =
+              await FlutterNativeImage.getImageProperties(_userProfile.path);
+          ImageProperties identityFileProperties =
+              await FlutterNativeImage.getImageProperties(_identityProof.path);
+
+          userCompressedFile = await FlutterNativeImage.compressImage(
+              _userProfile.path,
+              quality: 90);
+          identityCompressedFile = await FlutterNativeImage.compressImage(
+              _identityProof.path,
+              quality: 90);
+
+          userFileName = _userProfile.path.split('/').last;
+          userFilePath = userCompressedFile.path;
+
+          identityFileName = _userProfile.path.split('/').last;
+          identityFilePath = identityCompressedFile.path;
+        } else if (_userFilePath != null && _identityFilePath != "") {
+          userFilePath = _userFilePath;
+          userFileName = _userFileName;
+
+          identityFilePath = _identityFilePath;
+          identityFileName = _identityFileName;
+        }
+
         var body = FormData.fromMap({
-          "firstName": txtFirstName.text,
-          "lastName": txtLastName.text,
-          "mobileNo1": "1234567890",
-          "emailId": txtEmail.text,
-          "password": txtPassword.text,
-          "userRole": "",
+          "firstName": "Keval",
+          "lastName": "dddd",
+          "mobileNo1": "9632587100",
+          "emailId": "kevaltech9teen@gmail.com",
+          "password": "Kev@1212",
+          "userRole": 0,
           "fcmToken": "d5dff5d5d5s5d",
           "refferBy": "",
           "deviceType": Platform.isAndroid ? "android" : "ios",
           "gender": selectedGender,
-          "identityProof": "6038e235eecaca08c8744d57"
+          "identityProof": "6038e235eecaca08c8744d57",
+          "identityImage": (identityFilePath != null && identityFilePath != '')
+              ? await MultipartFile.fromFile(identityFilePath,
+                  filename: identityFileName.toString())
+              : null,
+          "memberImage": (userFilePath != null && userFilePath != '')
+              ? await MultipartFile.fromFile(userFilePath,
+                  filename: userFileName.toString())
+              : null,
         });
         Services.responseHandler(apiName: "api/member/memberSignIn", body: body)
             .then((responseData) {
@@ -550,7 +567,8 @@ class _SignUp3State extends State<SignUp3> {
           } else {
             print(responseData);
             LoadingIndicator.close(context);
-            Fluttertoast.showToast(msg: "${responseData.Message}");
+            Fluttertoast.showToast(
+                msg: "Already Register ${responseData.Message}");
           }
         }).catchError((error) {
           LoadingIndicator.close(context);

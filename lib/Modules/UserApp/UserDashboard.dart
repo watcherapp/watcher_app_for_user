@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.dart';
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Data/Providers/BottomNavigationBarProvider.dart';
-import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MoreScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserHomeScreen.dart';
@@ -28,7 +27,7 @@ class _UserDashboardState extends State<UserDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<BottomNavigationBarProvider>(context);
+    var provider = Provider.of<IndexCountProvider>(context);
     return Scaffold(
       backgroundColor: Colors.grey[200],
       /*appBar: AppBar(title: Text("${sharedPrefs.memberId}")),*/
@@ -48,7 +47,7 @@ class _UserDashboardState extends State<UserDashboard> {
           Expanded(
               child: Padding(
             padding: EdgeInsets.only(left: 6.0, right: 6.0),
-            child: screenList[provider.currentIndex],
+            child: screenList[provider.bottomBarCurrentIndex],
           ))
         ],
       ),
