@@ -4,12 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
 import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
-import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
@@ -179,11 +177,10 @@ class _SignInState extends State<SignIn> {
 
   _saveDataToSession(var sessionData) async {
     sharedPrefs.memberId = "${sessionData[0]["_id"]}";
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(Session.memberId, sessionData[0]["_id"] ?? "");
-    prefs.setString(Session.memberNo, sessionData[0]["memberNo"] ?? "");
-    prefs.setString(
-        Session.userRole, sessionData[0]["userRole"].toString() ?? "");
+    sharedPrefs.userRole = "${sessionData[0]["userRole"]}";
+    sharedPrefs.memberNo = "${sessionData[0]["_id"]}";
+    sharedPrefs.memberId = "${sessionData[0]["_id"]}";
+    sharedPrefs.memberId = "${sessionData[0]["_id"]}";
     if (sessionData[0]["userRole"] == 0) {
       Navigator.pushReplacement(
           context,

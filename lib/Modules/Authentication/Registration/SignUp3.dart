@@ -41,9 +41,9 @@ class _SignUp3State extends State<SignUp3> {
   GlobalKey<FormState> _passwordDetail = GlobalKey();
 
   List<Gender> genderList = [
-    Gender(icon: "images/male.png", name: "Male", isSelected: false),
-    Gender(icon: "images/female.png", name: "Female", isSelected: false),
-    Gender(icon: "images/other.png", name: "Other", isSelected: false),
+    Gender(icon: "images/male.png", name: "male", isSelected: false),
+    Gender(icon: "images/female.png", name: "female", isSelected: false),
+    Gender(icon: "images/other.png", name: "other", isSelected: false),
   ];
   String selectedGender = "";
   @override
@@ -252,35 +252,82 @@ class _SignUp3State extends State<SignUp3> {
                             child: SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              FlatButton(
-                                  onPressed: () async {
-                                    final pickedFile = await picker.getImage(
-                                        source: ImageSource.camera);
-
-                                    setState(() {
-                                      if (pickedFile != null) {
-                                        _userProfile = File(pickedFile.path);
-                                      } else {
-                                        print('No image selected.');
-                                      }
-                                    });
-                                  },
-                                  child: Text("Click")),
-                              FlatButton(
-                                  onPressed: () async {
-                                    final pickedFile = await picker.getImage(
-                                        source: ImageSource.camera);
-
-                                    setState(() {
-                                      if (pickedFile != null) {
-                                        _identityProof = File(pickedFile.path);
-                                      } else {
-                                        print('No image selected.');
-                                      }
-                                    });
-                                  },
-                                  child: Text("Click"))
+                              CircleAvatar(
+                                radius: 60,
+                                backgroundColor: appPrimaryMaterialColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(1.0),
+                                  child: ClipOval(
+                                    child: Image.asset("images/maleavtar.png"),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 24),
+                              Text("Select Profile Photo",
+                                  style: fontConstants.smallText),
+                              DottedBorder(
+                                borderType: BorderType.Rect,
+                                dashPattern: [5, 5, 5, 5],
+                                color: Colors.grey[400],
+                                child: Container(
+                                  height: 129,
+                                  width: 220,
+                                  decoration: ShapeDecoration(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4)),
+                                    color: Color(0x22888888),
+                                  ),
+                                  child: Center(
+                                    child: Container(
+                                      width: 80.0,
+                                      height: 80.0,
+                                      child: Icon(
+                                        Icons.person,
+                                        color: Colors.white,
+                                        size: 70,
+                                      ),
+                                      decoration: new BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: new BorderRadius.all(
+                                            new Radius.circular(90.0)),
+                                        border: new Border.all(
+                                            color: Colors.grey[300],
+                                            width: 0.5),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // FlatButton(
+                              //     onPressed: () async {
+                              //       final pickedFile = await picker.getImage(
+                              //           source: ImageSource.camera);
+                              //
+                              //       setState(() {
+                              //         if (pickedFile != null) {
+                              //           _userProfile = File(pickedFile.path);
+                              //         } else {
+                              //           print('No image selected.');
+                              //         }
+                              //       });
+                              //     },
+                              //     child: Text("Click")),
+                              // FlatButton(
+                              //     onPressed: () async {
+                              //       final pickedFile = await picker.getImage(
+                              //           source: ImageSource.camera);
+                              //
+                              //       setState(() {
+                              //         if (pickedFile != null) {
+                              //           _identityProof = File(pickedFile.path);
+                              //         } else {
+                              //           print('No image selected.');
+                              //         }
+                              //       });
+                              //     },
+                              //     child: Text("Click"))
                             ],
                           ),
                         ))
@@ -419,9 +466,9 @@ class _SignUp3State extends State<SignUp3> {
                           child: FloatingActionButton(
                             backgroundColor: appPrimaryMaterialColor,
                             onPressed: () {
-                              if (_basicDetail.currentState.validate()) {
-                                provider.stepCurrentIndex = 1;
-                              }
+                              //if (_basicDetail.currentState.validate()) {
+                              provider.stepCurrentIndex = 1;
+                              //}
                               print("First Click");
                             },
                             mini: true,
@@ -539,12 +586,14 @@ class _SignUp3State extends State<SignUp3> {
         }
 
         var body = FormData.fromMap({
-          "firstName": "Keval",
-          "lastName": "dddd",
-          "mobileNo1": "9632587100",
-          "emailId": "kevaltech9teen@gmail.com",
-          "password": "Kev@1212",
-          "userRole": 0,
+          "firstName": txtFirstName.text,
+          "lastName": txtLastName.text,
+          "mobileNo1": "9429828152",
+          "emailId": txtEmail.text,
+          "password": txtPassword.text,
+          "userRole": "0",
+          "societyCode": "",
+          "address": "",
           "fcmToken": "d5dff5d5d5s5d",
           "refferBy": "",
           "deviceType": Platform.isAndroid ? "android" : "ios",
@@ -559,16 +608,16 @@ class _SignUp3State extends State<SignUp3> {
                   filename: userFileName.toString())
               : null,
         });
-        Services.responseHandler(apiName: "api/member/memberSignIn", body: body)
+        Services.responseHandler(apiName: "api/member/signUp", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             LoadingIndicator.close(context);
-            _saveDataToSession(responseData.Data);
+            Fluttertoast.showToast(msg: "Response ${responseData.Data}");
+            //_saveDataToSession(responseData.Data);
           } else {
             print(responseData);
             LoadingIndicator.close(context);
-            Fluttertoast.showToast(
-                msg: "Already Register ${responseData.Message}");
+            Fluttertoast.showToast(msg: "Response ${responseData.Message}");
           }
         }).catchError((error) {
           LoadingIndicator.close(context);
