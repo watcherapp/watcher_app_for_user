@@ -30,26 +30,24 @@ class _ComplainDetailState extends State<ComplainDetail> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          {
-            "complainNo" : widget.complaintData["complainNo"],
-            "complainStatus" : status,
-          }
+          "complainNo": widget.complaintData["complainNo"],
+          "complainStatus": status,
         };
         print("$body");
         print(status);
         Services.responseHandler(
                 apiName: "api/admin/resposneToComplain", body: body)
             .then((responseData) {
-          if (responseData.Data != 0) {
-            print(responseData.Data);
-            widget.getComplainApi();
-            Fluttertoast.showToast(msg: "Your Complain Status Updated Successfully");
+          if (responseData.Data == 1) {
+            Navigator.pop(context);
+            Fluttertoast.showToast(
+                msg: "Your Complain Status Updated Successfully");
             setState(() {
               isLoading = false;
             });
+            widget.getComplainApi();
           } else {
             print(responseData);
-
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
                 toastLength: Toast.LENGTH_SHORT,
@@ -111,7 +109,7 @@ class _ComplainDetailState extends State<ComplainDetail> {
                 ),
                 Center(
                   child: Text(
-                    "Waste Disposal management Event",
+                    widget.complaintData["subject"],
                     //'${widget.notification["Title"]}',
                     style: TextStyle(
                         color: Colors.black,
@@ -131,7 +129,8 @@ class _ComplainDetailState extends State<ComplainDetail> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 25.0, left: 10, right: 10),
+                  padding:
+                      const EdgeInsets.only(top: 25.0, left: 10, right: 10),
                   child: Text(
                     widget.complaintData["discription"],
                     //'${widget.notification["Title"]}',
@@ -155,7 +154,6 @@ class _ComplainDetailState extends State<ComplainDetail> {
                         child: GestureDetector(
                           onTap: () {
                             _upDateStatus("0");
-                            Navigator.pop(context);
                           },
                           child: Container(
                             height: 30,
@@ -182,7 +180,6 @@ class _ComplainDetailState extends State<ComplainDetail> {
                         child: GestureDetector(
                           onTap: () {
                             _upDateStatus("1");
-                            Navigator.pop(context);
                           },
                           child: Container(
                             height: 30,
@@ -216,7 +213,6 @@ class _ComplainDetailState extends State<ComplainDetail> {
                         child: GestureDetector(
                           onTap: () {
                             _upDateStatus("2");
-                            Navigator.pop(context);
                           },
                           child: Container(
                             height: 30,
@@ -244,7 +240,6 @@ class _ComplainDetailState extends State<ComplainDetail> {
                         child: GestureDetector(
                           onTap: () {
                             _upDateStatus("3");
-                            Navigator.pop(context);
                           },
                           child: Container(
                             height: 30,

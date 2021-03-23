@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
 
 class DailyHelperScreen extends StatefulWidget {
   @override
@@ -9,6 +14,75 @@ class DailyHelperScreen extends StatefulWidget {
 }
 
 class _DailyHelperScreenState extends State<DailyHelperScreen> {
+  bool isLoading = false;
+  List amenitiesList = [];
+
+  @override
+  void initState() {
+    _getAllStaff();
+  }
+
+  _getAllStaff() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "societyId": societyId,
+        };
+        print("$body");
+        Services.responseHandler(
+                apiName: "api/admin/getSocietyStaff", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            amenitiesList = responseData.Data;
+            print(amenitiesList);
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            print(responseData);
+            Fluttertoast.showToast(
+                msg: "${responseData.Message}",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                // textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+              msg: "Error $error",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              // textColor: Colors.white,
+              fontSize: 16.0);
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+          msg: "You aren't connected to the Internet !",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          // textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +95,15 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: ListView.builder(
-        itemCount: 10,
+      body: isLoading
+          ? Center(
+        child: CircularProgressIndicator(
+          valueColor:
+          new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+        ),
+      )
+          : ListView.builder(
+        itemCount: amenitiesList.length,
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.only(
             right: 5,
@@ -35,9 +116,9 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
               //     PageTransition(
               //         child: DailyHelperSubScreen(),
               //         type: PageTransitionType.rightToLeft));
-              // showDialog(
-              //     context: context,
-              //     builder: (BuildContext context) => ShowDialog());
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => ShowDialog());
             },
             child: Card(
               child: Padding(
@@ -47,7 +128,12 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
                     SizedBox(
                       width: 10,
                     ),
-                    Image.asset('images/user.png', width: 50, height: 50),
+                    // Image.asset('images/user.png', width: 50, height: 50),
+                    Image.network(
+                      amenitiesList[index]["staffImage"],
+                      width: 50,
+                      height: 50,
+                    ),
                     SizedBox(
                       width: 15,
                     ),
@@ -56,7 +142,8 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Sunny more',
+                          "${amenitiesList[index]["firstName"]} " +
+                              "${amenitiesList[index]["lastName"]}",
                           style: TextStyle(
                               color: appPrimaryMaterialColor,
                               fontWeight: FontWeight.bold,
@@ -69,7 +156,9 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
                         SizedBox(
                           height: 2,
                         ),
-                        Text('8735069293'),
+                        Text(
+                          amenitiesList[index]["mobileNo1"],
+                        ),
                         SizedBox(
                           height: 2,
                         ),
@@ -81,7 +170,7 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        print("8735069293");
+                        print(amenitiesList[index]["mobileNo1"]);
                       },
                       icon: Icon(
                         Icons.call,
@@ -94,11 +183,13 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: DailyHelperSubScreen(),
-                                type: PageTransitionType.rightToLeft));
+                        // Navigator.push(
+                        //     context,
+                        //     PageTransition(
+                        //         child: DailyHelperSubScreen(
+                        //           helperData: amenitiesList[index]["workingLocation"][index],
+                        //         ),
+                        //         type: PageTransitionType.rightToLeft));
                       },
                       child: Container(
                         height: 20,
@@ -216,11 +307,88 @@ class _ShowDialogState extends State<ShowDialog> {
 }
 
 class DailyHelperSubScreen extends StatefulWidget {
+  var helperData;
+
+  DailyHelperSubScreen({
+    this.helperData,
+  });
+
   @override
   _DailyHelperSubScreenState createState() => _DailyHelperSubScreenState();
 }
 
 class _DailyHelperSubScreenState extends State<DailyHelperSubScreen> {
+  bool isLoading = false;
+  List flatList =[];
+
+
+  @override
+  void initState() {
+    _getFlatData();
+  }
+
+  _getFlatData() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "societyId": societyId,
+          "wingId" : widget.helperData["flatId"]["wingId"]["_id"],
+          "flatId" : widget.helperData["flatId"]["_id"],
+        };
+        print("$body");
+        Services.responseHandler(
+            apiName: "api/admin/getMembersOfFlat", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            flatList = responseData.Data;
+            print(flatList);
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            print(responseData);
+            Fluttertoast.showToast(
+                msg: "${responseData.Message}",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                // textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+              msg: "Error $error",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              // textColor: Colors.white,
+              fontSize: 16.0);
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+          msg: "You aren't connected to the Internet !",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          // textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

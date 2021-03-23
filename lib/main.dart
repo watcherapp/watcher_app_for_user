@@ -5,6 +5,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/PropertyManagerProvider.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AmenitiesScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 
 import 'Constants/appColors.dart';

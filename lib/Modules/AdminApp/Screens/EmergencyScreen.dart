@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/EmergencyComponent.dart';
@@ -32,7 +33,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": "60129950e19dc51744dd7cfe",
+          "societyId": societyId,
         };
         Services.responseHandler(
                 apiName: "api/admin/getAllEmergencyContacts", body: body)

@@ -294,7 +294,7 @@ class _GuestCategoryState extends State<GuestCategory> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": "60129950e19dc51744dd7cfe",
+          "societyId": societyId,
         };
         setState(() {
           isLoading = true;
