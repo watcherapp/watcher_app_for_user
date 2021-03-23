@@ -19,9 +19,10 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
 
   @override
   void initState() {
-    // _getAllEmergency();
+    _getAllEmergency();
   }
 
+  //get...
   _getAllEmergency() async {
     try {
       setState(() {
@@ -30,9 +31,77 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        var body = {"societyId": "60129950e19dc51744dd7cfe"};
+        var body = {
+          "societyId": "60129950e19dc51744dd7cfe",
+        };
         Services.responseHandler(
-                apiName: "api/admin/addEmergencyNumber", body: body)
+                apiName: "api/admin/getAllEmergencyContacts", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            print("allEmergencyList-->${responseData.Data}");
+            setState(() {
+              isLoading = false;
+              allEmergencyList = responseData.Data;
+            });
+          } else {
+            print(responseData);
+            setState(() {
+              allEmergencyList = responseData.Data;
+            });
+            Fluttertoast.showToast(
+                msg: "${responseData.Message}",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                // textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+              msg: "Error $error",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              // textColor: Colors.white,
+              fontSize: 16.0);
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+          msg: "You aren't connected to the Internet !",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          // textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
+  //upDate...
+  _updateEmergency() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "emergencyContactId": "601936b52168562de8c753f4",
+          "contactName": "Fire",
+          "contactNo": "102"
+        };
+        Services.responseHandler(
+                apiName: "api/admin/updateEmergencyContacts", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -81,6 +150,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,13 +164,25 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: ListView.builder(
-          padding: EdgeInsets.only(top: 5, bottom: 18),
-          scrollDirection: Axis.vertical,
-          itemCount: 3,
-          itemBuilder: (BuildContext context, int index) {
-            return EmergencyComponent();
-          }),
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+              // backgroundColor: Colors.red,
+              valueColor:
+                  new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+            ))
+          : ListView.builder(
+              padding: EdgeInsets.only(top: 5, bottom: 18),
+              scrollDirection: Axis.vertical,
+              itemCount: allEmergencyList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return EmergencyComponent(
+                  allEmergencyList: allEmergencyList[index],
+                  GetEmergencyApi:(){
+                    _getAllEmergency();
+                  },
+                );
+              }),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 12.0),

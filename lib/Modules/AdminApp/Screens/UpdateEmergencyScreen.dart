@@ -6,20 +6,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 
-class AddEmergencyScreen extends StatefulWidget {
+class UpdateEmergencyScreen extends StatefulWidget {
+  var emergencyData;
+  Function GetData;
+
+  UpdateEmergencyScreen({
+    this.emergencyData,
+    this.GetData,
+  });
 
   @override
-  _AddEmergencyScreenState createState() => _AddEmergencyScreenState();
+  _UpdateEmergencyScreenState createState() => _UpdateEmergencyScreenState();
 }
 
-class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
+class _UpdateEmergencyScreenState extends State<UpdateEmergencyScreen> {
   File imagePath;
   File _image;
   bool isLoading = false;
@@ -73,10 +80,11 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
 
   @override
   void initState() {
-    // _addEmergency();
+    txtName.text = widget.emergencyData["contactName"];
+    txtNumber.text = widget.emergencyData["contactNo"];
   }
 
-  _addEmergency() async {
+  _updateEmergency() async {
     try {
       setState(() {
         isLoading = true;
@@ -84,24 +92,18 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        String fileName = imagePath.path.split('/').last;
-
-        FormData formData = FormData.fromMap({
-          "societyId": "60129950e19dc51744dd7cfe",
+        var body = {
+          "emergencyContactId": widget.emergencyData["_id"],
           "contactName": txtName.text,
           "contactNo": txtNumber.text,
-          "Image": await MultipartFile.fromFile(
-            imagePath.path,
-            filename: fileName,
-          ),
-        });
-        print("$formData");
+        };
         Services.responseHandler(
-                apiName: "api/admin/addEmergencyNumber", body: formData)
+                apiName: "api/admin/updateEmergencyContacts", body: body)
             .then((responseData) {
-          if (responseData.Data.length > 0) {
+          if (responseData.Data != 0) {
             print(responseData.Data);
-            addEmergencyList = responseData.Data;
+            widget.GetData();
+            Fluttertoast.showToast(msg: "Your Emergency Updated Successfully");
             setState(() {
               isLoading = false;
             });
@@ -151,7 +153,7 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Add Emergency",
+          "Update Emergency",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
         centerTitle: true,
@@ -165,8 +167,12 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MyTextFormField(
-                  lable: "Emergency Name", hintText: "Enter Emergency name"),
+                controller: txtName,
+                lable: "Emergency Name",
+                hintText: "Enter Emergency name",
+              ),
               MyTextFormField(
+                  controller: txtNumber,
                   lable: "Emergency Number",
                   hintText: "Enter Emergency number"),
               Padding(
@@ -208,20 +214,20 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
                                         fit: BoxFit.contain),
                                   ),
                                 )
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset("images/id-card.png",
-                                        color: Colors.grey[300],
-                                        width: 40.0,
-                                        height: 40.0),
-                                    Text(
-                                      "Choose Image",
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
+                              : Container(
+                                  height: 200.0,
+                                  decoration: BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(30),
+                                    shape: BoxShape.rectangle,
+                                    /* border: Border.all(
+                                        width: 0.2,
+                                        color: appPrimaryMaterialColor),*/
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                          widget.emergencyData["image"],
+                                        ),
+                                        fit: BoxFit.contain),
+                                  ),
                                 ),
                         ),
                       )),
@@ -234,9 +240,10 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
                 padding: const EdgeInsets.only(left: 10.0),
                 child: MyButton(
                   onPressed: () {
-                    _addEmergency();
+                    _updateEmergency();
+                    Navigator.pop(context);
                   },
-                  title: "Add",
+                  title: "Update",
                 ),
               )
             ],
@@ -246,23 +253,6 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
     );
   }
 }
-
-//Row(
-//                         mainAxisAlignment: MainAxisAlignment.center,
-//                         children: [
-//                           Icon(
-//                             Icons.add,
-//                             color: Colors.black38,
-//                           ),
-//                           Text(
-//                             "Add Photo",
-//                             style: TextStyle(
-//                                 color: Colors.black38,
-//                                 fontSize: 14,
-//                                 fontWeight: FontWeight.bold),
-//                           ),
-//                         ],
-//                       ),
 
 class EmergencyBottomSheet extends StatefulWidget {
   Function setImagePath;

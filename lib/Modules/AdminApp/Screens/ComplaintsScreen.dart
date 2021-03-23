@@ -239,6 +239,9 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
                                 itemBuilder: (BuildContext context, int index) {
                                   return ComplainComponent(
                                     getAllComplain: getAllComplaintList[index],
+                                    getComplaindApi: (){
+                                      _getAllComplains();
+                                    },
                                   );
                                 }),
                             Container(),
