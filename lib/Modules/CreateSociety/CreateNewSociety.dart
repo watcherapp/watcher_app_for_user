@@ -237,11 +237,8 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
     }
   }
 
-  _getAllstate() async {
+  _getAllstate(var selectedCountry) async {
     try {
-      print(
-          "MY SELECTED COUNTRY =============================================================" +
-              selectedCountry);
       setState(() {
         isLoading = true;
       });
@@ -436,7 +433,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                 hiddenValue: "isoCode",
                 myListValue: countryList,
                 functionName: () {
-                  _getAllstate();
+                  _getAllstate(selectedCountry);
                 },
               ),
               MyCustomDropDown(

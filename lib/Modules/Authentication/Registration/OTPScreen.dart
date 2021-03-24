@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
@@ -22,39 +21,33 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  final FirebaseAuth _firebaseAuth =
-      new FirebaseAuth.instanceFor(app: Firebase.app());
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   String _verificationId;
+  TextEditingController _txtOTP = TextEditingController();
 
   @override
   void initState() {
-    // _sendOTP();
+    super.initState();
+    _sendOtpVerifyCode();
   }
 
-  _sendOTP() async {
-    final PhoneVerificationCompleted phoneVerificationCompleted =
-        (AuthCredential authCredential) {
+  _sendOtpVerifyCode() async {
+    final PhoneVerificationCompleted verificationCompleted =
+        (AuthCredential phoneAuthCredential) {
       _firebaseAuth
-          .signInWithCredential(authCredential)
+          .signInWithCredential(phoneAuthCredential)
           .then((UserCredential value) {
         if (value.user != null) {
-          debugPrint("Otp Sent Successfully");
         } else {
-          debugPrint("${value.user}");
+          Fluttertoast.showToast(msg: "Error validating OTP, try again");
         }
       }).catchError((error) {
-        debugPrint("${error}");
+        Fluttertoast.showToast(msg: "Try again in sometime");
       });
     };
-
-    // On verificationFailed
-
-    final PhoneVerificationFailed verificationFailed =
-        (FirebaseAuthException authException) {
+    final PhoneVerificationFailed verificationFailed = (authException) {
       Fluttertoast.showToast(msg: authException.message);
     };
-
-    // On codeSent
 
     final PhoneCodeSent codeSent =
         (String verificationId, [int forceResendingToken]) async {
@@ -63,9 +56,6 @@ class _OTPScreenState extends State<OTPScreen> {
         _verificationId = verificationId;
       });
     };
-
-    // codeAutoRetrievalTimeout
-
     final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
         (String verificationId) {
       _verificationId = verificationId;
@@ -73,15 +63,32 @@ class _OTPScreenState extends State<OTPScreen> {
         _verificationId = verificationId;
       });
     };
+
     // TODO: Change country code
 
     await _firebaseAuth.verifyPhoneNumber(
-        phoneNumber: "${widget.dialCode}" + "${widget.mobileNo}",
+        phoneNumber: "+919429828152",
         timeout: const Duration(seconds: 60),
-        verificationCompleted: phoneVerificationCompleted,
+        verificationCompleted: verificationCompleted,
         verificationFailed: verificationFailed,
         codeSent: codeSent,
         codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+  }
+
+  void _onFormSubmitted() async {
+    AuthCredential _authCredential = PhoneAuthProvider.credential(
+        verificationId: _verificationId, smsCode: _txtOTP.text);
+
+    _firebaseAuth
+        .signInWithCredential(_authCredential)
+        .then((UserCredential value) {
+      if (value.user != null) {
+      } else {
+        Fluttertoast.showToast(msg: "Error validating OTP, try again");
+      }
+    }).catchError((error) {
+      Fluttertoast.showToast(msg: "Something went wrong");
+    });
   }
 
   @override
@@ -125,7 +132,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 4.0),
                       child: Text(
-                        "${widget.dialCode}" + "${widget.mobileNo}",
+                        "${widget.dialCode}" + "9429828152",
                         style: fontConstants.smallText,
                         textAlign: TextAlign.center,
                       ),

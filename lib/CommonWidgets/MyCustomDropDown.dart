@@ -8,7 +8,7 @@ class MyCustomDropDown extends StatefulWidget {
   String displayName;
   String hiddenValue;
   List myListValue;
-  VoidCallback functionName;
+  Function functionName;
 
   MyCustomDropDown({
     this.lable,
@@ -63,7 +63,6 @@ class _MyCustomDropDownState extends State<MyCustomDropDown> {
                       print(widget.value);
                       widget.functionName;
                     });
-
                   },
                   items: widget.myListValue?.map((item) {
                         return new DropdownMenuItem(
