@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/ValidationClass.dart';
@@ -113,7 +114,9 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        var body = {"societyId": "601a7269a585c6079c1d21f8"};
+        var body = {
+          "societyId": societyId,
+        };
         print("$body");
         Services.responseHandler(
                 apiName: "api/admin/getAllSocietyComplain", body: body)
@@ -239,6 +242,9 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
                                 itemBuilder: (BuildContext context, int index) {
                                   return ComplainComponent(
                                     getAllComplain: getAllComplaintList[index],
+                                    getComplaindApi: () {
+                                      _getAllComplains();
+                                    },
                                   );
                                 }),
                             Container(),

@@ -6,9 +6,11 @@ import 'package:watcher_app_for_user/Modules/AdminApp/Screens/DailyHelperScreen.
 
 class ComplainComponent extends StatefulWidget {
   var getAllComplain;
+  Function getComplaindApi;
 
   ComplainComponent({
     this.getAllComplain,
+    this.getComplaindApi,
   });
 
   @override
@@ -271,7 +273,10 @@ class _ComplainComponentState extends State<ComplainComponent> {
                                             Navigator.push(
                                               context,
                                               PageTransition(
-                                                  child: ComplainDetail(),
+                                                  child: ComplainDetail(
+                                                    complaintData: widget.getAllComplain,
+                                                    getComplainApi: widget.getComplaindApi,
+                                                  ),
                                                   type: PageTransitionType
                                                       .rightToLeft),
                                             );

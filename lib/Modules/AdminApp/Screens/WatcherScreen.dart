@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/DailyHelperScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/GateKeeperScreen.dart';
 
 class WatcherScreen extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _WatcherScreenState extends State<WatcherScreen> {
     {
       "label": "Gate Keeper",
       "img": "images/watchman.png",
-      "screenName": WatcherScreen(),
+      "screenName": GateKeeperScreen(),
     },
     {
       "label": "Gates",
