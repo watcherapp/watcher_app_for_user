@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 
+// ignore: must_be_immutable
 class DialogOpenFormField extends StatelessWidget {
   String lable;
   String hintLable;
@@ -10,7 +9,10 @@ class DialogOpenFormField extends StatelessWidget {
   VoidCallback onTap;
 
   DialogOpenFormField(
-      {@required this.lable, @required this.onTap, @required this.value,this.hintLable});
+      {@required this.lable,
+      @required this.onTap,
+      @required this.value,
+      this.hintLable});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,9 @@ class DialogOpenFormField extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 14.0),
                   child: Text(
-                    (hintLable==null)?"${value ?? "$lable"}":"${value ?? "$hintLable"}",
+                    (hintLable == null)
+                        ? "${value ?? "$lable"}"
+                        : "${value ?? "$hintLable"}",
                   ),
                 ),
                 Padding(

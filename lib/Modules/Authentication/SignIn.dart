@@ -17,6 +17,7 @@ import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/Verif
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/SignUp1.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/ChooseCreateOrJoin.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -31,9 +32,6 @@ class _SignInState extends State<SignIn> {
   bool isVerify = true;
   TextEditingController txtEmailOrMobile = new TextEditingController();
   TextEditingController txtPassword = new TextEditingController();
-
-  @override
-  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -197,8 +195,7 @@ class _SignInState extends State<SignIn> {
       Navigator.pushReplacement(
           context,
           PageTransition(
-              child: ChooseCreateOrJoin(),
-              type: PageTransitionType.leftToRight));
+              child: UserDashboard(), type: PageTransitionType.leftToRight));
     }
   }
 

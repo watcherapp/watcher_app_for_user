@@ -37,9 +37,10 @@ class _SignUp3State extends State<SignUp3> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
   TextEditingController txtConfirmPassword = TextEditingController();
+  TextEditingController txtSocietyCode = TextEditingController();
 
   GlobalKey<FormState> _basicDetail = GlobalKey();
-  GlobalKey<FormState> _photoDetail = GlobalKey();
+  GlobalKey<FormState> _firstStep = GlobalKey();
   GlobalKey<FormState> _passwordDetail = GlobalKey();
   bool isRoleSelected = false;
 
@@ -104,7 +105,6 @@ class _SignUp3State extends State<SignUp3> {
     var provider = Provider.of<IndexCountProvider>(context);
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
     return Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: appPrimaryMaterialColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -169,239 +169,103 @@ class _SignUp3State extends State<SignUp3> {
                                       : Colors.grey,
                                   borderRadius: BorderRadius.circular(6.0)),
                             ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Container(
+                              height: 3,
+                              width: 30,
+                              decoration: BoxDecoration(
+                                  color: provider.stepCurrentIndex == 3
+                                      ? appPrimaryMaterialColor
+                                      : Colors.grey,
+                                  borderRadius: BorderRadius.circular(6.0)),
+                            ),
                           )
                         ],
                       ),
-                      if (isRoleSelected == true) ...[
-                        if (provider.stepCurrentIndex == 0) ...[
-                          Expanded(
-                            child: SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
-                              child: Form(
-                                key: _basicDetail,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    MyTextFormField(
-                                        controller: txtFirstName,
-                                        lable: "First Name",
-                                        validator: (val) {
-                                          if (val.isEmpty) {
-                                            return "Please Enter First Name";
-                                          }
-                                          return null;
-                                        },
-                                        hintText: "Enter first name"),
-                                    MyTextFormField(
-                                        controller: txtMiddleName,
-                                        lable: "Middle Name",
-                                        validator: (val) {
-                                          if (val.isEmpty) {
-                                            return "Please Enter Middle Name";
-                                          }
-                                          return null;
-                                        },
-                                        hintText: "Enter middle name"),
-                                    MyTextFormField(
-                                        controller: txtLastName,
-                                        lable: "Last Name",
-                                        validator: (val) {
-                                          if (val.isEmpty) {
-                                            return "Please Enter Last Name";
-                                          }
-                                          return null;
-                                        },
-                                        hintText: "Enter last name"),
-                                    MyTextFormField(
-                                        controller: txtEmail,
-                                        lable: "Email",
-                                        // validator: validateEmail,
-                                        hintText: "Enter email"),
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 4.0, bottom: 4.0),
-                                      child: Text("Gender",
-                                          style: fontConstants.formFieldLabel),
-                                    ),
-                                    Row(
-                                      children: genderList.map((value) {
-                                        int index = genderList.indexOf(value);
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 2.0),
-                                          child: SizedBox(
-                                            width: 90,
-                                            child: OutlinedButton(
-                                                style: ButtonStyle(),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    genderList.forEach(
-                                                        (gender) =>
-                                                            gender.isSelected =
-                                                                false);
-                                                    genderList[index]
-                                                        .isSelected = true;
-                                                    selectedGender =
-                                                        genderList[index].name;
-                                                  });
-                                                  print(selectedGender);
-                                                },
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(6.0),
-                                                  child: Column(
-                                                    children: [
-                                                      Image.asset(
-                                                        genderList[index].icon,
-                                                        color: genderList[index]
-                                                                .isSelected
-                                                            ? appPrimaryMaterialColor
-                                                            : Colors.grey,
-                                                        width: 18,
-                                                      ),
-                                                      Text(
-                                                          genderList[index]
-                                                              .name,
-                                                          style: TextStyle(
-                                                              fontSize: 11,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: genderList[
-                                                                          index]
-                                                                      .isSelected
-                                                                  ? appPrimaryMaterialColor
-                                                                  : Colors
-                                                                      .grey)),
-                                                    ],
-                                                  ),
-                                                )),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                        ] else if (provider.stepCurrentIndex == 1) ...[
-                          Expanded(
-                              child: SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 18,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      chooseCameraOrGallery(context, "Profile");
-                                    },
-                                    child: CircleAvatar(
-                                      radius: 60,
-                                      backgroundColor: appPrimaryMaterialColor,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(1.0),
-                                        child: ClipOval(
-                                          child: _userProfile == null
-                                              ? Image.asset(
-                                                  "images/maleavtar.png")
-                                              : Image.file(_userProfile),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 24),
-                                  Text("Select Profile Photo",
-                                      style: fontConstants.smallText),
-                                  SizedBox(
-                                    height: 18,
-                                  ),
-                                  Container(
-                                    height: 45,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 1, color: Colors.grey),
-                                        borderRadius:
-                                            BorderRadius.circular(4.0)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.0, right: 8.0),
-                                      child: DropdownButtonHideUnderline(
-                                        child: DropdownButton(
-                                          isExpanded: true,
-                                          icon: Icon(
-                                              Icons
-                                                  .arrow_drop_down_circle_outlined,
-                                              size: 20),
-                                          items: identityData.map((item) {
-                                            return new DropdownMenuItem(
-                                              child: new Text(
-                                                  "${item['identityProofName']}"),
-                                              value: item['_id'],
-                                            );
-                                          }).toList(),
-                                          hint: Text("Select Identity Proof",
-                                              style: TextStyle(fontSize: 14)),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              selectedValue = value;
-                                            });
-                                          },
-                                          value: selectedValue,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 24,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      chooseCameraOrGallery(
-                                          context, "Identity");
-                                    },
-                                    child: DottedBorder(
-                                      borderType: BorderType.Rect,
-                                      dashPattern: [5, 5, 5, 5],
-                                      color: Colors.grey[400],
+                      if (provider.stepCurrentIndex == 0) ...[
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              Column(
+                                  children: signUpRole.map((value) {
+                                int index = signUpRole.indexOf(value);
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      currentIndex = index;
+                                      isRoleSelected = true;
+                                      selectedRole = value["value"];
+                                    });
+                                    print("$selectedRole");
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 40.0),
+                                    child: Center(
                                       child: Container(
-                                        height: 129,
-                                        width: 220,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: _identityProof != null
-                                                  ? FileImage(_identityProof)
-                                                  : AssetImage(
-                                                      "images/id-card.png")),
-                                          color: Color(0x22888888),
+                                        width: 150,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              Image.asset("${value["icon"]}",
+                                                  width: 40,
+                                                  color: currentIndex == index
+                                                      ? appPrimaryMaterialColor
+                                                      : Colors.grey),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text("${value["label"]}",
+                                                  style: TextStyle(
+                                                      color: currentIndex ==
+                                                              index
+                                                          ? appPrimaryMaterialColor
+                                                          : Colors.grey,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12)),
+                                            ],
+                                          ),
                                         ),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6.0),
+                                            border: Border.all(
+                                                color: currentIndex == index
+                                                    ? appPrimaryMaterialColor
+                                                    : Colors.grey,
+                                                width: 1.5)),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 15),
-                                  SizedBox(height: 20),
-                                  Text("Select Identity Proof",
-                                      style: fontConstants.smallText),
-                                ],
-                              ),
-                            ),
-                          ))
-                        ] else ...[
-                          Expanded(
-                              child: SingleChildScrollView(
+                                );
+                              }).toList()),
+                              Form(
+                                key: _firstStep,
+                                child: MyTextFormField(
+                                  lable: "SocietyCode",
+                                  controller: txtSocietyCode,
+                                  hintText: "Enter your Society Code",
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return "Society Code Can't be empty";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ] else if (provider.stepCurrentIndex == 1) ...[
+                        Expanded(
+                          child: SingleChildScrollView(
                             physics: BouncingScrollPhysics(),
                             child: Form(
-                              key: _passwordDetail,
+                              key: _basicDetail,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -409,138 +273,295 @@ class _SignUp3State extends State<SignUp3> {
                                     height: 15,
                                   ),
                                   MyTextFormField(
-                                      controller: txtPassword,
-                                      lable: "Create Password",
-                                      validator: validatePassword,
-                                      hintText: "Enter Password"),
-                                  MyTextFormField(
-                                      controller: txtConfirmPassword,
-                                      lable: "Confirm Password",
+                                      controller: txtFirstName,
+                                      lable: "First Name",
                                       validator: (val) {
-                                        if (txtPassword.text != val) {
-                                          return "Pasword does not match";
+                                        if (val.isEmpty) {
+                                          return "Please Enter First Name";
                                         }
                                         return null;
                                       },
-                                      hintText: "Re-enter Password"),
+                                      hintText: "Enter first name"),
+                                  MyTextFormField(
+                                      controller: txtMiddleName,
+                                      lable: "Middle Name",
+                                      validator: (val) {
+                                        if (val.isEmpty) {
+                                          return "Please Enter Middle Name";
+                                        }
+                                        return null;
+                                      },
+                                      hintText: "Enter middle name"),
+                                  MyTextFormField(
+                                      controller: txtLastName,
+                                      lable: "Last Name",
+                                      validator: (val) {
+                                        if (val.isEmpty) {
+                                          return "Please Enter Last Name";
+                                        }
+                                        return null;
+                                      },
+                                      hintText: "Enter last name"),
+                                  MyTextFormField(
+                                      controller: txtEmail,
+                                      lable: "Email",
+                                      validator: validateEmail,
+                                      hintText: "Enter email"),
                                   SizedBox(
-                                    height: 10,
+                                    height: 12,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 10.0, bottom: 4.0),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.lock,
-                                          size: 13,
-                                          color: Colors.grey,
-                                        ),
-                                        Text(
-                                          "  Password must contain :",
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black87),
-                                        ),
-                                      ],
-                                    ),
+                                        top: 4.0, bottom: 4.0),
+                                    child: Text("Gender",
+                                        style: fontConstants.formFieldLabel),
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "○ at least 8 characters",
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.black87),
-                                      ),
-                                      Text(
-                                        "○ at least 1 symbol like ( ! , \$ , # , & )",
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.black87),
-                                      ),
-                                      Text(
-                                        "○ both uppercase and lowercase",
-                                        style: TextStyle(
-                                          fontSize: 11,
-                                          color: Colors.black87,
+                                  Row(
+                                    children: genderList.map((value) {
+                                      int index = genderList.indexOf(value);
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 2.0),
+                                        child: SizedBox(
+                                          width: 90,
+                                          child: OutlinedButton(
+                                              style: ButtonStyle(),
+                                              onPressed: () {
+                                                setState(() {
+                                                  genderList.forEach((gender) =>
+                                                      gender.isSelected =
+                                                          false);
+                                                  genderList[index].isSelected =
+                                                      true;
+                                                  selectedGender =
+                                                      genderList[index].name;
+                                                });
+                                                print(selectedGender);
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(6.0),
+                                                child: Column(
+                                                  children: [
+                                                    Image.asset(
+                                                      genderList[index].icon,
+                                                      color: genderList[index]
+                                                              .isSelected
+                                                          ? appPrimaryMaterialColor
+                                                          : Colors.grey,
+                                                      width: 18,
+                                                    ),
+                                                    Text(genderList[index].name,
+                                                        style: TextStyle(
+                                                            fontSize: 11,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: genderList[
+                                                                        index]
+                                                                    .isSelected
+                                                                ? appPrimaryMaterialColor
+                                                                : Colors.grey)),
+                                                  ],
+                                                ),
+                                              )),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  MyButton(
-                                    onPressed: () {
-                                      if (_passwordDetail.currentState
-                                          .validate()) {
-                                        _userSignUp();
-                                      }
-                                    },
-                                    title: "Sign Up",
+                                      );
+                                    }).toList(),
                                   )
                                 ],
                               ),
                             ),
-                          ))
-                        ]
-                      ] else ...[
+                          ),
+                        )
+                      ] else if (provider.stepCurrentIndex == 2) ...[
                         Expanded(
-                          child: Column(
-                              children: signUpRole.map((value) {
-                            int index = signUpRole.indexOf(value);
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  currentIndex = index;
-                                  isRoleSelected = true;
-                                  selectedRole = value["value"];
-                                });
-                                print("$selectedRole");
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 40.0),
-                                child: Center(
-                                  child: Container(
-                                    width: 150,
+                            child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 18,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    chooseCameraOrGallery(context, "Profile");
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 60,
+                                    backgroundColor: appPrimaryMaterialColor,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        children: [
-                                          Image.asset("${value["icon"]}",
-                                              width: 40,
-                                              color: currentIndex == index
-                                                  ? appPrimaryMaterialColor
-                                                  : Colors.grey),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text("${value["label"]}",
-                                              style: TextStyle(
-                                                  color: currentIndex == index
-                                                      ? appPrimaryMaterialColor
-                                                      : Colors.grey,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12)),
-                                        ],
+                                      padding: const EdgeInsets.all(1.0),
+                                      child: ClipOval(
+                                        child: _userProfile == null
+                                            ? Image.asset(
+                                                "images/maleavtar.png")
+                                            : Image.file(_userProfile),
                                       ),
                                     ),
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(6.0),
-                                        border: Border.all(
-                                            color: currentIndex == index
-                                                ? appPrimaryMaterialColor
-                                                : Colors.grey,
-                                            width: 1.5)),
                                   ),
                                 ),
-                              ),
-                            );
-                          }).toList()),
-                        ),
+                                SizedBox(height: 24),
+                                Text("Select Profile Photo",
+                                    style: fontConstants.smallText),
+                                SizedBox(
+                                  height: 18,
+                                ),
+                                Container(
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(4.0)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8.0),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                        isExpanded: true,
+                                        icon: Icon(
+                                            Icons
+                                                .arrow_drop_down_circle_outlined,
+                                            size: 20),
+                                        items: identityData.map((item) {
+                                          return new DropdownMenuItem(
+                                            child: new Text(
+                                                "${item['identityProofName']}"),
+                                            value: item['_id'],
+                                          );
+                                        }).toList(),
+                                        hint: Text("Select Identity Proof",
+                                            style: TextStyle(fontSize: 14)),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedValue = value;
+                                          });
+                                        },
+                                        value: selectedValue,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 24,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    chooseCameraOrGallery(context, "Identity");
+                                  },
+                                  child: DottedBorder(
+                                    borderType: BorderType.Rect,
+                                    dashPattern: [5, 5, 5, 5],
+                                    color: Colors.grey[400],
+                                    child: Container(
+                                      height: 129,
+                                      width: 220,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: _identityProof != null
+                                                ? FileImage(_identityProof)
+                                                : AssetImage(
+                                                    "images/id-card.png")),
+                                        color: Color(0x22888888),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 15),
+                                SizedBox(height: 20),
+                                Text("Select Identity Proof",
+                                    style: fontConstants.smallText),
+                              ],
+                            ),
+                          ),
+                        ))
+                      ] else ...[
+                        Expanded(
+                            child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Form(
+                            key: _passwordDetail,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                MyTextFormField(
+                                    controller: txtPassword,
+                                    lable: "Create Password",
+                                    validator: validatePassword,
+                                    hintText: "Enter Password"),
+                                MyTextFormField(
+                                    controller: txtConfirmPassword,
+                                    lable: "Confirm Password",
+                                    validator: (val) {
+                                      if (txtPassword.text != val) {
+                                        return "Pasword does not match";
+                                      }
+                                      return null;
+                                    },
+                                    hintText: "Re-enter Password"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, bottom: 4.0),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.lock,
+                                        size: 13,
+                                        color: Colors.grey,
+                                      ),
+                                      Text(
+                                        "  Password must contain :",
+                                        style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.black87),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "○ at least 8 characters",
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.black87),
+                                    ),
+                                    Text(
+                                      "○ at least 1 symbol like ( ! , \$ , # , & )",
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.black87),
+                                    ),
+                                    Text(
+                                      "○ both uppercase and lowercase",
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                MyButton(
+                                  onPressed: () {
+                                    if (_passwordDetail.currentState
+                                        .validate()) {
+                                      _userSignUp();
+                                    }
+                                  },
+                                  title: "Sign Up",
+                                )
+                              ],
+                            ),
+                          ),
+                        ))
                       ]
                     ],
                   ),
@@ -549,7 +570,7 @@ class _SignUp3State extends State<SignUp3> {
             ),
           ],
         ),
-        floatingActionButton: keyboardIsOpened || isRoleSelected == false
+        floatingActionButton: keyboardIsOpened
             ? null
             : Stack(
                 children: <Widget>[
@@ -565,7 +586,62 @@ class _SignUp3State extends State<SignUp3> {
                                     backgroundColor: appPrimaryMaterialColor,
                                     mini: true,
                                     onPressed: () {
-                                      provider.stepCurrentIndex = 0;
+                                      provider.backButton();
+                                    },
+                                    heroTag: null,
+                                    child: Icon(Icons.arrow_back_ios_rounded)),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 31),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: FloatingActionButton(
+                                    backgroundColor: appPrimaryMaterialColor,
+                                    mini: true,
+                                    onPressed: () {
+                                      if (_basicDetail.currentState
+                                          .validate()) {
+                                        provider.stepCurrentIndex = 2;
+                                      }
+                                    },
+                                    heroTag: null,
+                                    child:
+                                        Icon(Icons.arrow_forward_ios_rounded)),
+                              ),
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
+                  provider.stepCurrentIndex == 0
+                      ? Align(
+                          alignment: Alignment.bottomRight,
+                          child: FloatingActionButton(
+                            backgroundColor: appPrimaryMaterialColor,
+                            onPressed: () {
+                              if (_firstStep.currentState.validate()) {
+                                provider.stepCurrentIndex = 1;
+                              }
+                            },
+                            mini: true,
+                            heroTag: null,
+                            child: Icon(Icons.arrow_forward_ios_rounded),
+                          ),
+                        )
+                      : SizedBox(),
+                  provider.stepCurrentIndex == 2
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 31),
+                              child: Align(
+                                alignment: Alignment.bottomLeft,
+                                child: FloatingActionButton(
+                                    backgroundColor: appPrimaryMaterialColor,
+                                    mini: true,
+                                    onPressed: () {
+                                      provider.backButton();
                                     },
                                     heroTag: null,
                                     child: Icon(Icons.arrow_back_ios_rounded)),
@@ -581,7 +657,7 @@ class _SignUp3State extends State<SignUp3> {
                                     onPressed: () {
                                       if (selectedValue != null) {
                                         if (_identityProof != null) {
-                                          provider.stepCurrentIndex = 2;
+                                          provider.stepCurrentIndex = 3;
                                         } else {
                                           Fluttertoast.showToast(
                                               gravity: ToastGravity.TOP,
@@ -607,44 +683,22 @@ class _SignUp3State extends State<SignUp3> {
                           ],
                         )
                       : SizedBox(),
-                  provider.stepCurrentIndex == 0
-                      ? Align(
-                          alignment: Alignment.bottomRight,
-                          child: FloatingActionButton(
-                            backgroundColor: appPrimaryMaterialColor,
-                            onPressed: () {
-                              if (_basicDetail.currentState.validate()) {
-                                provider.stepCurrentIndex = 1;
-                              }
-                              print("First Click");
-                            },
-                            mini: true,
-                            heroTag: null,
-                            child: Icon(Icons.arrow_forward_ios_rounded),
+                  provider.stepCurrentIndex == 3
+                      ? Padding(
+                          padding: EdgeInsets.only(left: 31),
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: FloatingActionButton(
+                                backgroundColor: appPrimaryMaterialColor,
+                                mini: true,
+                                onPressed: () {
+                                  provider.backButton();
+                                },
+                                heroTag: null,
+                                child: Icon(Icons.arrow_back_ios_rounded)),
                           ),
                         )
-                      : SizedBox(),
-                  provider.stepCurrentIndex == 2
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 31),
-                              child: Align(
-                                alignment: Alignment.bottomLeft,
-                                child: FloatingActionButton(
-                                    backgroundColor: appPrimaryMaterialColor,
-                                    mini: true,
-                                    onPressed: () {
-                                      provider.stepCurrentIndex = 1;
-                                    },
-                                    heroTag: null,
-                                    child: Icon(Icons.arrow_back_ios_rounded)),
-                              ),
-                            ),
-                          ],
-                        )
-                      : SizedBox(),
+                      : SizedBox()
                 ],
               ));
   }
@@ -805,7 +859,7 @@ class _SignUp3State extends State<SignUp3> {
           "emailId": txtEmail.text,
           "password": txtPassword.text,
           "userRole": selectedRole,
-          "societyCode": "",
+          "societyCode": "SOC-RAGHUVIR-525411000000",
           "address": "",
           "fcmToken": "d5dff5d5d5s5d",
           "refferBy": "",

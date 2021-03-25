@@ -21,7 +21,7 @@ class fontConstants {
 
   // TextFormField label
   static const formFieldLabel = TextStyle(
-      color: Colors.black54, fontSize: 14, fontWeight: FontWeight.bold);
+      color: Colors.black54, fontSize: 13, fontWeight: FontWeight.bold);
 
   // Bottombar FontStyle
   static const activeFonts = TextStyle(fontSize: 12);

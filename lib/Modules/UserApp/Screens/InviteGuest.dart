@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
@@ -13,12 +12,12 @@ import 'package:watcher_app_for_user/Data/ClassList/Gender.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
-class AddFamilyMember extends StatefulWidget {
+class InviteGuest extends StatefulWidget {
   @override
-  _AddFamilyMemberState createState() => _AddFamilyMemberState();
+  _InviteGuestState createState() => _InviteGuestState();
 }
 
-class _AddFamilyMemberState extends State<AddFamilyMember> {
+class _InviteGuestState extends State<InviteGuest> {
   //Controllers
   TextEditingController txtFirstame = new TextEditingController();
   TextEditingController txtMiddlename = new TextEditingController();
@@ -247,7 +246,7 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
             focusNode: save,
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                addFamilyMember();
+                inviteGuest();
               }
             },
             title: "Save"),
@@ -255,27 +254,32 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
     );
   }
 
-  addFamilyMember() async {
+  inviteGuest() async {
     try {
       LoadingIndicator.show(context);
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        var body = FormData.fromMap({
-          "parentId": "${sharedPrefs.memberId}",
-          "firstName": txtFirstame.text,
-          "lastName": txtLastname.text,
-          "mobileNo1": txtMobileNo.text,
-          "emailId": txtEmailId.text,
-          "gender": selectedGender,
-        });
+        var body = {
+          "memberNo": "${sharedPrefs.memberNo}",
+          "societyId": "6038838fd00ee22d24a09c7a",
+          "validFrom": "08/03/2021",
+          "validTo": "08/03/2021",
+          "purpose": "Ni kev",
+          "guestType": "6018dc018ca5940d100c1d40",
+          "guestName": "Top Secret",
+          "numberOfGuest": "1",
+          "emailId": "private@gmal.com",
+          "mobileNo": "9898494312",
+          "wingName": "A",
+          "flateNo": "101"
+        };
         print(body);
-        Services.responseHandler(
-                apiName: "api/member/addFamilyMember", body: body)
+        Services.responseHandler(apiName: "api/member/inviteGuest", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             LoadingIndicator.close(context);
-            Fluttertoast.showToast(msg: "Family Member Added Successfully");
+            Fluttertoast.showToast(msg: "Guest Added Successfully");
             Navigator.pop(context);
           } else {
             print(responseData);
