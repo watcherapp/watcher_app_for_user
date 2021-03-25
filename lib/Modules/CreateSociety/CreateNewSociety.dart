@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyCustomDropDown.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
+import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
@@ -51,15 +52,15 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               isLoading = false;
             });
           } else {
-            print(responseData);
+           print(responseData);
+            setState(() {
+              isLoading = false;
+            });
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                // textColor: Colors.white,
-                fontSize: 16.0);
+                backgroundColor: Colors.white,
+                textColor: appPrimaryMaterialColor,
+                );
           }
         }).catchError((error) {
           setState(() {
@@ -68,12 +69,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           //LoadingIndicator.close(context);
           Fluttertoast.showToast(
               msg: "Error $error",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              // textColor: Colors.white,
-              fontSize: 16.0);
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+              );
         });
       }
     } catch (e) {
@@ -83,12 +81,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
       //LoadingIndicator.close(context);
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          // textColor: Colors.white,
-          fontSize: 16.0);
+          backgroundColor: Colors.white,
+          textColor: appPrimaryMaterialColor,
+          );
     }
   }
 
@@ -123,16 +118,15 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               isLoading = false;
             });
           } else {
-            print(responseData);
-
+           print(responseData);
+            setState(() {
+              isLoading = false;
+            });
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                // textColor: Colors.white,
-                fontSize: 16.0);
+                backgroundColor: Colors.white,
+                textColor: appPrimaryMaterialColor,
+                );
           }
         }).catchError((error) {
           setState(() {
@@ -141,12 +135,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           //LoadingIndicator.close(context);
           Fluttertoast.showToast(
               msg: "Error $error",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              // textColor: Colors.white,
-              fontSize: 16.0);
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+              );
         });
       }
     } catch (e) {
@@ -156,12 +147,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
       //LoadingIndicator.close(context);
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          // textColor: Colors.white,
-          fontSize: 16.0);
+          backgroundColor: Colors.white,
+          textColor: appPrimaryMaterialColor,
+          );
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(
       //     behavior: SnackBarBehavior.floating,
@@ -196,15 +184,15 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               isLoading = false;
             });
           } else {
-            print(responseData);
+           print(responseData);
+            setState(() {
+              isLoading = false;
+            });
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                // textColor: Colors.white,
-                fontSize: 16.0);
+                backgroundColor: Colors.white,
+                textColor: appPrimaryMaterialColor,
+                );
           }
         }).catchError((error) {
           setState(() {
@@ -213,12 +201,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           //LoadingIndicator.close(context);
           Fluttertoast.showToast(
               msg: "Error $error",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              // textColor: Colors.white,
-              fontSize: 16.0);
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+              );
         });
       }
     } catch (e) {
@@ -228,12 +213,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
       //LoadingIndicator.close(context);
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          // textColor: Colors.white,
-          fontSize: 16.0);
+          backgroundColor: Colors.white,
+          textColor: appPrimaryMaterialColor,
+          );
     }
   }
 
@@ -266,15 +248,15 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               isLoading = false;
             });
           } else {
-            print(responseData);
+           print(responseData);
+            setState(() {
+              isLoading = false;
+            });
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                // textColor: Colors.white,
-                fontSize: 16.0);
+                backgroundColor: Colors.white,
+                textColor: appPrimaryMaterialColor,
+                );
           }
         }).catchError((error) {
           setState(() {
@@ -283,12 +265,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           //LoadingIndicator.close(context);
           Fluttertoast.showToast(
               msg: "Error $error",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              // textColor: Colors.white,
-              fontSize: 16.0);
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+              );
         });
       }
     } catch (e) {
@@ -298,12 +277,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
       //LoadingIndicator.close(context);
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          // textColor: Colors.white,
-          fontSize: 16.0);
+          backgroundColor: Colors.white,
+          textColor: appPrimaryMaterialColor,
+          );
     }
   }
 
@@ -331,15 +307,15 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               isLoading = false;
             });
           } else {
-            print(responseData);
+           print(responseData);
+            setState(() {
+              isLoading = false;
+            });
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                // textColor: Colors.white,
-                fontSize: 16.0);
+                backgroundColor: Colors.white,
+                textColor: appPrimaryMaterialColor,
+                );
           }
         }).catchError((error) {
           setState(() {
@@ -347,12 +323,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           });
           Fluttertoast.showToast(
               msg: "Error $error",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              // textColor: Colors.white,
-              fontSize: 16.0);
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+              );
         });
       }
     } catch (e) {
@@ -362,12 +335,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
       //LoadingIndicator.close(context);
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          // textColor: Colors.white,
-          fontSize: 16.0);
+          backgroundColor: Colors.white,
+          textColor: appPrimaryMaterialColor,
+          );
     }
   }
 

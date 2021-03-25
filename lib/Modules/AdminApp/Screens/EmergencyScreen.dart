@@ -64,12 +64,9 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
           });
           Fluttertoast.showToast(
               msg: "Error $error",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              // textColor: Colors.white,
-              fontSize: 16.0);
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+              );
         });
       }
     } catch (e) {
@@ -78,12 +75,9 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       });
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          // textColor: Colors.white,
-          fontSize: 16.0);
+          backgroundColor: Colors.white,
+          textColor: appPrimaryMaterialColor,
+          );
     }
   }
 
@@ -111,16 +105,15 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
               isLoading = false;
             });
           } else {
-            print(responseData);
-
+           print(responseData);
+            setState(() {
+              isLoading = false;
+            });
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                // textColor: Colors.white,
-                fontSize: 16.0);
+                backgroundColor: Colors.white,
+                textColor: appPrimaryMaterialColor,
+                );
           }
         }).catchError((error) {
           setState(() {
@@ -128,12 +121,9 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
           });
           Fluttertoast.showToast(
               msg: "Error $error",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              // textColor: Colors.white,
-              fontSize: 16.0);
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+              );
         });
       }
     } catch (e) {
@@ -142,12 +132,9 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       });
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          // textColor: Colors.white,
-          fontSize: 16.0);
+          backgroundColor: Colors.white,
+          textColor: appPrimaryMaterialColor,
+          );
     }
   }
 
