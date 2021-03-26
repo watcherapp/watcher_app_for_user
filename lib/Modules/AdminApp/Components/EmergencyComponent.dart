@@ -47,25 +47,25 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
               isDeleteLoading = false;
             });
           } else {
-           print(responseData);
+            print(responseData);
             setState(() {
               isDeleteLoading = false;
             });
             Fluttertoast.showToast(
-                msg: "${responseData.Message}",
-                backgroundColor: Colors.white,
-                textColor: appPrimaryMaterialColor,
-                );
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
           }
         }).catchError((error) {
           setState(() {
             isDeleteLoading = false;
           });
           Fluttertoast.showToast(
-              msg: "Error $error",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-              );
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
         });
       }
     } catch (e) {
@@ -73,10 +73,10 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
         isDeleteLoading = false;
       });
       Fluttertoast.showToast(
-          msg: "You aren't connected to the Internet !",
-          backgroundColor: Colors.white,
-          textColor: appPrimaryMaterialColor,
-          );
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
     }
   }
 
@@ -98,8 +98,8 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 7.0),
-                    child: Image.network(
-                      widget.allEmergencyList["image"],
+                    child: Image.asset(
+                      "images/policeman.png",
                       width: 60,
                     ),
                   ),
@@ -149,7 +149,7 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
                                 PageTransition(
                                     child: UpdateEmergencyScreen(
                                       emergencyData: widget.allEmergencyList,
-                                      GetData: (){
+                                      GetData: () {
                                         widget.GetEmergencyApi();
                                       },
                                     ),

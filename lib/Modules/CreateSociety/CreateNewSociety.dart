@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
+import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 
 class CreateNewSociety extends StatefulWidget {
@@ -19,6 +21,10 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
   String selectedCountry = "";
   String selectedState = "";
   String selectedCity = "";
+  String selectedCountryName = "";
+  String selectedStateName = "";
+  String selectedCityName = "";
+  String latitude, longitude;
   String selectedSocietyType = "";
   bool isCountryLoading = false;
   bool isStateLoading = false;
@@ -34,6 +40,14 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
   TextEditingController txtStreetAddress = TextEditingController();
   TextEditingController txtZipCode = TextEditingController();
 
+  GlobalKey<FormState> _formKey = GlobalKey();
+
+  FocusNode societyName = new FocusNode();
+  FocusNode wingNumber = new FocusNode();
+  FocusNode streetName = new FocusNode();
+  FocusNode streetAddress = new FocusNode();
+  FocusNode zipcode = new FocusNode();
+  FocusNode submit = new FocusNode();
   @override
   void initState() {
     super.initState();
@@ -42,203 +56,278 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
   }
 
   @override
+  void dispose() {
+    @override
+    void dispose() {
+      // TODO: implement dispose
+      super.dispose();
+      societyName.dispose();
+      wingNumber.dispose();
+      streetName.dispose();
+      streetAddress.dispose();
+      zipcode.dispose();
+      submit.dispose();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Create Society"),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back_ios_rounded),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Select Society Type", style: fontConstants.formFieldLabel),
-              SizedBox(height: 3),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6.0),
-                  color: Colors.grey[200],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Select Society Type",
+                    style: fontConstants.formFieldLabel),
+                SizedBox(height: 3),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    color: Colors.grey[200],
+                  ),
+                  child: SearchableDropdown.single(
+                    items: societyTypeList.map((value) {
+                      return (DropdownMenuItem(
+                        child: Text(value["categoryName"]),
+                        value: value["_id"],
+                      ));
+                    }).toList(),
+                    value: selectedSocietyType,
+                    hint: "Select Society Type",
+                    isCaseSensitiveSearch: false,
+                    style: TextStyle(fontSize: 15, color: Colors.black87),
+                    searchHint: "Select Society Type",
+                    onChanged: (value) {
+                      setState(() {
+                        selectedSocietyType = value;
+                      });
+                      print(selectedSocietyType);
+                    },
+                    dialogBox: true,
+                    displayClearIcon: false,
+                    isExpanded: true,
+                  ),
                 ),
-                child: SearchableDropdown.single(
-                  items: societyTypeList.map((value) {
-                    return (DropdownMenuItem(
-                      child: Text(value["categoryName"]),
-                      value: value["_id"],
-                    ));
-                  }).toList(),
-                  value: selectedSocietyType,
-                  hint: "Select Society Type",
-                  isCaseSensitiveSearch: false,
-                  style: TextStyle(fontSize: 15, color: Colors.black87),
-                  searchHint: "Select Society Type",
-                  onChanged: (value) {
-                    setState(() {
-                      selectedSocietyType = value;
-                    });
-                    print(selectedSocietyType);
-                  },
-                  dialogBox: true,
-                  displayClearIcon: false,
-                  isExpanded: true,
+                MyTextFormField(
+                    focusNode: societyName,
+                    controller: txtSocName,
+                    lable: "Society Name",
+                    textInputAction: TextInputAction.next,
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter Society Name";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (term) {
+                      societyName.unfocus();
+                      FocusScope.of(context).requestFocus(wingNumber);
+                    },
+                    hintText: "Enter Society Name"),
+                MyTextFormField(
+                    focusNode: wingNumber,
+                    controller: txtWingNumber,
+                    textInputAction: TextInputAction.done,
+                    lable: "Total Wings or Apartment buildings",
+                    keyboardType: TextInputType.number,
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter Total Wings or Apartment buildings";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (term) {
+                      wingNumber.unfocus();
+                    },
+                    hintText: "Enter Total Wings or Apartment buildings"),
+                SizedBox(height: 10),
+                Text("Country", style: fontConstants.formFieldLabel),
+                SizedBox(height: 3),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    color: Colors.grey[200],
+                  ),
+                  child: SearchableDropdown.single(
+                    items: countryList.map((value) {
+                      return (DropdownMenuItem(
+                        child: Text(value["name"]),
+                        value: value["isoCode"] + "@" + value["name"],
+                      ));
+                    }).toList(),
+                    value: selectedCountry,
+                    hint: "Select Country",
+                    style: TextStyle(fontSize: 15, color: Colors.black87),
+                    searchHint: "Select Country",
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCountry = value.toString().split("@")[0];
+                        selectedCountryName = value.toString().split("@")[1];
+                      });
+                      _getAllstate(selectedCountry);
+                      print(selectedCountryName);
+                    },
+                    dialogBox: true,
+                    displayClearIcon: false,
+                    isCaseSensitiveSearch: false,
+                    isExpanded: true,
+                  ),
                 ),
-              ),
-              MyTextFormField(
-                  controller: txtSocName,
-                  lable: "Society Name",
-                  validator: (val) {
-                    if (val.isEmpty) {
-                      return "Please Enter Society Name";
-                    }
-                    return null;
-                  },
-                  hintText: "Enter Society Name"),
-              MyTextFormField(
-                  controller: txtWingNumber,
-                  lable: "Total Wings or Apartment buildings",
-                  keyboardType: TextInputType.number,
-                  validator: (val) {
-                    if (val.isEmpty) {
-                      return "Please Enter Total Wings or Apartment buildings";
-                    }
-                    return null;
-                  },
-                  hintText: "Enter Total Wings or Apartment buildings"),
-              SizedBox(height: 10),
-              Text("Country", style: fontConstants.formFieldLabel),
-              SizedBox(height: 3),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6.0),
-                  color: Colors.grey[200],
-                ),
-                child: SearchableDropdown.single(
-                  items: countryList.map((value) {
-                    return (DropdownMenuItem(
-                      child: Text(value["name"]),
-                      value: value["isoCode"],
-                    ));
-                  }).toList(),
-                  value: selectedCountry,
-                  hint: "Select Country",
-                  style: TextStyle(fontSize: 15, color: Colors.black87),
-                  searchHint: "Select Country",
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCountry = value;
-                    });
-                    _getAllstate(selectedCountry);
-                  },
-                  dialogBox: true,
-                  displayClearIcon: false,
-                  isCaseSensitiveSearch: false,
-                  isExpanded: true,
-                ),
-              ),
-              SizedBox(height: 15),
-              Text("State", style: fontConstants.formFieldLabel),
-              SizedBox(height: 3),
-              isStateLoading == true
-                  ? CircularProgressIndicator()
-                  : Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        color: Colors.grey[200],
+                SizedBox(height: 15),
+                Text("State", style: fontConstants.formFieldLabel),
+                SizedBox(height: 3),
+                isStateLoading == true
+                    ? CircularProgressIndicator()
+                    : Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: SearchableDropdown.single(
+                          items: stateList.map((value) {
+                            return (DropdownMenuItem(
+                              child: Text(value["name"]),
+                              value: value["isoCode"] + "@" + value["name"],
+                            ));
+                          }).toList(),
+                          value: selectedState,
+                          hint: "Select State",
+                          isCaseSensitiveSearch: false,
+                          style: TextStyle(fontSize: 15, color: Colors.black87),
+                          searchHint: "Select State",
+                          onChanged: (value) {
+                            setState(() {
+                              selectedState = value.toString().split("@")[0];
+                              selectedStateName =
+                                  value.toString().split("@")[1];
+                            });
+                            _getAllCity(
+                                selectedCountry: selectedCountry,
+                                selectedState: selectedState);
+                            // _getAllstate(selectedState);
+                          },
+                          dialogBox: true,
+                          displayClearIcon: false,
+                          isExpanded: true,
+                        ),
                       ),
-                      child: SearchableDropdown.single(
-                        items: stateList.map((value) {
-                          return (DropdownMenuItem(
-                            child: Text(value["name"]),
-                            value: value["isoCode"],
-                          ));
-                        }).toList(),
-                        value: selectedState,
-                        hint: "Select State",
-                        isCaseSensitiveSearch: false,
-                        style: TextStyle(fontSize: 15, color: Colors.black87),
-                        searchHint: "Select State",
-                        onChanged: (value) {
-                          setState(() {
-                            selectedState = value;
-                          });
-                          _getAllCity(
-                              selectedCountry: selectedCountry,
-                              selectedState: selectedState);
-                          // _getAllstate(selectedState);
-                        },
-                        dialogBox: true,
-                        displayClearIcon: false,
-                        isExpanded: true,
+                SizedBox(height: 15),
+                Text("City", style: fontConstants.formFieldLabel),
+                SizedBox(height: 3),
+                isCityLoading == true
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: SearchableDropdown.single(
+                          items: cityList.map((value) {
+                            return (DropdownMenuItem(
+                              child: Text(value["name"] ?? ""),
+                              value: value,
+                            ));
+                          }).toList(),
+                          value: selectedCity,
+                          hint: "Select City",
+                          isCaseSensitiveSearch: false,
+                          style: TextStyle(fontSize: 15, color: Colors.black87),
+                          searchHint: "Select City",
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCityName = value["name"];
+                              latitude = value["latitude"];
+                              longitude = value["longitude"];
+                            });
+                            print(selectedCityName +
+                                " " +
+                                latitude +
+                                " " +
+                                longitude);
+                          },
+                          dialogBox: true,
+                          displayClearIcon: false,
+                          isExpanded: true,
+                        ),
                       ),
-                    ),
-              SizedBox(height: 15),
-              Text("City", style: fontConstants.formFieldLabel),
-              SizedBox(height: 3),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6.0),
-                  color: Colors.grey[200],
+                MyTextFormField(
+                    focusNode: streetName,
+                    controller: txtStreetName,
+                    textInputAction: TextInputAction.next,
+                    lable: "Street Name",
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter Street Name";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (term) {
+                      streetName.unfocus();
+                      FocusScope.of(context).requestFocus(streetAddress);
+                    },
+                    hintText: "Enter Street Name"),
+                MyTextFormField(
+                    controller: txtStreetAddress,
+                    focusNode: streetAddress,
+                    textInputAction: TextInputAction.next,
+                    lable: "Street Address",
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter Street Address";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (term) {
+                      streetAddress.unfocus();
+                      FocusScope.of(context).requestFocus(zipcode);
+                    },
+                    hintText: "Enter Street Address"),
+                MyTextFormField(
+                    focusNode: zipcode,
+                    controller: txtZipCode,
+                    textInputAction: TextInputAction.next,
+                    lable: "ZipCode",
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter ZipCode";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (term) {
+                      zipcode.unfocus();
+                      FocusScope.of(context).requestFocus(submit);
+                    },
+                    hintText: "Enter ZIP Code"),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: MyButton(
+                      focusNode: submit,
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          _createSociety();
+                        }
+                      },
+                      title: "Submit"),
                 ),
-                child: SearchableDropdown.single(
-                  items: cityList.map((value) {
-                    return (DropdownMenuItem(
-                      child: Text(value["name"]),
-                      value: value["isoCode"],
-                    ));
-                  }).toList(),
-                  value: selectedCity,
-                  hint: "Select City",
-                  isCaseSensitiveSearch: false,
-                  style: TextStyle(fontSize: 15, color: Colors.black87),
-                  searchHint: "Select City",
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCity = value;
-                    });
-                  },
-                  dialogBox: true,
-                  displayClearIcon: false,
-                  isExpanded: true,
-                ),
-              ),
-              MyTextFormField(
-                  controller: txtStreetName,
-                  lable: "Street Name",
-                  validator: (val) {
-                    if (val.isEmpty) {
-                      return "Please Enter Street Name";
-                    }
-                    return null;
-                  },
-                  hintText: "Enter Street Name"),
-              MyTextFormField(
-                  controller: txtStreetAddress,
-                  lable: "Street Address",
-                  validator: (val) {
-                    if (val.isEmpty) {
-                      return "Please Enter Street Address";
-                    }
-                    return null;
-                  },
-                  hintText: "Enter Street Address"),
-              MyTextFormField(
-                  controller: txtZipCode,
-                  lable: "ZipCode",
-                  validator: (val) {
-                    if (val.isEmpty) {
-                      return "Please Enter ZipCode";
-                    }
-                    return null;
-                  },
-                  hintText: "Enter ZIP Code"),
-              MyButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: SetupWings(),
-                            type: PageTransitionType.rightToLeft));
-                  },
-                  title: "Submit"),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -250,21 +339,21 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
       setState(() {
         isLoading = true;
       });
-      //LoadingIndicator.show(context);
+      LoadingIndicator.show(context);
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "secretaryId": "6038834fd00ee22d24a09c77",
+          "secretaryId": "${sharedPrefs.memberId}",
           "societyName": txtSocName.text,
-          "totalWings": "",
-          "country": "india",
-          "state": "gujarat",
-          "city": "surat",
-          "lat": "21.0541351",
-          "long": "72.151513",
+          "totalWings": txtWingNumber.text,
+          "country": selectedCountryName,
+          "state": selectedStateName,
+          "city": selectedCityName,
+          "lat": latitude,
+          "long": longitude,
           "completeAddress": txtStreetName.text + " " + txtStreetAddress.text,
-          "categoryId": "600574f31afece007c40804e"
+          "categoryId": selectedSocietyType
         };
         print("$body");
         Services.responseHandler(
@@ -272,12 +361,16 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
-            setState(() {
-              isLoading = false;
-            });
+            LoadingIndicator.close(context);
+            Navigator.push(
+                context,
+                PageTransition(
+                    child:
+                        SetupWings(wingsCount: int.parse(txtWingNumber.text)),
+                    type: PageTransitionType.rightToLeft));
           } else {
             print(responseData);
-
+            LoadingIndicator.close(context);
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
                 toastLength: Toast.LENGTH_SHORT,
@@ -288,10 +381,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                 fontSize: 16.0);
           }
         }).catchError((error) {
-          setState(() {
-            isLoading = false;
-          });
-          //LoadingIndicator.close(context);
+          LoadingIndicator.close(context);
           Fluttertoast.showToast(
               msg: "Error $error",
               toastLength: Toast.LENGTH_SHORT,
@@ -303,10 +393,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
         });
       }
     } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      //LoadingIndicator.close(context);
+      LoadingIndicator.close(context);
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
           toastLength: Toast.LENGTH_SHORT,
@@ -315,13 +402,6 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           backgroundColor: Colors.red,
           // textColor: Colors.white,
           fontSize: 16.0);
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     behavior: SnackBarBehavior.floating,
-      //     backgroundColor: Colors.red,
-      //     content: Text("You aren't connected to the Internet !"),
-      //   ),
-      // );
     }
   }
 
@@ -470,6 +550,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           apiName: "api/admin/getState",
           body: body,
         ).then((responseData) {
+          print(responseData.Data.length);
           if (responseData.Data.length > 0) {
             print("getAllstate -- >${responseData.Data}");
             stateList = responseData.Data;
@@ -477,7 +558,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               isStateLoading = false;
             });
           } else {
-            print(responseData);
+            print(responseData.Message);
             setState(() {
               isStateLoading = false;
             });

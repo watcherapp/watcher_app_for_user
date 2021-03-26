@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/PropertyManagerProvider.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
-import 'package:watcher_app_for_user/Modules/CreateSociety/CreateNewSociety.dart';
+import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 
 import 'Constants/appColors.dart';
 import 'Data/Providers/IndexCountProvider.dart';
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: CreateNewSociety(),
+        home: SetupWings(),
       ),
     );
   }

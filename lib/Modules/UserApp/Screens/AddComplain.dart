@@ -50,7 +50,7 @@ class _AddComplainState extends State<AddComplain> {
                       FocusScope.of(context).unfocus();
                       showDialog(
                         context: context,
-                        builder: (context) =>  Padding(
+                        builder: (context) => Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: MyDropDown(
                             dropDownTitle: "Complains Category",
