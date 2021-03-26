@@ -15,7 +15,6 @@ import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 
 class AddEmergencyScreen extends StatefulWidget {
-
   @override
   _AddEmergencyScreenState createState() => _AddEmergencyScreenState();
 }
@@ -29,25 +28,25 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
   TextEditingController txtName = new TextEditingController();
   TextEditingController txtNumber = new TextEditingController();
 
-  Future getFromCamera() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    if (image != null) {
-      setState(() {
-        _image = image;
-      });
-    }
-  }
+  // Future getFromCamera() async {
+  //   var image = await ImagePicker.pickImage(source: ImageSource.camera);
+  //   if (image != null) {
+  //     setState(() {
+  //       _image = image;
+  //     });
+  //   }
+  // }
+  //
+  // Future getFromGallery() async {
+  //   var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  //   if (image != null) {
+  //     setState(() {
+  //       _image = image;
+  //     });
+  //   }
+  // }
 
-  Future getFromGallery() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _image = image;
-      });
-    }
-  }
-
-  getImageFileFromAssets(String path) async {
+  Future<File> getImageFileFromAssets(String path) async {
     final byteData = await rootBundle.load('$path');
 
     var file = File('${(await getTemporaryDirectory()).path}/$path');
@@ -107,25 +106,25 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
               isLoading = false;
             });
           } else {
-           print(responseData);
+            print(responseData);
             setState(() {
               isLoading = false;
             });
             Fluttertoast.showToast(
-                msg: "${responseData.Message}",
-                backgroundColor: Colors.white,
-                textColor: appPrimaryMaterialColor,
-                );
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
           }
         }).catchError((error) {
           setState(() {
             isLoading = false;
           });
           Fluttertoast.showToast(
-              msg: "Error $error",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-              );
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
         });
       }
     } catch (e) {
@@ -133,10 +132,10 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
         isLoading = false;
       });
       Fluttertoast.showToast(
-          msg: "You aren't connected to the Internet !",
-          backgroundColor: Colors.white,
-          textColor: appPrimaryMaterialColor,
-          );
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
     }
   }
 
@@ -310,7 +309,9 @@ class _EmergencyBottomSheetState extends State<EmergencyBottomSheet> {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            widget.setImagePath(Fields[index]["img"].toString());
+            widget.setImagePath(
+              Fields[index]["img"].toString(),
+            );
             Navigator.of(context).pop();
           },
           child: Padding(

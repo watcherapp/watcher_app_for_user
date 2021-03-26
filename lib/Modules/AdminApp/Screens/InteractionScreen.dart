@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddPollingQuestion.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/NoticeBoardScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AmenitiesScreen.dart';
 
 class InteractionScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _InteractionScreenState extends State<InteractionScreen> {
     {
       "label": "Notice",
       "img": "images/microphone.png",
-      "screenName" : AddPollingQuestion(),
+      "screenName" : NoticeBoardScreen(),
     },
     // {
     //   "label": "Event",
