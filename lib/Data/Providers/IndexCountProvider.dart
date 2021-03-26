@@ -19,4 +19,11 @@ class IndexCountProvider with ChangeNotifier {
     _stepCurrentIndex = index;
     notifyListeners();
   }
+
+  backButton() {
+    if (_stepCurrentIndex != 0) {
+      _stepCurrentIndex--;
+    }
+    notifyListeners();
+  }
 }

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/EmergencyComponent.dart';
@@ -33,7 +32,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": societyId,
+          "societyId": "605b0073d7dc4b0022aa1e92",
         };
         Services.responseHandler(
                 apiName: "api/admin/getAllEmergencyContacts", body: body)
@@ -63,10 +62,10 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
             isLoading = false;
           });
           Fluttertoast.showToast(
-              msg: "Error $error",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-              );
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
         });
       }
     } catch (e) {
@@ -74,10 +73,10 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         isLoading = false;
       });
       Fluttertoast.showToast(
-          msg: "You aren't connected to the Internet !",
-          backgroundColor: Colors.white,
-          textColor: appPrimaryMaterialColor,
-          );
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
     }
   }
 
@@ -105,25 +104,25 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
               isLoading = false;
             });
           } else {
-           print(responseData);
+            print(responseData);
             setState(() {
               isLoading = false;
             });
             Fluttertoast.showToast(
-                msg: "${responseData.Message}",
-                backgroundColor: Colors.white,
-                textColor: appPrimaryMaterialColor,
-                );
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
           }
         }).catchError((error) {
           setState(() {
             isLoading = false;
           });
           Fluttertoast.showToast(
-              msg: "Error $error",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-              );
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
         });
       }
     } catch (e) {
@@ -131,13 +130,12 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         isLoading = false;
       });
       Fluttertoast.showToast(
-          msg: "You aren't connected to the Internet !",
-          backgroundColor: Colors.white,
-          textColor: appPrimaryMaterialColor,
-          );
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +164,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
               itemBuilder: (BuildContext context, int index) {
                 return EmergencyComponent(
                   allEmergencyList: allEmergencyList[index],
-                  GetEmergencyApi:(){
+                  GetEmergencyApi: () {
                     _getAllEmergency();
                   },
                 );

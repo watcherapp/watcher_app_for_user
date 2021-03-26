@@ -150,7 +150,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     ? Padding(
                         padding: const EdgeInsets.only(top: 3.0),
                         child: Container(
-                          height: 140.0,
+                          height: 150.0,
                           width: MediaQuery.of(context).size.width / 1,
                           decoration: BoxDecoration(
                             // borderRadius: BorderRadius.circular(30),
@@ -206,7 +206,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               ],
             ),
             color: appPrimaryMaterialColor,
-            height: MediaQuery.of(context).size.height / 3.5,
+            height: MediaQuery.of(context).size.height / 3,
             width: MediaQuery.of(context).size.width,
           ),
           Padding(

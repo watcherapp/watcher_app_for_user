@@ -1,9 +1,13 @@
-import 'package:dotted_border/dotted_border.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/CommonWidgets/labelWithAddButton.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/AddComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/DailyHelperComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/FamilyMemberComponent.dart';
@@ -20,6 +24,15 @@ class MyWatcher extends StatefulWidget {
 
 class _MyWatcherState extends State<MyWatcher> {
   int length = 3;
+  List familyMemberList = [];
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _getMyFamilyMember();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -341,5 +354,50 @@ class _MyWatcherState extends State<MyWatcher> {
         ],
       ),
     ));
+  }
+
+  _getMyFamilyMember() async {
+    print("Calling");
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "memberId": "${sharedPrefs.memberId}",
+          "societyId": "6038838fd00ee22d24a09c7a"
+        };
+        setState(() {
+          isLoading = true;
+        });
+        Services.responseHandler(
+                apiName: "api/member/getFamilyMembers", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              familyMemberList = responseData.Data;
+              isLoading = false;
+            });
+            print(familyMemberList);
+          } else {
+            print(responseData);
+            setState(() {
+              familyMemberList = responseData.Data;
+              isLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
   }
 }

@@ -70,7 +70,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
           int currentNumber = flatNo + j;
           flatList.add({
             "flatNo": currentNumber,
-            "statusColor": flatColorsList[colorIndex]
+            "flatStatus": flatColorsList[colorIndex]
           });
           // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
         }
@@ -88,7 +88,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
             int currentNumber = flatNo + j;
             flatList.add({
               "flatNo": "G" + "${j + 1}",
-              "statusColor": flatColorsList[colorIndex]
+              "flatStatus": flatColorsList[colorIndex]
             });
             // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
           }
@@ -97,7 +97,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
             int currentNumber = flatNo + j;
             flatList.add({
               "flatNo": currentNumber,
-              "statusColor": flatColorsList[colorIndex]
+              "flatStatus": flatColorsList[colorIndex]
             });
             // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
           }
@@ -117,7 +117,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
             int currentNumber = flatNo + j;
             flatList.add({
               "flatNo": "G" + "${j + 1}",
-              "statusColor": flatColorsList[colorIndex]
+              "flatStatus": flatColorsList[colorIndex]
             });
           }
         } else {
@@ -125,7 +125,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
             int currentNumber = flatNo + j;
             flatList.add({
               "flatNo": currentNumber,
-              "statusColor": flatColorsList[colorIndex]
+              "flatStatus": flatColorsList[colorIndex]
             });
           }
           flatNo += maxFlatPerFloor;
