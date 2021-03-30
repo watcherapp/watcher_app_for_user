@@ -9,6 +9,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AmenitiesDetailScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddNewAmenities.dart';
 
 class AmenitiesScreen extends StatefulWidget {
   @override
@@ -98,126 +99,150 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                valueColor:
-                    new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+      body: Stack(
+        children: [
+          isLoading
+              ? Center(
+            child: CircularProgressIndicator(
+              valueColor:
+              new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+            ),
+          )
+              : ListView.builder(
+            itemCount: amenitiesList.length,
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.only(
+                right: 5,
+                left: 5,
               ),
-            )
-          : ListView.builder(
-              itemCount: amenitiesList.length,
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.only(
-                  right: 5,
-                  left: 5,
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     PageTransition(
-                    //         child: DailyHelperSubScreen(),
-                    //         type: PageTransitionType.rightToLeft));
-                    // showDialog(
-                    //     context: context,
-                    //     builder: (BuildContext context) => ShowDialog());
-                  },
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 100,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      amenitiesList[index]["images"][0],
-                                      // "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
-                                    ),
-                                    fit: BoxFit.cover,
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.push(
+                  //     context,
+                  //     PageTransition(
+                  //         child: DailyHelperSubScreen(),
+                  //         type: PageTransitionType.rightToLeft));
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (BuildContext context) => ShowDialog());
+                },
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 100,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    amenitiesList[index]["images"][0],
+                                    // "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
                                   ),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      amenitiesList[index]["amenityName"],
-                                      style: TextStyle(
-                                          color: appPrimaryMaterialColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      amenitiesList[index]["location"]
-                                          ["completeAddress"],
-                                      style: TextStyle(
-                                        color: Colors.grey,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    amenitiesList[index]["amenityName"],
+                                    style: TextStyle(
+                                        color: appPrimaryMaterialColor,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 12,
+                                        fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    amenitiesList[index]["location"]
+                                    ["completeAddress"],
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 17,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10.0),
+                                    child: SizedBox(
+                                      width: 100,
+                                      height: 35,
+                                      child: RaisedButton(
+                                        child: Text("View More",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold)),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(6)),
+                                        color: appPrimaryMaterialColor,
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                  child:
+                                                  AmenitiesDetailScreen(
+                                                    amenitiesListData:
+                                                    amenitiesList[index],
+                                                  ),
+                                                  type: PageTransitionType
+                                                      .rightToLeft));
+                                        },
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 17,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10.0),
-                                      child: SizedBox(
-                                        width: 100,
-                                        height: 35,
-                                        child: RaisedButton(
-                                          child: Text("View More",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold)),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(6)),
-                                          color: appPrimaryMaterialColor,
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                    child:
-                                                        AmenitiesDetailScreen(
-                                                      amenitiesListData:
-                                                          amenitiesList[index],
-                                                    ),
-                                                    type: PageTransitionType
-                                                        .rightToLeft));
-                                          },
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
+          ),
+          Positioned(
+            bottom: 30,
+            right: 10,
+            child: FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: AddNewAmenities(
+                          AllAmenitiesApi: (){
+                            _getAllAmenities();
+                          },
+                        ),
+                        type: PageTransitionType.rightToLeft));
+              },
+              icon: Icon(Icons.add),
+              label: Text("Add New Amenity"),
+            ),
+          ),
+        ],
+      )
+
     );
   }
 }
