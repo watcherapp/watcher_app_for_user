@@ -1,9 +1,11 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -35,7 +37,7 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
   bool isLoading = false;
 
   // List multipartFile=[];
-  List<MultipartFile> multipartFile = new List<MultipartFile>();
+  List<MultipartFile> multipartFile =[];
   MultipartFile multipartFile1;
 
   // _addNewAmenity() async {
@@ -193,6 +195,207 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
   //     );
   //   }
   // }
+
+
+  // _addNewAmenity() async {
+  //   for (int i = 0; i < images.length; i++) {
+  //     String filename = "";
+  //     String filePath = "";
+  //     File compressedFile;
+  //     File _imageEvent = await File(images[i].identifier);
+  //     print("${_imageEvent.path}");
+  //       print(_imageEvent);
+  //       filename = _imageEvent.path.split('/').last;
+  //       filePath = _imageEvent.path;
+  //       print(filePath);
+  //
+  //     multipartFile.add((filePath != null && filePath != '')
+  //         ? await MultipartFile.fromFile(filePath,
+  //         filename: filename.toString())
+  //         : null);
+  //   }
+  // }
+
+  // _addNewAmenity() async {
+  //   try {
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //     final internetResult = await InternetAddress.lookup('google.com');
+  //     if (internetResult.isNotEmpty &&
+  //         internetResult[0].rawAddress.isNotEmpty) {
+  //
+  //       for (int i = 0; i < images.length; i++) {
+  //         ByteData byteData = await images[i].getByteData();
+  //         List<int> imageData = byteData.buffer.asUint8List();
+  //         // File _imageEvent = await File(images[i].identifier);
+  //         multipartFile1 = MultipartFile.fromBytes(
+  //           imageData,
+  //           filename: images[i].name,
+  //           // contentType: MediaType("image", "jpeg"),
+  //         );
+  //         print(images.length);
+  //         multipartFile.add(multipartFile1);
+  //         //TODO:Temporary
+  //         // multipartFile.add(
+  //         //     await MultipartFile.fromFile(_imageEvent.path,
+  //         //         filename: _imageEvent.path.split("/").last));
+  //       }
+  //
+  //
+  //       // for (Asset asset in images) {
+  //       //   ByteData byteData = await asset.getByteData();
+  //       //   List<int> imageData = byteData.buffer.asUint8List();
+  //       //   multipartFile1 = MultipartFile.fromBytes(
+  //       //     imageData,
+  //       //     filename: asset.name,
+  //       //     // contentType: MediaType("image", "jpeg"),
+  //       //   );
+  //       //   multipartFile.add(multipartFile1);
+  //       // }
+  //       print("--------------->${multipartFile}");
+  //       var data = {
+  //         "societyId": societyId,
+  //         "amenityName": txtName.text,
+  //         "description": txtDiscription.text,
+  //         "completeAddress": txtAddress.text,
+  //         "images": multipartFile,
+  //       };
+  //       // print(data);
+  //       FormData formData = new FormData.fromMap(data);
+  //       Services.responseHandler(
+  //           apiName: "api/society/addSocietyAmenity", body: formData)
+  //           .then((responseData) {
+  //         if (responseData.Data.length > 0) {
+  //           print(responseData.Data);
+  //           widget.AllAmenitiesApi();
+  //           Fluttertoast.showToast(
+  //             msg: "Your Notice added Successfully.",
+  //           );
+  //           Navigator.pop(context);
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //         } else {
+  //           print(responseData);
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //           Fluttertoast.showToast(
+  //             msg: "${responseData.Message}",
+  //             backgroundColor: Colors.white,
+  //             textColor: appPrimaryMaterialColor,
+  //           );
+  //         }
+  //       }).catchError((error) {
+  //         setState(() {
+  //           isLoading = false;
+  //         });
+  //         Fluttertoast.showToast(
+  //           msg: "Error $error",
+  //           backgroundColor: Colors.white,
+  //           textColor: appPrimaryMaterialColor,
+  //         );
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     Fluttertoast.showToast(
+  //       msg: "You aren't connected to the Internet !",
+  //       backgroundColor: Colors.white,
+  //       textColor: appPrimaryMaterialColor,
+  //     );
+  //   }
+  // }
+  // _addNewAmenity() async {
+  //   try {
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //     final internetResult = await InternetAddress.lookup('google.com');
+  //     if (internetResult.isNotEmpty &&
+  //         internetResult[0].rawAddress.isNotEmpty) {
+  //       print(images.length);
+  //       for (var i = 0; i < images.length; i++) {
+  //         // Get ByteData
+  //         print(i);
+  //         ByteData byteData = await images[i].getByteData();
+  //         List<int> imageData = byteData.buffer.asUint8List();
+  //         File _imageEvent = await File(images[i].identifier);
+  //         print("s");
+  //         print("ss");
+  //         print(multipartFile1.filename);
+  //         // multipartFile = (await MultipartFile.fromFile(_imageEvent.path, filename: images[i].name)) as List<MultipartFile>;
+  //
+  //         // multipartFile.add(MultipartFile.fromBytes(
+  //         //   _imageEvent.path,
+  //         //   filename: images[i].name,
+  //         //   contentType: MediaType("image", "jpg"),
+  //         // ));
+  //
+  //         // multipartFile.add(MultipartFile.fromFile(
+  //         //   _imageEvent.path,
+  //         // ));
+  //       }
+  //       // log(multipartFile.toString());
+  //       print("sss");
+  //         var data = {
+  //           "societyId": societyId,
+  //           "amenityName": txtName.text,
+  //           "description": txtDiscription.text,
+  //           "completeAddress": txtAddress.text,
+  //           "images": multipartFile,
+  //         };
+  //         FormData formData = FormData.fromMap(data);
+  //       print("ssss");
+  //       Services.responseHandler(
+  //           apiName: "api/society/addSocietyAmenity", body: formData)
+  //           .then((responseData) {
+  //         if (responseData.Data.length > 0) {
+  //           print(responseData.Data);
+  //           widget.AllAmenitiesApi();
+  //           Fluttertoast.showToast(
+  //             msg: "Your Notice added Successfully.",
+  //           );
+  //           Navigator.pop(context);
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //         } else {
+  //           print(responseData);
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //           Fluttertoast.showToast(
+  //             msg: "${responseData.Message}",
+  //             backgroundColor: Colors.white,
+  //             textColor: appPrimaryMaterialColor,
+  //           );
+  //         }
+  //       }).catchError((error) {
+  //         setState(() {
+  //           isLoading = false;
+  //         });
+  //         Fluttertoast.showToast(
+  //           msg: "Error $error",
+  //           backgroundColor: Colors.white,
+  //           textColor: appPrimaryMaterialColor,
+  //         );
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     Fluttertoast.showToast(
+  //       msg: "You aren't connected to the Internet !",
+  //       backgroundColor: Colors.white,
+  //       textColor: appPrimaryMaterialColor,
+  //     );
+  //   }
+  // }
   _addNewAmenity() async {
     try {
       setState(() {
@@ -201,39 +404,30 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        // for (int i = 0; i < images.length; i++) {
-        //   ByteData byteData = await images[i].getByteData();
-        //   List<int> imageData = byteData.buffer.asUint8List();
-        //   multipartFile1 = MultipartFile.fromBytes(
-        //     imageData,
-        //     filename: images[i].name,
-        //     // contentType: MediaType("image", "jpeg"),
-        //   );
-        //   multipartFile.add(multipartFile1);
-        // }
 
+        print(images.length);
+        List<MultipartFile> imageList = <MultipartFile>[];
         for (Asset asset in images) {
           ByteData byteData = await asset.getByteData();
           List<int> imageData = byteData.buffer.asUint8List();
-          multipartFile1 = MultipartFile.fromBytes(
+          MultipartFile multipartFile = new MultipartFile.fromBytes(
             imageData,
-            filename: asset.name,
-            // contentType: MediaType("image", "jpeg"),
+            filename: 'load_image',
+            contentType: MediaType("image", "jpg"),
           );
-          multipartFile.add(multipartFile1);
+          imageList.add(multipartFile);
         }
-        print("--------------->${multipartFile.toString()}");
-        var data = {
-          "societyId": societyId,
-          "amenityName": txtName.text,
-          "description": txtDiscription.text,
-          "completeAddress": txtAddress.text,
-          "images": multipartFile,
-        };
-        // print(data);
-        FormData formData = new FormData.fromMap(data);
+
+          FormData formData = FormData.fromMap({
+            "societyId": societyId,
+            "amenityName": txtName.text,
+            "description": txtDiscription.text,
+            "completeAddress": txtAddress.text,
+            "images": imageList,
+          });
+        print("ssss");
         Services.responseHandler(
-                apiName: "api/society/addSocietyAmenity", body: formData)
+            apiName: "api/society/addSocietyAmenity", body: formData)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -279,52 +473,42 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
     }
   }
 
-  // _uploadImages() async {
-  //   setState(() {
-  //     isLoading = false;
-  //   });
-  //   try {
-  //     final result = await InternetAddress.lookup('google.com');
-  //     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-  //       SharedPreferences prefs = await SharedPreferences.getInstance();
-  //       print("MEMBER IDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" +
-  //           prefs.getString(cnst.Session.MemberId).toString());
-  //       var data;
-  //       print("images");
-  //       print(images);
-  //       String img = '';
-  //
-  //       for (int i = 0; i < images.length; i++) {
-  //         ByteData byteData = await images[i].getByteData();
-  //         List<int> imageData = byteData.buffer.asUint8List();
-  //         MultipartFile multipartFile = MultipartFile.fromBytes(
-  //           imageData,
-  //           filename: images[i].name,
-  //         );
-  //         data = {
-  //           "memberid": prefs.getString(cnst.Session.MemberId),
-  //           "images": multipartFile,
-  //         };
-  //         // print(data);
-  //         FormData formData = new FormData.fromMap(data);
-  //         Services.PostForList4(api_name: 'card/addimages', body: formData)
-  //             .then((data) async {
-  //           print(
-  //               "==================================================IMAGE UPLOAD SUCCESSFULLY==================================================");
-  //           setState(() {
-  //             isLoading = false;
-  //           });
-  //         }, onError: (e) {
-  //           print(e.toString());
-  //           showMsg("Try Again");
-  //         });
-  //       }
-  //     }
-  //   } on SocketException catch (_) {
-  //     //pr.hide();
-  //     showMsg("No Internet Connection.");
-  //   }
-  // }
+
+
+  _apiCall() async {
+    String url =
+        "https://watcher03.herokuapp.com/api/society/addSocietyAmenity";
+    List<MultipartFile> imageList = <MultipartFile>[];
+    // if (null != blogUser_id) {
+    for (Asset asset in images) {
+      ByteData byteData = await asset.getByteData();
+      List<int> imageData = byteData.buffer.asUint8List();
+      MultipartFile multipartFile = new MultipartFile.fromBytes(
+        imageData,
+        filename: 'load_image',
+        contentType: MediaType("image", "jpg"),
+      );
+      imageList.add(multipartFile);
+    }
+
+    FormData formData = FormData.fromMap({
+      "images": imageList,
+      "societyId": "605583b2848881107c3fcf9d",
+      "amenityName": txtName.text,
+      "description": txtDiscription.text,
+      "completeAddress": txtAddress.text,
+    });
+
+    Dio dio = new Dio();
+    dio.options.headers["authorization"] =
+    "RvHiQ6J4QJoAMeA0ysCw-HJklmBHklmnknNJn-hghJUdksjH";
+    var response = await dio.post(url, data: formData);
+    print(response.data);
+    // }
+  }
+
+
+
 
   List<Asset> images = <Asset>[];
   String _error = 'No Error Dectected';
