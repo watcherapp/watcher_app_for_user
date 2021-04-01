@@ -1,13 +1,10 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Data/Providers/PropertyManagerProvider.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Components/PropertyManagerComponent.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Screens/CategoryScreen.dart';
@@ -21,57 +18,22 @@ class MasterAdminDashboard extends StatefulWidget {
 class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
   bool isLoading = false;
   List AllmanagerList = [];
-  List demoList = [
-    {
-      "label": " megha 1",
-    },
-    {
-      "label": " megha 2",
-    },
-    {
-      "label": "megha 3",
-    },
-    {
-      "label": "megha 4",
-    },
-    {
-      "label": "megha 5",
-    },
-    {
-      "label": "megha 6",
-    },
-    {
-      "label": "megha 7",
-    },
-    {
-      "label": "megha 8",
-    },
-    {
-      "label": "megha 9",
-    },
-    {
-      "label": "megha 10",
-    },
-  ];
-
   @override
   void initState() {
+    super.initState();
     _getAllPropertyManager();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Admin", style: TextStyle(fontFamily: 'Montserrat')),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: appPrimaryMaterialColor,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: AppBar(
+          title: Text("Admin", style: TextStyle(fontFamily: 'Montserrat')),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: appPrimaryMaterialColor,
+        ),
+        body: Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 6, right: 6),
@@ -227,96 +189,17 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                     fontWeight: FontWeight.w600),
               ),
             ),
-            SizedBox(height: 10),
-            /*   Expanded(
-              child: Column(
-                  children:
-                      demoList.reversed.take(5).map((propertyManagerData) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Center(child: Text(propertyManagerData["label"])),
-                    color: Colors.green,
-                    height: 30,
-                  ),
-                );
+            Expanded(
+              child: ListView(
+                  children: AllmanagerList.reversed
+                      .take(5)
+                      .map((propertyManagerData) {
+                return PropertyManagetComponent(
+                    propertyManagerData: propertyManagerData);
               }).toList()),
-            ),*/
-            /* ListView.builder(
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                // itemCount: AllmanagerList.length,
-                itemCount: demoList.length,
-                reverse: true,
-                itemBuilder: (context, index) {
-                  if (index > 5) {
-                    return SizedBox();
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Center(child: Text(demoList[index]["label"])),
-                        color: Colors.green,
-                        height: 30,
-                      ),
-                    );
-                  }
-                }),*/
-            /* isLoading == true
-                ? Center(
-                    child: CircularProgressIndicator(
-                        valueColor: new AlwaysStoppedAnimation<Color>(
-                            appPrimaryMaterialColor)))
-                : AllmanagerList.length > 0
-                    ? ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                itemCount: AllmanagerList.length,
-                        itemBuilder: (context, index) {
-                          return PropertyManagetComponent(
-                              propertyManagerData: AllmanagerList[index]);
-                        })
-                    : Center(
-                        child: Text(
-                          "No Data Found...",
-                          style: TextStyle(
-                              // fontFamily: 'Montserrat',
-                              fontSize: 13,
-                              color: Colors.grey),
-                        ),
-                      ),
-*/
-            /*Center(
-                    child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        appPrimaryMaterialColor),
-                  )),*/
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: PropertyManagers(),
-                        type: PageTransitionType.rightToLeft));
-              },
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0, bottom: 10),
-                  child: Text(
-                    "See All",
-                    style: TextStyle(
-                        // fontFamily: 'Montserrat',
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                ),
-              ),
             ),
           ],
-        ),
-      ),
-    );
+        ));
   }
 
   _getAllPropertyManager() async {

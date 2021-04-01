@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -29,6 +30,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
   ScrollController controller = new ScrollController();
   List<Widget> myRowChildren = [];
   List<List> numbers = [];
+  List finalFlatList = [];
   List flatList = [];
   int colorIndex = 0;
   List flatColorsList = [
@@ -37,6 +39,8 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
     Colors.orange,
     Colors.red[300]
   ];
+
+  List myData = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
   @override
   void initState() {
@@ -186,13 +190,41 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
                   ),
                 ),
               ),
+              Expanded(
+                  child: ListView(
+                children: myData.reversed.take(5).map((e) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("$e"),
+                    ],
+                  );
+                }).toList(),
+              ))
             ],
           ),
         ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
-        child: MyButton(onPressed: () {}, title: "Finish"),
+        child: MyButton(
+            onPressed: () {
+              List myFinalList = [];
+              var data;
+              myFinalList.clear();
+              for (int i = 0; i < numbers.length; i++) {
+                data = numbers[i]
+                    .toString()
+                    .replaceAll("[", "")
+                    .replaceAll("]", "");
+                myFinalList.add(json.decode(data));
+              }
+              setState(() {
+                finalFlatList = myFinalList;
+              });
+              print(myFinalList);
+            },
+            title: "Finish"),
       ),
     );
   }
