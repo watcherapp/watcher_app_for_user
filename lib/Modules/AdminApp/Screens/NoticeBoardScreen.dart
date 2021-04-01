@@ -344,7 +344,7 @@ class _NoticeBoardSubScreenState extends State<NoticeBoardSubScreen> {
                   borderRadius: BorderRadius.circular(5),
                   image: DecorationImage(
                     image: NetworkImage(
-                      widget.noticeData["noticeImage"],
+                      API_URL+widget.noticeData["noticeImage"],
                       // "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
                     ),
                     fit: BoxFit.cover,

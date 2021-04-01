@@ -53,6 +53,10 @@ dependencies:
   http_parser: any
 
 
+
+
+
+
   # firebase Plugins
 #  firebase_auth: ^0.18.1+2
   firebase_auth: ^1.0.1

@@ -43,7 +43,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
             .then((responseData) {
           if (responseData.Data.length > 0) {
             amenitiesList = responseData.Data;
-            print(amenitiesList);
+            print("$amenitiesList");
             setState(() {
               isLoading = false;
             });
@@ -145,7 +145,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
                                 borderRadius: BorderRadius.circular(5),
                                 image: DecorationImage(
                                   image: NetworkImage(
-                                    amenitiesList[index]["images"][0],
+                                    API_URL+amenitiesList[index]["images"][0],
                                     // "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
                                   ),
                                   fit: BoxFit.cover,
