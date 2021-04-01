@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
 
 class PropertyManagersDetail extends StatefulWidget {
   var propertyManagerDetailData;
@@ -11,6 +17,16 @@ class PropertyManagersDetail extends StatefulWidget {
 }
 
 class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
+  bool isApprovalLoading = false;
+  bool isRejectLoading = false;
+
+  @override
+  void initState() {
+    print("${widget.propertyManagerDetailData["_id"]}" +
+        "----------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +
+        "${widget.propertyManagerDetailData["PropertManager"][0]["_id"]}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -344,7 +360,9 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              _getApprovalStatus(true);
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -382,7 +400,9 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              _getApprovalStatus(false);
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -425,5 +445,41 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
               ),
             ),
     );
+  }
+
+  _getApprovalStatus(bool status) async {
+    try {
+      LoadingIndicator.show(context);
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "memberId":
+              "${widget.propertyManagerDetailData["PropertManager"][0]["_id"]}",
+          "isApprove": status,
+          "requestId": "${widget.propertyManagerDetailData["_id"]}"
+        };
+        print(
+            "====================================================>" + "status");
+        Services.responseHandler(
+                apiName: "api/admin/approvalOfPropertyManager", body: body)
+            .then((responseData) {
+          if (responseData.Data == 1) {
+            LoadingIndicator.close(context);
+            print(responseData.Data);
+          } else {
+            print(responseData);
+            LoadingIndicator.close(context);
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          LoadingIndicator.close(context);
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      LoadingIndicator.close(context);
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
   }
 }

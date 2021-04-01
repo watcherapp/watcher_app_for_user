@@ -11,12 +11,12 @@ class PropertyManagerProvider extends ChangeNotifier {
     getManagerData();
   }
 
-  Future<int> getManagerData([var status]) async {
+  getManagerData([var status]) async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         var body = {
-          "requestStatusCode": 3,
+          "requestStatusCode": status,
         };
         Services.responseHandler(
                 apiName: 'api/admin/getListOfRequestPropertyManager',
@@ -26,16 +26,13 @@ class PropertyManagerProvider extends ChangeNotifier {
             ManagerDatailList = responselist.Data;
             notifyListeners();
           }
-          return 0;
         }, onError: (e) {
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "something went wrong");
-          return 0;
         });
       }
     } on SocketException catch (_) {
       Fluttertoast.showToast(msg: "No Internet Connection");
-      return 0;
     }
   }
 }

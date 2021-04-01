@@ -5,6 +5,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/PropertyManagerProvider.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
+import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
 
 import 'Constants/appColors.dart';
 import 'Data/Providers/IndexCountProvider.dart';
@@ -23,8 +24,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<IndexCountProvider>(
             create: (context) => IndexCountProvider()),
-        ChangeNotifierProvider<PropertyManagerProvider>(
-            create: (context) => PropertyManagerProvider()),
+        /*ChangeNotifierProvider<PropertyManagerProvider>(
+            create: (context) => PropertyManagerProvider())*/
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: SetupWings(),
+        home: MasterAdminDashboard(),
       ),
     );
   }
