@@ -154,6 +154,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 15),
+
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
