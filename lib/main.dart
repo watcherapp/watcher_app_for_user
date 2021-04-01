@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/PropertyManagerProvider.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
-import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 
 import 'Constants/appColors.dart';
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: AdminDashboard(),
+        home: SetupWings(),
       ),
     );
   }

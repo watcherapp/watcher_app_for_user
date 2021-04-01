@@ -1,9 +1,11 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/CommonWidgets/FlatStatusColorsWithLabel.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
+import 'package:watcher_app_for_user/Modules/CreateSociety/Component/FlatSelectionComponent.dart';
 
 class SetupWingsFinalStep extends StatefulWidget {
   int flatFormatId, totalFloor, totalCountPerFloor;
@@ -51,34 +53,26 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         for (int y = 0; y < maxFlatPerFloor; y++) {
           int currentNumber = flatNo + y;
           // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
-          flatList.add({
-            "flatNo": currentNumber,
-            "flatStatus": flatColorsList[colorIndex]
-          });
+          flatList.add({"flatNo": currentNumber, "flatStatus": "Owner"});
         }
         flatNo = flatNo + 100;
         // z += maxFlatPerFloor;
         numbers.add(flatList);
         flatList = [];
       }
-      print(numbers);
     } else if (widget.flatFormatId == 1) {
       int flatNo = 1;
       for (int i = 0; i < widget.totalFloor; i++) {
         int maxFlatPerFloor = widget.totalCountPerFloor;
         for (int j = 0; j < maxFlatPerFloor; j++) {
           int currentNumber = flatNo + j;
-          flatList.add({
-            "flatNo": currentNumber,
-            "flatStatus": flatColorsList[colorIndex]
-          });
+          flatList.add({"flatNo": currentNumber, "flatStatus": "Owner"});
           // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
         }
         flatNo += maxFlatPerFloor;
         numbers.add(flatList);
         flatList = [];
       }
-      print(numbers);
     } else if (widget.flatFormatId == 2) {
       int flatNo = 101;
       for (int i = 0; i < widget.totalFloor; i++) {
@@ -86,19 +80,13 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         if (i == 0) {
           for (int j = 0; j < maxFlatPerFloor; j++) {
             int currentNumber = flatNo + j;
-            flatList.add({
-              "flatNo": "G" + "${j + 1}",
-              "flatStatus": flatColorsList[colorIndex]
-            });
+            flatList.add({"flatNo": "G" + "${j + 1}", "flatStatus": "Owner"});
             // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
           }
         } else {
           for (int j = 0; j < maxFlatPerFloor; j++) {
             int currentNumber = flatNo + j;
-            flatList.add({
-              "flatNo": currentNumber,
-              "flatStatus": flatColorsList[colorIndex]
-            });
+            flatList.add({"flatNo": currentNumber, "flatStatus": "Owner"});
             // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
           }
           flatNo = flatNo + 100;
@@ -107,7 +95,6 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         numbers.add(flatList);
         flatList = [];
       }
-      print(numbers);
     } else {
       int flatNo = 1;
       for (int i = 0; i < widget.totalFloor; i++) {
@@ -115,25 +102,18 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         if (i == 0) {
           for (int j = 0; j < maxFlatPerFloor; j++) {
             int currentNumber = flatNo + j;
-            flatList.add({
-              "flatNo": "G" + "${j + 1}",
-              "flatStatus": flatColorsList[colorIndex]
-            });
+            flatList.add({"flatNo": "G" + "${j + 1}", "flatStatus": "Owner"});
           }
         } else {
           for (int j = 0; j < maxFlatPerFloor; j++) {
             int currentNumber = flatNo + j;
-            flatList.add({
-              "flatNo": currentNumber,
-              "flatStatus": flatColorsList[colorIndex]
-            });
+            flatList.add({"flatNo": currentNumber, "flatStatus": "Owner"});
           }
           flatNo += maxFlatPerFloor;
         }
         numbers.add(flatList);
         flatList = [];
       }
-      print(numbers);
     }
   }
 
@@ -168,10 +148,12 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
                       padding: const EdgeInsets.only(
                           bottom: 8.0, left: 4.0, right: 4.0),
                       child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         controller: controller,
                         child: Padding(
                           padding: const EdgeInsets.only(right: 4.0),
                           child: SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
                             controller: controller,
                             scrollDirection: Axis.horizontal,
                             child: Column(
@@ -181,39 +163,18 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: columns.map((floorData) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: SizedBox(
-                                              height: 40,
-                                              child: MaterialButton(
-                                                color: floorData['statusColor'],
-                                                onPressed: () {
-                                                  setState(() {
-                                                    if (colorIndex == 3) {
-                                                      colorIndex = 0;
-                                                      floorData["statusColor"] =
-                                                          flatColorsList[
-                                                              colorIndex];
-                                                    } else {
-                                                      colorIndex++;
-                                                      floorData["statusColor"] =
-                                                          flatColorsList[
-                                                              colorIndex];
-                                                    }
-                                                  });
-                                                },
-                                                child: Text(
-                                                  floorData["flatNo"]
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                ),
-                                              ),
-                                            ),
-                                          );
+                                          int index =
+                                              columns.indexOf(floorData);
+                                          print(index);
+                                          return FlatSelectionComponent(
+                                              floorData: floorData,
+                                              onChange: (value) {
+                                                setState(() {
+                                                  columns[index]["flatStatus"] =
+                                                      value;
+                                                });
+                                                log(numbers.toString());
+                                              });
                                         }).toList(),
                                       ),
                                     )
@@ -231,15 +192,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
-        child: MyButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                      child: UserDashboard(),
-                      type: PageTransitionType.bottomToTop));
-            },
-            title: "Finish"),
+        child: MyButton(onPressed: () {}, title: "Finish"),
       ),
     );
   }

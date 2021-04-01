@@ -40,5 +40,3 @@ class Services {
     }
   }
 }
-
-class Data {}

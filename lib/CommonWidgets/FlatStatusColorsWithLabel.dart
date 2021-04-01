@@ -26,10 +26,11 @@ class _FlatStatusColorsWithLabelState extends State<FlatStatusColorsWithLabel> {
             child: Row(
               children: [
                 Container(
-                  height: 10,
-                  width: 10,
-                  color: data["Color"],
-                ),
+                    decoration: BoxDecoration(
+                        color: data["Color"],
+                        borderRadius: BorderRadius.circular(4.0)),
+                    height: 15,
+                    width: 15),
                 Padding(
                   padding: const EdgeInsets.only(left: 4.0),
                   child: Text(
