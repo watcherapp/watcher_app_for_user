@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
@@ -7,6 +10,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/PasswordScreen.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/VerifyScreen.dart';
 
 import 'SignUp3.dart';
 
@@ -14,7 +18,15 @@ class OTPScreen extends StatefulWidget {
   var otpData;
   var mobileNo;
   var dialCode;
-  OTPScreen({this.otpData, this.mobileNo, this.dialCode});
+  String fromWhere;
+
+  OTPScreen({
+    this.otpData,
+    this.mobileNo,
+    this.dialCode,
+    this.fromWhere,
+  });
+
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
@@ -23,6 +35,8 @@ class _OTPScreenState extends State<OTPScreen> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   String _verificationCode;
   TextEditingController _txtOTP = TextEditingController();
+  bool isLoading = false;
+  String myPhoneNumber;
 
   @override
   void initState() {
@@ -32,14 +46,45 @@ class _OTPScreenState extends State<OTPScreen> {
 
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+917359571489',
+        // phoneNumber: '+917359571489',
+        phoneNumber: '${widget.dialCode + widget.mobileNo}',
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance
               .signInWithCredential(credential)
-              .then((value) async {
+              .then((UserCredential value) async {
             if (value.user != null) {
+              myPhoneNumber = widget.dialCode + widget.mobileNo;
+              print(myPhoneNumber);
+              if (widget.fromWhere == "fromForgotPassword") {
+                Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                        child: VerifyScreen(
+                          // verifyData: isVerify,
+                        ),
+                        type: PageTransitionType.rightToLeft));
+              } else {
+                if (widget.otpData == true) {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: PasswordScreen(),
+                          type: PageTransitionType.rightToLeft));
+                } else {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: SignUp3(),
+                          type: PageTransitionType.rightToLeft));
+                }
+              }
               print("Login Successfully");
+            } else {
+              Fluttertoast.showToast(msg: "Error validating OTP, try again");
             }
+          }).catchError((error) {
+            log("->>>" + error.toString());
+            Fluttertoast.showToast(msg: " $error");
           });
         },
         verificationFailed: (FirebaseAuthException e) {
@@ -57,6 +102,57 @@ class _OTPScreenState extends State<OTPScreen> {
         },
         timeout: Duration(seconds: 120));
   }
+
+  void _onFormSubmitted() async {
+    setState(() {
+      isLoading = true;
+    });
+    AuthCredential _authCredential = PhoneAuthProvider.credential(
+        verificationId: _verificationCode, smsCode: _txtOTP.text);
+    _firebaseAuth
+        .signInWithCredential(_authCredential)
+        .then((UserCredential value) {
+      setState(() {
+        isLoading = false;
+      });
+      if (value.user != null) {
+        print(value.user);
+
+        if (widget.fromWhere == "fromForgotPassword") {
+          Navigator.pushReplacement(
+              context,
+              PageTransition(
+                  child: VerifyScreen(
+                    // verifyData: isVerify,
+                  ),
+                  type: PageTransitionType.rightToLeft));
+        } else {
+          if (widget.otpData == true) {
+            Navigator.push(
+                context,
+                PageTransition(
+                    child: PasswordScreen(),
+                    type: PageTransitionType.rightToLeft));
+          } else {
+            Navigator.push(
+                context,
+                PageTransition(
+                    child: SignUp3(
+                      phoneNumber: myPhoneNumber,
+                    ),
+                    type: PageTransitionType.rightToLeft));
+          }
+        }
+      } else {
+        Fluttertoast.showToast(msg: "Invalid OTP");
+      }
+
+    }).catchError((error) {
+      log(error.toString());
+      Fluttertoast.showToast(msg: "$error Something went wrong");
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -130,19 +226,33 @@ class _OTPScreenState extends State<OTPScreen> {
                     MyButton(
                         title: "Verify",
                         onPressed: () {
-                          if (widget.otpData == true) {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: PasswordScreen(),
-                                    type: PageTransitionType.rightToLeft));
-                          } else {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: SignUp3(),
-                                    type: PageTransitionType.rightToLeft));
-                          }
+                          _onFormSubmitted();
+                          //working....
+
+                          // if (widget.fromWhere == "fromForgotPassword") {
+                          //   Navigator.pushReplacement(
+                          //       context,
+                          //       PageTransition(
+                          //           child: VerifyScreen(
+                          //               // verifyData: isVerify,
+                          //               ),
+                          //           type: PageTransitionType.rightToLeft));
+                          // } else {
+                          //   if (widget.otpData == true) {
+                          //     Navigator.push(
+                          //         context,
+                          //         PageTransition(
+                          //             child: PasswordScreen(),
+                          //             type: PageTransitionType.rightToLeft));
+                          //   } else {
+                          //     Navigator.push(
+                          //         context,
+                          //         PageTransition(
+                          //             child: SignUp3(),
+                          //             type: PageTransitionType.rightToLeft));
+                          //   }
+                          // }
+
                           /*       widget.otpData
                               ? Navigator.push(
                                   context,

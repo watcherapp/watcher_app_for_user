@@ -24,6 +24,12 @@ import 'package:watcher_app_for_user/Data/ValidationClass.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/ChooseCreateOrJoin.dart';
 
 class SignUp3 extends StatefulWidget {
+  String phoneNumber;
+
+  SignUp3({
+    this.phoneNumber,
+  });
+
   @override
   _SignUp3State createState() => _SignUp3State();
 }
@@ -69,6 +75,7 @@ class _SignUp3State extends State<SignUp3> {
   ];
 
   String selectedGender = "";
+
   @override
   void initState() {
     super.initState();

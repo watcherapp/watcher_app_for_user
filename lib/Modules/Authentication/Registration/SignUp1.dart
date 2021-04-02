@@ -1,15 +1,23 @@
+import 'dart:io';
+
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/OTPScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 
 class SignUp1 extends StatefulWidget {
+
+  String fromWhere;
+
+  SignUp1({this.fromWhere});
   @override
   _SignUp1State createState() => _SignUp1State();
 }
@@ -17,6 +25,76 @@ class SignUp1 extends StatefulWidget {
 class _SignUp1State extends State<SignUp1> {
   TextEditingController txtMobile = new TextEditingController();
   String dialCode = "+91";
+  bool isLoading = false;
+
+  _verifyMember() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "mobileNo1" : txtMobile.text,
+        };
+        print("$body");
+        Services.responseHandler(
+            apiName: "api/member/checkMember", body: body)
+            .then((responseData) {
+          if (responseData.Data == 1) {
+            print(responseData.Data);
+            Fluttertoast.showToast(
+              msg: "Phone Number is already exist",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            print(responseData);
+            Navigator.push(
+                context,
+                PageTransition(
+                    child: OTPScreen(
+                      dialCode: dialCode,
+                      mobileNo: txtMobile.text,
+                      fromWhere: widget.fromWhere,
+                    ),
+                    type: PageTransitionType.rightToLeft));
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,13 +205,16 @@ class _SignUp1State extends State<SignUp1> {
                     MyButton(
                         title: "Send OTP",
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: OTPScreen(
-                                      dialCode: dialCode,
-                                      mobileNo: txtMobile.text),
-                                  type: PageTransitionType.rightToLeft));
+                          _verifyMember();
+                          // Navigator.push(
+                          //     context,
+                          //     PageTransition(
+                          //         child: OTPScreen(
+                          //           dialCode: dialCode,
+                          //           mobileNo: txtMobile.text,
+                          //           fromWhere: widget.fromWhere,
+                          //         ),
+                          //         type: PageTransitionType.rightToLeft));
                         }),
                     SizedBox(
                       height: 35,

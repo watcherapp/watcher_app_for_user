@@ -27,6 +27,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   bool password = true;
   bool isLoading = false;
+  String fromWhere = "fromForgotPassword";
   GlobalKey<FormState> _formKey = GlobalKey();
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
   bool isVerify = true;
@@ -97,27 +98,19 @@ class _SignInState extends State<SignIn> {
                             Navigator.push(
                                 context,
                                 PageTransition(
-                                    child: VerifyScreen(),
+                                    child: SignUp1(
+                                      fromWhere: fromWhere,
+                                    ),
                                     type: PageTransitionType.rightToLeft));
+
                           },
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      child: VerifyScreen(
-                                        verifyData: isVerify,
-                                      ),
-                                      type: PageTransitionType.rightToLeft));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 12.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text("Forgot Password ?"),
-                                ],
-                              ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text("Forgot Password ?"),
+                              ],
                             ),
                           )),
                       // Sign In Button
