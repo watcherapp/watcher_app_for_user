@@ -39,7 +39,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
   TextEditingController txtStreetName = TextEditingController();
   TextEditingController txtStreetAddress = TextEditingController();
   TextEditingController txtZipCode = TextEditingController();
-
+  String societyId = "";
   GlobalKey<FormState> _formKey = GlobalKey();
 
   FocusNode societyName = new FocusNode();
@@ -336,9 +336,6 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
 
   _createSociety() async {
     try {
-      setState(() {
-        isLoading = true;
-      });
       LoadingIndicator.show(context);
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
@@ -362,11 +359,15 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
             LoadingIndicator.close(context);
+            setState(() {
+              societyId = responseData.Data[0]["_id"];
+            });
             Navigator.push(
                 context,
                 PageTransition(
-                    child:
-                        SetupWings(wingsCount: int.parse(txtWingNumber.text)),
+                    child: SetupWings(
+                        wingsCount: int.parse(txtWingNumber.text),
+                        societyId: societyId),
                     type: PageTransitionType.rightToLeft));
           } else {
             print(responseData);

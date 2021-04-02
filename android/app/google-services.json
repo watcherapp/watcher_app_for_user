@@ -7,7 +7,36 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1017572077836:android:28a018c83b16081d0bd929",
+        "mobilesdk_app_id": "1:1017572077836:android:2636586855fc8ca40bd929",
+        "android_client_info": {
+          "package_name": "com.watcher_app_for_securityguard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017572077836-69qjlht97afg0evjp4897vjirn5lgtve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHw7CS_OchJRe_Si1y-UvuUSLlp2seqyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017572077836-69qjlht97afg0evjp4897vjirn5lgtve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017572077836:android:33233a48dec087560bd929",
         "android_client_info": {
           "package_name": "com.watcher_app_user"
         }

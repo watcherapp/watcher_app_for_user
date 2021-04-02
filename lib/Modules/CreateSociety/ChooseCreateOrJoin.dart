@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/CreateNewSociety.dart';
+import 'package:watcher_app_for_user/Modules/CreateSociety/EnterSocietyCodeScreen.dart';
 
 class ChooseCreateOrJoin extends StatefulWidget {
   @override
@@ -38,7 +39,13 @@ class _ChooseCreateOrJoinState extends State<ChooseCreateOrJoin> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(6)),
                             color: appPrimaryMaterialColor,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      child: EnterSocietyCode(),
+                                      type: PageTransitionType.rightToLeft));
+                            },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -72,9 +79,7 @@ class _ChooseCreateOrJoinState extends State<ChooseCreateOrJoin> {
             height: 25,
           ),
           Text("OR"),
-          SizedBox(
-            height: 15,
-          ),
+          SizedBox(height: 15),
           SizedBox(
             height: 75,
             width: MediaQuery.of(context).size.width / 1.5,

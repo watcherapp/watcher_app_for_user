@@ -1,22 +1,28 @@
-import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/CommonWidgets/FlatStatusColorsWithLabel.dart';
+import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/Component/FlatSelectionComponent.dart';
 
 class SetupWingsFinalStep extends StatefulWidget {
   int flatFormatId, totalFloor, totalCountPerFloor;
-  String wingName;
+  String wingName, societyId, parkingSpot;
 
   SetupWingsFinalStep(
       {this.flatFormatId,
       this.totalFloor,
       this.totalCountPerFloor,
-      this.wingName});
+      this.wingName,
+      this.societyId,
+      this.parkingSpot});
 
   @override
   _SetupWingsFinalStepState createState() => _SetupWingsFinalStepState();
@@ -39,8 +45,6 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
     Colors.orange,
     Colors.red[300]
   ];
-
-  List myData = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
   @override
   void initState() {
@@ -190,17 +194,6 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
                   ),
                 ),
               ),
-              Expanded(
-                  child: ListView(
-                children: myData.reversed.take(5).map((e) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("$e"),
-                    ],
-                  );
-                }).toList(),
-              ))
             ],
           ),
         ),
@@ -209,23 +202,78 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
         child: MyButton(
             onPressed: () {
-              List myFinalList = [];
-              var data;
-              myFinalList.clear();
+              List tempList = [];
+              tempList.clear();
               for (int i = 0; i < numbers.length; i++) {
-                data = numbers[i]
-                    .toString()
-                    .replaceAll("[", "")
-                    .replaceAll("]", "");
-                myFinalList.add(json.decode(data));
+                for (int j = 0; j < numbers[i].length; j++) {
+                  tempList.add(numbers[i][j]);
+                }
               }
               setState(() {
-                finalFlatList = myFinalList;
+                finalFlatList = tempList;
               });
-              print(myFinalList);
             },
             title: "Finish"),
       ),
     );
+  }
+
+  _setupWing() async {
+    try {
+      LoadingIndicator.show(context);
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "secretaryId": "${sharedPrefs.memberId}",
+          "societyId": "${widget.societyId}",
+          "wingName": "${widget.wingName}",
+          "totalFloor": "${widget.totalFloor}",
+          "maxUnitPerFloor": "${widget.totalCountPerFloor}",
+          "totalParkingSpot": "${widget.parkingSpot}",
+          "flatList": finalFlatList
+        };
+        print("$body");
+        Services.responseHandler(
+                apiName: "api/society/createSociety", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            print(responseData.Data);
+            LoadingIndicator.close(context);
+          } else {
+            print(responseData);
+            LoadingIndicator.close(context);
+            Fluttertoast.showToast(
+                msg: "${responseData.Message}",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                // textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        }).catchError((error) {
+          LoadingIndicator.close(context);
+          Fluttertoast.showToast(
+              msg: "Error $error",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              // textColor: Colors.white,
+              fontSize: 16.0);
+        });
+      }
+    } catch (e) {
+      LoadingIndicator.close(context);
+      Fluttertoast.showToast(
+          msg: "You aren't connected to the Internet !",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          // textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 }

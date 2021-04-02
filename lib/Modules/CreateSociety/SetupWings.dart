@@ -4,7 +4,8 @@ import 'package:watcher_app_for_user/Modules/CreateSociety/ParticularWingSetup.d
 
 class SetupWings extends StatefulWidget {
   int wingsCount = 10;
-  SetupWings({this.wingsCount});
+  var societyId;
+  SetupWings({this.wingsCount, this.societyId});
   @override
   _SetupWingsState createState() => _SetupWingsState();
 }
@@ -66,7 +67,9 @@ class _SetupWingsState extends State<SetupWings> {
                       Navigator.push(
                           context,
                           PageTransition(
-                              child: ParticularWingSetup(wingList[index]),
+                              child: ParticularWingSetup(
+                                  wingName: wingList[index],
+                                  societyId: widget.societyId),
                               type: PageTransitionType.rightToLeft));
                     },
                     child: Stack(

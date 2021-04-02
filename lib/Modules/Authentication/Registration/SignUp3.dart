@@ -391,15 +391,17 @@ class _SignUp3State extends State<SignUp3> {
                                   child: CircleAvatar(
                                     radius: 60,
                                     backgroundColor: appPrimaryMaterialColor,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(1.0),
-                                      child: ClipOval(
-                                        child: _userProfile == null
-                                            ? Image.asset(
-                                                "images/maleavtar.png")
-                                            : Image.file(_userProfile),
-                                      ),
-                                    ),
+                                    child: ClipOval(
+                                        child: Container(
+                                      height: 115,
+                                      width: 115,
+                                      child: _userProfile == null
+                                          ? Image.asset("images/maleavtar.png")
+                                          : Image.file(
+                                              _userProfile,
+                                              fit: BoxFit.fill,
+                                            ),
+                                    )),
                                   ),
                                 ),
                                 SizedBox(height: 24),
@@ -880,7 +882,7 @@ class _SignUp3State extends State<SignUp3> {
           if (responseData.Data.length > 0) {
             LoadingIndicator.close(context);
             Fluttertoast.showToast(msg: "Response ${responseData.Data}");
-            //_saveDataToSession(responseData.Data);
+            _saveDataToSession(responseData.Data);
           } else {
             print(responseData);
             LoadingIndicator.close(context);

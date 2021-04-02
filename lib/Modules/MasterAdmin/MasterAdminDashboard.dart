@@ -235,7 +235,7 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
           setState(() {
             isLoading = false;
           });
-          Fluttertoast.showToast(msg: "${error}");
+          Fluttertoast.showToast(msg: "$error");
         });
       }
     } catch (e) {

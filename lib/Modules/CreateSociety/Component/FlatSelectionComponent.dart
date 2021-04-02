@@ -10,12 +10,7 @@ class FlatSelectionComponent extends StatefulWidget {
 }
 
 class _FlatSelectionComponentState extends State<FlatSelectionComponent> {
-  List<Color> colorList = [
-    appPrimaryMaterialColor,
-    Colors.lightGreen,
-    Colors.amber,
-    Colors.redAccent
-  ];
+
 
   int index = 0;
 

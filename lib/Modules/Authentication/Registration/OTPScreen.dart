@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:watcher_app_for_user/CommonWidgets/CircleDesign.dart';
@@ -22,73 +21,41 @@ class OTPScreen extends StatefulWidget {
 
 class _OTPScreenState extends State<OTPScreen> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  String _verificationId;
+  String _verificationCode;
   TextEditingController _txtOTP = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _sendOtpVerifyCode();
+    _verifyPhone();
   }
 
-  _sendOtpVerifyCode() async {
-    final PhoneVerificationCompleted verificationCompleted =
-        (AuthCredential phoneAuthCredential) {
-      _firebaseAuth
-          .signInWithCredential(phoneAuthCredential)
-          .then((UserCredential value) {
-        if (value.user != null) {
-        } else {
-          Fluttertoast.showToast(msg: "Error validating OTP, try again");
-        }
-      }).catchError((error) {
-        Fluttertoast.showToast(msg: "Try again in sometime");
-      });
-    };
-    final PhoneVerificationFailed verificationFailed = (authException) {
-      Fluttertoast.showToast(msg: authException.message);
-    };
-
-    final PhoneCodeSent codeSent =
-        (String verificationId, [int forceResendingToken]) async {
-      _verificationId = verificationId;
-      setState(() {
-        _verificationId = verificationId;
-      });
-    };
-    final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
-        (String verificationId) {
-      _verificationId = verificationId;
-      setState(() {
-        _verificationId = verificationId;
-      });
-    };
-
-    // TODO: Change country code
-
-    await _firebaseAuth.verifyPhoneNumber(
-        phoneNumber: "+919429828152",
-        timeout: const Duration(seconds: 60),
-        verificationCompleted: verificationCompleted,
-        verificationFailed: verificationFailed,
-        codeSent: codeSent,
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
-  }
-
-  void _onFormSubmitted() async {
-    AuthCredential _authCredential = PhoneAuthProvider.credential(
-        verificationId: _verificationId, smsCode: _txtOTP.text);
-
-    _firebaseAuth
-        .signInWithCredential(_authCredential)
-        .then((UserCredential value) {
-      if (value.user != null) {
-      } else {
-        Fluttertoast.showToast(msg: "Error validating OTP, try again");
-      }
-    }).catchError((error) {
-      Fluttertoast.showToast(msg: "Something went wrong");
-    });
+  _verifyPhone() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: '+917359571489',
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((value) async {
+            if (value.user != null) {
+              print("Login Successfully");
+            }
+          });
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          print(e.message);
+        },
+        codeSent: (String verficationID, int resendToken) {
+          setState(() {
+            _verificationCode = verficationID;
+          });
+        },
+        codeAutoRetrievalTimeout: (String verificationID) {
+          setState(() {
+            _verificationCode = verificationID;
+          });
+        },
+        timeout: Duration(seconds: 120));
   }
 
   @override
@@ -141,7 +108,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       height: 60,
                     ),
                     PinCodeTextField(
-                      //controller: txtOTP,
+                      controller: _txtOTP,
                       autofocus: false,
                       wrapAlignment: WrapAlignment.center,
                       highlight: true,
@@ -192,7 +159,9 @@ class _OTPScreenState extends State<OTPScreen> {
                       height: 35,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        _verifyPhone();
+                      },
                       child: Column(
                         children: [
                           RichText(

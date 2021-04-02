@@ -7,9 +7,9 @@ import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWingsFinalStep.dart';
 
 class ParticularWingSetup extends StatefulWidget {
-  var wingName;
+  var wingName, societyId;
 
-  ParticularWingSetup(this.wingName);
+  ParticularWingSetup({this.wingName, this.societyId});
 
   @override
   _ParticularWingSetupState createState() => _ParticularWingSetupState();
@@ -19,6 +19,7 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
   TextEditingController txtWingName = new TextEditingController();
   TextEditingController txtTotalFloor = new TextEditingController();
   TextEditingController txtUnitPerWing = new TextEditingController();
+  TextEditingController txtParkingSpot = new TextEditingController();
   int currentIndex = 0;
   GlobalKey<FormState> formKey = GlobalKey();
   String wingName;
@@ -112,6 +113,17 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
                       return null;
                     },
                     hintText: "Enter Unit Per Floor"),
+                MyTextFormField(
+                    controller: txtParkingSpot,
+                    keyboardType: TextInputType.number,
+                    lable: "Parking Spots",
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter Parking Spots";
+                      }
+                      return null;
+                    },
+                    hintText: "Enter Parking Spots"),
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Text("Choose Flat Number Format",
@@ -176,6 +188,7 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
                               context,
                               PageTransition(
                                   child: SetupWingsFinalStep(
+                                      societyId: widget.societyId,
                                       wingName: wingName,
                                       flatFormatId: currentIndex,
                                       totalFloor: int.parse(txtTotalFloor.text),
