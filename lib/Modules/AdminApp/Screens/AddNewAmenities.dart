@@ -125,6 +125,18 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
         "https://watcher03.herokuapp.com/api/society/addSocietyAmenity";
     List<MultipartFile> imageList = <MultipartFile>[];
 
+    // for (int i = 0; i < images.length; i++) {
+    //     ByteData byteData = await images[i].getByteData();
+    //     List<int> imageData = byteData.buffer.asUint8List();
+    //     File _imageEvent = await File(images[i].identifier);
+    //     MultipartFile multipartFile = new MultipartFile.fromBytes(
+    //       imageData,
+    //       filename: images[i].name,
+    //       contentType: MediaType("image", "png"),
+    //     );
+    //     imageList.add(multipartFile);
+    // }
+
     for (Asset asset in images) {
       ByteData byteData = await asset.getByteData();
       List<int> imageData = byteData.buffer.asUint8List();
@@ -150,7 +162,7 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
     var response = await dio.post(url, data: formData);
     widget.AllAmenitiesApi();
     Fluttertoast.showToast(
-      msg: "Your Notice added Successfully.",
+      msg: "Your Amenities added Successfully.",
     );
     Navigator.pop(context);
     print(response.data);
