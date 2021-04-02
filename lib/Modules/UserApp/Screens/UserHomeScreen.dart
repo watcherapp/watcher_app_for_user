@@ -1,10 +1,12 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:video_player/video_player.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVisitorListComponent.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/NoticesScreen.dart';
 
 class UserHomeScreen extends StatefulWidget {
   @override
@@ -42,10 +44,26 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   ];
 
   List quickActions = [
-    {"id": 0, "icon": CupertinoIcons.number_square, "title": "Notice"},
-    {"id": 0, "icon": Icons.album, "title": "Emergency"},
-    {"id": 0, "icon": CupertinoIcons.number_square, "title": "Advertisement"},
-    {"id": 0, "icon": CupertinoIcons.car_detailed, "title": "Parking"},
+    {
+      "image": "images/complain.png",
+      "title": "Notice",
+      "screenName": NoticesScreen(),
+    },
+    {
+      "image": "images/alarm.png",
+      "title": "Emergency",
+      "screenName": NoticesScreen(),
+    },
+    {
+      "image": "images/ad-campaign.png",
+      "title": "Advertisement",
+      "screenName": NoticesScreen(),
+    },
+    {
+      "image": "images/car.png",
+      "title": "Parking",
+      "screenName": NoticesScreen(),
+    },
   ];
 
   @override
@@ -107,33 +125,42 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               children: quickActions.map((e) {
-                return Card(
-                  elevation: 0,
-                  child: SizedBox(
-                    width: 85,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        color: Colors.white,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "images/complain.png",
-                              width: 35,
-                              color: appPrimaryMaterialColor,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "${e["title"]}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10,
-                                  color: Colors.black54),
-                            )
-                          ],
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: e["screenName"],
+                            type: PageTransitionType.rightToLeft));
+                  },
+                  child: Card(
+                    elevation: 0,
+                    child: SizedBox(
+                      width: 85,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "${e["image"]}",
+                                width: 32,
+                                color: appPrimaryMaterialColor,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "${e["title"]}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                    color: Colors.black54),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 
@@ -19,8 +20,14 @@ class AmenitiesDetailScreen extends StatefulWidget {
 
 class _AmenitiesDetailScreenState extends State<AmenitiesDetailScreen> {
   bool isLoading = false;
+  List images=[];
 
-  // List amenitiesList = [];
+
+  @override
+  void initState() {
+    images = widget.amenitiesListData["images"];
+    print(images);
+  } // List amenitiesList = [];
 
   // List bannerList = [
   //   "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
@@ -140,13 +147,13 @@ class _AmenitiesDetailScreenState extends State<AmenitiesDetailScreen> {
                         dotVerticalPadding: 10.0,
                         showIndicator: true,
                         indicatorBgPadding: 7.0,
-                        images: widget.amenitiesListData["images"]
+                        images: images
                             .map(
                               (item) => Card(
                                 semanticContainer: true,
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 child: Image.network(
-                                  "$item",
+                                  "$API_URL"+"$item",
                                   fit: BoxFit.fitWidth,
                                 ),
                                 shape: RoundedRectangleBorder(

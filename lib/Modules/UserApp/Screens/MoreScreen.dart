@@ -13,7 +13,7 @@ class _MoreScreenState extends State<MoreScreen> {
     {
       "label": "Aminites",
       "img": "images/complain.png",
-      "screenName": NoticesScreen(),
+
     },
     {
       "label": "Notices",

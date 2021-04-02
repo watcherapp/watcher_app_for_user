@@ -18,6 +18,7 @@ class MasterAdminDashboard extends StatefulWidget {
 class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
   bool isLoading = false;
   List AllmanagerList = [];
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +35,7 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
           backgroundColor: appPrimaryMaterialColor,
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0, left: 6, right: 6),
@@ -179,7 +181,7 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 15.0, left: 10, right: 6),
+              padding: const EdgeInsets.only(top: 15.0, left: 10, right: 6,bottom: 10),
               child: Text(
                 "Recent Requests",
                 style: TextStyle(
@@ -189,14 +191,47 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                     fontWeight: FontWeight.w600),
               ),
             ),
-            Expanded(
-              child: ListView(
-                  children: AllmanagerList.reversed
-                      .take(5)
-                      .map((propertyManagerData) {
-                return PropertyManagetComponent(
-                    propertyManagerData: propertyManagerData);
-              }).toList()),
+            isLoading == true
+                ? Center(
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          appPrimaryMaterialColor),
+                    ),
+                  )
+                : AllmanagerList.length > 0
+                    ? ListView(
+                      shrinkWrap: true,
+                        children: AllmanagerList.reversed
+                            .take(5)
+                            .map((propertyManagerData) {
+                    return PropertyManagetComponent(
+                        propertyManagerData: propertyManagerData);
+                      }).toList())
+                    : Text(
+                        "Data Not Found",
+                        style: TextStyle(fontSize: 13, color: Colors.grey),
+                      ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: PropertyManagers(),
+                        type: PageTransitionType.rightToLeft));
+              },
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    "See All",
+                    style: TextStyle(
+                        // fontFamily: 'Montserrat',
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ),
+              ),
             ),
           ],
         ));
