@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -864,7 +865,7 @@ class _SignUp3State extends State<SignUp3> {
         var body = FormData.fromMap({
           "firstName": txtFirstName.text,
           "lastName": txtLastName.text,
-          "mobileNo1": "9429828152",
+          "mobileNo1": widget.phoneNumber,
           "emailId": txtEmail.text,
           "password": txtPassword.text,
           "userRole": selectedRole,
@@ -884,6 +885,7 @@ class _SignUp3State extends State<SignUp3> {
                   filename: userFileName.toString())
               : null,
         });
+        log(body.fields.toString());
         Services.responseHandler(apiName: "api/member/signUp", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
