@@ -59,8 +59,8 @@ class _OTPScreenState extends State<OTPScreen> {
                 Navigator.pushReplacement(
                     context,
                     PageTransition(
-                        child: VerifyScreen(
-                          // verifyData: isVerify,
+                        child: PasswordScreen(
+                          phoneNumber: widget.mobileNo,
                         ),
                         type: PageTransitionType.rightToLeft));
               } else {
@@ -68,7 +68,9 @@ class _OTPScreenState extends State<OTPScreen> {
                   Navigator.push(
                       context,
                       PageTransition(
-                          child: PasswordScreen(),
+                          child: PasswordScreen(
+                            phoneNumber: widget.mobileNo,
+                          ),
                           type: PageTransitionType.rightToLeft));
                 } else {
                   Navigator.push(
@@ -122,8 +124,8 @@ class _OTPScreenState extends State<OTPScreen> {
           Navigator.pushReplacement(
               context,
               PageTransition(
-                  child: VerifyScreen(
-                    // verifyData: isVerify,
+                  child: PasswordScreen(
+                    phoneNumber: widget.mobileNo,
                   ),
                   type: PageTransitionType.rightToLeft));
         } else {
@@ -131,7 +133,9 @@ class _OTPScreenState extends State<OTPScreen> {
             Navigator.push(
                 context,
                 PageTransition(
-                    child: PasswordScreen(),
+                    child: PasswordScreen(
+                      phoneNumber: widget.mobileNo,
+                    ),
                     type: PageTransitionType.rightToLeft));
           } else {
             Navigator.push(

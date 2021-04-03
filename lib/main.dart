@@ -5,9 +5,11 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/PropertyManagerProvider.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/PasswordScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/VerifyScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/OTPScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/SignUp1.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
 
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: VerifyScreen(),
+        home: SignIn(),
       ),
     );
   }
