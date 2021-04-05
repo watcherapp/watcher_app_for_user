@@ -205,7 +205,6 @@ class _AddMyStaffState extends State<AddMyStaff> {
                                     color: Colors.grey,
                                     width: 0.5,
                                   ),
-
                                   image: DecorationImage(
                                     image: FileImage(
                                       _image,
