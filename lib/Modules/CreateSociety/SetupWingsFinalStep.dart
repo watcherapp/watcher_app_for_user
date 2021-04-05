@@ -30,6 +30,7 @@ class SetupWingsFinalStep extends StatefulWidget {
 
 class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
   List wingFlatData = [];
+  String errorText;
   final ScrollController _scrollController = new ScrollController();
   int rowsColumn = 0;
   int total;
@@ -60,14 +61,20 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         int maxFlatPerFloor = widget.totalCountPerFloor;
         for (int y = 0; y < maxFlatPerFloor; y++) {
           int currentNumber = flatNo + y;
+          print("floor No ${i + 1}");
           // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
-          flatList.add({"flatNo": currentNumber, "flatStatus": "Owner"});
+          flatList.add({
+            "flatNo": currentNumber,
+            "floorNo": "${i + 1}",
+            "flatStatus": 3
+          });
         }
         flatNo = flatNo + 100;
         // z += maxFlatPerFloor;
         numbers.add(flatList);
         flatList = [];
       }
+      log(numbers.toString());
     } else if (widget.flatFormatId == 1) {
       int flatNo = 1;
       for (int i = 0; i < widget.totalFloor; i++) {
@@ -138,7 +145,9 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Setup Wing"),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 10.0),
@@ -212,6 +221,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
               setState(() {
                 finalFlatList = tempList;
               });
+              _setupWing();
             },
             title: "Finish"),
       ),
@@ -233,7 +243,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
           "totalParkingSpot": "${widget.parkingSpot}",
           "flatList": finalFlatList
         };
-        print("$body");
+        log("$body");
         Services.responseHandler(
                 apiName: "api/society/createSociety", body: body)
             .then((responseData) {
@@ -242,6 +252,9 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
             LoadingIndicator.close(context);
           } else {
             print(responseData);
+            setState(() {
+              errorText = responseData.Message;
+            });
             LoadingIndicator.close(context);
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
@@ -255,7 +268,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         }).catchError((error) {
           LoadingIndicator.close(context);
           Fluttertoast.showToast(
-              msg: "Error $error",
+              msg: "$error",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,

@@ -362,6 +362,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
             setState(() {
               societyId = responseData.Data[0]["_id"];
             });
+            print(societyId);
             Navigator.push(
                 context,
                 PageTransition(

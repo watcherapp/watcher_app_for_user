@@ -5,8 +5,10 @@ import 'package:page_transition/page_transition.dart';
 import 'package:video_player/video_player.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/EmergencyScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVisitorListComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/NoticesScreen.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserEmergencyScreen.dart';
 
 class UserHomeScreen extends StatefulWidget {
   @override
@@ -45,14 +47,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   List quickActions = [
     {
-      "image": "images/complain.png",
+      "image": "images/noticeboard.png",
       "title": "Notice",
       "screenName": NoticesScreen(),
     },
     {
       "image": "images/alarm.png",
       "title": "Emergency",
-      "screenName": NoticesScreen(),
+      "screenName": UserEmergencyScreen(),
     },
     {
       "image": "images/ad-campaign.png",
@@ -184,52 +186,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   itemBuilder: (context, index) {
                     return MyVisitorListComponent();
                   })
-              /*ListView.builder(
-                shrinkWrap: true,
-                itemCount: 10,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return MyVisitorComponent();
-                }),*/
-              ),
-          /* SizedBox(
-            height: 8,
-          ),
-          FutureBuilder(
-            future: _initializeVideoPlayerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                // If the VideoPlayerController has finished initialization, use
-                // the data it provides to limit the aspect ratio of the video.
-                return AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  // Use the VideoPlayer widget to display the video.
-                  child: VideoPlayer(_controller),
-                );
-              } else {
-                // If the VideoPlayerController is still initializing, show a
-                // loading spinner.
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-          FlatButton(
-            onPressed: () {
-              setState(() {
-                // If the video is playing, pause it.
-                if (_controller.value.isPlaying) {
-                  _controller.pause();
-                } else {
-                  // If the video is paused, play it.
-                  _controller.play();
-                }
-              });
-            },
-            child: Icon(
-              _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-            ),
-          )*/
-        ],
+          ),],
       ),
     );
   }

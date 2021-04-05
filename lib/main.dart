@@ -10,8 +10,10 @@ import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/Verif
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/OTPScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/SignUp1.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/Splash.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 
 import 'Constants/appColors.dart';
 import 'Data/Providers/IndexCountProvider.dart';
@@ -36,18 +38,17 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          appBarTheme: AppBarTheme(
-              color: appPrimaryMaterialColor,
-              centerTitle: true,
-              textTheme: TextTheme(
-                  // ignore: deprecated_member_use
-                  title: TextStyle(color: Colors.white, fontSize: 18))),
-          floatingActionButtonTheme: FloatingActionButtonThemeData(
-              backgroundColor: appPrimaryMaterialColor),
-          primaryColor: appPrimaryMaterialColor,
-          fontFamily: 'Montserrat',
-        ),
-        home: SignIn(),
+            appBarTheme: AppBarTheme(
+                color: appPrimaryMaterialColor,
+                centerTitle: true,
+                textTheme: TextTheme(
+                    // ignore: deprecated_member_use
+                    title: TextStyle(color: Colors.white, fontSize: 18))),
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
+                backgroundColor: appPrimaryMaterialColor),
+            primaryColor: appPrimaryMaterialColor,
+            fontFamily: 'Montserrat'),
+        home: UserDashboard(),
       ),
     );
   }

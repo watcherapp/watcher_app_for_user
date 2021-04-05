@@ -191,6 +191,7 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
                                       societyId: widget.societyId,
                                       wingName: wingName,
                                       flatFormatId: currentIndex,
+                                      parkingSpot: txtParkingSpot.text,
                                       totalFloor: int.parse(txtTotalFloor.text),
                                       totalCountPerFloor:
                                           int.parse(txtUnitPerWing.text)),
