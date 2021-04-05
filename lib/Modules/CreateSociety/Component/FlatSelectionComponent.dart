@@ -10,27 +10,22 @@ class FlatSelectionComponent extends StatefulWidget {
 }
 
 class _FlatSelectionComponentState extends State<FlatSelectionComponent> {
-
-
-  int index = 0;
+  int index = 3;
 
   List status = [
     {
-      "color": appPrimaryMaterialColor,
-      "status": "Owner",
-    },
-    {
-      "color": Colors.lightGreen,
-      "status": "Vacant",
-    },
-    {
-      "color": Colors.amber,
-      "status": "Rent",
+      "color": Colors.grey,
+      "status": 0,
     },
     {
       "color": Colors.redAccent,
-      "status": "Closed",
-    }
+      "status": 1,
+    },
+    {
+      "color": Colors.lightGreen,
+      "status": 2,
+    },
+    {"color": appPrimaryMaterialColor, "status": 3}
   ];
 
   @override

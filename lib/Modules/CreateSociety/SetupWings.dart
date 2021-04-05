@@ -17,7 +17,7 @@ class _SetupWingsState extends State<SetupWings> {
     int alphabet = "A".codeUnits.first;
     List temp = [];
     wingList.clear();
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < widget.wingsCount; i++) {
       temp.add(String.fromCharCode(alphabet++));
     }
     print(temp.toString());

@@ -9,10 +9,10 @@ class FlatStatusColorsWithLabel extends StatefulWidget {
 
 class _FlatStatusColorsWithLabelState extends State<FlatStatusColorsWithLabel> {
   List dataList = [
+    {"label": "Dead", "Color": Colors.grey},
+    {"label": "Closed", "Color": Colors.redAccent},
+    {"label": "Rent", "Color": Colors.lightGreen},
     {"label": "Owner", "Color": appPrimaryMaterialColor},
-    {"label": "Vacant", "Color": Colors.lightGreen},
-    {"label": "Rent", "Color": Colors.amber},
-    {"label": "Closed", "Color": Colors.red[300]},
   ];
   @override
   Widget build(BuildContext context) {

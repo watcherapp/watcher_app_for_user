@@ -181,7 +181,8 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 15.0, left: 10, right: 6,bottom: 10),
+              padding: const EdgeInsets.only(
+                  top: 15.0, left: 10, right: 6, bottom: 10),
               child: Text(
                 "Recent Requests",
                 style: TextStyle(
@@ -191,37 +192,39 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                     fontWeight: FontWeight.w600),
               ),
             ),
-            isLoading == true
-                ? Center(
-                    child: CircularProgressIndicator(
-                      valueColor: new AlwaysStoppedAnimation<Color>(
-                          appPrimaryMaterialColor),
-                    ),
-                  )
-                : AllmanagerList.length > 0
-                    ? ListView(
-                      shrinkWrap: true,
-                        children: AllmanagerList.reversed
-                            .take(5)
-                            .map((propertyManagerData) {
-                    return PropertyManagetComponent(
-                        propertyManagerData: propertyManagerData);
-                      }).toList())
-                    : Text(
-                        "Data Not Found",
-                        style: TextStyle(fontSize: 13, color: Colors.grey),
-                      ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: PropertyManagers(),
-                        type: PageTransitionType.rightToLeft));
-              },
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
+            Expanded(
+                child: isLoading == true
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              appPrimaryMaterialColor),
+                        ),
+                      )
+                    : AllmanagerList.length > 0
+                        ? ListView(
+                            physics: BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            children: AllmanagerList.reversed
+                                .take(5)
+                                .map((propertyManagerData) {
+                              return PropertyManagetComponent(
+                                  propertyManagerData: propertyManagerData);
+                            }).toList())
+                        : Text(
+                            "Data Not Found",
+                            style: TextStyle(fontSize: 13, color: Colors.grey),
+                          )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: PropertyManagers(),
+                          type: PageTransitionType.rightToLeft));
+                },
+                child: Center(
                   child: Text(
                     "See All",
                     style: TextStyle(
