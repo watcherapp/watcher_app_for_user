@@ -36,16 +36,17 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            appBarTheme: AppBarTheme(
-                color: appPrimaryMaterialColor,
-                centerTitle: true,
-                textTheme: TextTheme(
-                    // ignore: deprecated_member_use
-                    title: TextStyle(color: Colors.white, fontSize: 18))),
-            floatingActionButtonTheme: FloatingActionButtonThemeData(
-                backgroundColor: appPrimaryMaterialColor),
-            primaryColor: appPrimaryMaterialColor,
-            fontFamily: 'Montserrat'),
+          appBarTheme: AppBarTheme(
+              color: appPrimaryMaterialColor,
+              centerTitle: true,
+              textTheme: TextTheme(
+                  // ignore: deprecated_member_use
+                  title: TextStyle(color: Colors.white, fontSize: 18))),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: appPrimaryMaterialColor),
+          primaryColor: appPrimaryMaterialColor,
+          fontFamily: 'Montserrat',
+        ),
         home: SignIn(),
       ),
     );

@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 
 class FamilyMemberComponent extends StatefulWidget {
+  var familyDataList;
+
+  FamilyMemberComponent({
+    this.familyDataList,
+  });
+
   @override
   _FamilyMemberComponentState createState() => _FamilyMemberComponentState();
 }
@@ -24,7 +30,7 @@ class _FamilyMemberComponentState extends State<FamilyMemberComponent> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-            child: Text("Keval Mangroliya",
+            child: Text("${widget.familyDataList["firstName"]} ${widget.familyDataList["lastName"]}",
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     fontSize: 13,

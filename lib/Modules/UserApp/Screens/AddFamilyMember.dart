@@ -83,7 +83,7 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
             onPressed: () {
               Navigator.of(context).pop();
             }),
-        title: Text("${sharedPrefs.memberId}"),
+        title: Text("Add Family Member"),
       ),
       body: SingleChildScrollView(
         child: Padding(

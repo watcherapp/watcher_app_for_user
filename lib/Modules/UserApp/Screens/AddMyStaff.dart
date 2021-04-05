@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:watcher_app_for_user/CommonWidgets/DialogOpenFormField.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
@@ -16,6 +17,150 @@ class _AddMyStaffState extends State<AddMyStaff> {
   String idProofData;
   List idProof = ["Aadharcard", "Pancard", "Votingcard"];
   File _staffProfile;
+  File _image;
+  File _imageId1;
+  File _imageId2;
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+  void _showPicker1(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery1();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera1();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+  void _showPicker2(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery2();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera2();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  _imgFromCamera() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  _imgFromCamera1() async {
+    File imageId1 = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      _imageId1 = imageId1;
+    });
+  }
+
+  _imgFromCamera2() async {
+    File imageId2 = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      _imageId2 = imageId2;
+    });
+  }
+
+  _imgFromGallery() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+  _imgFromGallery1() async {
+    File imageId1 = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      _imageId1 = imageId1;
+    });
+  }
+
+  _imgFromGallery2() async {
+    File imageId2 = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      _imageId2 = imageId2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,21 +186,30 @@ class _AddMyStaffState extends State<AddMyStaff> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: 100.0,
-                      height: 100.0,
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 95,
-                      ),
-                      decoration: new BoxDecoration(
-                        color: Color(0x22888888),
-                        borderRadius:
-                            new BorderRadius.all(new Radius.circular(90.0)),
-                        border: new Border.all(
-                          color: Colors.grey,
-                          width: 0.5,
+                    GestureDetector(
+                      onTap: () {
+                        _showPicker(context);
+                      },
+                      child: Container(
+                        width: 100.0,
+                        height: 100.0,
+                        child: _image != null
+                            ? Image.file(
+                                _image,
+                              )
+                            : Icon(
+                                Icons.person,
+                                color: Colors.white,
+                                size: 95,
+                              ),
+                        decoration: new BoxDecoration(
+                          color: Color(0x22888888),
+                          borderRadius:
+                              new BorderRadius.all(new Radius.circular(90.0)),
+                          border: new Border.all(
+                            color: Colors.grey,
+                            width: 0.5,
+                          ),
                         ),
                       ),
                     ),
@@ -203,44 +357,56 @@ class _AddMyStaffState extends State<AddMyStaff> {
         borderType: BorderType.Rect,
         dashPattern: [5, 5, 5, 5],
         color: Colors.grey[400],
-        child: Container(
-          height: 110,
-          // width: MediaQuery.of(context).size.width / 2.2,
-          decoration: ShapeDecoration(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            color: Color(0x22888888),
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 32.0,
-                  height: 32.0,
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.black54,
-                    size: 25,
-                  ),
-                  decoration: new BoxDecoration(
-                    // color: Colors.grey[300],
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(90.0)),
-                    border: new Border.all(color: Colors.grey, width: 1),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 3.0),
-                  child: Text("Front",
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      )),
-                ),
-              ],
+        child: GestureDetector(
+          onTap: () {
+            _showPicker1(context);
+          },
+          child: Container(
+            height: 110,
+            // width: MediaQuery.of(context).size.width / 2.2,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)),
+              color: Color(0x22888888),
             ),
+            child: _imageId1 != null
+                ? Center(
+                    child: Image.file(
+                      _imageId1,
+                    ),
+                  )
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 32.0,
+                          height: 32.0,
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.black54,
+                            size: 25,
+                          ),
+                          decoration: new BoxDecoration(
+                            // color: Colors.grey[300],
+                            borderRadius:
+                                new BorderRadius.all(new Radius.circular(90.0)),
+                            border:
+                                new Border.all(color: Colors.grey, width: 1),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 3.0),
+                          child: Text("Front",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
           ),
         ),
       ),
@@ -253,44 +419,56 @@ class _AddMyStaffState extends State<AddMyStaff> {
         borderType: BorderType.Rect,
         dashPattern: [5, 5, 5, 5],
         color: Colors.grey[400],
-        child: Container(
-          height: 110,
-          // width: MediaQuery.of(context).size.width / 2.2,
-          decoration: ShapeDecoration(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            color: Color(0x22888888),
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 32.0,
-                  height: 32.0,
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.black54,
-                    size: 25,
-                  ),
-                  decoration: new BoxDecoration(
-                    // color: Colors.grey[300],
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(90.0)),
-                    border: new Border.all(color: Colors.grey, width: 1),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 3.0),
-                  child: Text("Back",
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      )),
-                ),
-              ],
+        child: GestureDetector(
+          onTap: () {
+            _showPicker2(context);
+          },
+          child: Container(
+            height: 110,
+            // width: MediaQuery.of(context).size.width / 2.2,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)),
+              color: Color(0x22888888),
             ),
+            child: _imageId2 != null
+                ? Center(
+                    child: Image.file(
+                      _imageId2,
+                    ),
+                  )
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 32.0,
+                          height: 32.0,
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.black54,
+                            size: 25,
+                          ),
+                          decoration: new BoxDecoration(
+                            // color: Colors.grey[300],
+                            borderRadius:
+                                new BorderRadius.all(new Radius.circular(90.0)),
+                            border:
+                                new Border.all(color: Colors.grey, width: 1),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 3.0),
+                          child: Text("Back",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
           ),
         ),
       ),

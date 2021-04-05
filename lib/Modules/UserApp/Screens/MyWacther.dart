@@ -25,12 +25,14 @@ class MyWatcher extends StatefulWidget {
 class _MyWatcherState extends State<MyWatcher> {
   int length = 3;
   List familyMemberList = [];
+  List staffList = [];
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _getMyFamilyMember();
+    _getMyStaff();
   }
 
   @override
@@ -115,7 +117,9 @@ class _MyWatcherState extends State<MyWatcher> {
             child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemCount: length + 1,
+                //aa use karvanu 6e.................................
+                // itemCount: familyMemberList.length + 1,
+                itemCount: familyMemberList.length ,
                 itemBuilder: (context, index) {
                   if (index == length) {
                     return AddComponent(
@@ -128,7 +132,9 @@ class _MyWatcherState extends State<MyWatcher> {
                                   type: PageTransitionType.rightToLeft));
                         });
                   } else {
-                    return FamilyMemberComponent();
+                    return FamilyMemberComponent(
+                      familyDataList: familyMemberList[index],
+                    );
                   }
                 }),
           ),
@@ -356,6 +362,7 @@ class _MyWatcherState extends State<MyWatcher> {
     ));
   }
 
+  //body is static...................
   _getMyFamilyMember() async {
     print("Calling");
     try {
@@ -363,8 +370,9 @@ class _MyWatcherState extends State<MyWatcher> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "memberId": "${sharedPrefs.memberId}",
-          "societyId": "6038838fd00ee22d24a09c7a"
+          // "memberId": "${sharedPrefs.memberId}",
+          "memberId": "6038834fd00ee22d24a09c77",
+          "societyId": societyId,
         };
         setState(() {
           isLoading = true;
@@ -400,4 +408,53 @@ class _MyWatcherState extends State<MyWatcher> {
       Fluttertoast.showToast(msg: "${Messages.message}");
     }
   }
+
+
+  //body is static...................
+  _getMyStaff() async {
+    print("Calling");
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "societyId" : "6038838fd00ee22d24a09c7a",
+          "wingId" : "60388797fc743024bc8bbfc3",
+          "flatId" : "60388797fc743024bc8bbfc5"
+        };
+        setState(() {
+          isLoading = true;
+        });
+        Services.responseHandler(
+                apiName: "api/member/getAllStaffDetails", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              staffList = responseData.Data;
+              isLoading = false;
+            });
+            print(staffList);
+          } else {
+            print(responseData);
+            setState(() {
+              familyMemberList = responseData.Data;
+              isLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
+
 }

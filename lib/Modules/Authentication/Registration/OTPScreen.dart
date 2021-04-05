@@ -122,41 +122,45 @@ class _OTPScreenState extends State<OTPScreen> {
 
         if (widget.fromWhere == "fromForgotPassword") {
           Navigator.pushReplacement(
-              context,
-              PageTransition(
-                  child: PasswordScreen(
-                    phoneNumber: widget.mobileNo,
-                  ),
-                  type: PageTransitionType.rightToLeft));
+            context,
+            PageTransition(
+              child: PasswordScreen(
+                phoneNumber: widget.mobileNo,
+              ),
+              type: PageTransitionType.rightToLeft,
+            ),
+          );
         } else {
           if (widget.otpData == true) {
             Navigator.push(
-                context,
-                PageTransition(
-                    child: PasswordScreen(
-                      phoneNumber: widget.mobileNo,
-                    ),
-                    type: PageTransitionType.rightToLeft));
+              context,
+              PageTransition(
+                child: PasswordScreen(
+                  phoneNumber: widget.mobileNo,
+                ),
+                type: PageTransitionType.rightToLeft,
+              ),
+            );
           } else {
             Navigator.push(
-                context,
-                PageTransition(
-                    child: SignUp3(
-                      phoneNumber: myPhoneNumber,
-                    ),
-                    type: PageTransitionType.rightToLeft));
+              context,
+              PageTransition(
+                child: SignUp3(
+                  phoneNumber: myPhoneNumber,
+                ),
+                type: PageTransitionType.rightToLeft,
+              ),
+            );
           }
         }
       } else {
         Fluttertoast.showToast(msg: "Invalid OTP");
       }
-
     }).catchError((error) {
       log(error.toString());
       Fluttertoast.showToast(msg: "$error Something went wrong");
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +203,7 @@ class _OTPScreenState extends State<OTPScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 4.0),
                       child: Text(
-                        "${widget.dialCode}" + "9429828152",
+                        "${widget.dialCode}" + "${widget.mobileNo}",
                         style: fontConstants.smallText,
                         textAlign: TextAlign.center,
                       ),
