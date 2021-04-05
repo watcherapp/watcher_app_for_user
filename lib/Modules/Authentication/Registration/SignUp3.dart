@@ -85,6 +85,7 @@ class _SignUp3State extends State<SignUp3> {
       genderList[0].isSelected = true;
       selectedGender = genderList[0].name;
     });
+    print(widget.phoneNumber);
     getIdentityData();
   }
 
@@ -250,21 +251,23 @@ class _SignUp3State extends State<SignUp3> {
                                   ),
                                 );
                               }).toList()),
-                              Form(
-                                key: _firstStep,
-                                child: MyTextFormField(
-                                  lable: "SocietyCode",
-                                  controller: txtSocietyCode,
-                                  hintText: "Enter your Society Code",
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return "Society Code Can't be empty";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                              )
+                              selectedRole == "2"
+                                  ? Form(
+                                      key: _firstStep,
+                                      child: MyTextFormField(
+                                        lable: "SocietyCode",
+                                        controller: txtSocietyCode,
+                                        hintText: "Enter your Society Code",
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return "Society Code Can't be empty";
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  : SizedBox()
                             ],
                           ),
                         ),
@@ -629,7 +632,11 @@ class _SignUp3State extends State<SignUp3> {
                           child: FloatingActionButton(
                             backgroundColor: appPrimaryMaterialColor,
                             onPressed: () {
-                              if (_firstStep.currentState.validate()) {
+                              if (selectedRole == "2") {
+                                if (_firstStep.currentState.validate()) {
+                                  provider.stepCurrentIndex = 1;
+                                }
+                              } else {
                                 provider.stepCurrentIndex = 1;
                               }
                             },
@@ -869,9 +876,9 @@ class _SignUp3State extends State<SignUp3> {
           "emailId": txtEmail.text,
           "password": txtPassword.text,
           "userRole": selectedRole,
-          "societyCode": "SOC-RAGHUVIR-525411000000",
+          "societyCode": txtSocietyCode.text ?? "",
           "address": "",
-          "fcmToken": "d5dff5d5d5s5d",
+          "fcmToken": "ssdfsd6sds8555sdsdsfdvdscdcDSfdfdefddccscddDD2",
           "refferBy": "",
           "deviceType": Platform.isAndroid ? "android" : "ios",
           "gender": selectedGender,

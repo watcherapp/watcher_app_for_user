@@ -13,11 +13,10 @@ import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Data/ValidationClass.dart';
-import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/VerifyScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/SignUp1.dart';
-import 'package:watcher_app_for_user/Modules/CreateSociety/ChooseCreateOrJoin.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
+
+import 'file:///C:/Users/Keval/AndroidStudioProjects/watcher_app_for_user/lib/Modules/CreateSociety/MyProperties.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -102,7 +101,6 @@ class _SignInState extends State<SignIn> {
                                       fromWhere: fromWhere,
                                     ),
                                     type: PageTransitionType.rightToLeft));
-
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 12.0),
@@ -169,9 +167,7 @@ class _SignInState extends State<SignIn> {
   _saveDataToSession(var sessionData) async {
     sharedPrefs.memberId = "${sessionData[0]["_id"]}";
     sharedPrefs.userRole = "${sessionData[0]["userRole"]}";
-    sharedPrefs.memberNo = "${sessionData[0]["_id"]}";
-    sharedPrefs.memberId = "${sessionData[0]["_id"]}";
-    sharedPrefs.memberId = "${sessionData[0]["_id"]}";
+    sharedPrefs.memberNo = "${sessionData[0]["memberNo"]}";
     if (sessionData[0]["userRole"] == 0) {
       Navigator.pushReplacement(
           context,
@@ -182,13 +178,12 @@ class _SignInState extends State<SignIn> {
       Navigator.pushReplacement(
           context,
           PageTransition(
-              child: ChooseCreateOrJoin(),
-              type: PageTransitionType.leftToRight));
+              child: MyProperties(), type: PageTransitionType.leftToRight));
     } else {
       Navigator.pushReplacement(
           context,
           PageTransition(
-              child: UserDashboard(), type: PageTransitionType.leftToRight));
+              child: MyProperties(), type: PageTransitionType.leftToRight));
     }
   }
 
@@ -215,7 +210,7 @@ class _SignInState extends State<SignIn> {
           } else {
             print(responseData);
             LoadingIndicator.close(context);
-            Fluttertoast.showToast(msg: "gggg ${responseData.Message}");
+            Fluttertoast.showToast(msg: "${responseData.Message}");
           }
         }).catchError((error) {
           LoadingIndicator.close(context);

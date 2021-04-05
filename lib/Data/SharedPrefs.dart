@@ -3,6 +3,11 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 
 class SharedPrefs {
   static SharedPreferences _sharedPrefs;
+
+  logout() {
+    _sharedPrefs.clear();
+  }
+
   factory SharedPrefs() => SharedPrefs._internal();
   SharedPrefs._internal();
 
