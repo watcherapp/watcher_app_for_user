@@ -30,7 +30,7 @@ class _MyPropertiesState extends State<MyProperties> {
         itemBuilder: (BuildContext context, int index) {
           return MyPropertiesComponent();
         },
-        itemCount: 15,
+        itemCount: 4,
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(12.0),

@@ -10,7 +10,6 @@ import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/PasswordScreen.dart';
-import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/VerifyScreen.dart';
 
 import 'SignUp3.dart';
 
@@ -76,7 +75,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   Navigator.push(
                       context,
                       PageTransition(
-                          child: SignUp3(),
+                          child: SignUp3(phoneNumber: widget.mobileNo),
                           type: PageTransitionType.rightToLeft));
                 }
               }

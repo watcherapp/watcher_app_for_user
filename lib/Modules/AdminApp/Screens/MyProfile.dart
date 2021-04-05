@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/UpdateProfile.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 
 class MyProfile extends StatefulWidget {
   @override
@@ -171,21 +173,30 @@ class _MyProfileState extends State<MyProfile> {
               color: Colors.grey,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 6.0),
-            child: ListTile(
-              leading: Image.asset(
-                "images/logout.png",
-                width: 20,
-                color: appPrimaryMaterialColor,
-              ),
-              title: Text(
-                "Logout",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Montserrat',
-                  fontSize: 14,
-                  // color: Colors.black),
+          GestureDetector(
+            onTap: () {
+              sharedPrefs.logout();
+              Navigator.of(context).pushAndRemoveUntil(
+                  PageTransition(
+                      child: SignIn(), type: PageTransitionType.rightToLeft),
+                  (Route<dynamic> route) => false);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: ListTile(
+                leading: Image.asset(
+                  "images/logout.png",
+                  width: 20,
+                  color: appPrimaryMaterialColor,
+                ),
+                title: Text(
+                  "Logout",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Montserrat',
+                    fontSize: 14,
+                    // color: Colors.black),
+                  ),
                 ),
               ),
             ),

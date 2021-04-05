@@ -47,8 +47,6 @@ class _SignUp1State extends State<SignUp1> {
             print(responseData.Data);
             Fluttertoast.showToast(
               msg: "Phone Number is already exist",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
             );
             setState(() {
               isLoading = false;
@@ -70,8 +68,6 @@ class _SignUp1State extends State<SignUp1> {
             });
             Fluttertoast.showToast(
               msg: "${responseData.Message}",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
             );
           }
         }).catchError((error) {
@@ -80,8 +76,6 @@ class _SignUp1State extends State<SignUp1> {
           });
           Fluttertoast.showToast(
             msg: "Error $error",
-            backgroundColor: Colors.white,
-            textColor: appPrimaryMaterialColor,
           );
         });
       }
@@ -91,7 +85,6 @@ class _SignUp1State extends State<SignUp1> {
       });
       Fluttertoast.showToast(
         msg: "You aren't connected to the Internet !",
-        backgroundColor: Colors.white,
         textColor: appPrimaryMaterialColor,
       );
     }
