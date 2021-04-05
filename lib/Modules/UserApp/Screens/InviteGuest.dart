@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
@@ -19,17 +20,68 @@ class InviteGuest extends StatefulWidget {
 
 class _InviteGuestState extends State<InviteGuest> {
   //Controllers
-  TextEditingController txtFirstame = new TextEditingController();
-  TextEditingController txtMiddlename = new TextEditingController();
+  TextEditingController txtGuestName = new TextEditingController();
+  TextEditingController txtNumOfGuest = new TextEditingController();
   TextEditingController txtLastname = new TextEditingController();
   TextEditingController txtMobileNo = new TextEditingController();
   TextEditingController txtEmailId = new TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey();
 
+   //datepicer coding
+
+  //DateTime selectedFromDate = DateTime.now() ;
+  DateTime selectedFromDate;
+  DateTime selectedToDate;
+
+  var fromDate = DateFormat('dd / MM / yyyy');
+  var toDate = DateFormat('dd / MM / yyyy');
+
+  Future<Null> showFromDatePicker(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2101));
+
+    if (picked != null && picked != selectedFromDate)
+      setState(() {
+        selectedFromDate = picked;
+      });
+  }
+  Future<Null> showToDatePicker(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2101));
+
+    if (picked != null && picked != selectedToDate)
+      setState(() {
+        selectedToDate = picked;
+      });
+  }
+
+
+
+  String selectedPurpose;
+
+  List purposeList = [
+    {
+      "PurposeType" : "Meeting"
+    },
+    {
+      "PurposeType" : "Delivery"
+    },
+    {
+      "PurposeType" : "Guest"
+    },
+  ];
+
+
   //FocusNode
-  FocusNode firstName;
-  FocusNode middleName;
+  FocusNode guestName;
+  FocusNode numofguest;
   FocusNode lastName;
   FocusNode mobileNo;
   FocusNode emailId;
@@ -53,8 +105,8 @@ class _InviteGuestState extends State<InviteGuest> {
       genderList[0].isSelected = true;
       selectedGender = genderList[0].name;
     });
-    firstName = new FocusNode();
-    middleName = new FocusNode();
+    guestName = new FocusNode();
+    numofguest = new FocusNode();
     lastName = new FocusNode();
     mobileNo = new FocusNode();
     emailId = new FocusNode();
@@ -65,8 +117,8 @@ class _InviteGuestState extends State<InviteGuest> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    firstName.dispose();
-    middleName.dispose();
+    guestName.dispose();
+    numofguest.dispose();
     lastName.dispose();
     mobileNo.dispose();
     emailId.dispose();
@@ -77,12 +129,16 @@ class _InviteGuestState extends State<InviteGuest> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        title: Text(
+          "Invite Guest",
+          style: TextStyle(fontFamily: 'Montserrat'),
+        ),
+        centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_rounded),
             onPressed: () {
               Navigator.of(context).pop();
             }),
-        title: Text("${sharedPrefs.memberId}"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -93,9 +149,9 @@ class _InviteGuestState extends State<InviteGuest> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MyTextFormField(
-                  controller: txtFirstame,
-                  focusNode: firstName,
-                  lable: "Firstname",
+                  controller: txtGuestName,
+                  focusNode: guestName,
+                  lable: "Guest Name",
                   textInputAction: TextInputAction.next,
                   validator: (value) {
                     if (value.isEmpty) {
@@ -105,52 +161,165 @@ class _InviteGuestState extends State<InviteGuest> {
                     }
                   },
                   onFieldSubmitted: (term) {
-                    firstName.unfocus();
-                    FocusScope.of(context).requestFocus(middleName);
+                    guestName.unfocus();
+                    FocusScope.of(context).requestFocus(numofguest);
                   },
-                  hintText: "Enter First Name",
+                  hintText: "Enter Guest Name",
                 ),
-                // MyTextFormField(
-                //   focusNode: middleName,
-                //   controller: txtMiddlename,
-                //   textInputAction: TextInputAction.next,
-                //   onFieldSubmitted: (term) {
-                //     middleName.unfocus();
-                //     FocusScope.of(context).requestFocus(lastName);
-                //   },
-                //   validator: (value){
-                //     if(value.isEmpty){
-                //       return "mi";
-                //     }
-                //     else{
-                //       return null;
-                //     }
-                //   },
-                //   lable: "Middlename",
-                //   hintText: "Enter Middle Name",
-                // ),
                 MyTextFormField(
-                  focusNode: lastName,
+                  focusNode: numofguest,
+                  controller: txtNumOfGuest,
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {
-                    lastName.unfocus();
-                    FocusScope.of(context).requestFocus(mobileNo);
+                    numofguest.unfocus();
+                    FocusScope.of(context).requestFocus(lastName);
                   },
+                  validator: (value){
+                    if(value.isEmpty){
+                      return "mi";
+                    }
+                    else{
+                      return null;
+                    }
+                  },
+                  lable: "Number Of Guest",
+                  hintText: "Enter Number Of Guest ",
+                ),
+                MyTextFormField(
+                  focusNode: emailId,
+                  controller: txtEmailId,
+                  textInputAction: TextInputAction.done,
+                  lable: "Email",
                   validator: (value) {
                     if (value.isEmpty) {
-                      return "last name can't be empty";
+                      return "mobile number can't be empty";
                     } else {
                       return null;
                     }
                   },
-                  controller: txtLastname,
-                  lable: "Lastname",
-                  hintText: "Enter Last Name",
+                  onFieldSubmitted: (term) {
+                    emailId.unfocus();
+                    FocusScope.of(context).requestFocus(save);
+                  },
+                  hintText: "Enter Email",
+                  keyboardType: TextInputType.emailAddress,
                 ),
-                SizedBox(
-                  height: 12,
+                MyTextFormField(
+                  controller: txtMobileNo,
+                  lable: "MobileNo",
+                  focusNode: mobileNo,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "mobile number can't be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    mobileNo.unfocus();
+                    FocusScope.of(context).requestFocus(emailId);
+                  },
+                  hintText: "Enter Mobile Number",
+                  keyboardType: TextInputType.number,
                 ),
                 Padding(
+                  padding: const EdgeInsets.only(top: 13.0, bottom: 9.0),
+                  child: Text("Select Purpose Type",style: fontConstants.formFieldLabel),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left:4.0,right: 4),
+                  child: Container(
+                    height: 47,
+                   width: MediaQuery.of(context).size.width,
+                   // padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: Colors.grey[200]),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        items: purposeList.map((item) {
+                          return new DropdownMenuItem(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left:11.0),
+                              child: new Text(item['PurposeType'],style:  TextStyle(fontFamily: 'Montserrat',fontSize: 14),),
+                            ),
+                            value: item['PurposeType'].toString(),
+                          );
+                        }).toList(),
+                        onChanged: (newVal) {
+                          setState(() {
+                            selectedPurpose = newVal;
+                          });
+                        },
+                        value: selectedPurpose,
+                        hint: Padding(
+                          padding: const EdgeInsets.only(left:13.0),
+                          child: Text(
+                            "Select Purpose Type",
+                            style: TextStyle(color: Colors.grey,fontFamily: 'Montserrat',fontSize: 13),
+                          ),
+                        ),
+                        /*style:
+                        TextStyle(color: Colors.black, decorationColor: Colors.red),*/
+                      ),
+
+                      ),
+                    ),
+                  ),
+                SizedBox(
+                  height: 20,
+                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text("Valid From",style: fontConstants.formFieldLabel),
+                      Padding(
+                        padding: const EdgeInsets.only(top:8.0),
+                        child: GestureDetector(
+                          onTap: (){
+                            showFromDatePicker(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Colors.grey[200]),
+                            height: 35,
+                            width: 130,
+                            child:Center(child: Text(selectedFromDate!=null?fromDate.format(selectedFromDate):"Select Date",)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text("Valid To",style: fontConstants.formFieldLabel),
+                      Padding(
+                        padding: const EdgeInsets.only(top:8.0),
+                        child: GestureDetector(
+                          onTap: (){
+                            showToDatePicker(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Colors.grey[200]),
+                            height: 35,
+                            width: 130,
+                            child:Center(child: Text(selectedToDate!=null?toDate.format(selectedToDate):"Select Date",)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              /*  Padding(
                   padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                   child: Text("Gender", style: fontConstants.formFieldLabel),
                 ),
@@ -197,44 +366,8 @@ class _InviteGuestState extends State<InviteGuest> {
                     );
                   }).toList(),
                 ),
-                MyTextFormField(
-                  controller: txtMobileNo,
-                  lable: "MobileNo",
-                  focusNode: mobileNo,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "mobile number can't be empty";
-                    } else {
-                      return null;
-                    }
-                  },
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (term) {
-                    mobileNo.unfocus();
-                    FocusScope.of(context).requestFocus(emailId);
-                  },
-                  hintText: "Enter Mobile Number",
-                  keyboardType: TextInputType.number,
-                ),
-                MyTextFormField(
-                  focusNode: emailId,
-                  controller: txtEmailId,
-                  textInputAction: TextInputAction.done,
-                  lable: "Email",
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "mobile number can't be empty";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onFieldSubmitted: (term) {
-                    emailId.unfocus();
-                    FocusScope.of(context).requestFocus(save);
-                  },
-                  hintText: "Enter Email",
-                  keyboardType: TextInputType.emailAddress,
-                )
+*/
+
               ],
             ),
           ),

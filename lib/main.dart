@@ -10,8 +10,10 @@ import 'package:watcher_app_for_user/Modules/Authentication/Forgotpassword/Verif
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/OTPScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/SignUp1.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/Splash.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 
 import 'Constants/appColors.dart';
 import 'Data/Providers/IndexCountProvider.dart';
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: SignIn(),
+        home: UserDashboard(),
       ),
     );
   }

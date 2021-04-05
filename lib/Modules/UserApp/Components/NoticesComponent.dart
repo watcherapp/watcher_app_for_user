@@ -2,11 +2,72 @@ import 'package:flutter/material.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 
 class NoticesComponent extends StatefulWidget {
+  var noticeData;
+
+  NoticesComponent({this.noticeData});
+
   @override
   _NoticesComponentState createState() => _NoticesComponentState();
 }
 
 class _NoticesComponentState extends State<NoticesComponent> {
+  String dateData;
+  String timeData;
+  var time, time1;
+  var date;
+  String month;
+  String monthName;
+
+  @override
+  void initState() {
+    //dateData = " ${widget.notificationData["date"]}";
+    funDate();
+    funTime();
+  }
+
+  funDate() {
+    dateData = "${widget.noticeData["dateTime"][0]}";
+    date = dateData.split('/');
+    print(date);
+  }
+
+  funTime() {
+    timeData = "${widget.noticeData["dateTime"][1]}";
+    time = timeData.split(':');
+    time1 = timeData.split(" ");
+    print(time1);
+  }
+
+  String funMonth(String mon) {
+    if (mon == "01") {
+      return month = "Jan";
+    } else if (mon == "02") {
+      return month = "Feb";
+    } else if (mon == "03") {
+      return month = "March";
+    } else if (mon == "04") {
+      return month = "April";
+    } else if (mon == "05") {
+      return month = "May";
+    } else if (mon == "06") {
+      return month = "June";
+    } else if (mon == "07") {
+      return month = "July";
+    } else if (mon == "08") {
+      return month = "Aug";
+    } else if (mon == "09") {
+      return month = "Sept";
+    } else if (mon == "10") {
+      return month = "Oct";
+    } else if (mon == "11") {
+      return month = "Nov";
+    } else if (mon == "12") {
+      return month = "Dec";
+    } else {
+      return month = "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,7 +76,6 @@ class _NoticesComponentState extends State<NoticesComponent> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
-          // border: Border.all(color: appPrimaryMaterialColor, width: 1)
         ),
         //height: 210,
         child: Column(
@@ -25,32 +85,27 @@ class _NoticesComponentState extends State<NoticesComponent> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0, left: 18),
               child: Text(
-                "Covid Checking",
-                style:
-                TextStyle(fontFamily: 'Montserrat', fontSize: 15),
+               "${widget.noticeData["noticeTitle"]}",
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15),
               ),
             ),
             Padding(
-              padding:
-              const EdgeInsets.only(left: 8.0, right: 8, top: 10),
+              padding: const EdgeInsets.only(left: 8.0, right: 8, top: 10),
               child: Container(
                 height: 0.3,
                 color: Colors.grey,
               ),
             ),
             Padding(
-              padding:
-              const EdgeInsets.only(top: 13.0, left: 18, right: 18),
+              padding: const EdgeInsets.only(top: 13.0, left: 18, right: 18),
               child: Text(
-                "Coronavirus India Live Updates: As covid cases rise in Maharashtra, Pune hospitals say they’re short on Covaxin doses",
+                "${widget.noticeData["noticeBody"]}",
                 textAlign: TextAlign.justify,
-                style:
-                TextStyle(fontFamily: 'Montserrat', fontSize: 14),
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 14),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  right: 18.0, top: 14, bottom: 3),
+            /*Padding(
+              padding: const EdgeInsets.only(right: 18.0, top: 14, bottom: 3),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -63,21 +118,60 @@ class _NoticesComponentState extends State<NoticesComponent> {
                   ),
                 ],
               ),
-            ),
+            ),*/
             Padding(
-              padding:
-              const EdgeInsets.only(left: 8.0, right: 8, top: 10),
+              padding: const EdgeInsets.only(left: 8.0, right: 8, top: 10),
               child: Container(
                 height: 0.4,
                 color: Colors.grey,
               ),
             ),
             Padding(
-              padding:
-              const EdgeInsets.only(top: 10.0, left: 18, bottom: 7),
+              padding: const EdgeInsets.only(top: 13.0, left: 18, bottom: 12),
               child: Row(
                 children: [
-                  FlatButton(
+                  Container(
+                    decoration: BoxDecoration(
+                      color: appPrimaryMaterialColor[100],
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "${date[0]}" + "-" + "${funMonth(date[1])}"+ "-" +"${date[2]}",
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 12,
+                            color: appPrimaryMaterialColor),
+                      ),
+                    ),
+                    height: 33,
+                    width: 100,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 9.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: appPrimaryMaterialColor[100],
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "${time[0]}"
+                             +" : " +
+                              "${time[1]}" + " " + "${time1[2]}",
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 12,
+                              color: appPrimaryMaterialColor),
+                        ),
+                      ),
+                      height: 33,
+                      width: 86,
+                    ),
+                  ),
+
+                  /*FlatButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(7.0),
                     ),
@@ -91,8 +185,8 @@ class _NoticesComponentState extends State<NoticesComponent> {
                           fontSize: 12,
                           color: appPrimaryMaterialColor),
                     ),
-                  ),
-                  Padding(
+                  ),*/
+                 /* Padding(
                     padding: const EdgeInsets.only(left: 9.0),
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
@@ -109,7 +203,7 @@ class _NoticesComponentState extends State<NoticesComponent> {
                             color: appPrimaryMaterialColor),
                       ),
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),

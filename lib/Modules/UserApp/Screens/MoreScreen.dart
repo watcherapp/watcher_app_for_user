@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/NoticesScreen.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/PollingScreen.dart';
 
 class MoreScreen extends StatefulWidget {
   @override
@@ -12,8 +13,8 @@ class _MoreScreenState extends State<MoreScreen> {
   List moreFields = [
     {
       "label": "Aminites",
-      "img": "images/complain.png",
-
+      "img": "images/gym.png",
+      "screenName": NoticesScreen()
     },
     {
       "label": "Notices",
@@ -23,7 +24,7 @@ class _MoreScreenState extends State<MoreScreen> {
     {
       "label": "Polling ",
       "img": "images/polling.png",
-      "screenName": NoticesScreen()
+      "screenName": PollingScreen()
     },
     {
       "label": "Meetings",

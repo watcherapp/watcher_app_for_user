@@ -5,81 +5,75 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/Components/NoticesComponent.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/UserEmergencyComponent.dart';
 
-class NoticesScreen extends StatefulWidget {
+class UserEmergencyScreen extends StatefulWidget {
   @override
-  _NoticesScreenState createState() => _NoticesScreenState();
+  _UserEmergencyScreenState createState() => _UserEmergencyScreenState();
 }
 
-class _NoticesScreenState extends State<NoticesScreen> {
-
-  List noticesList=[];
-
-  bool  isSLoading = false;
-
+class _UserEmergencyScreenState extends State<UserEmergencyScreen> {
+  bool isSLoading = false;
+  List EmergencyList = [];
 
   @override
   void initState() {
-    _getAllSocietyNotice();
+    _getAllUserEmergencyContact();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text(
-          "Notice Board",
+          "Emergency",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body:
-      isSLoading==true?
-      Center(
-        child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(
-              appPrimaryMaterialColor),
-        ),
-      )
-          :ListView.builder(
-          padding: EdgeInsets.only(bottom: 15),
-          shrinkWrap: true,
-          itemCount: noticesList.length,
-          itemBuilder: (context, index) {
-            return NoticesComponent(
-              noticeData: noticesList[index],
-            );
-          }),
+      body: isSLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                valueColor:
+                    new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+              ),
+            )
+          : ListView.builder(
+              padding: EdgeInsets.only(top: 5, bottom: 18),
+              scrollDirection: Axis.vertical,
+              itemCount: EmergencyList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return UserEmergencyComponent(
+                  userEmergencyData: EmergencyList[index],
+                );
+              }),
     );
   }
-  _getAllSocietyNotice() async {
+
+  _getAllUserEmergencyContact() async {
     try {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        var body = {
-          "societyId": "60250f1961e5ed1368ec3fd2"
-        };
+        var body = {"societyId": "60129950e19dc51744dd7cfe"};
         setState(() {
           isSLoading = true;
         });
         Services.responseHandler(
-            apiName: "api/admin/getSocietyNotice", body: body)
+                apiName: "api/admin/getAllEmergencyContacts", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData);
             setState(() {
-              noticesList = responseData.Data;
+              EmergencyList = responseData.Data;
               isSLoading = false;
             });
           } else {
             print(responseData);
             setState(() {
-              noticesList = responseData.Data;
+              EmergencyList = responseData.Data;
               isSLoading = false;
             });
             Fluttertoast.showToast(msg: "${responseData.Message}");
