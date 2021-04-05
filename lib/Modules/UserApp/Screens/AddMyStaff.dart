@@ -435,6 +435,7 @@ class _AddMyStaffState extends State<AddMyStaff> {
                 ? Center(
                     child: Image.file(
                       _imageId2,
+
                     ),
                   )
                 : Center(
