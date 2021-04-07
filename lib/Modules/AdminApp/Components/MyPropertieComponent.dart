@@ -15,25 +15,33 @@ class MyPropertiesComponent extends StatefulWidget {
 }
 
 class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
+  setPreferences() {
+    sharedPrefs.societyId =
+        "${widget.myPropertyData["MemberData"][0]["society"]["societyId"]}";
+    sharedPrefs.wingId =
+        "${widget.myPropertyData["MemberData"][0]["society"]["wingId"]}";
+    sharedPrefs.flatId =
+        "${widget.myPropertyData["MemberData"][0]["society"]["flatId"]}";
+    sharedPrefs.userRole =
+        "${widget.myPropertyData["MemberData"][0]["society"]["userRole"]}";
+    if (sharedPrefs.userRole == "1") {
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              child: AdminDashboard(), type: PageTransitionType.bottomToTop));
+    } else if (sharedPrefs.userRole == "2") {
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              child: UserDashboard(), type: PageTransitionType.bottomToTop));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        sharedPrefs.societyId =
-            "${widget.myPropertyData["SocietyData"][0]["_id"]}";
-        if (sharedPrefs.userRole == "1") {
-          Navigator.pushReplacement(
-              context,
-              PageTransition(
-                  child: AdminDashboard(),
-                  type: PageTransitionType.bottomToTop));
-        } else if (sharedPrefs.userRole == "2") {
-          Navigator.pushReplacement(
-              context,
-              PageTransition(
-                  child: UserDashboard(),
-                  type: PageTransitionType.bottomToTop));
-        }
+        setPreferences();
       },
       child: Card(
         elevation: 3,
