@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/CommonWidgets/FlatStatusColorsWithLabel.dart';
 import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
@@ -11,6 +12,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/Component/FlatSelectionComponent.dart';
+import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 
 class SetupWingsFinalStep extends StatefulWidget {
   int flatFormatId, totalFloor, totalCountPerFloor;
@@ -259,6 +261,15 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
             LoadingIndicator.close(context);
+            Fluttertoast.showToast(
+                msg: "Wing Created Successfully !",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                fontSize: 16.0);
+            Navigator.of(context).pushAndRemoveUntil(
+                PageTransition(
+                    child: SetupWings(), type: PageTransitionType.rightToLeft),
+                (Route<dynamic> route) => false);
           } else {
             print(responseData);
             LoadingIndicator.close(context);
