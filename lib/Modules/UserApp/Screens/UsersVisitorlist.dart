@@ -1,7 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/VisitorComponent.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MySearchField.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/InviteGuest.dart';
@@ -12,6 +18,15 @@ class UserVisitorList extends StatefulWidget {
 }
 
 class _UserVisitorListState extends State<UserVisitorList> {
+  bool isLoading = false;
+  List allGuestList=[];
+
+
+  @override
+  void initState() {
+    _getAllvisitor();
+  }
+
   Future<void> getReport() async {
     print("Refresh");
   }
@@ -84,16 +99,35 @@ class _UserVisitorListState extends State<UserVisitorList> {
                   ],
                 ),
               ),
-              Expanded(
+              isLoading==true?Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                      appPrimaryMaterialColor),
+                ),
+              ): allGuestList.length>0?Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top:8.0),
                   child: ListView.builder(
                     physics: BouncingScrollPhysics(),
-                    itemCount: 10,
+                    itemCount: allGuestList.length,
                     padding: EdgeInsets.zero,
                     itemBuilder: (BuildContext context, int index) {
-                      return VisitorComponent();
+                      return VisitorComponent(
+                        visitorData: allGuestList[index],
+                      );
                     },
+                  ),
+                ),
+              ):Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Text(
+                    "No Data Found...",
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 12,
+                        //fontWeight: FontWeight.bold,
+                        color: Colors.grey),
                   ),
                 ),
               ),
@@ -101,5 +135,45 @@ class _UserVisitorListState extends State<UserVisitorList> {
             ],
           ),
         ));
+  }
+  _getAllvisitor() async {
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {"memberId": sharedPrefs.memberId};
+        log("MemberId ${sharedPrefs.memberId}");
+        setState(() {
+          isLoading = true;
+        });
+        Services.responseHandler(apiName: "api/member/getAllGuestList",body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              allGuestList = responseData.Data;
+              isLoading = false;
+            });
+            print(responseData.Data);
+          } else {
+            print(responseData);
+            setState(() {
+              allGuestList = responseData.Data;
+              isLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
   }
 }

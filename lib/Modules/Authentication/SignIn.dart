@@ -14,9 +14,8 @@ import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Data/ValidationClass.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Registration/SignUp1.dart';
+import 'package:watcher_app_for_user/Modules/CreateSociety/MyProperties.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
-
-import 'file:///C:/Users/Keval/AndroidStudioProjects/watcher_app_for_user/lib/Modules/CreateSociety/MyProperties.dart';
 
 class SignIn extends StatefulWidget {
   @override

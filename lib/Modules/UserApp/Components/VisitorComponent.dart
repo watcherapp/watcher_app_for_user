@@ -5,6 +5,9 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/GetPass.dart';
 
 class VisitorComponent extends StatefulWidget {
+  var visitorData;
+  VisitorComponent({this.visitorData});
+
   @override
   _VisitorComponentState createState() => _VisitorComponentState();
 }
@@ -29,10 +32,7 @@ class _VisitorComponentState extends State<VisitorComponent> {
                 child: Container(
                   width: 57.0,
                   height: 57.0,
-                  child: Image.asset(
-                    "images/user.png",
-                    width: 65,
-                  ),
+                  child: Image.network("${widget.visitorData["guestImage"]}"),
                   decoration: new BoxDecoration(
                     color: Color(0x22888888),
                     borderRadius:
@@ -66,12 +66,12 @@ class _VisitorComponentState extends State<VisitorComponent> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text("Keval Mangroliya",
+                      Text("${widget.visitorData["guestName"]}",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text("9429828152",
+                        child: Text("${widget.visitorData["mobileNo"]}",
                             style: TextStyle(fontSize: 15, color: Colors.grey)),
                       ),
                     ],
