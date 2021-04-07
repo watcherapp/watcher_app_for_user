@@ -1,5 +1,3 @@
-
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -168,6 +166,7 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
     print(response.data);
     // }
   }
+
 
   List<Asset> images = <Asset>[];
   String _error = 'No Error Detected';
