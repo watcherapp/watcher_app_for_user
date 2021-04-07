@@ -13,5 +13,7 @@ class Session {
   static const String deviceType = "deviceType";
   static const String userRole = "userRole";
   static const String societyId = "SocietyId";
+  static const String FlatId = "FlatId";
+  static const String WingId = "WingId";
   static const String societyCode = "societyCode";
 }

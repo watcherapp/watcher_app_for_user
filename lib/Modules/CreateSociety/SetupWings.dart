@@ -3,7 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/ParticularWingSetup.dart';
 
 class SetupWings extends StatefulWidget {
-  int wingsCount = 10;
+  int wingsCount;
   var societyId;
   SetupWings({this.wingsCount, this.societyId});
   @override
@@ -22,16 +22,14 @@ class _SetupWingsState extends State<SetupWings> {
     }
     print(temp.toString());
     setState(() {
-      setState(() {
-        wingList = temp;
-      });
+      wingList = temp;
     });
   }
 
   @override
   void initState() {
-    createWings();
     super.initState();
+    createWings();
   }
 
   @override

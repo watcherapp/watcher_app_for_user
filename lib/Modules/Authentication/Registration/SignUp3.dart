@@ -22,7 +22,7 @@ import 'package:watcher_app_for_user/Data/ClassList/Gender.dart';
 import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/ValidationClass.dart';
-import 'package:watcher_app_for_user/Modules/CreateSociety/ChooseCreateOrJoin.dart';
+import 'package:watcher_app_for_user/Modules/CreateSociety/MyProperties.dart';
 
 class SignUp3 extends StatefulWidget {
   String phoneNumber;
@@ -832,10 +832,17 @@ class _SignUp3State extends State<SignUp3> {
     prefs.setString(Session.memberNo, sessionData[0]["memberNo"] ?? "");
     prefs.setString(
         Session.userRole, sessionData[0]["userRole"].toString() ?? "");
-    Navigator.pushReplacement(
-        context,
-        PageTransition(
-            child: ChooseCreateOrJoin(), type: PageTransitionType.leftToRight));
+    if (sessionData[0]["userRole"] == 1) {
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              child: MyProperties(), type: PageTransitionType.leftToRight));
+    } else {
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              child: MyProperties(), type: PageTransitionType.leftToRight));
+    }
   }
 
   _userSignUp() async {

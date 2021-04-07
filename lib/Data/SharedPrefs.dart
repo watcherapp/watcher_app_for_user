@@ -21,6 +21,8 @@ class SharedPrefs {
   String get memberNo => _sharedPrefs.getString(Session.memberNo) ?? "";
   String get userRole => _sharedPrefs.getString(Session.userRole) ?? "";
   String get societyId => _sharedPrefs.getString(Session.societyId) ?? "";
+  String get flatId => _sharedPrefs.getString(Session.FlatId) ?? "";
+  String get wingId => _sharedPrefs.getString(Session.WingId) ?? "";
   String get societyCode => _sharedPrefs.getString(Session.societyCode) ?? "";
   String get deviceType => _sharedPrefs.getString(Session.deviceType) ?? "";
 
@@ -46,6 +48,14 @@ class SharedPrefs {
 
   set deviceType(String value) {
     _sharedPrefs.setString(Session.deviceType, value);
+  }
+
+  set wingId(String value) {
+    _sharedPrefs.setString(Session.WingId, value);
+  }
+
+  set flatId(String value) {
+    _sharedPrefs.setString(Session.FlatId, value);
   }
 }
 

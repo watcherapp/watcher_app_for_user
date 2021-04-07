@@ -81,7 +81,11 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         int maxFlatPerFloor = widget.totalCountPerFloor;
         for (int j = 0; j < maxFlatPerFloor; j++) {
           int currentNumber = flatNo + j;
-          flatList.add({"flatNo": currentNumber, "flatStatus": "Owner"});
+          flatList.add({
+            "flatNo": currentNumber,
+            "floorNo": "${i + 1}",
+            "flatStatus": 3
+          });
           // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
         }
         flatNo += maxFlatPerFloor;
@@ -95,13 +99,21 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         if (i == 0) {
           for (int j = 0; j < maxFlatPerFloor; j++) {
             int currentNumber = flatNo + j;
-            flatList.add({"flatNo": "G" + "${j + 1}", "flatStatus": "Owner"});
+            flatList.add({
+              "flatNo": "G" + "${j + 1}",
+              "floorNo": "${i}",
+              "flatStatus": 3
+            });
             // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
           }
         } else {
           for (int j = 0; j < maxFlatPerFloor; j++) {
             int currentNumber = flatNo + j;
-            flatList.add({"flatNo": currentNumber, "flatStatus": "Owner"});
+            flatList.add({
+              "flatNo": currentNumber,
+              "floorNo": "${i + 1}",
+              "flatStatus": 3
+            });
             // 0,1,2,3,4,5,6,7,8,9,10, 10,11, 12, 13,14
           }
           flatNo = flatNo + 100;
@@ -117,12 +129,20 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         if (i == 0) {
           for (int j = 0; j < maxFlatPerFloor; j++) {
             int currentNumber = flatNo + j;
-            flatList.add({"flatNo": "G" + "${j + 1}", "flatStatus": "Owner"});
+            flatList.add({
+              "flatNo": "G" + "${j + 1}",
+              "floorNo": "${i}",
+              "flatStatus": 3
+            });
           }
         } else {
           for (int j = 0; j < maxFlatPerFloor; j++) {
             int currentNumber = flatNo + j;
-            flatList.add({"flatNo": currentNumber, "flatStatus": "Owner"});
+            flatList.add({
+              "flatNo": currentNumber,
+              "floorNo": "${i + 1}",
+              "flatStatus": 3
+            });
           }
           flatNo += maxFlatPerFloor;
         }
@@ -130,16 +150,6 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         flatList = [];
       }
     }
-  }
-
-  changeColor({int index}) {
-    setState(() {
-      int colorIndex = flatColorsList.indexOf(flatList[index]["statusColor"]);
-      if (colorIndex <= 3)
-        flatList[index]["statusColor"] = flatColorsList[colorIndex + 1];
-      else
-        flatList[index]["statusColor"] = flatColorsList[colorIndex];
-    });
   }
 
   @override
@@ -244,17 +254,13 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
           "flatList": finalFlatList
         };
         log("$body");
-        Services.responseHandler(
-                apiName: "api/society/createSociety", body: body)
+        Services.responseHandler(apiName: "api/society/setUpWing", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
             LoadingIndicator.close(context);
           } else {
             print(responseData);
-            setState(() {
-              errorText = responseData.Message;
-            });
             LoadingIndicator.close(context);
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",

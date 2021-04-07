@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
-import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
+import 'package:watcher_app_for_user/Modules/CreateSociety/MyProperties.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
-import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -34,12 +33,12 @@ class _SplashState extends State<Splash> {
         Navigator.pushReplacement(
             context,
             PageTransition(
-                child: AdminDashboard(), type: PageTransitionType.bottomToTop));
+                child: MyProperties(), type: PageTransitionType.bottomToTop));
       } else {
         Navigator.pushReplacement(
             context,
             PageTransition(
-                child: UserDashboard(), type: PageTransitionType.bottomToTop));
+                child: MyProperties(), type: PageTransitionType.bottomToTop));
       }
     } else {
       Navigator.pushReplacement(
