@@ -159,10 +159,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             border: Border.all(
                                 width: 0.2, color: appPrimaryMaterialColor),
                             image: DecorationImage(
-                                image: FileImage(
-                                  _image,
-                                ),
-                                fit: BoxFit.contain),
+                              image: FileImage(
+                                _image,
+                              ),
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       )

@@ -50,6 +50,7 @@ class _AddMyStaffState extends State<AddMyStaff> {
           );
         });
   }
+
   void _showPicker1(context) {
     showModalBottomSheet(
         context: context,
@@ -79,6 +80,7 @@ class _AddMyStaffState extends State<AddMyStaff> {
           );
         });
   }
+
   void _showPicker2(context) {
     showModalBottomSheet(
         context: context,
@@ -194,8 +196,22 @@ class _AddMyStaffState extends State<AddMyStaff> {
                         width: 100.0,
                         height: 100.0,
                         child: _image != null
-                            ? Image.file(
-                                _image,
+                            ? Container(
+                                decoration: new BoxDecoration(
+                                  color: Color(0x22888888),
+                                  borderRadius: new BorderRadius.all(
+                                      new Radius.circular(90.0)),
+                                  border: new Border.all(
+                                    color: Colors.grey,
+                                    width: 0.5,
+                                  ),
+                                  image: DecorationImage(
+                                    image: FileImage(
+                                      _image,
+                                    ),
+                                    // fit: BoxFit.contain,
+                                  ),
+                                ),
                               )
                             : Icon(
                                 Icons.person,
@@ -435,7 +451,6 @@ class _AddMyStaffState extends State<AddMyStaff> {
                 ? Center(
                     child: Image.file(
                       _imageId2,
-
                     ),
                   )
                 : Center(
