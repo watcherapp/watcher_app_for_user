@@ -393,7 +393,7 @@ class _InviteGuestState extends State<InviteGuest> {
                   ),
                 ],
               ),
-                SizedBox(
+               /* SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -442,7 +442,7 @@ class _InviteGuestState extends State<InviteGuest> {
                     ),
 
                   ],
-                ),
+                ),*/
               SizedBox(
                 height: 15,
               ),
@@ -524,7 +524,7 @@ class _InviteGuestState extends State<InviteGuest> {
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
           "memberNo": "${sharedPrefs.memberNo}",
-          "societyId": "6038838fd00ee22d24a09c7a",
+          "societyId": "${sharedPrefs.societyId}",
           "validFrom": "${selectedFromDate.toString()}",
           "validTo": "${selectedToDate.toString()}",
           "purpose":   "${selectedPurpose}" ,
@@ -533,8 +533,8 @@ class _InviteGuestState extends State<InviteGuest> {
           "numberOfGuest": txtNumOfGuest.text,
           "emailId": txtEmailId.text,
           "mobileNo": txtMobileNo.text,
-          "wingName": "A",
-          "flateNo": "101"
+          "wingName": "${sharedPrefs.wingId}",
+          "flateNo": "${sharedPrefs.flatId}"
         };
         print(body);
         Services.responseHandler(apiName: "api/member/inviteGuest", body: body)

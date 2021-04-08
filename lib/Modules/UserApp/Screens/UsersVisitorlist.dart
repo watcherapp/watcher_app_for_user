@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
@@ -9,8 +10,8 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/VisitorComponent.dart';
-import 'package:watcher_app_for_user/CommonWidgets/MySearchField.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/InviteGuest.dart';
+import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 
 class UserVisitorList extends StatefulWidget {
   @override
@@ -20,6 +21,33 @@ class UserVisitorList extends StatefulWidget {
 class _UserVisitorListState extends State<UserVisitorList> {
   bool isLoading = false;
   List allGuestList=[];
+  bool isOpen=false;
+  DateTime selectedFromDate;
+  DateTime selectedToDate;
+
+  var fromDate = DateFormat('dd / MM / yyyy');
+  var toDate = DateFormat('dd / MM / yyyy');
+
+  showToDatePicker(BuildContext context,var forDate) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2101));
+
+    if(forDate =="fromDate"){
+      if (picked != null && picked != selectedToDate)
+        setState(() {
+          selectedToDate = picked;
+        });
+    }
+    else if(forDate =="toDate"){
+      if (picked != null && picked != selectedToDate)
+        setState(() {
+          selectedToDate = picked;
+        });
+    }
+  }
 
 
   @override
@@ -41,19 +69,56 @@ class _UserVisitorListState extends State<UserVisitorList> {
           },
           child: Column(
             children: [
-              MySearchField(
+             /* MySearchField(
                 icon: Icon(
                   Icons.search_rounded,
                   color: appPrimaryMaterialColor,
                   size: 20,
                 ),
                 hintText: "Search",
-              ),
+              ),*/
+
               Padding(
-                padding: const EdgeInsets.only(right: 5,top: 14),
+                padding: const EdgeInsets.only(right: 8,top: 14,left: 8),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    GestureDetector(
+                      onTap: (){
+                       setState(() {
+                         isOpen=!isOpen;
+                       });
+                      },
+                      child: Container(
+                        height: 25,
+                        decoration: BoxDecoration(
+                           // color: Colors.white,
+                            border: Border.all(
+                              color: appPrimaryMaterialColor,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(4.0)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 6.0, right: 4.0, top: 2.0, bottom: 2.0),
+                          child: Row(
+                            children: [
+                             Image.asset("images/filter.png",width: 16,color: appPrimaryMaterialColor,),
+                              Padding(
+                                padding: const EdgeInsets.only(left:6.0,right: 3),
+                                child: Text(
+                                  "Filter",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: appPrimaryMaterialColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     GestureDetector(
                       onTap: (){
                         Navigator.push(
@@ -99,6 +164,110 @@ class _UserVisitorListState extends State<UserVisitorList> {
                   ],
                 ),
               ),
+              isOpen==true?Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 8,bottom: 8,top:15),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                     border: Border.all(
+                        color: appPrimaryMaterialColor,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0)),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left:6.0,top:15,right: 10,bottom: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left:4.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Valid From",style: fontConstants.formFieldLabel1,),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top:8.0),
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          showToDatePicker(context,"fromDate");
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8.0),
+                                              color: Colors.grey[200]),
+                                          height: 35,
+                                          width: MediaQuery.of(context).size.width/2,
+                                          child:Center(child: Text(selectedFromDate!=null?fromDate.format(selectedFromDate):"Select Date",style: TextStyle(fontSize: 13),)),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left:2.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Valid To",style: fontConstants.formFieldLabel1),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top:8.0),
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          showToDatePicker(context,"toDate");
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8.0),
+                                              color: Colors.grey[200]),
+                                          height: 35,
+                                          width: MediaQuery.of(context).size.width/2,
+                                          child:Center(child: Text(selectedToDate!=null?toDate.format(selectedToDate):"Select Date",style: TextStyle(fontSize: 13))),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom:7),
+                        child: SizedBox(
+                          width: 150,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: appPrimaryMaterialColor,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(7))),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              "Search",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ):SizedBox(),
               isLoading==true?Center(
                 child: CircularProgressIndicator(
                   valueColor: new AlwaysStoppedAnimation<Color>(
