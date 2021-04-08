@@ -26,7 +26,6 @@ class _MyWatcherState extends State<MyWatcher> {
   int length = 3;
   List familyMemberList = [];
   List staffList = [];
-  List vehicleList = [];
   bool isLoading = false;
 
   @override
@@ -34,7 +33,6 @@ class _MyWatcherState extends State<MyWatcher> {
     super.initState();
     _getMyFamilyMember();
     _getMyStaff();
-    _getMyVehical();
   }
 
   @override
@@ -154,8 +152,7 @@ class _MyWatcherState extends State<MyWatcher> {
             child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                // itemCount: length + 1,
-                itemCount: staffList.length ,
+                itemCount: length + 1,
                 itemBuilder: (context, index) {
                   if (index == length) {
                     return AddComponent(
@@ -168,9 +165,7 @@ class _MyWatcherState extends State<MyWatcher> {
                                   type: PageTransitionType.rightToLeft));
                         });
                   } else {
-                    return DailyHelperComponent(
-                      myStaffData: staffList[index],
-                    );
+                    return DailyHelperComponent();
                   }
                 }),
           ),
@@ -307,22 +302,31 @@ class _MyWatcherState extends State<MyWatcher> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 12.0, right: 10, top: 23, bottom: 15),
-            child: Row(
-              children: [
-                Image.asset("images/logout1.png", width: 21),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Text('Logout',
-                      //overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Montserrat",
-                          color: Colors.black87)),
-                ),
-              ],
+          GestureDetector(
+            onTap: (){
+              sharedPrefs.logout();
+              Navigator.of(context).pushAndRemoveUntil(
+                  PageTransition(
+                      child: SignIn(), type: PageTransitionType.rightToLeft),
+                      (Route<dynamic> route) => false);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 12.0, right: 10, top: 23, bottom: 15),
+              child: Row(
+                children: [
+                  Image.asset("images/logout1.png", width: 21),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Text('Logout',
+                        //overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Montserrat",
+                            color: Colors.black87)),
+                  ),
+                ],
+              ),
             ),
           ),
           /*  Center(
@@ -368,6 +372,7 @@ class _MyWatcherState extends State<MyWatcher> {
     ));
   }
 
+  //body is static...................
   _getMyFamilyMember() async {
     print("Calling");
     try {
@@ -413,6 +418,8 @@ class _MyWatcherState extends State<MyWatcher> {
     }
   }
 
+
+  //body is static...................
   _getMyStaff() async {
     print("Calling");
     try {
@@ -502,5 +509,46 @@ class _MyWatcherState extends State<MyWatcher> {
       Fluttertoast.showToast(msg: "${Messages.message}");
     }
   }
-
+  _memberDetail() async {
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "mobileNo": "${sharedPrefs.mobileNo}"
+        };
+        print("------------------------------------------------------------->${body}");
+        setState(() {
+          ismemberLoading = true;
+        });
+        Services.responseHandler(apiName: "api/member/getMemberInformation",body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              memberList = responseData.Data;
+              ismemberLoading = false;
+            });
+            print(memberList);
+          } else {
+            print(responseData);
+            setState(() {
+              memberList = responseData.Data;
+              ismemberLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            ismemberLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        ismemberLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
 }

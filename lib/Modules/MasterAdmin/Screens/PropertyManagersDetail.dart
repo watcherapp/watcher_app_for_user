@@ -466,6 +466,8 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
             .then((responseData) {
           if (responseData.Data == 1) {
             LoadingIndicator.close(context);
+            Fluttertoast.showToast(msg: "Request accept successfully");
+            Navigator.of(context).pop();
             print(responseData.Data);
           } else {
             print(responseData);

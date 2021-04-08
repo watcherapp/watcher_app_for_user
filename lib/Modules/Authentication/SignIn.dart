@@ -168,6 +168,7 @@ class _SignInState extends State<SignIn> {
     sharedPrefs.memberId = "${sessionData[0]["_id"]}";
     sharedPrefs.userRole = "${sessionData[0]["userRole"]}";
     sharedPrefs.memberNo = "${sessionData[0]["memberNo"]}";
+    sharedPrefs.mobileNo = "${sessionData[0]["mobileNo1"]}";
     if (sessionData[0]["userRole"] == 0) {
       Navigator.pushReplacement(
           context,
