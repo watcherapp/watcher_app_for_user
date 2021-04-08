@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/EmergencyComponent.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddEmergencyScreen.dart';
 
@@ -32,7 +33,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": "605b0073d7dc4b0022aa1e92",
+          "societyId": sharedPrefs.societyId,
         };
         Services.responseHandler(
                 apiName: "api/admin/getAllEmergencyContacts", body: body)

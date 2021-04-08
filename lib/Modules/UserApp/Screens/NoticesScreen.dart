@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/NoticesComponent.dart';
 
 class NoticesScreen extends StatefulWidget {
@@ -62,7 +63,7 @@ class _NoticesScreenState extends State<NoticesScreen> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": "60250f1961e5ed1368ec3fd2"
+          "societyId": "${sharedPrefs.societyId}"
         };
         setState(() {
           isSLoading = true;

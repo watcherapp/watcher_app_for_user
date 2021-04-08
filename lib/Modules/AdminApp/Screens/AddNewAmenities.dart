@@ -13,6 +13,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class AddNewAmenities extends StatefulWidget {
   Function AllAmenitiesApi;
@@ -63,7 +64,7 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
 
         FormData formData = FormData.fromMap({
           "images": imageList,
-          "societyId": "605583b2848881107c3fcf9d",
+          "societyId": "${sharedPrefs.societyId}",
           "amenityName": txtName.text,
           "description": txtDiscription.text,
           "completeAddress": txtAddress.text,

@@ -53,13 +53,13 @@ class _SocietyComponentState extends State<SocietyComponent> {
     );
   }
 
-  _deletevendorCategory(var societyId) async {
+  _deletevendorCategory(var currentId) async {
     try {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyCategoryId": "${societyId}",
+          "societyCategoryId": "$currentId",
         };
         setState(() {
           isremoveLoading = true;

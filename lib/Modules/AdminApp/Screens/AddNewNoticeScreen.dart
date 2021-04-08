@@ -12,6 +12,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Dialogs/MyDropdown.dart';
 
 class AddNewNoticeScreen extends StatefulWidget {
@@ -47,7 +48,7 @@ class _AddNewNoticeScreenState extends State<AddNewNoticeScreen> {
         String fileName = _image.path.split('/').last;
 
         FormData formData = FormData.fromMap({
-          "societyId": societyId,
+          "societyId": sharedPrefs.societyId,
           "noticeTitle": txtTitle.text,
           "noticeDescription": txtDiscription.text,
           "wingId": selctedWing,
@@ -112,7 +113,7 @@ class _AddNewNoticeScreenState extends State<AddNewNoticeScreen> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": societyId,
+          "societyId": sharedPrefs.societyId,
         };
         print("$body");
         Services.responseHandler(

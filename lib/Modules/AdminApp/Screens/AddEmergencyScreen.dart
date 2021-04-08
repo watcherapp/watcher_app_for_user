@@ -13,6 +13,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class AddEmergencyScreen extends StatefulWidget {
   @override
@@ -87,7 +88,7 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
         String fileName = imagePath.path.split('/').last;
 
         FormData formData = FormData.fromMap({
-          "societyId": societyId,
+          "societyId": sharedPrefs.societyId,
           "contactName": txtName.text,
           "contactNo": txtNumber.text,
           "Image": await MultipartFile.fromFile(

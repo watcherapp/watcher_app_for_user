@@ -26,6 +26,7 @@ class _MyWatcherState extends State<MyWatcher> {
   int length = 3;
   List familyMemberList = [];
   List staffList = [];
+  List vehicleList = [];
   bool isLoading = false;
 
   @override
@@ -33,6 +34,7 @@ class _MyWatcherState extends State<MyWatcher> {
     super.initState();
     _getMyFamilyMember();
     _getMyStaff();
+    _getMyVehical();
   }
 
   @override
@@ -152,7 +154,8 @@ class _MyWatcherState extends State<MyWatcher> {
             child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemCount: length + 1,
+                // itemCount: length + 1,
+                itemCount: staffList.length ,
                 itemBuilder: (context, index) {
                   if (index == length) {
                     return AddComponent(
@@ -165,7 +168,9 @@ class _MyWatcherState extends State<MyWatcher> {
                                   type: PageTransitionType.rightToLeft));
                         });
                   } else {
-                    return DailyHelperComponent();
+                    return DailyHelperComponent(
+                      myStaffData: staffList[index],
+                    );
                   }
                 }),
           ),
@@ -363,7 +368,6 @@ class _MyWatcherState extends State<MyWatcher> {
     ));
   }
 
-  //body is static...................
   _getMyFamilyMember() async {
     print("Calling");
     try {
@@ -371,9 +375,8 @@ class _MyWatcherState extends State<MyWatcher> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          // "memberId": "${sharedPrefs.memberId}",
-          "memberId": "6038834fd00ee22d24a09c77",
-          "societyId": societyId,
+          "memberId": "${sharedPrefs.memberId}",
+          "societyId": "${sharedPrefs.societyId}",
         };
         setState(() {
           isLoading = true;
@@ -410,8 +413,6 @@ class _MyWatcherState extends State<MyWatcher> {
     }
   }
 
-
-  //body is static...................
   _getMyStaff() async {
     print("Calling");
     try {
@@ -419,9 +420,9 @@ class _MyWatcherState extends State<MyWatcher> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId" : societyId,
-          "wingId" : "60388797fc743024bc8bbfc3",
-          "flatId" : "60388797fc743024bc8bbfc5"
+          "societyId" : sharedPrefs.societyId,
+          "wingId" : sharedPrefs.wingId,
+          "flatId" : sharedPrefs.flatId,
         };
         setState(() {
           isLoading = true;
@@ -438,7 +439,51 @@ class _MyWatcherState extends State<MyWatcher> {
           } else {
             print(responseData);
             setState(() {
-              familyMemberList = responseData.Data;
+              staffList = responseData.Data;
+              isLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
+
+  _getMyVehical() async {
+    print("Calling");
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "memberId" : "${sharedPrefs.memberId}",
+        };
+        setState(() {
+          isLoading = true;
+        });
+        Services.responseHandler(
+                apiName: "api/member/getMemberVehicles", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              vehicleList = responseData.Data;
+              isLoading = false;
+            });
+            print("-------------------->$vehicleList");
+          } else {
+            print(responseData);
+            setState(() {
+              vehicleList = responseData.Data;
               isLoading = false;
             });
             Fluttertoast.showToast(msg: "${responseData.Message}");

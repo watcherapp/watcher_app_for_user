@@ -8,6 +8,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AmenitiesDetailScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddNewAmenities.dart';
 
@@ -35,7 +36,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": societyId,
+          "societyId": sharedPrefs.societyId,
         };
         print("$body");
         Services.responseHandler(
