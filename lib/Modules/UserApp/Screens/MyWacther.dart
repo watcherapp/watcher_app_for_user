@@ -8,6 +8,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/AddComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/DailyHelperComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/FamilyMemberComponent.dart';
@@ -25,7 +26,10 @@ class MyWatcher extends StatefulWidget {
 class _MyWatcherState extends State<MyWatcher> {
   int length = 3;
   List familyMemberList = [];
+  List vehicleList = [];
   List staffList = [];
+  List memberList = [];
+  bool ismemberLoading;
   bool isLoading = false;
 
   @override
