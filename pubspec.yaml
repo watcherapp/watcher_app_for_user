@@ -51,6 +51,7 @@ dependencies:
   multi_image_picker: ^4.8.0
   http_parser: any
   percent_indicator: ^3.0.1
+  shimmer: ^1.1.2
 #  intl: ^0.16.1
 
   # firebase Plugins

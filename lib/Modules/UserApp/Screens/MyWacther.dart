@@ -8,6 +8,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/AddComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/DailyHelperComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/FamilyMemberComponent.dart';
@@ -15,6 +16,7 @@ import 'package:watcher_app_for_user/Modules/UserApp/Components/MyResidentCompon
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVehicleComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddFamilyMember.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddMyStaff.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserUpdateProfile.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/VehicleScreen.dart';
 
 class MyWatcher extends StatefulWidget {
@@ -27,12 +29,15 @@ class _MyWatcherState extends State<MyWatcher> {
   List familyMemberList = [];
   List staffList = [];
   bool isLoading = false;
+  List memberList=[];
+  bool ismemberLoading=false;
 
   @override
   void initState() {
     super.initState();
     _getMyFamilyMember();
     _getMyStaff();
+    _memberDetail();
   }
 
   @override
@@ -59,25 +64,32 @@ class _MyWatcherState extends State<MyWatcher> {
                   ),
                 ),
                 Expanded(
-                  child: Padding(
+                  child: ismemberLoading==true && memberList.length>0?Container():Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Keval Mangroliya",
+                        Text("${memberList[0]["firstName"]}"+ " " +"${memberList[0]["lastName"]}",
+                           // "Keval Mangroliya",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black87)),
-                        Text("9429828152",
+                        Text("${sharedPrefs.mobileNo}",
                             style: TextStyle(fontSize: 15, color: Colors.grey)),
                       ],
                     ),
-                  ),
+                  )
                 ),
                 IconButton(
                     icon: Icon(Icons.edit),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: UserUpdateProfile(),
+                              type: PageTransitionType.rightToLeft));
+                    },
                     color: appPrimaryMaterialColor)
               ],
             ),
@@ -302,22 +314,31 @@ class _MyWatcherState extends State<MyWatcher> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 12.0, right: 10, top: 23, bottom: 15),
-            child: Row(
-              children: [
-                Image.asset("images/logout1.png", width: 21),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Text('Logout',
-                      //overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Montserrat",
-                          color: Colors.black87)),
-                ),
-              ],
+          GestureDetector(
+            onTap: (){
+              sharedPrefs.logout();
+              Navigator.of(context).pushAndRemoveUntil(
+                  PageTransition(
+                      child: SignIn(), type: PageTransitionType.rightToLeft),
+                      (Route<dynamic> route) => false);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 12.0, right: 10, top: 23, bottom: 15),
+              child: Row(
+                children: [
+                  Image.asset("images/logout1.png", width: 21),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Text('Logout',
+                        //overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Montserrat",
+                            color: Colors.black87)),
+                  ),
+                ],
+              ),
             ),
           ),
           /*  Center(
@@ -457,5 +478,46 @@ class _MyWatcherState extends State<MyWatcher> {
       Fluttertoast.showToast(msg: "${Messages.message}");
     }
   }
-
+  _memberDetail() async {
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "mobileNo": "${sharedPrefs.mobileNo}"
+        };
+        print("------------------------------------------------------------->${body}");
+        setState(() {
+          ismemberLoading = true;
+        });
+        Services.responseHandler(apiName: "api/member/getMemberInformation",body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              memberList = responseData.Data;
+              ismemberLoading = false;
+            });
+            print(memberList);
+          } else {
+            print(responseData);
+            setState(() {
+              memberList = responseData.Data;
+              ismemberLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            ismemberLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        ismemberLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
 }

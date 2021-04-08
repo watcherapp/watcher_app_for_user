@@ -124,7 +124,9 @@ class _UserVisitorListState extends State<UserVisitorList> {
                         Navigator.push(
                             context,
                             PageTransition(
-                                child: InviteGuest(),
+                                child: InviteGuest(onSaved: (){
+                                  _getAllvisitor();
+                                }),
                                 type: PageTransitionType.rightToLeft));
                       },
                       child: Container(
