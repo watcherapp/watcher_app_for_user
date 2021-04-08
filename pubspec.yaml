@@ -43,7 +43,7 @@ dependencies:
   pin_code_text_field: ^1.6.0
   country_code_picker: ^1.7.0
   video_player: any
-  dio: ^4.0.0
+  dio: any
   fluttertoast: ^7.1.6
   shared_preferences: any
   flutter_native_image: ^0.0.5+3
@@ -51,12 +51,11 @@ dependencies:
   multi_image_picker: ^4.8.0
   http_parser: any
   percent_indicator: ^3.0.1
-  shimmer: ^1.1.2
-#  intl: ^0.16.1
+  intl: ^0.16.1
 
   # firebase Plugins
-  firebase_auth: ^1.0.0
-  firebase_core: ^1.0.3
+  firebase_auth: ^0.18.4+1
+  firebase_core: ^0.5.3
 
 dev_dependencies:
   flutter_test:
