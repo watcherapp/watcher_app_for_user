@@ -76,6 +76,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         numbers.add(flatList);
         flatList = [];
       }
+
       log(numbers.toString());
     } else if (widget.flatFormatId == 1) {
       int flatNo = 1;
