@@ -441,7 +441,7 @@ class _AddPollingQuestionState extends State<AddPollingQuestion> {
                   ),
                 )
               : Center(
-                  child: Text("No Data Found"),
+                  child: Text("No Polling Question Found"),
                 ),
     );
   }

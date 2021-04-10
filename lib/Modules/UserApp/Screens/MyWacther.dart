@@ -422,7 +422,6 @@ class _MyWatcherState extends State<MyWatcher> {
     }
   }
 
-
   //body is static...................
   _getMyStaff() async {
     print("Calling");
@@ -513,6 +512,7 @@ class _MyWatcherState extends State<MyWatcher> {
       Fluttertoast.showToast(msg: "${Messages.message}");
     }
   }
+
   _memberDetail() async {
     try {
       final internetResult = await InternetAddress.lookup('google.com');

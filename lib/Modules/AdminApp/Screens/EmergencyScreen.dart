@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
@@ -47,16 +46,14 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
           } else {
             print(responseData);
             setState(() {
+              isLoading = false;
               allEmergencyList = responseData.Data;
             });
             Fluttertoast.showToast(
-                msg: "${responseData.Message}",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                // textColor: Colors.white,
-                fontSize: 16.0);
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
           }
         }).catchError((error) {
           setState(() {
@@ -147,49 +144,79 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
           "Emergency",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: isLoading == true
-          ? Center(
-              child: CircularProgressIndicator(
-              // backgroundColor: Colors.red,
-              valueColor:
-                  new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
-            ))
-          : ListView.builder(
-              padding: EdgeInsets.only(top: 5, bottom: 18),
-              scrollDirection: Axis.vertical,
-              itemCount: allEmergencyList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return EmergencyComponent(
-                  allEmergencyList: allEmergencyList[index],
-                  GetEmergencyApi: () {
-                    _getAllEmergency();
-                  },
-                );
-              }),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 12.0),
-        child: FloatingActionButton(
-          // isExtended: true,
-          child: Icon(
-            Icons.add,
-            size: 26,
+      body: Stack(
+        children: [
+          isLoading == true
+              ? Center(
+                  child: CircularProgressIndicator(
+                  // backgroundColor: Colors.red,
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                      appPrimaryMaterialColor),
+                ))
+              : allEmergencyList.length > 0
+                  ? ListView.builder(
+                      padding: EdgeInsets.only(top: 5, bottom: 18),
+                      scrollDirection: Axis.vertical,
+                      itemCount: allEmergencyList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return EmergencyComponent(
+                          allEmergencyList: allEmergencyList[index],
+                          GetEmergencyApi: () {
+                            _getAllEmergency();
+                          },
+                        );
+                      })
+                  : Center(
+                      child: Text("No Emergency Found"),
+                    ),
+          Positioned(
+            bottom: 30,
+            right: 10,
+            child: FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: AddEmergencyScreen(),
+                        type: PageTransitionType.rightToLeft));
+                setState(() {});
+              },
+              icon: Icon(Icons.add),
+              label: Text("Add Emergency"),
+            ),
           ),
-          backgroundColor: appPrimaryMaterialColor,
-          onPressed: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    child: AddEmergencyScreen(),
-                    type: PageTransitionType.rightToLeft));
-            setState(() {});
-          },
-        ),
+        ],
       ),
+
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 12.0),
+      //   child: FloatingActionButton(
+      //     // isExtended: true,
+      //     child: Icon(
+      //       Icons.add,
+      //       size: 26,
+      //     ),
+      //     backgroundColor: appPrimaryMaterialColor,
+      //     onPressed: () {
+      //       Navigator.push(
+      //           context,
+      //           PageTransition(
+      //               child: AddEmergencyScreen(),
+      //               type: PageTransitionType.rightToLeft));
+      //       setState(() {});
+      //     },
+      //   ),
+      // ),
     );
   }
 }

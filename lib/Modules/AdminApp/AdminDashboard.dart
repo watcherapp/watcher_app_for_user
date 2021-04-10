@@ -10,6 +10,7 @@ import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ComplaintsScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/EmergencyScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/InteractionScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MemberDirectoryScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyProfile.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ParkingScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/WatcherScreen.dart';
@@ -624,7 +625,7 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
     {
       "label": "Directory",
       "img": "images/directory1.png",
-      "screenName": InteractionScreen(),
+      "screenName": MemberDirectoryScreen(),
     },
     {
       "label": "Parking",
@@ -634,7 +635,7 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
     {
       "label": "My Building",
       "img": "images/building.png",
-      "screenName": InteractionScreen(),
+      "screenName": MemberDirectoryScreen(),
     },
     {
       "label": "Emergency",
@@ -752,6 +753,7 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
                                 padding: const EdgeInsets.only(left: 11.0),
                                 child: Text(
                                   "0160203220",
+                                  // "${sharedPrefs.societyCode}",
                                   style: TextStyle(
                                       color: appPrimaryMaterialColor,
                                       fontSize: 15,

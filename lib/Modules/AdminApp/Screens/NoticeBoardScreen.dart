@@ -107,115 +107,120 @@ class _NoticeBoardScreenState extends State<NoticeBoardScreen> {
                       //backgroundColor: Colors.white54,
                     ),
                   )
-                : ListView.builder(
-                    itemCount: noticeList.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.only(
-                        right: 5,
-                        left: 5,
-                      ),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                // "Swimming Pool",
-                                noticeList[index]["noticeTitle"],
-                                style: TextStyle(
-                                  color: appPrimaryMaterialColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              Divider(
-                                color: Colors.grey,
-                              ),
-                              Text(
-                                noticeList[index]["noticeDescription"],
-                                // "Notice about swimming pool which not clean from 1 week that it is hard to swim in that pool so do somthing about that",
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          child: NoticeBoardSubScreen(
-                                            noticeData: noticeList[index],
-                                            AllNoticeApi: () {
-                                              _getAllNotice();
-                                            },
+                : noticeList.length > 0
+                    ? ListView.builder(
+                        itemCount: noticeList.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(
+                            right: 5,
+                            left: 5,
+                          ),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    // "Swimming Pool",
+                                    noticeList[index]["noticeTitle"],
+                                    style: TextStyle(
+                                      color: appPrimaryMaterialColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  Divider(
+                                    color: Colors.grey,
+                                  ),
+                                  Text(
+                                    noticeList[index]["noticeDescription"],
+                                    // "Notice about swimming pool which not clean from 1 week that it is hard to swim in that pool so do somthing about that",
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              child: NoticeBoardSubScreen(
+                                                noticeData: noticeList[index],
+                                                AllNoticeApi: () {
+                                                  _getAllNotice();
+                                                },
+                                              ),
+                                              type: PageTransitionType
+                                                  .rightToLeft));
+                                    },
+                                    child: Container(
+                                      width: 100,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          color: appPrimaryMaterialColor
+                                              .withOpacity(0.2),
+                                          borderRadius:
+                                              BorderRadius.circular(6.0)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          " View More",
+                                          style: TextStyle(
+                                            color: appPrimaryMaterialColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          type:
-                                              PageTransitionType.rightToLeft));
-                                },
-                                child: Container(
-                                  width: 100,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                      color: appPrimaryMaterialColor
-                                          .withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(6.0)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      " View More",
-                                      style: TextStyle(
-                                        color: appPrimaryMaterialColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(top: 10.0),
+                                  //   child: SizedBox(
+                                  //     width: 100,
+                                  //     height: 35,
+                                  //     child: RaisedButton(
+                                  //       child: Text(
+                                  //         "View More",
+                                  //         style: TextStyle(
+                                  //           color: Colors.white,
+                                  //           fontSize: 12,
+                                  //           fontWeight: FontWeight.bold,
+                                  //         ),
+                                  //       ),
+                                  //       shape: RoundedRectangleBorder(
+                                  //           borderRadius: BorderRadius.circular(6)),
+                                  //       color: appPrimaryMaterialColor.withOpacity(0.8),
+                                  //       onPressed: () {
+                                  //         Navigator.push(
+                                  //             context,
+                                  //             PageTransition(
+                                  //                 child: NoticeBoardSubScreen(
+                                  //                   noticeData: noticeList[index],
+                                  //                   AllNoticeApi: (){
+                                  //                     _getAllNotice();
+                                  //                   },
+                                  //                 ),
+                                  //                 type: PageTransitionType.rightToLeft));
+                                  //       },
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(top: 10.0),
-                              //   child: SizedBox(
-                              //     width: 100,
-                              //     height: 35,
-                              //     child: RaisedButton(
-                              //       child: Text(
-                              //         "View More",
-                              //         style: TextStyle(
-                              //           color: Colors.white,
-                              //           fontSize: 12,
-                              //           fontWeight: FontWeight.bold,
-                              //         ),
-                              //       ),
-                              //       shape: RoundedRectangleBorder(
-                              //           borderRadius: BorderRadius.circular(6)),
-                              //       color: appPrimaryMaterialColor.withOpacity(0.8),
-                              //       onPressed: () {
-                              //         Navigator.push(
-                              //             context,
-                              //             PageTransition(
-                              //                 child: NoticeBoardSubScreen(
-                              //                   noticeData: noticeList[index],
-                              //                   AllNoticeApi: (){
-                              //                     _getAllNotice();
-                              //                   },
-                              //                 ),
-                              //                 type: PageTransitionType.rightToLeft));
-                              //       },
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
+                            ),
                           ),
                         ),
+                      )
+                    : Center(
+                        child: Text("No Notice Found"),
                       ),
-                    ),
-                  ),
             Positioned(
               bottom: 30,
               right: 30,
@@ -345,7 +350,7 @@ class _NoticeBoardSubScreenState extends State<NoticeBoardSubScreen> {
                   borderRadius: BorderRadius.circular(5),
                   image: DecorationImage(
                     image: NetworkImage(
-                      API_URL+widget.noticeData["noticeImage"],
+                      API_URL + widget.noticeData["noticeImage"],
                       // "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
                     ),
                     fit: BoxFit.cover,

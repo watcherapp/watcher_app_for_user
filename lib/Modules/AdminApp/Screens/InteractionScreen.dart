@@ -4,6 +4,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddPollingQuestion.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/NoticeBoardScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AmenitiesScreen.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/BloodRequestScreen.dart';
 
 class InteractionScreen extends StatefulWidget {
   @override
@@ -35,6 +36,11 @@ class _InteractionScreenState extends State<InteractionScreen> {
       "img": "images/building.png",
       "screenName" : AmenitiesScreen(),
     },
+    {
+      "label": " Blood Request",
+      "img": "images/Blood.png",
+      "screenName" : BloodRequestScreen(),
+    },
     // {
     //   "label": "Proposal",
     //   "img": "images/approval.png",
@@ -58,6 +64,11 @@ class _InteractionScreenState extends State<InteractionScreen> {
           "Interaction",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
