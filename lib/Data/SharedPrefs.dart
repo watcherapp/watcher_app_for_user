@@ -18,6 +18,7 @@ class SharedPrefs {
   }
 
   String get memberId => _sharedPrefs.getString(Session.memberId) ?? "";
+  String get mobileNo => _sharedPrefs.getString(Session.mobileNo) ?? "";
   String get memberNo => _sharedPrefs.getString(Session.memberNo) ?? "";
   String get userRole => _sharedPrefs.getString(Session.userRole) ?? "";
   String get societyId => _sharedPrefs.getString(Session.societyId) ?? "";
@@ -52,6 +53,9 @@ class SharedPrefs {
 
   set wingId(String value) {
     _sharedPrefs.setString(Session.WingId, value);
+  }
+  set mobileNo(String value) {
+    _sharedPrefs.setString(Session.mobileNo, value);
   }
 
   set flatId(String value) {

@@ -11,6 +11,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class AddMyStaff extends StatefulWidget {
   @override
@@ -204,8 +205,8 @@ class _AddMyStaffState extends State<AddMyStaff> {
         images = [ _imageId1.path, _imageId2.path,];
 
         FormData formData = FormData.fromMap({
-          "wingId": "60388797fc743024bc8bbfc3",
-          "flatId": "60388797fc743024bc8bbfc4",
+          "wingId": sharedPrefs.wingId,
+          "flatId": sharedPrefs.flatId,
           "firstName": txtFname.text,
           "lastName": txtLname.text,
           "mobileNo1": txtMoNo.text,

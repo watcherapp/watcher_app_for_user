@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 
 class DailyHelperComponent extends StatefulWidget {
+  var myStaffData;
+
+  DailyHelperComponent({
+    this.myStaffData,
+  });
+
   @override
   _DailyHelperComponentState createState() => _DailyHelperComponentState();
 }
@@ -17,14 +24,21 @@ class _DailyHelperComponentState extends State<DailyHelperComponent> {
           Container(
             width: 70,
             child: ClipOval(
-              child: Image.network(
-                'https://randomuser.me/api/portraits/men/4.jpg',
-              ),
+              child: widget.myStaffData["staffImage"] == null
+                  ? Image.asset(
+                      'images/maleavtar.png',
+                    )
+                  : Image.network(
+                      // 'https://randomuser.me/api/portraits/men/4.jpg',
+                      API_URL + widget.myStaffData["staffImage"],
+                    ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-            child: Text("Keval Mangroliya",
+            child: Text(
+                // "smit vaghani",
+                "${widget.myStaffData["firstName"]} ${widget.myStaffData["lastName"]}",
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     fontSize: 13,

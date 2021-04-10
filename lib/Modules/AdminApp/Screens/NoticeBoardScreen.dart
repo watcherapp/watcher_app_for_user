@@ -7,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddNewNoticeScreen.dart';
 
 class NoticeBoardScreen extends StatefulWidget {
@@ -27,7 +28,7 @@ class _NoticeBoardScreenState extends State<NoticeBoardScreen> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": societyId,
+          "societyId": sharedPrefs.societyId,
         };
         print("$body");
         Services.responseHandler(

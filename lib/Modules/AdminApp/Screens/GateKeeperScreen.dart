@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class GateKeeperScreen extends StatefulWidget {
   @override
@@ -31,7 +32,7 @@ class _GateKeeperScreenState extends State<GateKeeperScreen> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": societyId,
+          "societyId": sharedPrefs.societyId,
         };
         print("$body");
         Services.responseHandler(

@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/UserEmergencyComponent.dart';
 
 class UserEmergencyScreen extends StatefulWidget {
@@ -57,7 +58,7 @@ class _UserEmergencyScreenState extends State<UserEmergencyScreen> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        var body = {"societyId": "60129950e19dc51744dd7cfe"};
+        var body = {"societyId": "${sharedPrefs.societyId}"};
         setState(() {
           isSLoading = true;
         });

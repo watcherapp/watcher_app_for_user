@@ -76,7 +76,16 @@ class _PropertyManagetComponentState extends State<PropertyManagetComponent> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            PageTransition(
+                child: PropertyManagersDetail(
+                  propertyManagerDetailData:
+                  widget.propertyManagerData,
+                ),
+                type: PageTransitionType.rightToLeft));
+      },
       child: Padding(
         padding: const EdgeInsets.only(left: 4.0, right: 4),
         child: Card(
@@ -192,7 +201,7 @@ class _PropertyManagetComponentState extends State<PropertyManagetComponent> {
                               PageTransition(
                                   child: PropertyManagersDetail(
                                     propertyManagerDetailData:
-                                        widget.propertyManagerData,
+                                    widget.propertyManagerData,
                                   ),
                                   type: PageTransitionType.rightToLeft));
                         },

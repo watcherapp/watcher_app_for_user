@@ -7,6 +7,7 @@ import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'file:///C:/Users/SMIT%20VAGHANI/AndroidStudioProjects/watcher_app_for_user/lib/Modules/CreateSociety/SelectWingAndFlat.dart';
 
 class EnterSocietyCode extends StatefulWidget {
   @override
@@ -78,7 +79,18 @@ class _EnterSocietyCodeState extends State<EnterSocietyCode> {
                 },
                 hintText: "Enter Society Code",
               ),
-              MyButton(onPressed: () {}, title: "Join")
+              MyButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: SelectWingAndFlat(
+                            SocietyCode: txtSocietyCode.text,
+                          ),
+                          type: PageTransitionType.rightToLeft));
+                },
+                title: "Join",
+              )
             ],
           ),
         ),

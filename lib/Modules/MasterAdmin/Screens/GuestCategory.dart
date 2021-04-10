@@ -7,6 +7,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Components/GuestComponent.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Components/VendorComponent.dart';
 
@@ -294,7 +295,7 @@ class _GuestCategoryState extends State<GuestCategory> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": societyId,
+          "societyId": "${sharedPrefs.societyId}",
         };
         setState(() {
           isLoading = true;

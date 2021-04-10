@@ -6,6 +6,7 @@ import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Data/ValidationClass.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/ComplainComponent.dart';
 
@@ -115,7 +116,7 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId": societyId,
+          "societyId": sharedPrefs.societyId,
         };
         print("$body");
         Services.responseHandler(

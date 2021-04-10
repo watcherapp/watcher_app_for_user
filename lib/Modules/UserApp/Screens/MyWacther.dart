@@ -8,6 +8,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/AddComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/DailyHelperComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/FamilyMemberComponent.dart';
@@ -25,7 +26,10 @@ class MyWatcher extends StatefulWidget {
 class _MyWatcherState extends State<MyWatcher> {
   int length = 3;
   List familyMemberList = [];
+  List vehicleList = [];
   List staffList = [];
+  List memberList = [];
+  bool ismemberLoading;
   bool isLoading = false;
 
   @override
@@ -302,22 +306,31 @@ class _MyWatcherState extends State<MyWatcher> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 12.0, right: 10, top: 23, bottom: 15),
-            child: Row(
-              children: [
-                Image.asset("images/logout1.png", width: 21),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Text('Logout',
-                      //overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Montserrat",
-                          color: Colors.black87)),
-                ),
-              ],
+          GestureDetector(
+            onTap: (){
+              sharedPrefs.logout();
+              Navigator.of(context).pushAndRemoveUntil(
+                  PageTransition(
+                      child: SignIn(), type: PageTransitionType.rightToLeft),
+                      (Route<dynamic> route) => false);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 12.0, right: 10, top: 23, bottom: 15),
+              child: Row(
+                children: [
+                  Image.asset("images/logout1.png", width: 21),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Text('Logout',
+                        //overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Montserrat",
+                            color: Colors.black87)),
+                  ),
+                ],
+              ),
             ),
           ),
           /*  Center(
@@ -371,9 +384,8 @@ class _MyWatcherState extends State<MyWatcher> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          // "memberId": "${sharedPrefs.memberId}",
-          "memberId": "6038834fd00ee22d24a09c77",
-          "societyId": societyId,
+          "memberId": "${sharedPrefs.memberId}",
+          "societyId": "${sharedPrefs.societyId}",
         };
         setState(() {
           isLoading = true;
@@ -419,9 +431,9 @@ class _MyWatcherState extends State<MyWatcher> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "societyId" : societyId,
-          "wingId" : "60388797fc743024bc8bbfc3",
-          "flatId" : "60388797fc743024bc8bbfc5"
+          "societyId" : sharedPrefs.societyId,
+          "wingId" : sharedPrefs.wingId,
+          "flatId" : sharedPrefs.flatId,
         };
         setState(() {
           isLoading = true;
@@ -438,7 +450,7 @@ class _MyWatcherState extends State<MyWatcher> {
           } else {
             print(responseData);
             setState(() {
-              familyMemberList = responseData.Data;
+              staffList = responseData.Data;
               isLoading = false;
             });
             Fluttertoast.showToast(msg: "${responseData.Message}");
@@ -458,4 +470,89 @@ class _MyWatcherState extends State<MyWatcher> {
     }
   }
 
+  _getMyVehical() async {
+    print("Calling");
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "memberId" : "${sharedPrefs.memberId}",
+        };
+        setState(() {
+          isLoading = true;
+        });
+        Services.responseHandler(
+                apiName: "api/member/getMemberVehicles", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              vehicleList = responseData.Data;
+              isLoading = false;
+            });
+            print("-------------------->$vehicleList");
+          } else {
+            print(responseData);
+            setState(() {
+              vehicleList = responseData.Data;
+              isLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
+  _memberDetail() async {
+    try {
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "mobileNo": "${sharedPrefs.mobileNo}"
+        };
+        print("------------------------------------------------------------->${body}");
+        setState(() {
+          ismemberLoading = true;
+        });
+        Services.responseHandler(apiName: "api/member/getMemberInformation",body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              memberList = responseData.Data;
+              ismemberLoading = false;
+            });
+            print(memberList);
+          } else {
+            print(responseData);
+            setState(() {
+              memberList = responseData.Data;
+              ismemberLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            ismemberLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        ismemberLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
 }

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 
-class FlatSelectionComponent extends StatefulWidget {
+class FlatSelactionComponent2 extends StatefulWidget {
   var floorData;
   Function onChange;
 
-  FlatSelectionComponent({this.floorData, this.onChange});
+  FlatSelactionComponent2({
+    this.floorData,
+    this.onChange,
+  });
 
   @override
-  _FlatSelectionComponentState createState() => _FlatSelectionComponentState();
+  _FlatSelactionComponent2State createState() =>
+      _FlatSelactionComponent2State();
 }
 
-class _FlatSelectionComponentState extends State<FlatSelectionComponent> {
+class _FlatSelactionComponent2State extends State<FlatSelactionComponent2> {
   int index = 3;
 
   List status = [

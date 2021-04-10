@@ -14,6 +14,8 @@ import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class InviteGuest extends StatefulWidget {
+  Function onSaved;
+  InviteGuest({this.onSaved});
   @override
   _InviteGuestState createState() => _InviteGuestState();
 }
@@ -174,6 +176,7 @@ class _InviteGuestState extends State<InviteGuest> {
                   hintText: "Enter Guest Name",
                 ),
                 MyTextFormField(
+                  keyboardType: TextInputType.number,
                   focusNode: numofguest,
                   controller: txtNumOfGuest,
                   textInputAction: TextInputAction.next,
@@ -183,7 +186,7 @@ class _InviteGuestState extends State<InviteGuest> {
                   },
                   validator: (value){
                     if(value.isEmpty){
-                      return "mi";
+                      return "Person number can't empty";
                     }
                     else{
                       return null;
@@ -195,7 +198,7 @@ class _InviteGuestState extends State<InviteGuest> {
                 MyTextFormField(
                   focusNode: emailId,
                   controller: txtEmailId,
-                  textInputAction: TextInputAction.done,
+                  textInputAction: TextInputAction.next,
                   lable: "Email",
                   validator: (value) {
                     if (value.isEmpty) {
@@ -213,6 +216,8 @@ class _InviteGuestState extends State<InviteGuest> {
                 ),
                 MyTextFormField(
                   controller: txtMobileNo,
+                  textInputAction: TextInputAction.done,
+                  maxLength: 10,
                   lable: "MobileNo",
                   focusNode: mobileNo,
                   validator: (value) {
@@ -222,13 +227,12 @@ class _InviteGuestState extends State<InviteGuest> {
                       return null;
                     }
                   },
-                  textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {
                     mobileNo.unfocus();
-                    FocusScope.of(context).requestFocus(save);
                   },
                   hintText: "Enter Mobile Number",
                   keyboardType: TextInputType.number,
+
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 13.0, bottom: 9.0),
@@ -541,6 +545,7 @@ class _InviteGuestState extends State<InviteGuest> {
             .then((responseData) {
           if (responseData.Data.length > 0) {
             LoadingIndicator.close(context);
+            widget.onSaved();
             Fluttertoast.showToast(msg: "Guest Added Successfully");
             Navigator.pop(context);
           } else {
