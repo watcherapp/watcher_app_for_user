@@ -7,7 +7,7 @@ import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
-import 'file:///C:/Users/SMIT%20VAGHANI/AndroidStudioProjects/watcher_app_for_user/lib/Modules/CreateSociety/SelectWingAndFlat.dart';
+import 'package:watcher_app_for_user/Modules/CreateSociety/SelectWingAndFlat.dart';
 
 class EnterSocietyCode extends StatefulWidget {
   @override
