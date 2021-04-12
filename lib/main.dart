@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/Splash.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
 
 import 'Constants/appColors.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: MasterAdminDashboard(),
+        home: Splash(),
       ),
     );
   }

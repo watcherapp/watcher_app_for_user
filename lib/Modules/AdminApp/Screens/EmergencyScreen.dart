@@ -78,7 +78,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     }
   }
 
-  //upDate...
+  //upDate...baki 6e
   _updateEmergency() async {
     try {
       setState(() {
