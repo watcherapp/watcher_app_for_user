@@ -17,4 +17,5 @@ class Session {
   static const String WingId = "WingId";
   static const String mobileNo = "MobileNo";
   static const String societyCode = "societyCode";
+  static const String societyName = "societyName";
 }

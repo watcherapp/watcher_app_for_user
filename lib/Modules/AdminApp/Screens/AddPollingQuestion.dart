@@ -266,184 +266,206 @@ class _AddPollingQuestionState extends State<AddPollingQuestion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
-        title: Text(
-          "Polling Questions",
-          style: TextStyle(fontFamily: 'Montserrat'),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.add_rounded,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                  child: AddPollingComponent(
-                    pollingListApi: () {
-                      _getAllPollingQuestion();
-                    },
-                  ),
-                  type: PageTransitionType.rightToLeft,
-                ),
-              );
-            },
-          )
-        ],
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: appPrimaryMaterialColor,
-      ),
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                valueColor:
-                    new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
-                //backgroundColor: Colors.white54,
-              ),
-            )
-          // : isDLoading
-          //     ? Center(
-          //         child: CircularProgressIndicator(
-          //           valueColor: new AlwaysStoppedAnimation<Color>(
-          //               appPrimaryMaterialColor),
-          //           //backgroundColor: Colors.white54,
+        // backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+          title: Text(
+            "Polling Questions",
+            style: TextStyle(fontFamily: 'Montserrat'),
+          ),
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(
+          //       Icons.add_rounded,
+          //     ),
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         PageTransition(
+          //           child: AddPollingComponent(
+          //             pollingListApi: () {
+          //               _getAllPollingQuestion();
+          //             },
+          //           ),
+          //           type: PageTransitionType.rightToLeft,
           //         ),
-          //       )
-          : pollQuestionList.length > 0
-              ? SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: pollQuestionList.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.only(
-                          right: 5,
-                          left: 5,
-                        ),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: PollingQuestionComponent(
-                            PollingData: pollQuestionList[index],
-                            pollinQuestionApi: () {
-                              _getAllPollingQuestion();
-                            },
-                            index: index,
+          //       );
+          //     },
+          //   )
+          // ],
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: appPrimaryMaterialColor,
+        ),
+        body: Stack(
+          children: [
+            isLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          appPrimaryMaterialColor),
+                      //backgroundColor: Colors.white54,
+                    ),
+                  )
+                // : isDLoading
+                //     ? Center(
+                //         child: CircularProgressIndicator(
+                //           valueColor: new AlwaysStoppedAnimation<Color>(
+                //               appPrimaryMaterialColor),
+                //           //backgroundColor: Colors.white54,
+                //         ),
+                //       )
+                : pollQuestionList.length == 0
+                    ? Center(
+                        child: Text("No Polling Question Found"),
+                      )
+                    : Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: ListView.builder(
+                        // physics: NeverScrollableScrollPhysics(),
+                        // shrinkWrap: true,
+                        itemCount: pollQuestionList.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(
+                            right: 5,
+                            left: 5,
                           ),
-                          // child: Card(
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(8.0),
-                          //     child: Column(
-                          //       crossAxisAlignment:
-                          //           CrossAxisAlignment.start,
-                          //       children: [
-                          //         Row(
-                          //           mainAxisAlignment:
-                          //               MainAxisAlignment
-                          //                   .spaceBetween,
-                          //           children: [
-                          //             Expanded(
-                          //               child: Text(
-                          //                 "${index + 1}) ${pollQuestionList[index]["pollQuestion"]}",
-                          //                 style: TextStyle(
-                          //                     fontFamily:
-                          //                         'Montserrat',
-                          //                     fontSize: 15,
-                          //                     fontWeight:
-                          //                         FontWeight.bold,
-                          //                     color:
-                          //                         appPrimaryMaterialColor),
-                          //               ),
-                          //             ),
-                          //             IconButton(
-                          //               icon: Icon(Icons.delete),
-                          //               color:
-                          //                   appPrimaryMaterialColor,
-                          //               iconSize: 18,
-                          //               onPressed: () {
-                          //                 _deletePollingQuestionData(
-                          //                     pollQuestionList[
-                          //                         index]["_id"]);
-                          //               },
-                          //             )
-                          //           ],
-                          //         ),
-                          //         for (int i = 0;
-                          //             i <
-                          //                 pollQuestionList[index]
-                          //                         ["PollOptions"]
-                          //                     .length;
-                          //             i++) ...[
-                          //           Padding(
-                          //             padding:
-                          //                 const EdgeInsets.only(
-                          //               top: 5,
-                          //               bottom: 5,
-                          //             ),
-                          //             child: FittedBox(
-                          //               fit: BoxFit.cover,
-                          //               child: Container(
-                          //                 width:
-                          //                     MediaQuery.of(context)
-                          //                         .size
-                          //                         .width,
-                          //                 height: 40,
-                          //                 decoration: BoxDecoration(
-                          //                     color:
-                          //                         Colors.grey[200],
-                          //                     borderRadius:
-                          //                         BorderRadius
-                          //                             .circular(
-                          //                                 5.0)),
-                          //                 child: Padding(
-                          //                   padding:
-                          //                       const EdgeInsets
-                          //                           .only(
-                          //                     left: 10,
-                          //                     top: 10,
-                          //                   ),
-                          //                   child: Text(
-                          //                     pollQuestionList[
-                          //                                 index][
-                          //                             "PollOptions"]
-                          //                         [i]["pollOption"],
-                          //                     style: TextStyle(
-                          //                       fontFamily:
-                          //                           'Montserrat',
-                          //                       fontSize: 13,
-                          //                       // fontWeight: FontWeight.bold,
-                          //                       color:
-                          //                           appPrimaryMaterialColor,
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ]
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: PollingQuestionComponent(
+                              PollingData: pollQuestionList[index],
+                              pollinQuestionApi: () {
+                                _getAllPollingQuestion();
+                              },
+                              index: index,
+                            ),
+                            // child: Card(
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.all(8.0),
+                            //     child: Column(
+                            //       crossAxisAlignment:
+                            //           CrossAxisAlignment.start,
+                            //       children: [
+                            //         Row(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment
+                            //                   .spaceBetween,
+                            //           children: [
+                            //             Expanded(
+                            //               child: Text(
+                            //                 "${index + 1}) ${pollQuestionList[index]["pollQuestion"]}",
+                            //                 style: TextStyle(
+                            //                     fontFamily:
+                            //                         'Montserrat',
+                            //                     fontSize: 15,
+                            //                     fontWeight:
+                            //                         FontWeight.bold,
+                            //                     color:
+                            //                         appPrimaryMaterialColor),
+                            //               ),
+                            //             ),
+                            //             IconButton(
+                            //               icon: Icon(Icons.delete),
+                            //               color:
+                            //                   appPrimaryMaterialColor,
+                            //               iconSize: 18,
+                            //               onPressed: () {
+                            //                 _deletePollingQuestionData(
+                            //                     pollQuestionList[
+                            //                         index]["_id"]);
+                            //               },
+                            //             )
+                            //           ],
+                            //         ),
+                            //         for (int i = 0;
+                            //             i <
+                            //                 pollQuestionList[index]
+                            //                         ["PollOptions"]
+                            //                     .length;
+                            //             i++) ...[
+                            //           Padding(
+                            //             padding:
+                            //                 const EdgeInsets.only(
+                            //               top: 5,
+                            //               bottom: 5,
+                            //             ),
+                            //             child: FittedBox(
+                            //               fit: BoxFit.cover,
+                            //               child: Container(
+                            //                 width:
+                            //                     MediaQuery.of(context)
+                            //                         .size
+                            //                         .width,
+                            //                 height: 40,
+                            //                 decoration: BoxDecoration(
+                            //                     color:
+                            //                         Colors.grey[200],
+                            //                     borderRadius:
+                            //                         BorderRadius
+                            //                             .circular(
+                            //                                 5.0)),
+                            //                 child: Padding(
+                            //                   padding:
+                            //                       const EdgeInsets
+                            //                           .only(
+                            //                     left: 10,
+                            //                     top: 10,
+                            //                   ),
+                            //                   child: Text(
+                            //                     pollQuestionList[
+                            //                                 index][
+                            //                             "PollOptions"]
+                            //                         [i]["pollOption"],
+                            //                     style: TextStyle(
+                            //                       fontFamily:
+                            //                           'Montserrat',
+                            //                       fontSize: 13,
+                            //                       // fontWeight: FontWeight.bold,
+                            //                       color:
+                            //                           appPrimaryMaterialColor,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ]
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              : Center(
-                  child: Text("No Polling Question Found"),
-                ),
-    );
+            Positioned(
+              bottom: 30,
+              right: 20,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      child: AddPollingComponent(
+                        pollingListApi: () {
+                          _getAllPollingQuestion();
+                        },
+                      ),
+                      type: PageTransitionType.rightToLeft,
+                    ),
+                  );
+                },
+                icon: Icon(Icons.add),
+                label: Text("Add polling"),
+              ),
+            ),
+          ],
+        ));
   }
 }
 

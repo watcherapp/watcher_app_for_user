@@ -1,17 +1,19 @@
 import 'dart:io';
-
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class AmenitiesDetailScreen extends StatefulWidget {
   var amenitiesListData;
+  Function amenitiesApi;
 
   AmenitiesDetailScreen({
     this.amenitiesListData,
+    this.amenitiesApi,
   });
 
   @override
@@ -28,6 +30,67 @@ class _AmenitiesDetailScreenState extends State<AmenitiesDetailScreen> {
     images = widget.amenitiesListData["images"];
     print(images);
   } // List amenitiesList = [];
+
+  _deleteAmenities() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        print(sharedPrefs.societyId);
+        print("${widget.amenitiesListData["_id"]}");
+        var body = {
+          "societyId": sharedPrefs.societyId,
+          "amenityId": "${widget.amenitiesListData["_id"]}"
+        };
+        print("$body");
+        Services.responseHandler(apiName: "api/society/deleteSocietyAmeties", body: body)
+            .then((responseData) {
+          if (responseData.Data == 1) {
+            print(responseData.Data);
+            widget.amenitiesApi();
+            Fluttertoast.showToast(
+              msg: "Your Notice deleted Successfully.",
+            );
+            Navigator.pop(context);
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
+    }
+  }
 
   // List bannerList = [
   //   "https://graphicsfamily.com/wp-content/uploads/edd/2020/11/Tasty-Food-Web-Banner-Design-scaled.jpg",
@@ -226,6 +289,31 @@ class _AmenitiesDetailScreenState extends State<AmenitiesDetailScreen> {
                         // fontWeight: FontWeight.w900,
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlineButton(
+                        child: new Text(
+                          "Delete Amenities",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                        onPressed: () {
+                          _deleteAmenities();
+                        },
+                        borderSide: BorderSide(color: Colors.red),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(5.0),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

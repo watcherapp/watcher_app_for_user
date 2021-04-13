@@ -18,6 +18,14 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
   setPreferences() {
     sharedPrefs.societyId =
         "${widget.myPropertyData["MemberData"][0]["society"]["societyId"]}";
+    //smit..
+    sharedPrefs.societyCode =
+    "${widget.myPropertyData["MemberData"][0]["society"]["societyCode"]}";
+
+    sharedPrefs.societyName =
+    "${widget.myPropertyData["MemberData"][0]["society"]["societyName"]}";
+
+    //
     sharedPrefs.wingId =
         "${widget.myPropertyData["MemberData"][0]["society"]["wingId"]}";
     sharedPrefs.flatId =

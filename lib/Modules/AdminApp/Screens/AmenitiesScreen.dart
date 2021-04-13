@@ -161,76 +161,88 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
                                             ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 15),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                amenitiesList[index]
-                                                    ["amenityName"],
-                                                style: TextStyle(
-                                                    color:
-                                                        appPrimaryMaterialColor,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                amenitiesList[index]["location"]
-                                                    ["completeAddress"],
-                                                style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12,
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 15),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  amenitiesList[index]
+                                                      ["amenityName"],
+                                                  style: TextStyle(
+                                                      color:
+                                                          appPrimaryMaterialColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: 17,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10.0),
-                                                child: SizedBox(
-                                                  width: 100,
-                                                  height: 35,
-                                                  child: RaisedButton(
-                                                    child: Text("View More",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        6)),
-                                                    color:
-                                                        appPrimaryMaterialColor,
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          PageTransition(
-                                                              child:
-                                                                  AmenitiesDetailScreen(
-                                                                amenitiesListData:
-                                                                    amenitiesList[
-                                                                        index],
-                                                              ),
-                                                              type: PageTransitionType
-                                                                  .rightToLeft));
-                                                    },
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  amenitiesList[index]
+                                                          ["location"]
+                                                      ["completeAddress"],
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
                                                   ),
                                                 ),
-                                              )
-                                            ],
+                                                SizedBox(
+                                                  height: 17,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 10.0),
+                                                  child: SizedBox(
+                                                    width: 100,
+                                                    height: 35,
+                                                    child: RaisedButton(
+                                                      child: Text("View More",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          6)),
+                                                      color:
+                                                          appPrimaryMaterialColor,
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          PageTransition(
+                                                            child:
+                                                                AmenitiesDetailScreen(
+                                                              amenitiesListData:
+                                                                  amenitiesList[
+                                                                      index],
+                                                              amenitiesApi: () {
+                                                                _getAllAmenities();
+                                                              },
+                                                            ),
+                                                            type:
+                                                                PageTransitionType
+                                                                    .rightToLeft,
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         )
                                       ],

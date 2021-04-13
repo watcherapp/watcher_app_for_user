@@ -7,6 +7,7 @@ import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.da
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ComplaintsScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/EmergencyScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/InteractionScreen.dart';
@@ -725,7 +726,7 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
             GestureDetector(
               onTap: () {
                 Share.share(
-                    '02541655 Share above code with building members to join xyz.');
+                    '${sharedPrefs.societyCode} Share above code with building members to join ${sharedPrefs.societyName}.');
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 13.0, right: 13),
@@ -752,8 +753,8 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 11.0),
                                 child: Text(
-                                  "0160203220",
-                                  // "${sharedPrefs.societyCode}",
+                                  // "0160203220",
+                                  "${sharedPrefs.societyCode}",
                                   style: TextStyle(
                                       color: appPrimaryMaterialColor,
                                       fontSize: 15,
@@ -765,7 +766,7 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
                                 padding: const EdgeInsets.only(
                                     left: 11.0, right: 10),
                                 child: Text(
-                                  "Share above code with building members to join xyz,",
+                                  "Share above code with building members to join ${sharedPrefs.societyName},",
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                       color: Colors.black,
