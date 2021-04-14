@@ -23,7 +23,7 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
     "${widget.myPropertyData["MemberData"][0]["society"]["societyCode"]}";
 
     sharedPrefs.societyName =
-    "${widget.myPropertyData["MemberData"][0]["society"]["societyName"]}";
+    "${widget.myPropertyData["SocietyData"][0]["societyName"]}";
 
     //
     sharedPrefs.wingId =

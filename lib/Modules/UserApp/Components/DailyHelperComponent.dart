@@ -24,13 +24,30 @@ class _DailyHelperComponentState extends State<DailyHelperComponent> {
           Container(
             width: 70,
             child: ClipOval(
-              child: widget.myStaffData["staffImage"] == null
+              child: widget.myStaffData["staffImage"] == null ||
+                      widget.myStaffData["staffImage"] == ""
                   ? Image.asset(
                       'images/maleavtar.png',
                     )
-                  : Image.network(
-                      // 'https://randomuser.me/api/portraits/men/4.jpg',
-                      API_URL + widget.myStaffData["staffImage"],
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Container(
+                        height: 70.0,
+                        width: 70,
+                        decoration: BoxDecoration(
+                          // borderRadius: BorderRadius.circular(30),
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              width: 0.2, color: appPrimaryMaterialColor),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              API_URL + widget.myStaffData["staffImage"],
+                            ),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                     ),
             ),
           ),

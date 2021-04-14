@@ -13,6 +13,7 @@ import 'package:watcher_app_for_user/Modules/AdminApp/Screens/EmergencyScreen.da
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/InteractionScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MemberDirectoryScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyProfile.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyVisitors.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ParkingScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/WatcherScreen.dart';
 
@@ -32,15 +33,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
         ),
       ),
     ),
-    Container(
-      child: Center(
-        child: Text(
-          "Visitors",
-          style: TextStyle(
-              color: appPrimaryMaterialColor, fontWeight: FontWeight.bold),
-        ),
-      ),
-    ),
+    MyVisitors(),
     AdminDashbordComponent(),
     Container(
       child: Center(

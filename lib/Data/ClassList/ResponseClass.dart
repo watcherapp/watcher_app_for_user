@@ -3,7 +3,11 @@ class ResponseDataClass {
   bool IsSuccess;
   var Data;
 
-  ResponseDataClass({this.Message, this.IsSuccess, this.Data});
+  ResponseDataClass({
+    this.Message,
+    this.IsSuccess,
+    this.Data,
+  });
 
   factory ResponseDataClass.fromJson(Map<String, dynamic> json) {
     return ResponseDataClass(
