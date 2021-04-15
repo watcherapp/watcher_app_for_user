@@ -14,6 +14,12 @@ import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class AddMyStaff extends StatefulWidget {
+  Function staffDataApi;
+
+  AddMyStaff({
+    this.staffDataApi,
+  });
+
   @override
   _AddMyStaffState createState() => _AddMyStaffState();
 }
@@ -196,13 +202,8 @@ class _AddMyStaffState extends State<AddMyStaff> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        String fileName = _image.path
-            .split('/')
-            .last;
-        String fileName1 = _imageId1.path
-            .split('/')
-            .last;
-        images = [ _imageId1.path, _imageId2.path,];
+        String fileName = _image.path.split('/').last;
+        String fileName1 = _imageId1.path.split('/').last;
 
         FormData formData = FormData.fromMap({
           "wingId": sharedPrefs.wingId,
@@ -228,8 +229,9 @@ class _AddMyStaffState extends State<AddMyStaff> {
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
+            widget.staffDataApi();
             Fluttertoast.showToast(
-              msg: "Your Notice added Successfully.",
+              msg: "Your Staff added Successfully.",
             );
             Navigator.pop(context);
             setState(() {
@@ -408,31 +410,31 @@ class _AddMyStaffState extends State<AddMyStaff> {
                           height: 100.0,
                           child: _image != null
                               ? Container(
-                            decoration: new BoxDecoration(
-                              color: Color(0x22888888),
-                              borderRadius: new BorderRadius.all(
-                                  new Radius.circular(90.0)),
-                              border: new Border.all(
-                                color: Colors.grey,
-                                width: 0.5,
-                              ),
-                              image: DecorationImage(
-                                image: FileImage(
-                                  _image,
-                                ),
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          )
+                                  decoration: new BoxDecoration(
+                                    color: Color(0x22888888),
+                                    borderRadius: new BorderRadius.all(
+                                        new Radius.circular(90.0)),
+                                    border: new Border.all(
+                                      color: Colors.grey,
+                                      width: 0.5,
+                                    ),
+                                    image: DecorationImage(
+                                      image: FileImage(
+                                        _image,
+                                      ),
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                )
                               : Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 95,
-                          ),
+                                  Icons.person,
+                                  color: Colors.white,
+                                  size: 95,
+                                ),
                           decoration: new BoxDecoration(
                             color: Color(0x22888888),
                             borderRadius:
-                            new BorderRadius.all(new Radius.circular(90.0)),
+                                new BorderRadius.all(new Radius.circular(90.0)),
                             border: new Border.all(
                               color: Colors.grey,
                               width: 0.5,
@@ -574,11 +576,11 @@ class _AddMyStaffState extends State<AddMyStaff> {
                             });
                           },
                           items: categoryList?.map((item) {
-                            return new DropdownMenuItem(
-                              child: new Text(item["staffCategoryName"]),
-                              value: item["_id"].toString(),
-                            );
-                          })?.toList() ??
+                                return new DropdownMenuItem(
+                                  child: new Text(item["staffCategoryName"]),
+                                  value: item["_id"].toString(),
+                                );
+                              })?.toList() ??
                               [],
                         ),
                       ),
@@ -623,11 +625,11 @@ class _AddMyStaffState extends State<AddMyStaff> {
                             });
                           },
                           items: idCategoryList?.map((item) {
-                            return new DropdownMenuItem(
-                              child: new Text(item["identityProofName"]),
-                              value: item["_id"].toString(),
-                            );
-                          })?.toList() ??
+                                return new DropdownMenuItem(
+                                  child: new Text(item["identityProofName"]),
+                                  value: item["_id"].toString(),
+                                );
+                              })?.toList() ??
                               [],
                         ),
                       ),
@@ -705,42 +707,42 @@ class _AddMyStaffState extends State<AddMyStaff> {
             ),
             child: _imageId1 != null
                 ? Center(
-              child: Image.file(
-                _imageId1,
-              ),
-            )
+                    child: Image.file(
+                      _imageId1,
+                    ),
+                  )
                 : Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 32.0,
-                    height: 32.0,
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.black54,
-                      size: 25,
-                    ),
-                    decoration: new BoxDecoration(
-                      // color: Colors.grey[300],
-                      borderRadius:
-                      new BorderRadius.all(new Radius.circular(90.0)),
-                      border:
-                      new Border.all(color: Colors.grey, width: 1),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 32.0,
+                          height: 32.0,
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.black54,
+                            size: 25,
+                          ),
+                          decoration: new BoxDecoration(
+                            // color: Colors.grey[300],
+                            borderRadius:
+                                new BorderRadius.all(new Radius.circular(90.0)),
+                            border:
+                                new Border.all(color: Colors.grey, width: 1),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 3.0),
+                          child: Text("Front",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        ),
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3.0),
-                    child: Text("Front",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        )),
-                  ),
-                ],
-              ),
-            ),
           ),
         ),
       ),
@@ -767,42 +769,42 @@ class _AddMyStaffState extends State<AddMyStaff> {
             ),
             child: _imageId2 != null
                 ? Center(
-              child: Image.file(
-                _imageId2,
-              ),
-            )
+                    child: Image.file(
+                      _imageId2,
+                    ),
+                  )
                 : Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 32.0,
-                    height: 32.0,
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.black54,
-                      size: 25,
-                    ),
-                    decoration: new BoxDecoration(
-                      // color: Colors.grey[300],
-                      borderRadius:
-                      new BorderRadius.all(new Radius.circular(90.0)),
-                      border:
-                      new Border.all(color: Colors.grey, width: 1),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 32.0,
+                          height: 32.0,
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.black54,
+                            size: 25,
+                          ),
+                          decoration: new BoxDecoration(
+                            // color: Colors.grey[300],
+                            borderRadius:
+                                new BorderRadius.all(new Radius.circular(90.0)),
+                            border:
+                                new Border.all(color: Colors.grey, width: 1),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 3.0),
+                          child: Text("Back",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        ),
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3.0),
-                    child: Text("Back",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        )),
-                  ),
-                ],
-              ),
-            ),
           ),
         ),
       ),

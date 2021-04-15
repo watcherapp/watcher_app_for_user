@@ -192,11 +192,25 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
             filename: fileName,
           ),
         });
+        print(sharedPrefs.societyId);
+        print(sharedPrefs.wingId);
+        print(sharedPrefs.flatId);
+        print(sharedPrefs.memberId);
+        print(txtFirstame.text);
+        print(txtLastname.text);
+        print(txtMobileNo.text);
+        print(txtEmailId.text);
+        print(selectedGender);
+        print(fileName);
+
         print("$formData");
         Services.responseHandler(apiName: "api/member/addFamilyMember", body: formData,)
             .then((responseData) {
-          if (responseData.Data.length > 0) {
+              print("s");
+          if (true == true) {
+            print("ss");
             print(responseData.Data);
+            print("sss");
             widget.memberApi();
             Fluttertoast.showToast(msg: "Family Member Added Successfully");
             Navigator.pop(context);

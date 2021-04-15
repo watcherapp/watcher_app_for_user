@@ -235,7 +235,11 @@ class _MyWatcherState extends State<MyWatcher> {
                                     Navigator.push(
                                         context,
                                         PageTransition(
-                                            child: AddMyStaff(),
+                                            child: AddMyStaff(
+                                              staffDataApi: (){
+                                                _getMyStaff();
+                                              },
+                                            ),
                                             type: PageTransitionType
                                                 .rightToLeft));
                                   });
