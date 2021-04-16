@@ -35,6 +35,7 @@ class _NoticesComponentState extends State<NoticesComponent> {
     timeData = "${widget.noticeData["dateTime"][1]}";
     time = timeData.split(':');
     time1 = timeData.split(" ");
+    print(time);
     print(time1);
   }
 
@@ -99,7 +100,7 @@ class _NoticesComponentState extends State<NoticesComponent> {
             Padding(
               padding: const EdgeInsets.only(top: 13.0, left: 18, right: 18),
               child: Text(
-                "${widget.noticeData["noticeBody"]}",
+                "${widget.noticeData["noticeDescription"]}",
                 textAlign: TextAlign.justify,
                 style: TextStyle(fontFamily: 'Montserrat', fontSize: 14),
               ),
@@ -157,9 +158,8 @@ class _NoticesComponentState extends State<NoticesComponent> {
                       ),
                       child: Center(
                         child: Text(
-                          "${time[0]}"
-                             +" : " +
-                              "${time[1]}" + " " + "${time1[2]}",
+                          "${time1[0]}"+ " "
+                             + "${time1[1]}",
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 12,

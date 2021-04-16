@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 
@@ -118,7 +119,7 @@ class _ComplainDetailState extends State<ComplainDetail> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10),
                   child: Image.network(
-                    widget.complaintData["attachment"],
+                   API_URL + widget.complaintData["attachment"],
                     height: 170,
                   ),
                 ),

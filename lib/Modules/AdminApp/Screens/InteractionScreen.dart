@@ -39,7 +39,7 @@ class _InteractionScreenState extends State<InteractionScreen> {
     },
     {
       "label": " Blood Request",
-      "img": "images/Blood.png",
+      "img": "images/bloodDonation.png",
       "screenName" : BloodRequestScreen(),
     },
     // {

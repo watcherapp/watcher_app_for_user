@@ -72,7 +72,7 @@ class _NoticesScreenState extends State<NoticesScreen> {
             apiName: "api/admin/getSocietyNotice", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
-            print(responseData);
+            print(responseData.Data);
             setState(() {
               noticesList = responseData.Data;
               isSLoading = false;

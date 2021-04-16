@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 
 class UserEmergencyComponent extends StatefulWidget {
   var userEmergencyData;
+
   UserEmergencyComponent({this.userEmergencyData});
 
   @override
@@ -11,7 +13,7 @@ class UserEmergencyComponent extends StatefulWidget {
 class _UserEmergencyComponentState extends State<UserEmergencyComponent> {
   @override
   Widget build(BuildContext context) {
-    return  Card(
+    return Card(
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
@@ -22,9 +24,12 @@ class _UserEmergencyComponentState extends State<UserEmergencyComponent> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 7.0),
-              child: Image.network("${widget.userEmergencyData["image"]}",width: 60)
-            ),
+                padding: const EdgeInsets.only(left: 7.0),
+                child: Image.network(
+                 API_URL + "${widget.userEmergencyData["image"]}",
+                  width: 60,
+                  // height: 50,
+                )),
             Padding(
               padding: const EdgeInsets.only(left: 25.0),
               child: Container(
@@ -43,16 +48,13 @@ class _UserEmergencyComponentState extends State<UserEmergencyComponent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(
-                "${widget.userEmergencyData["contactName"]}",
+                    Text("${widget.userEmergencyData["contactName"]}",
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold)),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        "${widget.userEmergencyData["contactNo"]}",
-                          style: TextStyle(
-                              fontSize: 15, color: Colors.grey)),
+                      child: Text("${widget.userEmergencyData["contactNo"]}",
+                          style: TextStyle(fontSize: 15, color: Colors.grey)),
                     ),
                   ],
                 ),
