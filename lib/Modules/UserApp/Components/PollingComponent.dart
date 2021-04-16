@@ -1,26 +1,112 @@
-import 'package:flutter/material.dart';
-import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class PollingComponent extends StatefulWidget {
+  var pollingData;
+  Function getPollingApi;
+  int index;
+
+  PollingComponent({
+    this.pollingData,
+    this.getPollingApi,
+    this.index,
+  });
+
   @override
   _PollingComponentState createState() => _PollingComponentState();
 }
 
 class _PollingComponentState extends State<PollingComponent> {
-  double option1 = 2.0;
-  double option2 = 0.0;
-  double option3 = 2.0;
-  double option4 = 3.0;
+  int _selectedIndex;
+  String AnswerId;
+  var Answer;
+  bool _submited = false;
+  bool isLoading = false;
+  int answerIndex;
 
-  String user = "king@mail.com";
-  Map usersWhoVoted = {'sam@mail.com': 3, 'mike@mail.com' : 4, 'john@mail.com' : 1, 'kenny@mail.com' : 1};
-  String creator = "eddy@mail.com";
+  _onSelected(int index) {
+    setState(() => _selectedIndex = index);
+  }
+
+  _checkanswer() {
+    for (int i = 0; i < widget.pollingData["PollOptions"].length; i++) {
+      if (widget.pollingData["PollOptions"][i]["IsSelected"] == true) {
+        setState(() {
+          _submited = true;
+          answerIndex = i;
+        });
+        break;
+      }
+    }
+  }
+
+
+  _givePollingAnswer() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "pollQuestionId" : widget.pollingData["_id"],
+          "pollOptionId" : AnswerId,
+          "memberId" : sharedPrefs.memberId,
+        };
+        print("$body");
+        Services.responseHandler(
+            apiName: "api/member/answerOfPollQuestion", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              // pollingDataList = responseData.Data;
+              isLoading = false;
+            });
+            // print("$pollingDataList");
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top:10.0,left: 10,right: 10),
+      padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -30,16 +116,127 @@ class _PollingComponentState extends State<PollingComponent> {
           ),
           borderRadius: BorderRadius.circular(10),
         ),
-
-        child: Padding(
-          padding: const EdgeInsets.only(left:17.0,right: 17,top:12,bottom: 10),
-          child: Container(
-            child: Text("")
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0, top: 9),
+              child: Text(
+                  "${widget.index}) " +
+                      "${widget.pollingData["pollQuestion"]}",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(81, 92, 111, 1))),
             ),
+            Padding(
+              padding:
+              const EdgeInsets.only(left: 4.0, bottom: 6.0, top: 4),
+              child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount:
+                  widget.pollingData["PollOptions"].length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: _selectedIndex != null &&
+                                _selectedIndex == index
+                                ? Colors.grey[100]
+                                : Colors.white,
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(6.0))),
+                        child: FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                _onSelected(index);
+                                AnswerId = widget
+                                    .pollingData["PollOptions"]
+                                [index]["_id"]
+                                    .toString();
+                                Answer = widget.pollingData["PollOptions"][index]["pollOption"].toString();
+
+                                print(AnswerId);
+                                print(Answer);
+
+                                print(widget
+                                    .pollingData["PollOptions"]
+                                [index]);
+                              });
+                            },
+                            child: Row(
+                              children: <Widget>[
+                                _selectedIndex != null &&
+                                    _selectedIndex == index
+                                    ? Image.asset(
+                                  'images/success.png',
+                                  width: 20,
+                                )
+                                    : Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.all(
+                                          Radius.circular(100)),
+                                      border: Border.all(
+                                          width: 2,
+                                          color: Colors.grey)),
+                                ),
+                                Padding(
+                                  padding:
+                                  const EdgeInsets.only(left: 8.0),
+                                  child: Text(
+                                    "${widget.pollingData["PollOptions"][index]["pollOption"]}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black54),
+                                  ),
+                                )
+                              ],
+                            )),
+                      ),
+                    );
+                  }),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _selectedIndex != null
+                    ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                  decoration: BoxDecoration(
+                        color: appPrimaryMaterialColor,
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(6.0))),
+                        child: SizedBox(
+                  width: 100,
+                  height: 40,
+                  child: FlatButton(
+                          onPressed: () {
+                            _givePollingAnswer();
+                          },
+                          child: Text(
+                            "Save",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                color: Colors.white),
+                          )),
+                ),
+                      ),
+                    )
+                    : Container(),
+              ],
+            )
+          ],
         ),
       ),
     );
-      /*Padding(
+    /*Padding(
       padding: const EdgeInsets.only(top: 12.0, left: 10, right: 10),
       child: Container(
         decoration: BoxDecoration(

@@ -15,6 +15,7 @@ import 'package:watcher_app_for_user/Modules/UserApp/Components/FamilyMemberComp
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyResidentComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVehicleComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddFamilyMember.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/UpdateMemberProfile.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddMyStaff.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/VehicleScreen.dart';
 
@@ -123,7 +124,19 @@ class _MyWatcherState extends State<MyWatcher> {
                           ),
                           IconButton(
                               icon: Icon(Icons.edit),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        child: UpdateMemberProfile(
+                                          myProfileFun: (){
+                                            _memberDetail();
+                                          },
+                                          profileData: memberList,
+                                        ),
+                                        type: PageTransitionType
+                                            .rightToLeft));
+                              },
                               color: appPrimaryMaterialColor)
                         ],
                       ),

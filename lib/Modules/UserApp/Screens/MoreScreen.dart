@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/NoticesScreen.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/ComplainsScreen.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/AmenitiesScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/PollingScreen.dart';
 
 class MoreScreen extends StatefulWidget {
@@ -12,9 +14,9 @@ class MoreScreen extends StatefulWidget {
 class _MoreScreenState extends State<MoreScreen> {
   List moreFields = [
     {
-      "label": "Aminites",
+      "label": "Amenities",
       "img": "images/gym.png",
-      "screenName": NoticesScreen()
+      "screenName": AmenitiesScreen()
     },
     {
       "label": "Notices",
@@ -35,6 +37,11 @@ class _MoreScreenState extends State<MoreScreen> {
       "label": "Vendors",
       "img": "images/seller.png",
       "screenName": NoticesScreen()
+    },
+    {
+      "label": "Complains",
+      "img": "images/complain.png",
+      "screenName": ComplainsScreen()
     },
   ];
 
