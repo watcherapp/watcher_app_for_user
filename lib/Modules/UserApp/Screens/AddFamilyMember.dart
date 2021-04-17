@@ -166,6 +166,8 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
   //   }
   // }
 
+
+  //this is not working
   _addFamilyMember() async {
     try {
       setState(() {
@@ -174,19 +176,17 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        String fileName = _image.path
-            .split('/')
-            .last;
+        String fileName = _image.path.split('/').last;
         FormData formData = FormData.fromMap({
-          "societyId ": "${sharedPrefs.societyId}",
+          "societyId": "${sharedPrefs.societyId}",
           "wingId": "${sharedPrefs.wingId}",
           "flatId": "${sharedPrefs.flatId}",
           "parentId": "${sharedPrefs.memberId}",
-          "firstName": txtFirstame.text,
+          "firstName": "${txtFirstame.text}",
           "lastName": txtLastname.text,
           "mobileNo1": txtMobileNo.text,
           "emailId": txtEmailId.text,
-          "gender": selectedGender,
+          "gender": "${selectedGender}",
           "memberImage": await MultipartFile.fromFile(
             _image.path,
             filename: fileName,
@@ -203,11 +203,14 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
         print(selectedGender);
         print(fileName);
 
-        print("$formData");
-        Services.responseHandler(apiName: "api/member/addFamilyMember", body: formData,)
-            .then((responseData) {
-              print("s");
-          if (true == true) {
+        print("${formData.fields}");
+        Services.responseHandler(
+          apiName: "api/member/addFamilyMember",
+          body: formData,
+        ).then((responseData) {
+          print("s");
+          print(responseData.Data.length);
+          if (responseData.Data.length > 0) {
             print("ss");
             print(responseData.Data);
             print("sss");
@@ -218,7 +221,9 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
               isLoading = false;
             });
           } else {
-            print(responseData);
+            print(responseData.Message);
+            print(responseData.IsSuccess);
+            print(responseData.Data);
             setState(() {
               isLoading = false;
             });

@@ -156,7 +156,7 @@ class _MyWatcherState extends State<MyWatcher> {
                           scrollDirection: Axis.horizontal,
                           itemCount: length + 1,
                           itemBuilder: (context, index) {
-                            if (index == length) {
+                            if (index > length - 1) {
                               return AddComponent(width: 100, onTap: () {});
                             } else {
                               return isLoading
@@ -290,7 +290,7 @@ class _MyWatcherState extends State<MyWatcher> {
                           scrollDirection: Axis.horizontal,
                           itemCount: length + 1,
                           itemBuilder: (context, index) {
-                            if (index == length) {
+                            if (index > length - 1) {
                               return AddComponent(
                                   width: 100,
                                   onTap: () {

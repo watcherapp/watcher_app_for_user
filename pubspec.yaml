@@ -43,7 +43,7 @@ dependencies:
   pin_code_text_field: ^1.6.0
   country_code_picker: ^1.7.0
   video_player: any
-  dio: any
+  dio: ^3.0.0
   fluttertoast: ^7.1.6
   shared_preferences: any
   flutter_native_image: ^0.0.5+3
@@ -52,6 +52,8 @@ dependencies:
   http_parser: any
   percent_indicator: ^3.0.1
   intl: ^0.16.1
+  http: ^0.12.0+4
+  qr_flutter: ^4.0.0
 
   # firebase Plugins
   firebase_auth: ^0.18.4+1

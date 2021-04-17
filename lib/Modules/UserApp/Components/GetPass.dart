@@ -6,10 +6,17 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 
 class GetPass extends StatefulWidget {
+  var myGuestData;
+
+  GetPass({
+    this.myGuestData,
+  });
+
   @override
   _GetPassState createState() => _GetPassState();
 }
@@ -30,7 +37,7 @@ class _GetPassState extends State<GetPass> {
   Future<void> _shareImage(Uint8List image) async {
     try {
       await Share.file('esys image', 'esys.png', image, 'image/png',
-          text: "Sample Ticket");
+          text: "Gate Pass");
     } catch (e) {
       print('error: $e');
     }
@@ -75,9 +82,21 @@ class _GetPassState extends State<GetPass> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Image.asset(
-                                "images/QR.png",
-                                width: 150,
+                              QrImage(
+                                data: '${widget.myGuestData["entryNo"]}',
+                                version: 1,
+                                size: 150,
+                                gapless: false,
+                                errorStateBuilder: (cxt, err) {
+                                  return Container(
+                                    child: Center(
+                                      child: Text(
+                                        "Uh oh! Something went wrong...",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                               SizedBox(
                                 height: 10,
@@ -86,7 +105,7 @@ class _GetPassState extends State<GetPass> {
                                   dashPattern: [4],
                                   padding: EdgeInsets.all(6.0),
                                   child: Text(
-                                    "8SF459GH56",
+                                    "${widget.myGuestData["entryNo"]}",
                                     style: TextStyle(
                                         fontSize: 30,
                                         color: appPrimaryMaterialColor,
@@ -99,7 +118,7 @@ class _GetPassState extends State<GetPass> {
                               RichText(
                                 textAlign: TextAlign.center,
                                 text: TextSpan(
-                                  text: "Keval Mangroliya\nA-105\n",
+                                  text: "${widget.myGuestData["MemberData"][0]["firstName"]}  ${widget.myGuestData["MemberData"][0]["lastName"]}\n${widget.myGuestData["WingData"][0]["wingName"]}-${widget.myGuestData["FlatData"][0]["flatNo"]}\n",
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: appPrimaryMaterialColor,
@@ -139,7 +158,7 @@ class _GetPassState extends State<GetPass> {
                                         Text("Valid From",
                                             style: fontConstants.labelFonts),
                                         Text(
-                                          "17 Feb 2020",
+                                          "${widget.myGuestData["validFrom"]}",
                                           style: fontConstants.valueFonts,
                                         ),
                                         Text(
@@ -155,7 +174,7 @@ class _GetPassState extends State<GetPass> {
                                         Text("Valid to",
                                             style: fontConstants.labelFonts),
                                         Text(
-                                          "20 Feb 2020",
+                                          "${widget.myGuestData["validTo"]}",
                                           style: fontConstants.valueFonts,
                                         ),
                                         Text(

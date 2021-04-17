@@ -224,7 +224,9 @@ class _AddMyStaffState extends State<AddMyStaff> {
             filename: fileName,
           ),
         });
-        print("$formData");
+        print("${formData.fields}");
+        print(fileName1);
+        print(fileName);
         Services.responseHandler(apiName: "api/member/addStaff", body: formData)
             .then((responseData) {
           if (responseData.Data.length > 0) {

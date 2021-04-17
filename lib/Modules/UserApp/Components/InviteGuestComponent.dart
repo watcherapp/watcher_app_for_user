@@ -80,7 +80,9 @@ class _InviteGuestComponentState extends State<InviteGuestComponent> {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return GetPass();
+                        return GetPass(
+                          myGuestData: widget.guestData,
+                        );
                       });
                 },
                 child: Padding(

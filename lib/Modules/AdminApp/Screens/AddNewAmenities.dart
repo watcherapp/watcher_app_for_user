@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,139 +37,393 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
 
   bool isLoading = false;
 
-  // List multipartFile=[];
-  List<MultipartFile> multipartFile =[];
-  MultipartFile multipartFile1;
+  // // List multipartFile=[];
+  // List<MultipartFile> multipartFile = [];
+  // MultipartFile multipartFile1;
 
+  // //old function which is not working............................
+  // _addNewAmenity() async {
+  //   try {
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //     final internetResult = await InternetAddress.lookup('google.com');
+  //     if (internetResult.isNotEmpty &&
+  //         internetResult[0].rawAddress.isNotEmpty) {
+  //       List<MultipartFile> imageList = <MultipartFile>[];
+  //       for (Asset asset in images) {
+  //         ByteData byteData = await asset.getByteData();
+  //         List<int> imageData = byteData.buffer.asUint8List();
+  //         MultipartFile multipartFile = new MultipartFile.fromBytes(
+  //           imageData,
+  //           filename: 'load_image',
+  //           contentType: MediaType("image", "jpg"),
+  //         );
+  //         imageList.add(multipartFile);
+  //       }
+  //
+  //       FormData formData = FormData.fromMap({
+  //         "images": imageList,
+  //         "societyId": "${sharedPrefs.societyId}",
+  //         "amenityName": txtName.text,
+  //         "description": txtDiscription.text,
+  //         "completeAddress": txtAddress.text,
+  //       });
+  //       Services.responseHandler(
+  //               apiName: "api/society/addSocietyAmenity", body: formData)
+  //           .then((responseData) {
+  //         print("ss");
+  //         if (responseData.Data.length != 0) {
+  //           print("sss");
+  //           print(responseData.Data);
+  //           widget.AllAmenitiesApi();
+  //           Fluttertoast.showToast(
+  //             msg: "Your Notice added Successfully.",
+  //           );
+  //           Navigator.pop(context);
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //         } else {
+  //           print(responseData);
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //           Fluttertoast.showToast(
+  //             msg: "${responseData.Message}",
+  //             backgroundColor: Colors.white,
+  //             textColor: appPrimaryMaterialColor,
+  //           );
+  //         }
+  //       }).catchError((error) {
+  //         setState(() {
+  //           isLoading = false;
+  //         });
+  //         Fluttertoast.showToast(
+  //           msg: "Error $error",
+  //           backgroundColor: Colors.white,
+  //           textColor: appPrimaryMaterialColor,
+  //         );
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     Fluttertoast.showToast(
+  //       msg: "You aren't connected to the Internet !",
+  //       backgroundColor: Colors.white,
+  //       textColor: appPrimaryMaterialColor,
+  //     );
+  //   }
+  // }
+  //
+  // //working function.................................
+  // _addNewAmenity2() async {
+  //   String url =
+  //       "https://watcher03.herokuapp.com/api/society/addSocietyAmenity";
+  //   List<MultipartFile> imageList = <MultipartFile>[];
+  //
+  //   // for (int i = 0; i < images.length; i++) {
+  //   //     ByteData byteData = await images[i].getByteData();
+  //   //     List<int> imageData = byteData.buffer.asUint8List();
+  //   //     File _imageEvent = await File(images[i].identifier);
+  //   //     MultipartFile multipartFile = new MultipartFile.fromBytes(
+  //   //       imageData,
+  //   //       filename: images[i].name,
+  //   //       contentType: MediaType("image", "png"),
+  //   //     );
+  //   //     imageList.add(multipartFile);
+  //   // }
+  //
+  //   for (Asset asset in images) {
+  //     ByteData byteData = await asset.getByteData();
+  //     List<int> imageData = byteData.buffer.asUint8List();
+  //     MultipartFile multipartFile = new MultipartFile.fromBytes(
+  //       imageData,
+  //       filename: asset.name,
+  //       contentType: MediaType("image", "png"),
+  //     );
+  //     imageList.add(multipartFile);
+  //   }
+  //   print(imageList);
+  //   FormData formData = FormData.fromMap({
+  //     "images": imageList,
+  //     "societyId": sharedPrefs.societyId,
+  //     "amenityName": txtName.text,
+  //     "description": txtDiscription.text,
+  //     "completeAddress": txtAddress.text,
+  //   });
+  //
+  //   Dio dio = new Dio();
+  //   dio.options.headers["authorization"] =
+  //       "RvHiQ6J4QJoAMeA0ysCw-HJklmBHklmnknNJn-hghJUdksjH";
+  //   var response = await dio.post(url, data: formData);
+  //   widget.AllAmenitiesApi();
+  //   Fluttertoast.showToast(
+  //     msg: "Your Amenities added Successfully.",
+  //   );
+  //   Navigator.pop(context);
+  //   print(response.data);
+  //   // }
+  // }
+  //
+  //base64 image.................
+  // _addNewAmenity3() async {
+  //   print("s");
+  //   String url =
+  //       "https://watcher03.herokuapp.com/api/society/addSocietyAmenity";
+  //   // List<MultipartFile> imageList = <MultipartFile>[];
+  //
+  //   print("ss");
+  //   String files = "";
+  //   String base64Image;
+  //   print("sss");
+  //   for (int i = 0; i < images.length; i++) {
+  //     ByteData byteData = await images[i].getByteData();
+  //     List<int> imageData = byteData.buffer.asUint8List();
+  //     base64Image = base64Encode(imageData);
+  //     if (i == images.length - 1) {
+  //       files += (base64Image);
+  //     } else {
+  //       files += (base64Image + ",");
+  //     }
+  //   }
+  //   print("ssss");
+  //
+  //   var body = {
+  //     "images": files,
+  //     "societyId": sharedPrefs.societyId,
+  //     "amenityName": txtName.text,
+  //     "description": txtDiscription.text,
+  //     "completeAddress": txtAddress.text,
+  //   };
+  //   // FormData formData = FormData.fromMap({
+  //   //   "images": files,
+  //   //   "societyId": sharedPrefs.societyId,
+  //   //   "amenityName": txtName.text,
+  //   //   "description": txtDiscription.text,
+  //   //   "completeAddress": txtAddress.text,
+  //   // });
+  //
+  //   print(body);
+  //   Dio dio = new Dio();
+  //   print("sssss");
+  //   dio.options.headers["authorization"] =
+  //       "RvHiQ6J4QJoAMeA0ysCw-HJklmBHklmnknNJn-hghJUdksjH";
+  //   print("ssssss");
+  //   var response = await dio.post(url, data: body);
+  //   print(response.data);
+  //   print("sssssss");
+  //   // widget.AllAmenitiesApi();
+  //   Fluttertoast.showToast(
+  //     msg: "Your Amenities added Successfully.",
+  //   );
+  //   Navigator.pop(context);
+  // }
 
-  //old function which is not working............................
-  _addNewAmenity() async {
-    try {
-      setState(() {
-        isLoading = true;
-      });
-      final internetResult = await InternetAddress.lookup('google.com');
-      if (internetResult.isNotEmpty &&
-          internetResult[0].rawAddress.isNotEmpty) {
-
-        List<MultipartFile> imageList = <MultipartFile>[];
-        for (Asset asset in images) {
-          ByteData byteData = await asset.getByteData();
-          List<int> imageData = byteData.buffer.asUint8List();
-          MultipartFile multipartFile = new MultipartFile.fromBytes(
-            imageData,
-            filename: 'load_image',
-            contentType: MediaType("image", "jpg"),
-          );
-          imageList.add(multipartFile);
-        }
-
-        FormData formData = FormData.fromMap({
-          "images": imageList,
-          "societyId": "${sharedPrefs.societyId}",
-          "amenityName": txtName.text,
-          "description": txtDiscription.text,
-          "completeAddress": txtAddress.text,
-        });
-        Services.responseHandler(
-            apiName: "api/society/addSocietyAmenity", body: formData)
-            .then((responseData) {
-          print("ss");
-          if (responseData.Data.length != 0) {
-            print("sss");
-            print(responseData.Data);
-            widget.AllAmenitiesApi();
-            Fluttertoast.showToast(
-              msg: "Your Notice added Successfully.",
-            );
-            Navigator.pop(context);
-            setState(() {
-              isLoading = false;
-            });
-          } else {
+  _addNewAmenity3() async {
+    if (images != null && images.length > 0) {
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          setState(() {
+            isLoading = true;
+          });
+          String files = "";
+          String base64Image;
+          for (int i = 0; i < images.length; i++) {
+            ByteData byteData = await images[i].getByteData();
+            List<int> imageData = byteData.buffer.asUint8List();
+            base64Image = base64Encode(imageData);
+            if (i == images.length - 1) {
+              files += (base64Image);
+            } else {
+              files += (base64Image + ",");
+            }
+          }
+          var jsonMap = {
+            "images": files,
+            "societyId": sharedPrefs.societyId,
+            "amenityName": txtName.text,
+            "description": txtDiscription.text,
+            "completeAddress": txtAddress.text,
+          };
+          print(jsonMap);
+          Services.responseHandlerForBase64(
+                  apiName: "api/society/addSocietyAmenity", body: jsonMap)
+              .then((responseData) async {
             print(responseData);
+            if (responseData.Data.length > 0) {
+              setState(() {
+                isLoading = false;
+              });
+              widget.AllAmenitiesApi();
+              Fluttertoast.showToast(
+                msg: "Your Amenities added Successfully.",
+              );
+              Navigator.pop(context);
+            } else {
+              setState(() {
+                isLoading = false;
+              });
+              Fluttertoast.showToast(
+                msg: "${responseData.Message}",
+                backgroundColor: Colors.white,
+                textColor: appPrimaryMaterialColor,
+              );
+            }
+          }, onError: (error) {
             setState(() {
               isLoading = false;
             });
             Fluttertoast.showToast(
-              msg: "${responseData.Message}",
+              msg: "Error $error",
               backgroundColor: Colors.white,
               textColor: appPrimaryMaterialColor,
             );
-          }
-        }).catchError((error) {
-          setState(() {
-            isLoading = false;
           });
-          Fluttertoast.showToast(
-            msg: "Error $error",
-            backgroundColor: Colors.white,
-            textColor: appPrimaryMaterialColor,
-          );
-        });
+        }
+      } on SocketException catch (_) {
+        Fluttertoast.showToast(
+          msg: "You aren't connected to the Internet !",
+          backgroundColor: Colors.white,
+          textColor: appPrimaryMaterialColor,
+        );
       }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
+    } else
       Fluttertoast.showToast(
-        msg: "You aren't connected to the Internet !",
-        backgroundColor: Colors.white,
-        textColor: appPrimaryMaterialColor,
-      );
-    }
+          msg: "Please Select Images",
+          backgroundColor: Colors.red,
+          gravity: ToastGravity.TOP,
+          textColor: Colors.white);
   }
 
-  //working function.................................
-  _addNewAmenity2() async {
-    String url =
-        "https://watcher03.herokuapp.com/api/society/addSocietyAmenity";
-    List<MultipartFile> imageList = <MultipartFile>[];
+  //
+  // _addNewAmenity4() async {
+  //   try {
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //     final internetResult = await InternetAddress.lookup('google.com');
+  //     if (internetResult.isNotEmpty &&
+  //         internetResult[0].rawAddress.isNotEmpty) {
+  //       print("ss");
+  //       String files = "";
+  //       String base64Image;
+  //       print("sss");
+  //       for (int i = 0; i < images.length; i++) {
+  //         ByteData byteData = await images[i].getByteData();
+  //         List<int> imageData = byteData.buffer.asUint8List();
+  //         base64Image = base64Encode(imageData);
+  //         if (i == images.length - 1) {
+  //           files += (base64Image);
+  //         } else {
+  //           files += (base64Image + ",");
+  //         }
+  //       }
+  //       FormData formData = FormData.fromMap({
+  //         "images": files,
+  //         "societyId": sharedPrefs.societyId,
+  //         "amenityName": txtName.text,
+  //         "description": txtDiscription.text,
+  //         "completeAddress": txtAddress.text,
+  //       });
+  //       print(formData);
+  //       Services.responseHandler(
+  //               apiName: "api/society/addSocietyAmenity", body: formData)
+  //           .then((responseData) {
+  //         print("ss");
+  //         if (responseData.Data.length > 0) {
+  //           print("sss");
+  //           print(responseData.Data);
+  //           widget.AllAmenitiesApi();
+  //           Fluttertoast.showToast(
+  //             msg: "Your Notice added Successfully.",
+  //           );
+  //           Navigator.pop(context);
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //         } else {
+  //           print(responseData);
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //           Fluttertoast.showToast(
+  //             msg: "${responseData.Message}",
+  //             backgroundColor: Colors.white,
+  //             textColor: appPrimaryMaterialColor,
+  //           );
+  //         }
+  //       }).catchError((error) {
+  //         setState(() {
+  //           isLoading = false;
+  //         });
+  //         Fluttertoast.showToast(
+  //           msg: "Error $error",
+  //           backgroundColor: Colors.white,
+  //           textColor: appPrimaryMaterialColor,
+  //         );
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     Fluttertoast.showToast(
+  //       msg: "You aren't connected to the Internet !",
+  //       backgroundColor: Colors.white,
+  //       textColor: appPrimaryMaterialColor,
+  //     );
+  //   }
+  // }
 
-    // for (int i = 0; i < images.length; i++) {
-    //     ByteData byteData = await images[i].getByteData();
-    //     List<int> imageData = byteData.buffer.asUint8List();
-    //     File _imageEvent = await File(images[i].identifier);
-    //     MultipartFile multipartFile = new MultipartFile.fromBytes(
-    //       imageData,
-    //       filename: images[i].name,
-    //       contentType: MediaType("image", "png"),
-    //     );
-    //     imageList.add(multipartFile);
-    // }
-
-    for (Asset asset in images) {
-      ByteData byteData = await asset.getByteData();
-      List<int> imageData = byteData.buffer.asUint8List();
-      MultipartFile multipartFile = new MultipartFile.fromBytes(
-        imageData,
-        filename: asset.name,
-        contentType: MediaType("image", "png"),
-      );
-      imageList.add(multipartFile);
-    }
-    print(imageList);
-    FormData formData = FormData.fromMap({
-      "images": imageList,
-      "societyId": societyId,
-      "amenityName": txtName.text,
-      "description": txtDiscription.text,
-      "completeAddress": txtAddress.text,
-    });
-
-    Dio dio = new Dio();
-    dio.options.headers["authorization"] =
-    "RvHiQ6J4QJoAMeA0ysCw-HJklmBHklmnknNJn-hghJUdksjH";
-    var response = await dio.post(url, data: formData);
-    widget.AllAmenitiesApi();
-    Fluttertoast.showToast(
-      msg: "Your Amenities added Successfully.",
-    );
-    Navigator.pop(context);
-    print(response.data);
-    // }
-  }
-
+  // _addNewAmenity5() async {
+  //   print("s");
+  //   String url =
+  //       "https://watcher03.herokuapp.com/api/society/addSocietyAmenity";
+  //   // List<MultipartFile> imageList = <MultipartFile>[];
+  //   Map<String, String>  headers = {
+  //   "Authorization": "RvHiQ6J4QJoAMeA0ysCw-HJklmBHklmnknNJn-hghJUdksjH",
+  //   };
+  //   print("ss");
+  //   String files = "";
+  //   String base64Image;
+  //   print("sss");
+  //   for (int i = 0; i < images.length; i++) {
+  //     ByteData byteData = await images[i].getByteData();
+  //     List<int> imageData = byteData.buffer.asUint8List();
+  //     base64Image = base64Encode(imageData);
+  //     if (i == images.length - 1) {
+  //       files += (base64Image);
+  //     } else {
+  //       files += (base64Image + ",");
+  //     }
+  //   }
+  //   print("ssss");
+  //
+  //   var body = {
+  //     "images": files,
+  //     "societyId": sharedPrefs.societyId,
+  //     "amenityName": txtName.text,
+  //     "description": txtDiscription.text,
+  //     "completeAddress": txtAddress.text,
+  //   };
+  //   print(body);
+  //
+  //   print("sssss");
+  //
+  //   print("ssssss");
+  //   var response = await http.post(url, headers: headers,body: body);
+  //   print("sssssss");
+  //   widget.AllAmenitiesApi();
+  //   Fluttertoast.showToast(
+  //     msg: "Your Amenities added Successfully.",
+  //   );
+  //   Navigator.pop(context);
+  //   print(response);
+  // }
 
   List<Asset> images = <Asset>[];
   String _error = 'No Error Detected';
@@ -305,7 +561,8 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         // _apiCall();
-                        _addNewAmenity2();
+                        print("d");
+                        _addNewAmenity3();
                       }
                     },
                     title: "Add New",
@@ -475,7 +732,6 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
 //     );
 //   }
 // }
-
 
 // _addNewAmenity() async {
 //   for (int i = 0; i < images.length; i++) {
