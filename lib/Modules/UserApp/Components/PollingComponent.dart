@@ -45,7 +45,6 @@ class _PollingComponentState extends State<PollingComponent> {
     }
   }
 
-
   _givePollingAnswer() async {
     try {
       setState(() {
@@ -55,20 +54,25 @@ class _PollingComponentState extends State<PollingComponent> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "pollQuestionId" : widget.pollingData["_id"],
-          "pollOptionId" : AnswerId,
-          "memberId" : sharedPrefs.memberId,
+          "pollQuestionId": widget.pollingData["_id"],
+          "pollOptionId": AnswerId,
+          "memberId": sharedPrefs.memberId,
         };
         print("$body");
         Services.responseHandler(
-            apiName: "api/member/answerOfPollQuestion", body: body)
+                apiName: "api/member/answerOfPollQuestion", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             setState(() {
               // pollingDataList = responseData.Data;
               isLoading = false;
             });
-            // print("$pollingDataList");
+            Fluttertoast.showToast(
+              msg: "Your answer Submitted Successfully",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+            Navigator.pop(context);
           } else {
             print(responseData);
             setState(() {
@@ -122,113 +126,114 @@ class _PollingComponentState extends State<PollingComponent> {
             Padding(
               padding: const EdgeInsets.only(left: 12.0, top: 9),
               child: Text(
-                  "${widget.index}) " +
-                      "${widget.pollingData["pollQuestion"]}",
+                  "${widget.index}) " + "${widget.pollingData["pollQuestion"]}",
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(81, 92, 111, 1))),
             ),
-            Padding(
-              padding:
-              const EdgeInsets.only(left: 4.0, bottom: 6.0, top: 4),
-              child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount:
-                  widget.pollingData["PollOptions"].length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: _selectedIndex != null &&
-                                _selectedIndex == index
-                                ? Colors.grey[100]
-                                : Colors.white,
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(6.0))),
-                        child: FlatButton(
-                            onPressed: () {
-                              setState(() {
-                                _onSelected(index);
-                                AnswerId = widget
-                                    .pollingData["PollOptions"]
-                                [index]["_id"]
-                                    .toString();
-                                Answer = widget.pollingData["PollOptions"][index]["pollOption"].toString();
+            _submited
+                ? MyAnswerComponent(widget.pollingData, answerIndex)
+                : Padding(
+                    padding:
+                        const EdgeInsets.only(left: 4.0, bottom: 6.0, top: 4),
+                    child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: widget.pollingData["PollOptions"].length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: _selectedIndex != null &&
+                                          _selectedIndex == index
+                                      ? Colors.grey[100]
+                                      : Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(6.0))),
+                              child: FlatButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _onSelected(index);
+                                      AnswerId = widget
+                                          .pollingData["PollOptions"][index]
+                                              ["_id"]
+                                          .toString();
+                                      Answer = widget.pollingData["PollOptions"]
+                                              [index]["pollOption"]
+                                          .toString();
 
-                                print(AnswerId);
-                                print(Answer);
+                                      print(AnswerId);
+                                      print(Answer);
 
-                                print(widget
-                                    .pollingData["PollOptions"]
-                                [index]);
-                              });
-                            },
-                            child: Row(
-                              children: <Widget>[
-                                _selectedIndex != null &&
-                                    _selectedIndex == index
-                                    ? Image.asset(
-                                  'images/success.png',
-                                  width: 20,
-                                )
-                                    : Container(
-                                  width: 20,
-                                  height: 20,
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.all(
-                                          Radius.circular(100)),
-                                      border: Border.all(
-                                          width: 2,
-                                          color: Colors.grey)),
-                                ),
-                                Padding(
-                                  padding:
-                                  const EdgeInsets.only(left: 8.0),
-                                  child: Text(
-                                    "${widget.pollingData["PollOptions"][index]["pollOption"]}",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black54),
-                                  ),
-                                )
-                              ],
-                            )),
-                      ),
-                    );
-                  }),
-            ),
+                                      print(widget.pollingData["PollOptions"]
+                                          [index]);
+                                    });
+                                  },
+                                  child: Row(
+                                    children: <Widget>[
+                                      _selectedIndex != null &&
+                                              _selectedIndex == index
+                                          ? Image.asset(
+                                              'images/success.png',
+                                              width: 20,
+                                            )
+                                          : Container(
+                                              width: 20,
+                                              height: 20,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(100)),
+                                                  border: Border.all(
+                                                      width: 2,
+                                                      color: Colors.grey)),
+                                            ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          "${widget.pollingData["PollOptions"][index]["pollOption"]}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black54),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                          );
+                        }),
+                  ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _selectedIndex != null
                     ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                  decoration: BoxDecoration(
-                        color: appPrimaryMaterialColor,
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(6.0))),
-                        child: SizedBox(
-                  width: 100,
-                  height: 40,
-                  child: FlatButton(
-                          onPressed: () {
-                            _givePollingAnswer();
-                          },
-                          child: Text(
-                            "Save",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: Colors.white),
-                          )),
-                ),
-                      ),
-                    )
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: appPrimaryMaterialColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(6.0))),
+                          child: SizedBox(
+                            width: 100,
+                            height: 40,
+                            child: FlatButton(
+                                onPressed: () {
+                                  _givePollingAnswer();
+                                },
+                                child: Text(
+                                  "Save",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                )),
+                          ),
+                        ),
+                      )
                     : Container(),
               ],
             )
@@ -337,5 +342,53 @@ class _PollingComponentState extends State<PollingComponent> {
         ),
       ),
     );*/
+  }
+}
+
+class MyAnswerComponent extends StatefulWidget {
+  var PollingData;
+  int index;
+
+  MyAnswerComponent(this.PollingData, this.index);
+
+  @override
+  _MyAnswerComponentState createState() => _MyAnswerComponentState();
+}
+
+class _MyAnswerComponentState extends State<MyAnswerComponent> {
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(
+              left: 8.0, top: 5.0, bottom: 8.0, right: 6.0),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.all(Radius.circular(6.0))),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0, top: 12, bottom: 12),
+              child: Row(
+                children: <Widget>[
+                  Image.asset(
+                    'images/success.png',
+                    width: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "${widget.PollingData["PollingOptionList"][widget.index]["Title"]}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600, color: Colors.black54),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    );
   }
 }

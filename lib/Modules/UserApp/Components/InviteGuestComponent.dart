@@ -4,7 +4,9 @@ import 'package:watcher_app_for_user/Modules/UserApp/Components/GetPass.dart';
 
 class InviteGuestComponent extends StatefulWidget {
   var guestData;
+
   InviteGuestComponent({this.guestData});
+
   @override
   _InviteGuestComponentState createState() => _InviteGuestComponentState();
 }
@@ -29,11 +31,16 @@ class _InviteGuestComponentState extends State<InviteGuestComponent> {
                 child: Container(
                   width: 57.0,
                   height: 57.0,
-                  child: Image.network("${widget.guestData["guestImage"]}"),
+                  child: widget.guestData["guestImage"] == "" ||
+                          widget.guestData["guestImage"] == null
+                      ? Image.asset(
+                          'images/maleavtar.png',
+                        )
+                      : Image.network("${widget.guestData["guestImage"]}"),
                   decoration: new BoxDecoration(
                     color: Color(0x22888888),
                     borderRadius:
-                    new BorderRadius.all(new Radius.circular(90.0)),
+                        new BorderRadius.all(new Radius.circular(90.0)),
                     border: new Border.all(
                       color: Colors.grey,
                       width: 0.5,
