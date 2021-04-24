@@ -52,7 +52,11 @@ class _MyPropertiesState extends State<MyProperties> {
                       mainAxisSpacing: 1.0),
                   itemBuilder: (BuildContext context, int index) {
                     return MyPropertiesComponent(
-                        myPropertyData: myPropertyList[index]);
+                      myPropertyData: myPropertyList[index],
+                      memberDataApi: () {
+                        _getMyProperties();
+                      },
+                    );
                   },
                   itemCount: myPropertyList.length,
                 )

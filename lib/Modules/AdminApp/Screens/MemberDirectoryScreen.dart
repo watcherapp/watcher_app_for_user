@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/MemberDirectoryComponent.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
@@ -148,12 +149,12 @@ class _MemberDirectoryScreenState extends State<MemberDirectoryScreen> {
             onPressed: () {
               Navigator.of(context).pop();
             }),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_active_rounded),
-            onPressed: () {},
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.notifications_active_rounded),
+        //     onPressed: () {},
+        //   ),
+        // ],
         title: Text(
           "Member Directory",
         ),
@@ -188,6 +189,8 @@ class _MemberDirectoryScreenState extends State<MemberDirectoryScreen> {
                         onTap: () {
                           setState(() {
                             selectedW = index;
+                            _getAllWingsMember(
+                                wingId: getAllWingList[index]["_id"]);
                           });
                           // _getAllFlats(wingId: getAllWingList[index]["_id"]);
                           print("${getAllWingList[index]["wingName"]}");
@@ -322,82 +325,92 @@ class _MemberDirectoryScreenState extends State<MemberDirectoryScreen> {
                     child: ListView.builder(
                       itemBuilder: (_, index) => Container(
                         height: 120,
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                getAllWingMemberData[index]["memberImage"] == null || getAllWingMemberData[index]["memberImage"] == ""
-                                    ? Image.asset(
-                                        'images/user.png',
-                                        width: 70,
-                                        height: 70,
-                                      )
-                                    : Padding(
-                                  padding: const EdgeInsets.only(top: 3.0),
-                                  child: Container(
-                                    height: 70.0,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                      // borderRadius: BorderRadius.circular(30),
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                          width: 0.2,
-                                          color: appPrimaryMaterialColor),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                          API_URL + getAllWingMemberData[index]["memberImage"],
-                                        ),
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "${getAllWingMemberData[index]["firstName"]} ${getAllWingMemberData[index]["lastName"]}",
-                                      style: TextStyle(
-                                          color: appPrimaryMaterialColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                        "${getAllWingMemberData[index]["FlatData"][0]["flatNo"]}"),
-                                    SizedBox(
-                                      height: 2,
-                                    ),
-                                    Text(
-                                        '${getAllWingMemberData[index]["mobileNo1"]}'),
-                                    SizedBox(
-                                      height: 2,
-                                    ),
-                                    Text('Resident'),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 105,
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.message),
-                                  iconSize: 25,
-                                ),
-                              ],
-                            ),
-                          ),
+                        child: MemberDirectoryComponent(
+                          memberData: getAllWingMemberData[index],
                         ),
+                        // child: Card(
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(5.0),
+                        //     child: Row(
+                        //       children: [
+                        //         SizedBox(
+                        //           width: 10,
+                        //         ),
+                        //         getAllWingMemberData[index]["memberImage"] ==
+                        //                     null ||
+                        //                 getAllWingMemberData[index]
+                        //                         ["memberImage"] ==
+                        //                     ""
+                        //             ? Image.asset(
+                        //                 'images/user.png',
+                        //                 width: 70,
+                        //                 height: 70,
+                        //               )
+                        //             : Padding(
+                        //                 padding:
+                        //                     const EdgeInsets.only(top: 3.0),
+                        //                 child: Container(
+                        //                   height: 70.0,
+                        //                   width: 70,
+                        //                   decoration: BoxDecoration(
+                        //                     // borderRadius: BorderRadius.circular(30),
+                        //                     color: Colors.white,
+                        //                     shape: BoxShape.circle,
+                        //                     border: Border.all(
+                        //                         width: 0.2,
+                        //                         color: appPrimaryMaterialColor),
+                        //                     image: DecorationImage(
+                        //                       image: NetworkImage(
+                        //                         API_URL +
+                        //                             getAllWingMemberData[index]
+                        //                                 ["memberImage"],
+                        //                       ),
+                        //                       fit: BoxFit.fill,
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //         SizedBox(
+                        //           width: 15,
+                        //         ),
+                        //         Column(
+                        //           crossAxisAlignment: CrossAxisAlignment.start,
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Text(
+                        //               "${getAllWingMemberData[index]["firstName"]} ${getAllWingMemberData[index]["lastName"]}",
+                        //               style: TextStyle(
+                        //                   color: appPrimaryMaterialColor,
+                        //                   fontWeight: FontWeight.bold,
+                        //                   fontSize: 14),
+                        //             ),
+                        //             SizedBox(
+                        //               height: 5,
+                        //             ),
+                        //             Text(
+                        //                 "${getAllWingMemberData[index]["FlatData"][0]["flatNo"]}"),
+                        //             SizedBox(
+                        //               height: 2,
+                        //             ),
+                        //             Text(
+                        //                 '${getAllWingMemberData[index]["mobileNo1"]}'),
+                        //             SizedBox(
+                        //               height: 2,
+                        //             ),
+                        //             Text('Resident'),
+                        //           ],
+                        //         ),
+                        //         SizedBox(
+                        //           width: 105,
+                        //         ),
+                        //         IconButton(
+                        //           icon: Icon(Icons.message),
+                        //           iconSize: 25,
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                       ),
                       // itemCount: 8,
                       itemCount: getAllWingMemberData.length,

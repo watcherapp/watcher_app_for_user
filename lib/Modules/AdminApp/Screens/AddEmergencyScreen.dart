@@ -58,7 +58,8 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
       ),
     );
 
-    print(file.toString());
+    print(file);
+    // print(file.toString());
   }
 
   void _settingModalBottomSheet() {
@@ -85,7 +86,9 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        String fileName = imagePath.path.split('/').last;
+        String fileName = imagePath.path
+            .split('/')
+            .last;
 
         FormData formData = FormData.fromMap({
           "societyId": sharedPrefs.societyId,
@@ -98,7 +101,7 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
         });
         print("$formData");
         Services.responseHandler(
-                apiName: "api/admin/addEmergencyNumber", body: formData)
+            apiName: "api/admin/addEmergencyNumber", body: formData)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -188,35 +191,35 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
                         child: Center(
                           child: imagePath != null
                               ? Container(
-                                  height: 200.0,
-                                  decoration: BoxDecoration(
-                                    // borderRadius: BorderRadius.circular(30),
-                                    shape: BoxShape.rectangle,
-                                    /* border: Border.all(
+                            height: 200.0,
+                            decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(30),
+                              shape: BoxShape.rectangle,
+                              /* border: Border.all(
                                         width: 0.2,
                                         color: appPrimaryMaterialColor),*/
-                                    image: DecorationImage(
-                                        image: FileImage(
-                                          imagePath,
-                                        ),
-                                        fit: BoxFit.contain),
+                              image: DecorationImage(
+                                  image: FileImage(
+                                    imagePath,
                                   ),
-                                )
+                                  fit: BoxFit.contain),
+                            ),
+                          )
                               : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset("images/id-card.png",
-                                        color: Colors.grey[300],
-                                        width: 40.0,
-                                        height: 40.0),
-                                    Text(
-                                      "Choose Image",
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                ),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset("images/id-card.png",
+                                  color: Colors.grey[300],
+                                  width: 40.0,
+                                  height: 40.0),
+                              Text(
+                                "Choose Image",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
                         ),
                       )),
                 ),
@@ -311,15 +314,18 @@ class _EmergencyBottomSheetState extends State<EmergencyBottomSheet> {
         return GestureDetector(
           onTap: () {
             widget.setImagePath(
-              Fields[index]["img"].toString(),
-            );
-            Navigator.of(context).pop();
+                Fields[index]["img"].toString(),
+                );
+                Navigator.of(context).pop();
           },
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 5.0, bottom: 5, right: 3, left: 3),
+            const EdgeInsets.only(top: 5.0, bottom: 5, right: 3, left: 3),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.13,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.13,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.grey, width: 0.5),
