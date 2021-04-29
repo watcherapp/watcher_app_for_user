@@ -10,9 +10,11 @@ import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class MemberDirectoryComponent extends StatefulWidget {
   var memberData;
+  Function memberDataApi;
 
   MemberDirectoryComponent({
     this.memberData,
+    this.memberDataApi,
   });
 
   @override
@@ -105,6 +107,9 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                             child: MemberAllInfo(
                               memberMobileNo: widget.memberData["mobileNo1"],
                               memberId: widget.memberData["_id"],
+                              memberApi: (){
+                                widget.memberDataApi();
+                              },
                             ),
                             type: PageTransitionType.rightToLeft));
                   },
@@ -121,10 +126,12 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
 class MemberAllInfo extends StatefulWidget {
   var memberMobileNo;
   var memberId;
+  Function memberApi;
 
   MemberAllInfo({
     this.memberMobileNo,
     this.memberId,
+    this.memberApi
   });
 
   @override
@@ -209,8 +216,70 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
         Services.responseHandler(
             apiName: "api/admin/removeMember", body: body)
             .then((responseData) {
+          if (responseData.Data == 1) {
+            print(responseData.Data);
+            widget.memberApi();
+            Navigator.pop(context);
+            // dataList = responseData.Data;
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
+    }
+  }
+
+  _assignAsAdmin() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "memberId": dataList[0]["_id"],
+          "adminId" : sharedPrefs.memberId,
+          "assignRole" : 1,
+          "societyId" : sharedPrefs.societyId,
+        };
+        print(body);
+        Services.responseHandler(
+            apiName: "api/admin/assignUserRole", body: body)
+            .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
+            // widget.memberApi();
+            Navigator.pop(context);
             // dataList = responseData.Data;
             setState(() {
               isLoading = false;
@@ -316,7 +385,7 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
                             ),
                       SizedBox(height: 20,),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           OutlineButton(
                             child: new Text(
@@ -331,6 +400,23 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
                               _deleteMember();
                             },
                             borderSide: BorderSide(color: Colors.red),
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          OutlineButton(
+                            child: new Text(
+                              "Assign as Admin",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                            onPressed: () {
+                              _assignAsAdmin();
+                            },
+                            borderSide: BorderSide(color: Colors.green),
                             shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(5.0),
                             ),

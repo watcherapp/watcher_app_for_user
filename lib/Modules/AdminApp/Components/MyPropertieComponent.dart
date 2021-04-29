@@ -56,7 +56,16 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setPreferences();
+        if(widget.myPropertyData["MemberData"][0]["society"]["isApprove"] == true){
+          setPreferences();
+        }else{
+          Fluttertoast.showToast(
+            msg: "You are not authorized to access this Please contact Admin of Society",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        }
+
       },
       child: Card(
         elevation: 3,
@@ -227,7 +236,7 @@ class _ShowDialogState extends State<ShowDialog> {
             Text(
               'Leave the Flat  (${widget.memberData["WingData"][0]["wingName"]} - ${widget.memberData["flatNo"]})',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: appPrimaryMaterialColor
               ),

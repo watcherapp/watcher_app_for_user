@@ -9,6 +9,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ComplaintsScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MemberApprovelScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/EmergencyScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/InteractionScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MemberDirectoryScreen.dart';
@@ -35,15 +36,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     ),
     MyVisitors(),
     AdminDashbordComponent(),
-    Container(
-      child: Center(
-        child: Text(
-          "Hello",
-          style: TextStyle(
-              color: appPrimaryMaterialColor, fontWeight: FontWeight.bold),
-        ),
-      ),
-    ),
+    MemberApprovelScreen(),
     MyProfile(),
   ];
   List dashFields = [

@@ -327,6 +327,9 @@ class _MemberDirectoryScreenState extends State<MemberDirectoryScreen> {
                         height: 120,
                         child: MemberDirectoryComponent(
                           memberData: getAllWingMemberData[index],
+                          memberDataApi: (){
+                            _getAllWingsMember();
+                          },
                         ),
                         // child: Card(
                         //   child: Padding(
