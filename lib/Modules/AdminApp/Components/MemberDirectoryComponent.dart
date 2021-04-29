@@ -276,7 +276,7 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
         Services.responseHandler(
             apiName: "api/admin/assignUserRole", body: body)
             .then((responseData) {
-          if (responseData.Data.length > 0) {
+          if (responseData.Data ==  1) {
             print(responseData.Data);
             // widget.memberApi();
             Navigator.pop(context);
