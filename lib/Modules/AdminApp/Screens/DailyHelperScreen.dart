@@ -16,7 +16,7 @@ class DailyHelperScreen extends StatefulWidget {
 
 class _DailyHelperScreenState extends State<DailyHelperScreen> {
   bool isLoading = false;
-  List amenitiesList = [];
+  List societyStaffList = [];
 
   @override
   void initState() {
@@ -39,31 +39,31 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
                 apiName: "api/admin/getSocietyStaff", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
-            amenitiesList = responseData.Data;
-            print(amenitiesList);
+            societyStaffList = responseData.Data;
+            print(societyStaffList);
             setState(() {
               isLoading = false;
             });
           } else {
-           print(responseData);
+            print(responseData);
             setState(() {
               isLoading = false;
             });
             Fluttertoast.showToast(
-                msg: "${responseData.Message}",
-                backgroundColor: Colors.white,
-                textColor: appPrimaryMaterialColor,
-                );
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
           }
         }).catchError((error) {
           setState(() {
             isLoading = false;
           });
           Fluttertoast.showToast(
-              msg: "Error $error",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-              );
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
         });
       }
     } catch (e) {
@@ -71,10 +71,10 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
         isLoading = false;
       });
       Fluttertoast.showToast(
-          msg: "You aren't connected to the Internet !",
-          backgroundColor: Colors.white,
-          textColor: appPrimaryMaterialColor,
-          );
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
     }
   }
 
@@ -92,116 +92,161 @@ class _DailyHelperScreenState extends State<DailyHelperScreen> {
       ),
       body: isLoading
           ? Center(
-        child: CircularProgressIndicator(
-          valueColor:
-          new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
-        ),
-      )
+              child: CircularProgressIndicator(
+                valueColor:
+                    new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+              ),
+            )
           : ListView.builder(
-        itemCount: amenitiesList.length,
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.only(
-            right: 5,
-            left: 5,
-          ),
-          child: GestureDetector(
-            onTap: () {
-              // Navigator.push(
-              //     context,
-              //     PageTransition(
-              //         child: DailyHelperSubScreen(),
-              //         type: PageTransitionType.rightToLeft));
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => ShowDialog());
-            },
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    // Image.asset('images/user.png', width: 50, height: 50),
-                    Image.network(
-                      amenitiesList[index]["staffImage"],
-                      width: 50,
-                      height: 50,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "${amenitiesList[index]["firstName"]} " +
-                              "${amenitiesList[index]["lastName"]}",
-                          style: TextStyle(
-                              color: appPrimaryMaterialColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        // Text('B1 - 07'),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          amenitiesList[index]["mobileNo1"],
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        // Text('Resident'),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 105,
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        print(amenitiesList[index]["mobileNo1"]);
-                      },
-                      icon: Icon(
-                        Icons.call,
-                        color: Colors.green,
+              itemCount: societyStaffList.length,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.only(
+                  right: 5,
+                  left: 5,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.push(
+                    //     context,
+                    //     PageTransition(
+                    //         child: DailyHelperSubScreen(),
+                    //         type: PageTransitionType.rightToLeft));
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => ShowDialog());
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              // Image.asset('images/user.png', width: 50, height: 50),
+                              societyStaffList[index]["staffImage"] == null ||
+                                      societyStaffList[index]["staffImage"] ==
+                                          ""
+                                  ? Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                          // border: Border.all(
+                                          //     width: 1, color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                          color: appPrimaryMaterialColor),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            "${societyStaffList[index]["firstName"].toString().substring(0, 1).toUpperCase()}",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18)),
+                                      ),
+                                    )
+                                  : Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                               API_URL + societyStaffList[index]
+                                                    ["staffImage"]),
+                                            fit: BoxFit.fill,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                          color: appPrimaryMaterialColor),
+                                    ),
+                              // Image.network(
+                              //   societyStaffList[index]["staffImage"],
+                              //   width: 50,
+                              //   height: 50,
+                              // ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${societyStaffList[index]["firstName"]} " +
+                                        "${societyStaffList[index]["lastName"]}",
+                                    style: TextStyle(
+                                        color: appPrimaryMaterialColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  // Text('B1 - 07'),
+                                  SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(
+                                    societyStaffList[index]["mobileNo1"],
+                                  ),
+                                  SizedBox(
+                                    height: 2,
+                                  ),
+                                  // Text('Resident'),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  print(societyStaffList[index]["mobileNo1"]);
+                                },
+                                icon: Icon(
+                                  Icons.call,
+                                  color: Colors.green,
+                                ),
+                                iconSize: 25,
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //     context,
+                                  //     PageTransition(
+                                  //         child: DailyHelperSubScreen(
+                                  //           helperData: societyStaffList[index]["workingLocation"][index],
+                                  //         ),
+                                  //         type: PageTransitionType.rightToLeft));
+                                },
+                                child: Container(
+                                  height: 20,
+                                  width: 20,
+                                  child: Image.asset(
+                                    "images/rightArrow.png",
+                                    color: appPrimaryMaterialColor,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      iconSize: 25,
                     ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     PageTransition(
-                        //         child: DailyHelperSubScreen(
-                        //           helperData: amenitiesList[index]["workingLocation"][index],
-                        //         ),
-                        //         type: PageTransitionType.rightToLeft));
-                      },
-                      child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "images/rightArrow.png",
-                          color: appPrimaryMaterialColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -314,8 +359,7 @@ class DailyHelperSubScreen extends StatefulWidget {
 
 class _DailyHelperSubScreenState extends State<DailyHelperSubScreen> {
   bool isLoading = false;
-  List flatList =[];
-
+  List flatList = [];
 
   @override
   void initState() {
@@ -332,12 +376,12 @@ class _DailyHelperSubScreenState extends State<DailyHelperSubScreen> {
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
           "societyId": sharedPrefs.societyId,
-          "wingId" : widget.helperData["flatId"]["wingId"]["_id"],
-          "flatId" : widget.helperData["flatId"]["_id"],
+          "wingId": widget.helperData["flatId"]["wingId"]["_id"],
+          "flatId": widget.helperData["flatId"]["_id"],
         };
         print("$body");
         Services.responseHandler(
-            apiName: "api/admin/getMembersOfFlat", body: body)
+                apiName: "api/admin/getMembersOfFlat", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             flatList = responseData.Data;
@@ -346,25 +390,25 @@ class _DailyHelperSubScreenState extends State<DailyHelperSubScreen> {
               isLoading = false;
             });
           } else {
-           print(responseData);
+            print(responseData);
             setState(() {
               isLoading = false;
             });
             Fluttertoast.showToast(
-                msg: "${responseData.Message}",
-                backgroundColor: Colors.white,
-                textColor: appPrimaryMaterialColor,
-                );
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
           }
         }).catchError((error) {
           setState(() {
             isLoading = false;
           });
           Fluttertoast.showToast(
-              msg: "Error $error",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-              );
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
         });
       }
     } catch (e) {
@@ -372,12 +416,13 @@ class _DailyHelperSubScreenState extends State<DailyHelperSubScreen> {
         isLoading = false;
       });
       Fluttertoast.showToast(
-          msg: "You aren't connected to the Internet !",
-          backgroundColor: Colors.white,
-          textColor: appPrimaryMaterialColor,
-          );
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

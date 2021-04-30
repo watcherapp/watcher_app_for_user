@@ -15,6 +15,7 @@ import 'package:watcher_app_for_user/Modules/UserApp/Components/FamilyMemberComp
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyResidentComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVehicleComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddFamilyMember.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/JoinNewFlatInSociety.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UpdateMemberProfile.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddMyStaff.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/VehicleScreen.dart';
@@ -30,6 +31,7 @@ class _MyWatcherState extends State<MyWatcher> {
   List vehicleList = [];
   List staffList = [];
   List memberList = [];
+  List myPropertyList = [];
   bool ismemberLoading;
   bool isLoading = false;
 
@@ -40,6 +42,7 @@ class _MyWatcherState extends State<MyWatcher> {
     _getMyStaff();
     _getMyVehical();
     _memberDetail();
+    _getMyProperties();
   }
 
   @override
@@ -129,13 +132,12 @@ class _MyWatcherState extends State<MyWatcher> {
                                     context,
                                     PageTransition(
                                         child: UpdateMemberProfile(
-                                          myProfileFun: (){
+                                          myProfileFun: () {
                                             _memberDetail();
                                           },
                                           profileData: memberList,
                                         ),
-                                        type: PageTransitionType
-                                            .rightToLeft));
+                                        type: PageTransitionType.rightToLeft));
                               },
                               color: appPrimaryMaterialColor)
                         ],
@@ -154,10 +156,25 @@ class _MyWatcherState extends State<MyWatcher> {
                       child: ListView.builder(
                           physics: BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: length + 1,
+                          itemCount: myPropertyList.length + 1,
                           itemBuilder: (context, index) {
-                            if (index > length - 1) {
-                              return AddComponent(width: 100, onTap: () {});
+                            if (index > myPropertyList.length - 1) {
+                              return AddComponent(
+                                width: 100,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          child:  JoinNewFlatInSociety(
+                                            memberPropertyApi: (){
+                                              _getMyProperties();
+                                            },
+                                          ),
+                                          type: PageTransitionType
+                                              .rightToLeft));
+
+                                },
+                              );
                             } else {
                               return isLoading
                                   ? Padding(
@@ -171,7 +188,9 @@ class _MyWatcherState extends State<MyWatcher> {
                                         ),
                                       ),
                                     )
-                                  : MyResidentComponent();
+                                  : MyResidentComponent(
+                                      memberPropertyData: myPropertyList[index],
+                                    );
                             }
                           }),
                     ),
@@ -200,7 +219,7 @@ class _MyWatcherState extends State<MyWatcher> {
                                         context,
                                         PageTransition(
                                             child: AddFamilyMember(
-                                              memberApi: (){
+                                              memberApi: () {
                                                 _getMyFamilyMember();
                                               },
                                             ),
@@ -249,7 +268,7 @@ class _MyWatcherState extends State<MyWatcher> {
                                         context,
                                         PageTransition(
                                             child: AddMyStaff(
-                                              staffDataApi: (){
+                                              staffDataApi: () {
                                                 _getMyStaff();
                                               },
                                             ),
@@ -675,6 +694,61 @@ class _MyWatcherState extends State<MyWatcher> {
         ismemberLoading = false;
       });
       Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
+
+  _getMyProperties() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "memberId": "${sharedPrefs.memberId}",
+        };
+        print("$body");
+        Services.responseHandler(
+                apiName: "api/member/getMemberSociety", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              myPropertyList = responseData.Data;
+              isLoading = false;
+            });
+            print("myPropertyList--------------${myPropertyList}");
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
     }
   }
 }

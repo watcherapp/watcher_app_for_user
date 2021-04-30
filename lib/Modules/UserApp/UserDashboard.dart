@@ -5,6 +5,7 @@ import 'package:watcher_app_for_user/CommonWidgets/BottomNavigationBarWithFab.da
 import 'package:watcher_app_for_user/Constants/ClassList.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
+import 'package:watcher_app_for_user/Dialogs/EntryConformationPopup.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MoreScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserHomeScreen.dart';
@@ -21,7 +22,7 @@ class _UserDashboardState extends State<UserDashboard> {
     MyWatcher(),
     UserVisitorList(),
     UserHomeScreen(),
-    Container(),
+    EntryConfirmationPopup(),
     MoreScreen()
   ];
 

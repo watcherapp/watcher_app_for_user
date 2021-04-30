@@ -9,7 +9,6 @@ import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 
-
 class MyVisitors extends StatefulWidget {
   @override
   _MyVisitorsState createState() => _MyVisitorsState();
@@ -29,16 +28,17 @@ class _MyVisitorsState extends State<MyVisitors> {
   TabController _tabController;
   List<Widget> tabs;
 
-  bool isOpen = false;
-  DateTime selectedFromDate = DateTime.now();
-  DateTime selectedToDate = DateTime.now();
+  //gest...............
+  bool isOpenG = false;
+  DateTime selectedFromDateG = DateTime.now();
+  DateTime selectedToDateG = DateTime.now();
 
-  var fromDate = DateFormat('dd / MM / yyyy');
-  var toDate = DateFormat('dd / MM / yyyy');
+  var fromDateG = DateFormat('dd / MM / yyyy');
+  var toDateG = DateFormat('dd / MM / yyyy');
 
-  var dateFormate = DateFormat('dd/MM/yyyy');
+  var dateFormateG = DateFormat('dd/MM/yyyy');
 
-  showToDatePicker(BuildContext context, var forDate) async {
+  showToDatePickerG(BuildContext context, var forDate) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
@@ -46,14 +46,75 @@ class _MyVisitorsState extends State<MyVisitors> {
         lastDate: DateTime(2101));
 
     if (forDate == "fromDate") {
-      if (picked != null && picked != selectedFromDate)
+      if (picked != null && picked != selectedFromDateG)
         setState(() {
-          selectedFromDate = picked;
+          selectedFromDateG = picked;
         });
     } else if (forDate == "toDate") {
-      if (picked != null && picked != selectedToDate)
+      if (picked != null && picked != selectedToDateG)
         setState(() {
-          selectedToDate = picked;
+          selectedToDateG = picked;
+        });
+    }
+  }
+
+  //staff...................
+  bool isOpenS = false;
+  DateTime selectedFromDateS = DateTime.now();
+  DateTime selectedToDateS = DateTime.now();
+
+  var fromDateS = DateFormat('dd / MM / yyyy');
+  var toDateS = DateFormat('dd / MM / yyyy');
+
+  var dateFormateS = DateFormat('dd/MM/yyyy');
+
+  showToDatePickerS(BuildContext context, var forDate) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2101));
+
+    if (forDate == "fromDate") {
+      if (picked != null && picked != selectedFromDateS)
+        setState(() {
+          selectedFromDateS = picked;
+        });
+    } else if (forDate == "toDate") {
+      if (picked != null && picked != selectedToDateS)
+        setState(() {
+          selectedToDateS = picked;
+        });
+    }
+  }
+
+  //vendor.......................
+
+  bool isOpenV = false;
+  DateTime selectedFromDateV = DateTime.now();
+  DateTime selectedToDateV = DateTime.now();
+
+  var fromDateV = DateFormat('dd / MM / yyyy');
+  var toDateV = DateFormat('dd / MM / yyyy');
+
+  var dateFormateV = DateFormat('dd/MM/yyyy');
+
+  showToDatePickerV(BuildContext context, var forDate) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2101));
+
+    if (forDate == "fromDate") {
+      if (picked != null && picked != selectedFromDateV)
+        setState(() {
+          selectedFromDateV = picked;
+        });
+    } else if (forDate == "toDate") {
+      if (picked != null && picked != selectedToDateV)
+        setState(() {
+          selectedToDateV = picked;
         });
     }
   }
@@ -94,8 +155,8 @@ class _MyVisitorsState extends State<MyVisitors> {
         var body = {
           "societyId": sharedPrefs.societyId,
           "type": "0",
-          // "fromDate" : "15/03/2021",
-          // "toDate" : "30/03/2021"
+          "fromDate": dateFormateG.format(selectedFromDateG),
+          "toDate": dateFormateG.format(selectedToDateG),
         };
         print("$body");
         Services.responseHandler(
@@ -152,8 +213,8 @@ class _MyVisitorsState extends State<MyVisitors> {
         var body = {
           "societyId": sharedPrefs.societyId,
           "type": "1",
-          // "fromDate" : "15/03/2021",
-          // "toDate" : "30/03/2021"
+          "fromDate": dateFormateS.format(selectedFromDateS),
+          "toDate": dateFormateS.format(selectedToDateS),
         };
         print("$body");
         Services.responseHandler(
@@ -210,8 +271,8 @@ class _MyVisitorsState extends State<MyVisitors> {
         var body = {
           "societyId": sharedPrefs.societyId,
           "type": "2",
-          // "fromDate" : "15/03/2021",
-          // "toDate" : "30/03/2021"
+          "fromDate": dateFormateV.format(selectedFromDateV),
+          "toDate": dateFormateV.format(selectedToDateV),
         };
         print("$body");
         Services.responseHandler(
@@ -297,96 +358,6 @@ class _MyVisitorsState extends State<MyVisitors> {
                     child: TabBarView(
                       physics: BouncingScrollPhysics(),
                       children: [
-                        // for (int i = 0; i < wingList.length; i++) ...[
-                        //   Container(
-                        //     child: ListView.builder(
-                        //       itemBuilder: (_, index) => Container(
-                        //         height: 100,
-                        //         child: Card(
-                        //           child: Padding(
-                        //             padding: const EdgeInsets.all(5.0),
-                        //             child: Row(
-                        //               children: [
-                        //                 SizedBox(
-                        //                   width: 10,
-                        //                 ),
-                        //                 // getAllWingMemberData[index]["memberImage"] == null || getAllWingMemberData[index]["memberImage"] == ""
-                        //                 true == true
-                        //                     ? Image.asset(
-                        //                         'images/user.png',
-                        //                         width: 70,
-                        //                         height: 70,
-                        //                       )
-                        //                     : Padding(
-                        //                         padding: const EdgeInsets.only(
-                        //                             top: 3.0),
-                        //                         child: Container(
-                        //                           height: 70.0,
-                        //                           width: 70,
-                        //                           decoration: BoxDecoration(
-                        //                             // borderRadius: BorderRadius.circular(30),
-                        //                             color: Colors.white,
-                        //                             shape: BoxShape.circle,
-                        //                             border: Border.all(
-                        //                                 width: 0.2,
-                        //                                 color:
-                        //                                     appPrimaryMaterialColor),
-                        //                             image: DecorationImage(
-                        //                               image: NetworkImage(
-                        //                                 "",
-                        //                               ),
-                        //                               fit: BoxFit.fill,
-                        //                             ),
-                        //                           ),
-                        //                         ),
-                        //                       ),
-                        //                 SizedBox(
-                        //                   width: 15,
-                        //                 ),
-                        //                 Column(
-                        //                   crossAxisAlignment:
-                        //                       CrossAxisAlignment.start,
-                        //                   mainAxisAlignment:
-                        //                       MainAxisAlignment.center,
-                        //                   children: [
-                        //                     Text(
-                        //                       "smit vaghani",
-                        //                       style: TextStyle(
-                        //                           color:
-                        //                               appPrimaryMaterialColor,
-                        //                           fontWeight: FontWeight.bold,
-                        //                           fontSize: 14),
-                        //                     ),
-                        //                     SizedBox(
-                        //                       height: 5,
-                        //                     ),
-                        //                     SizedBox(
-                        //                       height: 2,
-                        //                     ),
-                        //                     Text(
-                        //                         '8735069293'),
-                        //                     SizedBox(
-                        //                       height: 2,
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //                 SizedBox(
-                        //                   width: 105,
-                        //                 ),
-                        //                 IconButton(
-                        //                   icon: Icon(Icons.message),
-                        //                   iconSize: 25,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //       // itemCount: 8,
-                        //       itemCount: 10,
-                        //     ),
-                        //   ),
-                        // ],
                         isLoading
                             ? Padding(
                                 padding: const EdgeInsets.only(top: 100),
@@ -399,804 +370,863 @@ class _MyVisitorsState extends State<MyVisitors> {
                                   ),
                                 ),
                               )
-                            : guestList.length == 0
-                                ? Center(
-                                    child: Text("No Guest Entry Found"),
-                                  )
-                                : Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 8, top: 14, left: 8),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                isOpen = !isOpen;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 25,
-                                              decoration: BoxDecoration(
+                            : Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8, top: 14, left: 8),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              isOpenG = !isOpenG;
+                                            });
+                                          },
+                                          child: Container(
+                                            height: 25,
+                                            decoration: BoxDecoration(
                                                 // color: Colors.white,
-                                                  border: Border.all(
-                                                    color: appPrimaryMaterialColor,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                  BorderRadius.circular(4.0)),
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 6.0,
-                                                    right: 4.0,
-                                                    top: 2.0,
-                                                    bottom: 2.0),
-                                                child: Row(
-                                                  children: [
-                                                    Image.asset(
-                                                      "images/filter.png",
-                                                      width: 16,
-                                                      color: appPrimaryMaterialColor,
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          left: 6.0, right: 3),
-                                                      child: Text(
-                                                        "Filter",
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontWeight: FontWeight.bold,
-                                                            color:
-                                                            appPrimaryMaterialColor),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                border: Border.all(
+                                                  color:
+                                                      appPrimaryMaterialColor,
+                                                  width: 1,
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                          // GestureDetector(
-                                          //   onTap: () {
-                                          //     Navigator.push(
-                                          //         context,
-                                          //         PageTransition(
-                                          //             child: InviteGuest(onSaved: () {
-                                          //               _getAllvisitor();
-                                          //             }),
-                                          //             type: PageTransitionType.rightToLeft));
-                                          //   },
-                                          //   child: Container(
-                                          //     height: 25,
-                                          //     decoration: BoxDecoration(
-                                          //       // color: Colors.white,
-                                          //         border: Border.all(
-                                          //           color: appPrimaryMaterialColor,
-                                          //           width: 1,
-                                          //         ),
-                                          //         borderRadius: BorderRadius.circular(4.0)),
-                                          //     child: Padding(
-                                          //       padding: const EdgeInsets.only(
-                                          //           left: 4.0, right: 4.0, top: 2.0, bottom: 2.0),
-                                          //       child: Row(
-                                          //         children: [
-                                          //           Icon(
-                                          //             Icons.add_circle_outline_sharp,
-                                          //             size: 16,
-                                          //             color: appPrimaryMaterialColor,
-                                          //           ),
-                                          //           Padding(
-                                          //             padding:
-                                          //             const EdgeInsets.only(left: 4.0, right: 3),
-                                          //             child: Text(
-                                          //               "Add",
-                                          //               style: TextStyle(
-                                          //                   fontSize: 12,
-                                          //                   fontWeight: FontWeight.bold,
-                                          //                   color: appPrimaryMaterialColor),
-                                          //             ),
-                                          //           ),
-                                          //         ],
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // )
-                                        ],
-                                      ),
-                                    ),
-                                    isOpen == true
-                                        ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.0, right: 8, bottom: 8, top: 15),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(
-                                              color: appPrimaryMaterialColor,
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                            BorderRadius.circular(4.0)),
-                                        child: Column(
-                                          children: [
-                                            Padding(
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0)),
+                                            child: Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 6.0,
-                                                  top: 15,
-                                                  right: 10,
-                                                  bottom: 15),
+                                                  right: 4.0,
+                                                  top: 2.0,
+                                                  bottom: 2.0),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.start,
                                                 children: [
-                                                  Flexible(
-                                                    child: Padding(
-                                                      padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4.0),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                        children: [
-                                                          Text(
-                                                            "Valid From",
-                                                            style: fontConstants
-                                                                .formFieldLabel1,
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                            const EdgeInsets
-                                                                .only(top: 8.0),
-                                                            child: GestureDetector(
-                                                              onTap: () {
-                                                                showToDatePicker(
-                                                                    context,
-                                                                    "fromDate");
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                        8.0),
-                                                                    color: Colors
-                                                                        .grey[200]),
-                                                                height: 35,
-                                                                width: MediaQuery.of(
-                                                                    context)
-                                                                    .size
-                                                                    .width /
-                                                                    2,
-                                                                child: Center(
-                                                                    child: Text(
-                                                                      selectedFromDate !=
-                                                                          null
-                                                                          ? fromDate.format(
-                                                                          selectedFromDate)
-                                                                          : "Select Date",
-                                                                      style: TextStyle(
-                                                                          fontSize: 13),
-                                                                    )),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
+                                                  Image.asset(
+                                                    "images/filter.png",
+                                                    width: 16,
+                                                    color:
+                                                        appPrimaryMaterialColor,
                                                   ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Flexible(
-                                                    child: Padding(
-                                                      padding:
-                                                      const EdgeInsets.only(
-                                                          left: 2.0),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                        children: [
-                                                          Text("Valid To",
-                                                              style: fontConstants
-                                                                  .formFieldLabel1),
-                                                          Padding(
-                                                            padding:
-                                                            const EdgeInsets
-                                                                .only(top: 8.0),
-                                                            child: GestureDetector(
-                                                              onTap: () {
-                                                                showToDatePicker(
-                                                                    context,
-                                                                    "toDate");
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                        8.0),
-                                                                    color: Colors
-                                                                        .grey[200]),
-                                                                height: 35,
-                                                                width: MediaQuery.of(
-                                                                    context)
-                                                                    .size
-                                                                    .width /
-                                                                    2,
-                                                                child: Center(
-                                                                    child: Text(
-                                                                        selectedToDate !=
-                                                                            null
-                                                                            ? toDate.format(
-                                                                            selectedToDate)
-                                                                            : "Select Date",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                            13))),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 6.0,
+                                                            right: 3),
+                                                    child: Text(
+                                                      "Filter",
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color:
+                                                              appPrimaryMaterialColor),
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            Padding(
-                                              padding:
-                                              const EdgeInsets.only(bottom: 7),
-                                              child: SizedBox(
-                                                width: 150,
-                                                child: TextButton(
-                                                  style: TextButton.styleFrom(
-                                                    backgroundColor:
-                                                    appPrimaryMaterialColor,
-                                                    shape:
-                                                    const RoundedRectangleBorder(
-                                                        borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                7))),
-                                                  ),
-                                                  onPressed: () {
-                                                    // _getAllvisitor();
-                                                  },
-                                                  child: Text(
-                                                    "Search",
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    )
-                                        : SizedBox(),
-                                    Expanded(
-                                      child: Container(
-                                          child: ListView.builder(
-                                            itemBuilder: (_, index) => Container(
-                                              height: 100,
-                                              child: Card(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(5.0),
+                                        // GestureDetector(
+                                        //   onTap: () {
+                                        //     Navigator.push(
+                                        //         context,
+                                        //         PageTransition(
+                                        //             child: InviteGuest(onSaved: () {
+                                        //               _getAllvisitor();
+                                        //             }),
+                                        //             type: PageTransitionType.rightToLeft));
+                                        //   },
+                                        //   child: Container(
+                                        //     height: 25,
+                                        //     decoration: BoxDecoration(
+                                        //       // color: Colors.white,
+                                        //         border: Border.all(
+                                        //           color: appPrimaryMaterialColor,
+                                        //           width: 1,
+                                        //         ),
+                                        //         borderRadius: BorderRadius.circular(4.0)),
+                                        //     child: Padding(
+                                        //       padding: const EdgeInsets.only(
+                                        //           left: 4.0, right: 4.0, top: 2.0, bottom: 2.0),
+                                        //       child: Row(
+                                        //         children: [
+                                        //           Icon(
+                                        //             Icons.add_circle_outline_sharp,
+                                        //             size: 16,
+                                        //             color: appPrimaryMaterialColor,
+                                        //           ),
+                                        //           Padding(
+                                        //             padding:
+                                        //             const EdgeInsets.only(left: 4.0, right: 3),
+                                        //             child: Text(
+                                        //               "Add",
+                                        //               style: TextStyle(
+                                        //                   fontSize: 12,
+                                        //                   fontWeight: FontWeight.bold,
+                                        //                   color: appPrimaryMaterialColor),
+                                        //             ),
+                                        //           ),
+                                        //         ],
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                  isOpenG == true
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0,
+                                              right: 8,
+                                              bottom: 8,
+                                              top: 15),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                  color:
+                                                      appPrimaryMaterialColor,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0)),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 6.0,
+                                                          top: 15,
+                                                          right: 10,
+                                                          bottom: 15),
                                                   child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
                                                     children: [
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      guestList[index][
-                                                                      "guestImage"] ==
-                                                                  null ||
-                                                              guestList[index][
-                                                                      "guestImage"] ==
-                                                                  ""
-                                                          ? Image.asset(
-                                                              'images/user.png',
-                                                              width: 70,
-                                                              height: 70,
-                                                            )
-                                                          : Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(top: 3.0),
-                                                              child: Container(
-                                                                height: 70.0,
-                                                                width: 70,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  // borderRadius: BorderRadius.circular(30),
-                                                                  color: Colors.white,
-                                                                  shape:
-                                                                      BoxShape.circle,
-                                                                  border: Border.all(
-                                                                      width: 0.2,
-                                                                      color:
-                                                                          appPrimaryMaterialColor),
-                                                                  image:
-                                                                      DecorationImage(
-                                                                    image:
-                                                                        NetworkImage(
-                                                                      API_URL +
-                                                                          guestList[
-                                                                                  index]
-                                                                              [
-                                                                              "guestImage"],
-                                                                    ),
-                                                                    fit: BoxFit.fill,
+                                                      Flexible(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 4.0),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                "Valid From",
+                                                                style: fontConstants
+                                                                    .formFieldLabel1,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            8.0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    showToDatePickerG(
+                                                                        context,
+                                                                        "fromDate");
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                8.0),
+                                                                        color: Colors
+                                                                            .grey[200]),
+                                                                    height: 35,
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        2,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      selectedFromDateG !=
+                                                                              null
+                                                                          ? fromDateG
+                                                                              .format(selectedFromDateG)
+                                                                          : "Select Date",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              13),
+                                                                    )),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                      SizedBox(
-                                                        width: 15,
+                                                            ],
+                                                          ),
+                                                        ),
                                                       ),
-                                                      Expanded(
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Flexible(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 2.0),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text("Valid To",
+                                                                  style: fontConstants
+                                                                      .formFieldLabel1),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            8.0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    showToDatePickerG(
+                                                                        context,
+                                                                        "toDate");
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                8.0),
+                                                                        color: Colors
+                                                                            .grey[200]),
+                                                                    height: 35,
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        2,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                            selectedToDateG != null
+                                                                                ? toDateG.format(selectedToDateG)
+                                                                                : "Select Date",
+                                                                            style: TextStyle(fontSize: 13))),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 7),
+                                                  child: SizedBox(
+                                                    width: 150,
+                                                    child: TextButton(
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                        backgroundColor:
+                                                            appPrimaryMaterialColor,
+                                                        shape: const RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            7))),
+                                                      ),
+                                                      onPressed: () {
+                                                        _getAllGuest();
+                                                      },
+                                                      child: Text(
+                                                        "Search",
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  guestList.length == 0
+                                      ? Center(
+                                          child: Text("No Guest Entry Found"),
+                                        )
+                                      : Expanded(
+                                          child: Container(
+                                            child: ListView.builder(
+                                              itemBuilder: (_, index) =>
+                                                  Container(
+                                                height: 100,
+                                                child: Card(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        guestList[index][
+                                                                        "guestImage"] ==
+                                                                    null ||
+                                                                guestList[index]
+                                                                        [
+                                                                        "guestImage"] ==
+                                                                    ""
+                                                            ? Image.asset(
+                                                                'images/user.png',
+                                                                width: 70,
+                                                                height: 70,
+                                                              )
+                                                            : Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            3.0),
+                                                                child:
+                                                                    Container(
+                                                                  height: 70.0,
+                                                                  width: 70,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    // borderRadius: BorderRadius.circular(30),
+                                                                    color: Colors
+                                                                        .white,
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    border: Border.all(
+                                                                        width:
+                                                                            0.2,
+                                                                        color:
+                                                                            appPrimaryMaterialColor),
+                                                                    image:
+                                                                        DecorationImage(
+                                                                      image:
+                                                                          NetworkImage(
+                                                                        API_URL +
+                                                                            guestList[index]["guestImage"],
+                                                                      ),
+                                                                      fit: BoxFit
+                                                                          .fill,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                        SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Expanded(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                "${guestList[index]["guestName"]}",
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        appPrimaryMaterialColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        14),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 5,
+                                                              ),
+                                                              Text(
+                                                                "${guestList[index]["mobileNo"]}",
+                                                              ),
+                                                              SizedBox(
+                                                                height: 2,
+                                                              ),
+                                                              Text(
+                                                                "${guestList[index]["vehicleNo"]}",
+                                                              ),
+                                                              SizedBox(
+                                                                height: 2,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 90,
+                                                        ),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                              Icons.message),
+                                                          iconSize: 25,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              // itemCount: 8,
+                                              itemCount: guestList.length,
+                                            ),
+                                          ),
+                                        )
+                                ],
+                              ),
+                        isLoading
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 100),
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            appPrimaryMaterialColor),
+                                    //backgroundColor: Colors.white54,
+                                  ),
+                                ),
+                              )
+                            : Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8, top: 14, left: 8),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              isOpenS = !isOpenS;
+                                            });
+                                          },
+                                          child: Container(
+                                            height: 25,
+                                            decoration: BoxDecoration(
+                                                // color: Colors.white,
+                                                border: Border.all(
+                                                  color:
+                                                      appPrimaryMaterialColor,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0)),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 6.0,
+                                                  right: 4.0,
+                                                  top: 2.0,
+                                                  bottom: 2.0),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    "images/filter.png",
+                                                    width: 16,
+                                                    color:
+                                                        appPrimaryMaterialColor,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 6.0,
+                                                            right: 3),
+                                                    child: Text(
+                                                      "Filter",
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color:
+                                                              appPrimaryMaterialColor),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        // GestureDetector(
+                                        //   onTap: () {
+                                        //     Navigator.push(
+                                        //         context,
+                                        //         PageTransition(
+                                        //             child: InviteGuest(onSaved: () {
+                                        //               _getAllvisitor();
+                                        //             }),
+                                        //             type: PageTransitionType.rightToLeft));
+                                        //   },
+                                        //   child: Container(
+                                        //     height: 25,
+                                        //     decoration: BoxDecoration(
+                                        //       // color: Colors.white,
+                                        //         border: Border.all(
+                                        //           color: appPrimaryMaterialColor,
+                                        //           width: 1,
+                                        //         ),
+                                        //         borderRadius: BorderRadius.circular(4.0)),
+                                        //     child: Padding(
+                                        //       padding: const EdgeInsets.only(
+                                        //           left: 4.0, right: 4.0, top: 2.0, bottom: 2.0),
+                                        //       child: Row(
+                                        //         children: [
+                                        //           Icon(
+                                        //             Icons.add_circle_outline_sharp,
+                                        //             size: 16,
+                                        //             color: appPrimaryMaterialColor,
+                                        //           ),
+                                        //           Padding(
+                                        //             padding:
+                                        //             const EdgeInsets.only(left: 4.0, right: 3),
+                                        //             child: Text(
+                                        //               "Add",
+                                        //               style: TextStyle(
+                                        //                   fontSize: 12,
+                                        //                   fontWeight: FontWeight.bold,
+                                        //                   color: appPrimaryMaterialColor),
+                                        //             ),
+                                        //           ),
+                                        //         ],
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                  isOpenS == true
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0,
+                                              right: 8,
+                                              bottom: 8,
+                                              top: 15),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                  color:
+                                                      appPrimaryMaterialColor,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0)),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 6.0,
+                                                          top: 15,
+                                                          right: 10,
+                                                          bottom: 15),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Flexible(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 4.0),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                "Valid From",
+                                                                style: fontConstants
+                                                                    .formFieldLabel1,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            8.0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    showToDatePickerS(
+                                                                        context,
+                                                                        "fromDate");
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                8.0),
+                                                                        color: Colors
+                                                                            .grey[200]),
+                                                                    height: 35,
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        2,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      selectedFromDateS !=
+                                                                              null
+                                                                          ? fromDateS
+                                                                              .format(selectedFromDateS)
+                                                                          : "Select Date",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              13),
+                                                                    )),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Flexible(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 2.0),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text("Valid To",
+                                                                  style: fontConstants
+                                                                      .formFieldLabel1),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            8.0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    showToDatePickerS(
+                                                                        context,
+                                                                        "toDate");
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                8.0),
+                                                                        color: Colors
+                                                                            .grey[200]),
+                                                                    height: 35,
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        2,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                            selectedToDateS != null
+                                                                                ? toDateS.format(selectedToDateS)
+                                                                                : "Select Date",
+                                                                            style: TextStyle(fontSize: 13))),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 7),
+                                                  child: SizedBox(
+                                                    width: 150,
+                                                    child: TextButton(
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                        backgroundColor:
+                                                            appPrimaryMaterialColor,
+                                                        shape: const RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            7))),
+                                                      ),
+                                                      onPressed: () {
+                                                        _getAllStaff();
+                                                      },
+                                                      child: Text(
+                                                        "Search",
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  staffList.length == 0
+                                      ? Center(
+                                          child: Text("No Staff Entry Found"),
+                                        )
+                                      : Column(
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                child: ListView.builder(
+                                                  itemBuilder: (_, index) =>
+                                                      Container(
+                                                    height: 100,
+                                                    child: Card(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5.0),
+                                                        child: Row(
                                                           children: [
-                                                            Text(
-                                                              "${guestList[index]["guestName"]}",
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      appPrimaryMaterialColor,
-                                                                  fontWeight:
-                                                                      FontWeight.bold,
-                                                                  fontSize: 14),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            staffList[index]["StaffData"][0]
+                                                                            [
+                                                                            "staffImage"] ==
+                                                                        null ||
+                                                                    staffList[index]["StaffData"][0]
+                                                                            [
+                                                                            "staffImage"] ==
+                                                                        ""
+                                                                ? Image.asset(
+                                                                    'images/user.png',
+                                                                    width: 70,
+                                                                    height: 70,
+                                                                  )
+                                                                : Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            3.0),
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          70.0,
+                                                                      width: 70,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        // borderRadius: BorderRadius.circular(30),
+                                                                        color: Colors
+                                                                            .white,
+                                                                        shape: BoxShape
+                                                                            .circle,
+                                                                        border: Border.all(
+                                                                            width:
+                                                                                0.2,
+                                                                            color:
+                                                                                appPrimaryMaterialColor),
+                                                                        image:
+                                                                            DecorationImage(
+                                                                          image:
+                                                                              NetworkImage(
+                                                                            API_URL +
+                                                                                staffList[index]["StaffData"][0]["staffImage"],
+                                                                          ),
+                                                                          fit: BoxFit
+                                                                              .fill,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                            SizedBox(
+                                                              width: 15,
+                                                            ),
+                                                            Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Text(
+                                                                  "${staffList[index]["StaffData"][0]["firstName"]} ${staffList[index]["StaffData"][0]["lastName"]}",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          appPrimaryMaterialColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          14),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 5,
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 2,
+                                                                ),
+                                                                Text(
+                                                                    '${staffList[index]["StaffData"][0]["mobileNo1"]}'),
+                                                                SizedBox(
+                                                                  height: 2,
+                                                                ),
+                                                              ],
                                                             ),
                                                             SizedBox(
-                                                              height: 5,
+                                                              width: 105,
                                                             ),
-                                                            Text(
-                                                              "${guestList[index]["mobileNo"]}",
-                                                            ),
-                                                            SizedBox(
-                                                              height: 2,
-                                                            ),
-                                                            Text(
-                                                              "${guestList[index]["vehicleNo"]}",
-                                                            ),
-                                                            SizedBox(
-                                                              height: 2,
+                                                            IconButton(
+                                                              icon: Icon(Icons
+                                                                  .message),
+                                                              iconSize: 25,
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                      SizedBox(
-                                                        width: 90,
-                                                      ),
-                                                      IconButton(
-                                                        icon: Icon(Icons.message),
-                                                        iconSize: 25,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            // itemCount: 8,
-                                            itemCount: guestList.length,
-                                          ),
-                                        ),
-                                    ),
-                                  ],
-                                ),
-                        isLoading
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 100),
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    valueColor:
-                                        new AlwaysStoppedAnimation<Color>(
-                                            appPrimaryMaterialColor),
-                                    //backgroundColor: Colors.white54,
-                                  ),
-                                ),
-                              )
-                            : staffList.length == 0
-                                ? Center(
-                                    child: Text("No Staff Entry Found"),
-                                  )
-                                : Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 8, top: 14, left: 8),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                isOpen = !isOpen;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 25,
-                                              decoration: BoxDecoration(
-                                                // color: Colors.white,
-                                                  border: Border.all(
-                                                    color: appPrimaryMaterialColor,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                  BorderRadius.circular(4.0)),
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 6.0,
-                                                    right: 4.0,
-                                                    top: 2.0,
-                                                    bottom: 2.0),
-                                                child: Row(
-                                                  children: [
-                                                    Image.asset(
-                                                      "images/filter.png",
-                                                      width: 16,
-                                                      color: appPrimaryMaterialColor,
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          left: 6.0, right: 3),
-                                                      child: Text(
-                                                        "Filter",
-                                                        style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontWeight: FontWeight.bold,
-                                                            color:
-                                                            appPrimaryMaterialColor),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          // GestureDetector(
-                                          //   onTap: () {
-                                          //     Navigator.push(
-                                          //         context,
-                                          //         PageTransition(
-                                          //             child: InviteGuest(onSaved: () {
-                                          //               _getAllvisitor();
-                                          //             }),
-                                          //             type: PageTransitionType.rightToLeft));
-                                          //   },
-                                          //   child: Container(
-                                          //     height: 25,
-                                          //     decoration: BoxDecoration(
-                                          //       // color: Colors.white,
-                                          //         border: Border.all(
-                                          //           color: appPrimaryMaterialColor,
-                                          //           width: 1,
-                                          //         ),
-                                          //         borderRadius: BorderRadius.circular(4.0)),
-                                          //     child: Padding(
-                                          //       padding: const EdgeInsets.only(
-                                          //           left: 4.0, right: 4.0, top: 2.0, bottom: 2.0),
-                                          //       child: Row(
-                                          //         children: [
-                                          //           Icon(
-                                          //             Icons.add_circle_outline_sharp,
-                                          //             size: 16,
-                                          //             color: appPrimaryMaterialColor,
-                                          //           ),
-                                          //           Padding(
-                                          //             padding:
-                                          //             const EdgeInsets.only(left: 4.0, right: 3),
-                                          //             child: Text(
-                                          //               "Add",
-                                          //               style: TextStyle(
-                                          //                   fontSize: 12,
-                                          //                   fontWeight: FontWeight.bold,
-                                          //                   color: appPrimaryMaterialColor),
-                                          //             ),
-                                          //           ),
-                                          //         ],
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // )
-                                        ],
-                                      ),
-                                    ),
-                                    isOpen == true
-                                        ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8.0, right: 8, bottom: 8, top: 15),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(
-                                              color: appPrimaryMaterialColor,
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                            BorderRadius.circular(4.0)),
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 6.0,
-                                                  top: 15,
-                                                  right: 10,
-                                                  bottom: 15),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                                children: [
-                                                  Flexible(
-                                                    child: Padding(
-                                                      padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4.0),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                        children: [
-                                                          Text(
-                                                            "Valid From",
-                                                            style: fontConstants
-                                                                .formFieldLabel1,
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                            const EdgeInsets
-                                                                .only(top: 8.0),
-                                                            child: GestureDetector(
-                                                              onTap: () {
-                                                                showToDatePicker(
-                                                                    context,
-                                                                    "fromDate");
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                        8.0),
-                                                                    color: Colors
-                                                                        .grey[200]),
-                                                                height: 35,
-                                                                width: MediaQuery.of(
-                                                                    context)
-                                                                    .size
-                                                                    .width /
-                                                                    2,
-                                                                child: Center(
-                                                                    child: Text(
-                                                                      selectedFromDate !=
-                                                                          null
-                                                                          ? fromDate.format(
-                                                                          selectedFromDate)
-                                                                          : "Select Date",
-                                                                      style: TextStyle(
-                                                                          fontSize: 13),
-                                                                    )),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
                                                     ),
                                                   ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Flexible(
-                                                    child: Padding(
-                                                      padding:
-                                                      const EdgeInsets.only(
-                                                          left: 2.0),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                        children: [
-                                                          Text("Valid To",
-                                                              style: fontConstants
-                                                                  .formFieldLabel1),
-                                                          Padding(
-                                                            padding:
-                                                            const EdgeInsets
-                                                                .only(top: 8.0),
-                                                            child: GestureDetector(
-                                                              onTap: () {
-                                                                showToDatePicker(
-                                                                    context,
-                                                                    "toDate");
-                                                              },
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                        8.0),
-                                                                    color: Colors
-                                                                        .grey[200]),
-                                                                height: 35,
-                                                                width: MediaQuery.of(
-                                                                    context)
-                                                                    .size
-                                                                    .width /
-                                                                    2,
-                                                                child: Center(
-                                                                    child: Text(
-                                                                        selectedToDate !=
-                                                                            null
-                                                                            ? toDate.format(
-                                                                            selectedToDate)
-                                                                            : "Select Date",
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                            13))),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                              const EdgeInsets.only(bottom: 7),
-                                              child: SizedBox(
-                                                width: 150,
-                                                child: TextButton(
-                                                  style: TextButton.styleFrom(
-                                                    backgroundColor:
-                                                    appPrimaryMaterialColor,
-                                                    shape:
-                                                    const RoundedRectangleBorder(
-                                                        borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                7))),
-                                                  ),
-                                                  onPressed: () {
-                                                    // _getAllvisitor();
-                                                  },
-                                                  child: Text(
-                                                    "Search",
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Colors.white),
-                                                  ),
+                                                  // itemCount: 8,
+                                                  itemCount: staffList.length,
                                                 ),
                                               ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    )
-                                        : SizedBox(),
-                                    Expanded(
-                                      child: Container(
-                                          child: ListView.builder(
-                                            itemBuilder: (_, index) => Container(
-                                              height: 100,
-                                              child: Card(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(5.0),
-                                                  child: Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      staffList[index]["StaffData"][0]
-                                                                      [
-                                                                      "staffImage"] ==
-                                                                  null ||
-                                                              staffList[index][
-                                                                          "StaffData"][0]
-                                                                      [
-                                                                      "staffImage"] ==
-                                                                  ""
-                                                          ? Image.asset(
-                                                              'images/user.png',
-                                                              width: 70,
-                                                              height: 70,
-                                                            )
-                                                          : Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(top: 3.0),
-                                                              child: Container(
-                                                                height: 70.0,
-                                                                width: 70,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  // borderRadius: BorderRadius.circular(30),
-                                                                  color: Colors.white,
-                                                                  shape:
-                                                                      BoxShape.circle,
-                                                                  border: Border.all(
-                                                                      width: 0.2,
-                                                                      color:
-                                                                          appPrimaryMaterialColor),
-                                                                  image:
-                                                                      DecorationImage(
-                                                                    image:
-                                                                        NetworkImage(
-                                                                      API_URL +
-                                                                          staffList[index]
-                                                                                  [
-                                                                                  "StaffData"][0]
-                                                                              [
-                                                                              "staffImage"],
-                                                                    ),
-                                                                    fit: BoxFit.fill,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                      SizedBox(
-                                                        width: 15,
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment.start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment.center,
-                                                        children: [
-                                                          Text(
-                                                            "${staffList[index]["StaffData"][0]["firstName"]} ${staffList[index]["StaffData"][0]["lastName"]}",
-                                                            style: TextStyle(
-                                                                color:
-                                                                    appPrimaryMaterialColor,
-                                                                fontWeight:
-                                                                    FontWeight.bold,
-                                                                fontSize: 14),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          SizedBox(
-                                                            height: 2,
-                                                          ),
-                                                          Text(
-                                                              '${staffList[index]["StaffData"][0]["mobileNo1"]}'),
-                                                          SizedBox(
-                                                            height: 2,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        width: 105,
-                                                      ),
-                                                      IconButton(
-                                                        icon: Icon(Icons.message),
-                                                        iconSize: 25,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            // itemCount: 8,
-                                            itemCount: staffList.length,
-                                          ),
-                                        ),
-                                    ),
-                                  ],
-                                ),
+                                ],
+                              ),
                         isLoading
                             ? Padding(
                                 padding: const EdgeInsets.only(top: 100),
@@ -1209,127 +1239,441 @@ class _MyVisitorsState extends State<MyVisitors> {
                                   ),
                                 ),
                               )
-                            : vendorList.length == 0
-                                ? Center(
-                                    child: Text("No Vendor Entry Found"),
-                                  )
-                                : Column(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                          child: ListView.builder(
-                                            itemBuilder: (_, index) => Container(
-                                              height: 100,
-                                              child: Card(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(5.0),
+                            : Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8, top: 14, left: 8),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              isOpenV = !isOpenV;
+                                            });
+                                          },
+                                          child: Container(
+                                            height: 25,
+                                            decoration: BoxDecoration(
+                                                // color: Colors.white,
+                                                border: Border.all(
+                                                  color:
+                                                      appPrimaryMaterialColor,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0)),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 6.0,
+                                                  right: 4.0,
+                                                  top: 2.0,
+                                                  bottom: 2.0),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    "images/filter.png",
+                                                    width: 16,
+                                                    color:
+                                                        appPrimaryMaterialColor,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 6.0,
+                                                            right: 3),
+                                                    child: Text(
+                                                      "Filter",
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color:
+                                                              appPrimaryMaterialColor),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        // GestureDetector(
+                                        //   onTap: () {
+                                        //     Navigator.push(
+                                        //         context,
+                                        //         PageTransition(
+                                        //             child: InviteGuest(onSaved: () {
+                                        //               _getAllvisitor();
+                                        //             }),
+                                        //             type: PageTransitionType.rightToLeft));
+                                        //   },
+                                        //   child: Container(
+                                        //     height: 25,
+                                        //     decoration: BoxDecoration(
+                                        //       // color: Colors.white,
+                                        //         border: Border.all(
+                                        //           color: appPrimaryMaterialColor,
+                                        //           width: 1,
+                                        //         ),
+                                        //         borderRadius: BorderRadius.circular(4.0)),
+                                        //     child: Padding(
+                                        //       padding: const EdgeInsets.only(
+                                        //           left: 4.0, right: 4.0, top: 2.0, bottom: 2.0),
+                                        //       child: Row(
+                                        //         children: [
+                                        //           Icon(
+                                        //             Icons.add_circle_outline_sharp,
+                                        //             size: 16,
+                                        //             color: appPrimaryMaterialColor,
+                                        //           ),
+                                        //           Padding(
+                                        //             padding:
+                                        //             const EdgeInsets.only(left: 4.0, right: 3),
+                                        //             child: Text(
+                                        //               "Add",
+                                        //               style: TextStyle(
+                                        //                   fontSize: 12,
+                                        //                   fontWeight: FontWeight.bold,
+                                        //                   color: appPrimaryMaterialColor),
+                                        //             ),
+                                        //           ),
+                                        //         ],
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                  isOpenV == true
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0,
+                                              right: 8,
+                                              bottom: 8,
+                                              top: 15),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                  color:
+                                                      appPrimaryMaterialColor,
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0)),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 6.0,
+                                                          top: 15,
+                                                          right: 10,
+                                                          bottom: 15),
                                                   child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
                                                     children: [
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      vendorList[index]["VendorData"]
-                                                                          [0][
-                                                                      "vendorImage"] ==
-                                                                  null ||
-                                                              vendorList[index][
-                                                                          "VendorData"][0]
-                                                                      [
-                                                                      "vendorImage"] ==
-                                                                  ""
-                                                          ? Image.asset(
-                                                              'images/user.png',
-                                                              width: 70,
-                                                              height: 70,
-                                                            )
-                                                          : Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .only(top: 3.0),
-                                                              child: Container(
-                                                                height: 70.0,
-                                                                width: 70,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  // borderRadius: BorderRadius.circular(30),
-                                                                  color: Colors.white,
-                                                                  shape:
-                                                                      BoxShape.circle,
-                                                                  border: Border.all(
-                                                                      width: 0.2,
-                                                                      color:
-                                                                          appPrimaryMaterialColor),
-                                                                  image:
-                                                                      DecorationImage(
-                                                                    image:
-                                                                        NetworkImage(
-                                                                      API_URL +
-                                                                          vendorList[index]
-                                                                                  [
-                                                                                  "VendorData"][0]
-                                                                              [
-                                                                              "vendorImage"],
-                                                                    ),
-                                                                    fit: BoxFit.fill,
+                                                      Flexible(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 4.0),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                "Valid From",
+                                                                style: fontConstants
+                                                                    .formFieldLabel1,
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            8.0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    showToDatePickerV(
+                                                                        context,
+                                                                        "fromDate");
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                8.0),
+                                                                        color: Colors
+                                                                            .grey[200]),
+                                                                    height: 35,
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        2,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      selectedFromDateV !=
+                                                                              null
+                                                                          ? fromDateV
+                                                                              .format(selectedFromDateV)
+                                                                          : "Select Date",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              13),
+                                                                    )),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                      SizedBox(
-                                                        width: 15,
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment.start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment.center,
-                                                        children: [
-                                                          Text(
-                                                            vendorList[index]
-                                                                    ["VendorData"][0]
-                                                                ["vendorName"],
-                                                            style: TextStyle(
-                                                                color:
-                                                                    appPrimaryMaterialColor,
-                                                                fontWeight:
-                                                                    FontWeight.bold,
-                                                                fontSize: 14),
+                                                            ],
                                                           ),
-                                                          SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          SizedBox(
-                                                            height: 2,
-                                                          ),
-                                                          Text(
-                                                            vendorList[index]
-                                                                    ["VendorData"][0]
-                                                                ["mobileNo1"],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 2,
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
                                                       SizedBox(
-                                                        width: 105,
+                                                        width: 10,
                                                       ),
-                                                      IconButton(
-                                                        icon: Icon(Icons.message),
-                                                        iconSize: 25,
+                                                      Flexible(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 2.0),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text("Valid To",
+                                                                  style: fontConstants
+                                                                      .formFieldLabel1),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            8.0),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    showToDatePickerV(
+                                                                        context,
+                                                                        "toDate");
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                8.0),
+                                                                        color: Colors
+                                                                            .grey[200]),
+                                                                    height: 35,
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width /
+                                                                        2,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                            selectedToDateV != null
+                                                                                ? toDateV.format(selectedToDateV)
+                                                                                : "Select Date",
+                                                                            style: TextStyle(fontSize: 13))),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 7),
+                                                  child: SizedBox(
+                                                    width: 150,
+                                                    child: TextButton(
+                                                      style:
+                                                          TextButton.styleFrom(
+                                                        backgroundColor:
+                                                            appPrimaryMaterialColor,
+                                                        shape: const RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            7))),
+                                                      ),
+                                                      onPressed: () {
+                                                        _getAllStaff();
+                                                      },
+                                                      child: Text(
+                                                        "Search",
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  vendorList.length == 0
+                                      ? Align(
+                                          alignment: Alignment.center,
+                                          child: Center(
+                                            child:
+                                                Text("No Vendor Entry Found"),
+                                          ),
+                                        )
+                                      : Column(
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                child: ListView.builder(
+                                                  itemBuilder: (_, index) =>
+                                                      Container(
+                                                    height: 100,
+                                                    child: Card(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5.0),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            vendorList[index]["VendorData"][0]
+                                                                            [
+                                                                            "vendorImage"] ==
+                                                                        null ||
+                                                                    vendorList[index]["VendorData"][0]
+                                                                            [
+                                                                            "vendorImage"] ==
+                                                                        ""
+                                                                ? Image.asset(
+                                                                    'images/user.png',
+                                                                    width: 70,
+                                                                    height: 70,
+                                                                  )
+                                                                : Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        top:
+                                                                            3.0),
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          70.0,
+                                                                      width: 70,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        // borderRadius: BorderRadius.circular(30),
+                                                                        color: Colors
+                                                                            .white,
+                                                                        shape: BoxShape
+                                                                            .circle,
+                                                                        border: Border.all(
+                                                                            width:
+                                                                                0.2,
+                                                                            color:
+                                                                                appPrimaryMaterialColor),
+                                                                        image:
+                                                                            DecorationImage(
+                                                                          image:
+                                                                              NetworkImage(
+                                                                            API_URL +
+                                                                                vendorList[index]["VendorData"][0]["vendorImage"],
+                                                                          ),
+                                                                          fit: BoxFit
+                                                                              .fill,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                            SizedBox(
+                                                              width: 15,
+                                                            ),
+                                                            Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Text(
+                                                                  vendorList[index]
+                                                                          [
+                                                                          "VendorData"][0]
+                                                                      [
+                                                                      "vendorName"],
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          appPrimaryMaterialColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          14),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 5,
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 2,
+                                                                ),
+                                                                Text(
+                                                                  vendorList[index]
+                                                                          [
+                                                                          "VendorData"][0]
+                                                                      [
+                                                                      "mobileNo1"],
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 2,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              width: 105,
+                                                            ),
+                                                            IconButton(
+                                                              icon: Icon(Icons
+                                                                  .message),
+                                                              iconSize: 25,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  // itemCount: 8,
+                                                  itemCount: vendorList.length,
+                                                ),
                                               ),
                                             ),
-                                            // itemCount: 8,
-                                            itemCount: vendorList.length,
-                                          ),
+                                          ],
                                         ),
-                                    ),
-                                  ],
-                                ),
+                                ],
+                              )
                       ],
                     ),
                   ),
