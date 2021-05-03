@@ -674,7 +674,7 @@ class _InviteGuestState extends State<InviteGuest> {
           "emailId": "${txtEmailId.text}",
           "ContactNo": "${txtMobileNo.text}",
           "wingId": "${sharedPrefs.wingId}",
-          "flateId": "${sharedPrefs.flatId}"
+          "flatId": "${sharedPrefs.flatId}"
         };
         print(body);
         Services.responseHandler(apiName: "api/member/inviteGuest", body: body)

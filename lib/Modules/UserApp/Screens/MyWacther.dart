@@ -38,10 +38,10 @@ class _MyWatcherState extends State<MyWatcher> {
   @override
   void initState() {
     super.initState();
+    _memberDetail();
     _getMyFamilyMember();
     _getMyStaff();
     _getMyVehical();
-    _memberDetail();
     _getMyProperties();
   }
 
@@ -99,7 +99,7 @@ class _MyWatcherState extends State<MyWatcher> {
                                                       memberList[0]
                                                           ["memberImage"],
                                                 ),
-                                                fit: BoxFit.fill,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                           ),
@@ -307,9 +307,9 @@ class _MyWatcherState extends State<MyWatcher> {
                       child: ListView.builder(
                           physics: BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: length + 1,
+                          itemCount: vehicleList.length + 1,
                           itemBuilder: (context, index) {
-                            if (index > length - 1) {
+                            if (index > vehicleList.length - 1) {
                               return AddComponent(
                                   width: 100,
                                   onTap: () {
@@ -333,7 +333,9 @@ class _MyWatcherState extends State<MyWatcher> {
                                         ),
                                       ),
                                     )
-                                  : MyVehicleComponent();
+                                  : MyVehicleComponent(
+                                vehicleData: vehicleList[index],
+                              );
                             }
                           }),
                     ),

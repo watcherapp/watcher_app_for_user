@@ -118,7 +118,8 @@ class _GetPassState extends State<GetPass> {
                               RichText(
                                 textAlign: TextAlign.center,
                                 text: TextSpan(
-                                  text: "${widget.myGuestData["MemberData"][0]["firstName"]}  ${widget.myGuestData["MemberData"][0]["lastName"]}\n${widget.myGuestData["WingData"][0]["wingName"]}-${widget.myGuestData["FlatData"][0]["flatNo"]}\n",
+                                  text:
+                                      "${widget.myGuestData["MemberData"][0]["firstName"]}  ${widget.myGuestData["MemberData"][0]["lastName"]}\n${widget.myGuestData["WingData"][0]["wingName"]}-${widget.myGuestData["FlatData"][0]["flatNo"]}\n",
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: appPrimaryMaterialColor,

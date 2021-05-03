@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 
 class MyVehicleComponent extends StatefulWidget {
+  var vehicleData;
+
+  MyVehicleComponent({
+    this.vehicleData,
+  });
+
   @override
   _MyVehicleComponentState createState() => _MyVehicleComponentState();
 }
@@ -19,13 +25,21 @@ class _MyVehicleComponentState extends State<MyVehicleComponent> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 12),
-              child: Image.asset(
-                "images/car.png",
-                width: 37,
-              ),
-            ),
+            widget.vehicleData["vehicleType"] == "Car"
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Image.asset(
+                      "images/car.png",
+                      width: 37,
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Image.asset(
+                      "images/bike.png",
+                      width: 37,
+                    ),
+                  ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,13 +48,13 @@ class _MyVehicleComponentState extends State<MyVehicleComponent> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text("7515",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: "Montserrat",
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87)),
+                      // Text("7515",
+                      //     overflow: TextOverflow.ellipsis,
+                      //     style: TextStyle(
+                      //         fontSize: 14,
+                      //         fontFamily: "Montserrat",
+                      //         fontWeight: FontWeight.bold,
+                      //         color: Colors.black87)),
                       Container(
                         decoration: BoxDecoration(
                             color: Colors.green,
@@ -68,8 +82,8 @@ class _MyVehicleComponentState extends State<MyVehicleComponent> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 10),
-                    child: Text("Gj05xx00",
+                    padding: const EdgeInsets.only(top: 8.0, left: 30),
+                    child: Text("${widget.vehicleData["vehicleNo"]}",
                         style: TextStyle(
                             fontFamily: "Montserrat-Bold",
                             fontSize: 14,

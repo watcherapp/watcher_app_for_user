@@ -893,11 +893,11 @@ class _SignUp3State extends State<SignUp3> {
           "identityImage": (identityFilePath != null && identityFilePath != '')
               ? await MultipartFile.fromFile(identityFilePath,
                   filename: identityFileName.toString())
-              : null,
+              : "",
           "memberImage": (userFilePath != null && userFilePath != '')
               ? await MultipartFile.fromFile(userFilePath,
                   filename: userFileName.toString())
-              : null,
+              : "",
         });
         log(body.fields.toString());
         Services.responseHandler(apiName: "api/member/signUp", body: body)

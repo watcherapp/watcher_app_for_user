@@ -406,7 +406,7 @@ class _SelectWingAndFlatState extends State<SelectWingAndFlat> {
                   ),
                 )
               : Container(
-                  height: MediaQuery.of(context).size.height * 0.52,
+                  height: MediaQuery.of(context).size.height * 0.47,
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 5),

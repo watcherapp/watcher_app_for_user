@@ -223,94 +223,99 @@ class _BloodRequestComponentState extends State<BloodRequestComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 10,
-            ),
-            Container(
-              height: 40,
-              width: 60,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8.0),
+    if (widget.BloodDataList["Member"].length > 0) {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 10,
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Center(
-                  child: Text(
-                    "${widget.BloodDataList["requestedBloodGroup"]}",
-                    style: TextStyle(
-                      color: appPrimaryMaterialColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
+              Container(
+                height: 40,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: Text(
+                      "${widget.BloodDataList["requestedBloodGroup"]}",
+                      style: TextStyle(
+                        color: appPrimaryMaterialColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.26,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "${widget.BloodDataList["Member"][0]["firstName"]} ${widget.BloodDataList["Member"][0]["lastName"]}",
-                    style: TextStyle(
-                        color: appPrimaryMaterialColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
-                  ),
-                  // Text('B1 - 07'),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    widget.BloodDataList["Member"][0]["mobileNo1"],
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                  // Text('Resident'),
-                ],
+              SizedBox(
+                width: 15,
               ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.17,
-            ),
-            IconButton(
-              icon: Icon(Icons.info),
-              color: appPrimaryMaterialColor,
-              iconSize: 22,
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => ShowDialog(
-                    bloodData: widget.BloodDataList,
-                  ),
-                );
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.delete),
-              color: appPrimaryMaterialColor,
-              iconSize: 22,
-              onPressed: () {
-                _deleteBloodRequest();
-              },
-            )
-          ],
+              Container(
+                width: MediaQuery.of(context).size.width * 0.26,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${widget.BloodDataList["Member"][0]["firstName"]} ${widget.BloodDataList["Member"][0]["lastName"]}",
+                      style: TextStyle(
+                          color: appPrimaryMaterialColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
+                    ),
+                    // Text('B1 - 07'),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      widget.BloodDataList["Member"][0]["mobileNo1"],
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    // Text('Resident'),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.17,
+              ),
+              IconButton(
+                icon: Icon(Icons.info),
+                color: appPrimaryMaterialColor,
+                iconSize: 22,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => ShowDialog(
+                      bloodData: widget.BloodDataList,
+                    ),
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.delete),
+                color: appPrimaryMaterialColor,
+                iconSize: 22,
+                onPressed: () {
+                  _deleteBloodRequest();
+                },
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }else{
+      return Container() ;
+    }
+
   }
 }
 

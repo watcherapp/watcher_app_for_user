@@ -22,7 +22,7 @@ class _UserDashboardState extends State<UserDashboard> {
     MyWatcher(),
     UserVisitorList(),
     UserHomeScreen(),
-    EntryConfirmationPopup(),
+    Container(),
     MoreScreen()
   ];
 

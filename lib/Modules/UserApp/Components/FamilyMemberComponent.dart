@@ -44,7 +44,7 @@ class _FamilyMemberComponentState extends State<FamilyMemberComponent> {
                             image: NetworkImage(
                               API_URL + widget.familyDataList["memberImage"],
                             ),
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),

@@ -44,7 +44,7 @@ class _DailyHelperComponentState extends State<DailyHelperComponent> {
                             image: NetworkImage(
                               API_URL + widget.myStaffData["staffImage"],
                             ),
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),

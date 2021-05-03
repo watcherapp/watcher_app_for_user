@@ -307,7 +307,7 @@ class _UpdateMemberProfileState extends State<UpdateMemberProfile> {
                                     API_URL +
                                         widget.profileData[0]["memberImage"],
                                   ),
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
                             ),
