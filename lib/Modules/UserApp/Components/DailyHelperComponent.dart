@@ -63,7 +63,13 @@ class _DailyHelperComponentState extends State<DailyHelperComponent> {
                     fontWeight: FontWeight.bold,
                     color: Colors.black87)),
           ),
-          Text("Cook", style: TextStyle(fontSize: 12, color: Colors.black87)),
+          Text(
+            "${widget.myStaffData["StaffCategoryIs"][0]["staffCategoryName"] ?? "Staff"}",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.black87,
+            ),
+          ),
           Row(
             children: [
               IconButton(

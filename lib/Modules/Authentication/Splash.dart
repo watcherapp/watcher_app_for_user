@@ -25,20 +25,28 @@ class _SplashState extends State<Splash> {
     if (sharedPrefs.memberId != "") {
       if (sharedPrefs.userRole == "0") {
         Navigator.pushReplacement(
-            context,
-            PageTransition(
-                child: MasterAdminDashboard(),
-                type: PageTransitionType.bottomToTop));
+          context,
+          PageTransition(
+            child: MasterAdminDashboard(),
+            type: PageTransitionType.bottomToTop,
+          ),
+        );
       } else if (sharedPrefs.userRole == "1") {
         Navigator.pushReplacement(
-            context,
-            PageTransition(
-                child: MyProperties(), type: PageTransitionType.bottomToTop));
+          context,
+          PageTransition(
+            child: MyProperties(),
+            type: PageTransitionType.bottomToTop,
+          ),
+        );
       } else {
         Navigator.pushReplacement(
-            context,
-            PageTransition(
-                child: MyProperties(), type: PageTransitionType.bottomToTop));
+          context,
+          PageTransition(
+            child: MyProperties(),
+            type: PageTransitionType.bottomToTop,
+          ),
+        );
       }
     } else {
       Navigator.pushReplacement(

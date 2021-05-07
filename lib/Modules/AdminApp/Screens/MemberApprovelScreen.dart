@@ -111,7 +111,8 @@ class _MemberApprovelScreenState extends State<MemberApprovelScreen> {
               //     getAllWingMemberData.add(dataList);
               //   }
               // }
-              // print("finalList---------------${getAllWingMemberData}");
+              print(
+                  "getAllWingMemberData---------------${getAllWingMemberData}");
               isLoading = false;
             });
           } else {
@@ -151,117 +152,119 @@ class _MemberApprovelScreenState extends State<MemberApprovelScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              "Select Building",
-              style: TextStyle(
-                  color: appPrimaryMaterialColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 120,
-              // width: 100,
-              child: ListView.builder(
-                  padding: EdgeInsets.only(top: 5, bottom: 18),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: getAllWingList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 5, left: 5),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedW = index;
-                            _getAllWingsMember(
-                                wingId: getAllWingList[index]["_id"]);
-                            wingId = getAllWingList[index]["_id"];
-                          });
-                          // _getAllFlats(wingId: getAllWingList[index]["_id"]);
-                          print("${getAllWingList[index]["wingName"]}");
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          child: Card(
-                            color: selectedW == index
-                                ? appPrimaryMaterialColor
-                                : Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 15, left: 10, right: 10, bottom: 8),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 40,
-                                      width: 40,
-                                      child: Image(
+      body: Column(
+        children: [
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            "Select Building",
+            style: TextStyle(
+                color: appPrimaryMaterialColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 15),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: 120,
+            // width: 100,
+            child: ListView.builder(
+                padding: EdgeInsets.only(top: 5, bottom: 18),
+                scrollDirection: Axis.horizontal,
+                itemCount: getAllWingList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 5, left: 5),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedW = index;
+                          _getAllWingsMember(
+                              wingId: getAllWingList[index]["_id"]);
+                          wingId = getAllWingList[index]["_id"];
+                        });
+                        // _getAllFlats(wingId: getAllWingList[index]["_id"]);
+                        print("${getAllWingList[index]["wingName"]}");
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        child: Card(
+                          color: selectedW == index
+                              ? appPrimaryMaterialColor
+                              : Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 15, left: 10, right: 10, bottom: 8),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    child: Image(
+                                      color: selectedW == index
+                                          ? Colors.white
+                                          : appPrimaryMaterialColor,
+                                      image: AssetImage(
+                                        "images/building.png",
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text("${getAllWingList[index]["wingName"]}",
+                                      style: TextStyle(
                                         color: selectedW == index
                                             ? Colors.white
                                             : appPrimaryMaterialColor,
-                                        image: AssetImage(
-                                          "images/building.png",
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text("${getAllWingList[index]["wingName"]}",
-                                        style: TextStyle(
-                                          color: selectedW == index
-                                              ? Colors.white
-                                              : appPrimaryMaterialColor,
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                        )),
-                                  ],
-                                ),
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 16,
+                                      )),
+                                ],
                               ),
                             ),
                           ),
                         ),
                       ),
-                    );
-                  }),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            isLoading
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 100),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: new AlwaysStoppedAnimation<Color>(
-                            appPrimaryMaterialColor),
-                        //backgroundColor: Colors.white54,
-                      ),
                     ),
-                  )
-                : getAllWingMemberData.length == 0
-                    ? Center(
-                        child: Text("No Member Request Found",
-                            style: TextStyle(
-                              color: appPrimaryMaterialColor,
-                              fontFamily: 'Montserrat',
-                              fontSize: 16,
-                            )),
-                      )
-                    : Container(
-                        height: MediaQuery.of(context).size.height * 0.55,
+                  );
+                }),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          isLoading
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          appPrimaryMaterialColor),
+                      //backgroundColor: Colors.white54,
+                    ),
+                  ),
+                )
+              : getAllWingMemberData.length == 0
+                  ? Center(
+                      child: Text("No Member Request Found",
+                          style: TextStyle(
+                            color: appPrimaryMaterialColor,
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                          )),
+                    )
+                  : Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5, right: 5),
                         child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
                           itemBuilder: (_, index) => MemberDirectoryComponent(
                             memberData: getAllWingMemberData[index],
                             memberDataApi: () {
@@ -272,8 +275,8 @@ class _MemberApprovelScreenState extends State<MemberApprovelScreen> {
                           itemCount: getAllWingMemberData.length,
                         ),
                       ),
-          ],
-        ),
+                    ),
+        ],
       ),
     );
   }
@@ -296,6 +299,7 @@ class MemberDirectoryComponent extends StatefulWidget {
 class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
   bool isLoading = false;
 
+  //baki 6e..............
   _memberApprove({String approve}) async {
     try {
       setState(() {
@@ -309,8 +313,8 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
           "memberId": widget.memberData["_id"],
           "isApprove": approve,
           "societyId": sharedPrefs.societyId,
-          "wingId" : widget.memberData["society"]["wingId"],
-          "flatId" : widget.memberData["society"]["flatId"],
+          "wingId": widget.memberData["society"]["wingId"],
+          "flatId": widget.memberData["society"]["flatId"],
           "propertyManagerId": sharedPrefs.memberId,
         };
         print("$body");
@@ -398,7 +402,7 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                                   image: NetworkImage(
                                     API_URL + widget.memberData["memberImage"],
                                   ),
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -429,7 +433,21 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                         SizedBox(
                           height: 2,
                         ),
-                        Text('Resident'),
+                        Text(
+                            widget.memberData[
+                            "FlatData"][0]["flatStatus"] ==
+                                "0"
+                                ? "Dead"
+                                : widget.memberData[
+                            "FlatData"][0]["flatStatus"] ==
+                                "1"
+                                ? "Closed"
+                                : widget.memberData[
+                            "FlatData"][0]["flatStatus"] ==
+                                "2"
+                                ? "Rent"
+                                : "Owner",
+                        ),
                       ],
                     ),
                     // SizedBox(

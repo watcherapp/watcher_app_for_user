@@ -274,6 +274,9 @@ class _ParkingScreenState extends State<ParkingScreen> {
                 fontSize: 16,
               ),
             ),
+            SizedBox(
+              height: 10,
+            ),
             Container(
               height: 90,
               // width: 100,
@@ -338,6 +341,9 @@ class _ParkingScreenState extends State<ParkingScreen> {
                 fontSize: 16,
               ),
             ),
+            SizedBox(
+              height: 15,
+            ),
             isLoading
                 ? Padding(
                     padding: const EdgeInsets.only(top: 100),
@@ -349,80 +355,104 @@ class _ParkingScreenState extends State<ParkingScreen> {
                       ),
                     ),
                   )
-                : Container(
-                    height: MediaQuery.of(context).size.height * 0.55,
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 5),
-                      itemBuilder: (_, index) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedF = index;
-                            print("${getAllFlatList[index]["_id"]}");
-                            flatId = getAllFlatList[index]["_id"];
-                          });
-                        },
-                        child: Container(
-                          width: 70,
-                          child: Card(
-                            color: selectedF == index
-                                ? appPrimaryMaterialColor
-                                : Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 8, left: 10, right: 10, bottom: 8),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child:
-                                    Text("${getAllFlatList[index]["flatNo"]}",
-                                        style: TextStyle(
-                                          color: selectedF == index
-                                              ? Colors.white
-                                              : appPrimaryMaterialColor,
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 16,
-                                        )),
+                : Padding(
+                  padding: const EdgeInsets.only(left: 5,right: 5),
+                  child: Container(
+                      height: MediaQuery.of(context).size.height * 0.55,
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5),
+                        itemBuilder: (_, index) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedF = index;
+                              print("${getAllFlatList[index]["_id"]}");
+                              flatId = getAllFlatList[index]["_id"];
+                            });
+                          },
+                          child: Container(
+                            width: 70,
+                            child: Card(
+                              color: selectedF == index
+                                  ? appPrimaryMaterialColor
+                                  : Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 8, left: 10, right: 10, bottom: 8),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child:
+                                      Text("${getAllFlatList[index]["flatNo"]}",
+                                          style: TextStyle(
+                                            color: selectedF == index
+                                                ? Colors.white
+                                                : appPrimaryMaterialColor,
+                                            fontFamily: 'Montserrat',
+                                            fontSize: 16,
+                                          )),
+                                ),
                               ),
                             ),
+                            // decoration: BoxDecoration(
+                            //   color: selectedF == index
+                            //       ? appPrimaryMaterialColor
+                            //       : Colors.white,
+                            //   borderRadius: BorderRadius.circular(10),
+                            // ),
                           ),
-                          // decoration: BoxDecoration(
-                          //   color: selectedF == index
-                          //       ? appPrimaryMaterialColor
-                          //       : Colors.white,
-                          //   borderRadius: BorderRadius.circular(10),
-                          // ),
                         ),
+                        // itemCount: 8,
+                        itemCount: getAllFlatList.length,
                       ),
-                      // itemCount: 8,
-                      itemCount: getAllFlatList.length,
                     ),
-                  ),
-            SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5, right: 5),
-              child: MyButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      context: context,
-                      builder: (builder) {
-                        return Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: BottomSheet(
-                            parkingSlot: parkingList,
-                            flatId: flatId,
-                          ),
-                        );
-                      });
-                },
-                title: "Assign",
-              ),
-            ),
+                ),
+            // SizedBox(
+            //   height: 40,
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 5, right: 5),
+            //   child: MyButton(
+            //     onPressed: () {
+            //       showModalBottomSheet(
+            //           shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(10.0),
+            //           ),
+            //           context: context,
+            //           builder: (builder) {
+            //             return Padding(
+            //               padding: const EdgeInsets.all(10.0),
+            //               child: BottomSheet(
+            //                 parkingSlot: parkingList,
+            //                 flatId: flatId,
+            //               ),
+            //             );
+            //           });
+            //     },
+            //     title: "Assign",
+            //   ),
+            // ),
           ],
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
+          child: MyButton(
+              onPressed: () {
+                showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    context: context,
+                    builder: (builder) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: BottomSheet(
+                          parkingSlot: parkingList,
+                          flatId: flatId,
+                        ),
+                      );
+                    });
+              },
+              title: "Assign"),
         ),
         // body: Column(
         //   mainAxisAlignment: MainAxisAlignment.center,

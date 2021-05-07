@@ -406,7 +406,7 @@ class _SelectWingAndFlatState extends State<SelectWingAndFlat> {
                   ),
                 )
               : Container(
-                  height: MediaQuery.of(context).size.height * 0.47,
+                  height: MediaQuery.of(context).size.height * 0.52,
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 5),
@@ -458,16 +458,24 @@ class _SelectWingAndFlatState extends State<SelectWingAndFlat> {
                     itemCount: getAllFlatList.length,
                   ),
                 ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MyButton(
-              onPressed: () {
-                _joinSociety();
-              },
-              title: "Select",
-            ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: MyButton(
+          //     onPressed: () {
+          //       _joinSociety();
+          //     },
+          //     title: "Select",
+          //   ),
+          // )
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
+        child: MyButton(
+            onPressed: () {
+              _joinSociety();
+            },
+            title: "Select"),
       ),
     );
   }

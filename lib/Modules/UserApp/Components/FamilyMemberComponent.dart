@@ -62,7 +62,7 @@ class _FamilyMemberComponentState extends State<FamilyMemberComponent> {
                     fontWeight: FontWeight.bold,
                     color: Colors.black87)),
           ),
-          Text("Brother",
+          Text("${widget.familyDataList["relation"] ?? "Relation"}",
               style: TextStyle(fontSize: 12, color: Colors.black87)),
           Row(
             children: [

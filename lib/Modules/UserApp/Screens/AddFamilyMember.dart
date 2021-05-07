@@ -31,6 +31,7 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
   TextEditingController txtMiddlename = new TextEditingController();
   TextEditingController txtLastname = new TextEditingController();
   TextEditingController txtMobileNo = new TextEditingController();
+  TextEditingController txtRelation = new TextEditingController();
   TextEditingController txtEmailId = new TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey();
@@ -39,6 +40,7 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
   FocusNode firstName;
   FocusNode middleName;
   FocusNode lastName;
+  FocusNode Relation;
   FocusNode mobileNo;
   FocusNode emailId;
   FocusNode save;
@@ -184,6 +186,7 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
           "parentId": "${sharedPrefs.memberId}",
           "firstName": "${txtFirstame.text}",
           "lastName": txtLastname.text,
+          "relation" : txtRelation.text,
           "mobileNo1": txtMobileNo.text,
           "emailId": txtEmailId.text,
           "gender": "${selectedGender}",
@@ -281,6 +284,7 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
     firstName.dispose();
     middleName.dispose();
     lastName.dispose();
+    Relation.dispose();
     mobileNo.dispose();
     emailId.dispose();
   }
@@ -380,7 +384,7 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
                                 textInputAction: TextInputAction.next,
                                 onFieldSubmitted: (term) {
                                   lastName.unfocus();
-                                  FocusScope.of(context).requestFocus(mobileNo);
+                                  FocusScope.of(context).requestFocus(Relation);
                                 },
                                 validator: (value) {
                                   if (value.isEmpty) {
@@ -504,6 +508,25 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
                       ),
                     );
                   }).toList(),
+                ),
+                MyTextFormField(
+                  controller: txtRelation,
+                  lable: "Relation",
+                  focusNode: Relation,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "Relation with member can't be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    Relation.unfocus();
+                    FocusScope.of(context).requestFocus(mobileNo);
+                  },
+                  hintText: "Enter Relation with Member",
+
                 ),
                 MyTextFormField(
                   controller: txtMobileNo,

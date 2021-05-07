@@ -559,6 +559,9 @@ class _UserVisitorListState extends State<UserVisitorList> {
                                               int index) {
                                             return InviteGuestComponent(
                                               guestData: inviteGuestList[index],
+                                              invitedGuestApi: (){
+                                                _getMemberInviteGuests();
+                                              },
                                             );
                                           },
                                         ),

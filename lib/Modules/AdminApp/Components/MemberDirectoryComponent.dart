@@ -36,32 +36,32 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                   width: 10,
                 ),
                 widget.memberData["memberImage"] == null ||
-                    widget.memberData["memberImage"] == ""
+                        widget.memberData["memberImage"] == ""
                     ? Image.asset(
-                  'images/user.png',
-                  width: 70,
-                  height: 70,
-                )
+                        'images/user.png',
+                        width: 70,
+                        height: 70,
+                      )
                     : Padding(
-                  padding: const EdgeInsets.only(top: 3.0),
-                  child: Container(
-                    height: 70.0,
-                    width: 70,
-                    decoration: BoxDecoration(
-                      // borderRadius: BorderRadius.circular(30),
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                          width: 0.2, color: appPrimaryMaterialColor),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          API_URL + widget.memberData["memberImage"],
+                        padding: const EdgeInsets.only(top: 3.0),
+                        child: Container(
+                          height: 70.0,
+                          width: 70,
+                          decoration: BoxDecoration(
+                            // borderRadius: BorderRadius.circular(30),
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                width: 0.2, color: appPrimaryMaterialColor),
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                API_URL + widget.memberData["memberImage"],
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                        fit: BoxFit.fill,
                       ),
-                    ),
-                  ),
-                ),
                 SizedBox(
                   width: 15,
                 ),
@@ -87,13 +87,23 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                     SizedBox(
                       height: 2,
                     ),
-                    Text('Resident'),
+                    Text(
+                      widget.memberData["FlatData"][0]["flatStatus"] == "0"
+                          ? "Dead"
+                          : widget.memberData["FlatData"][0]["flatStatus"] ==
+                                  "1"
+                              ? "Closed"
+                              : widget.memberData["FlatData"][0]
+                                          ["flatStatus"] ==
+                                      "2"
+                                  ? "Rent"
+                                  : "Owner",
+                    ),
                   ],
                 ),
                 // SizedBox(
                 //   width: 105,
                 // ),
-
               ],
             ),
             Positioned(
@@ -107,7 +117,7 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                             child: MemberAllInfo(
                               memberMobileNo: widget.memberData["mobileNo1"],
                               memberId: widget.memberData["_id"],
-                              memberApi: (){
+                              memberApi: () {
                                 widget.memberDataApi();
                               },
                             ),
@@ -128,11 +138,7 @@ class MemberAllInfo extends StatefulWidget {
   var memberId;
   Function memberApi;
 
-  MemberAllInfo({
-    this.memberMobileNo,
-    this.memberId,
-    this.memberApi
-  });
+  MemberAllInfo({this.memberMobileNo, this.memberId, this.memberApi});
 
   @override
   _MemberAllInfoState createState() => _MemberAllInfoState();
@@ -213,8 +219,7 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
           "memberId": dataList[0]["_id"],
         };
         print(body);
-        Services.responseHandler(
-            apiName: "api/admin/removeMember", body: body)
+        Services.responseHandler(apiName: "api/admin/removeMember", body: body)
             .then((responseData) {
           if (responseData.Data == 1) {
             print(responseData.Data);
@@ -268,15 +273,15 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
           "memberId": dataList[0]["_id"],
-          "adminId" : sharedPrefs.memberId,
-          "assignRole" : 1,
-          "societyId" : sharedPrefs.societyId,
+          "adminId": sharedPrefs.memberId,
+          "assignRole": 1,
+          "societyId": sharedPrefs.societyId,
         };
         print(body);
         Services.responseHandler(
-            apiName: "api/admin/assignUserRole", body: body)
+                apiName: "api/admin/assignUserRole", body: body)
             .then((responseData) {
-          if (responseData.Data ==  1) {
+          if (responseData.Data == 1) {
             print(responseData.Data);
             // widget.memberApi();
             Navigator.pop(context);
@@ -383,7 +388,9 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
                               color: Colors.white,
                               width: 170,
                             ),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [

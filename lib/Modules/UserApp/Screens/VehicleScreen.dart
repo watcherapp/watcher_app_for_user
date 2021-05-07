@@ -12,6 +12,12 @@ import 'package:watcher_app_for_user/Data/ClassList/Vehicle.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class VehicleScreen extends StatefulWidget {
+  Function myVehicleApi;
+
+  VehicleScreen({
+    this.myVehicleApi,
+  });
+
   @override
   _VehicleScreenState createState() => _VehicleScreenState();
 }
@@ -21,7 +27,6 @@ class _VehicleScreenState extends State<VehicleScreen> {
 
   bool isLoading = false;
   List parkingSlotList = [];
-  List myVehicleList = [];
   List<Vehicle> vehicleList = [
     Vehicle(icon: "images/car.png", name: "Car", isSelected: false),
     Vehicle(icon: "images/bike.png", name: "Bike", isSelected: false),
@@ -84,7 +89,6 @@ class _VehicleScreenState extends State<VehicleScreen> {
   }
 
   _addVehicleOnParkingSlots() async {
-    print("Calling");
     try {
       setState(() {
         isLoading = true;
@@ -93,21 +97,25 @@ class _VehicleScreenState extends State<VehicleScreen> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "memberId": "${sharedPrefs.memberNo}",
-          "vehiclesNoList": myVehicleList,
+          "memberId": "${sharedPrefs.memberId}",
+          "vehicleType": selectedVehicle,
+          "vehicleNo": txtvehicleNo.text,
         };
         print(body);
-        Services.responseHandler(
-            apiName: "api/member/getMemberParkingSlots", body: body)
+        Services.responseHandler(apiName: "api/member/addVehicles", body: body)
             .then((responseData) {
-          print(responseData.Data.length);
-          if (responseData.Data.length > 0) {
+          if (responseData.Data == 1) {
             setState(() {
-              parkingSlotList = responseData.Data;
               isLoading = false;
             });
             print(responseData.Data);
-            print("parkingSlotList-------------------->$parkingSlotList");
+            Fluttertoast.showToast(
+              msg: "Your Vehicle Added Successfully.",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+            widget.myVehicleApi();
+            Navigator.pop(context);
           } else {
             print(responseData);
             setState(() {
@@ -268,7 +276,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
         child: MyButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                // _addFamilyMember();
+                _addVehicleOnParkingSlots();
               }
             },
             title: "Save"),

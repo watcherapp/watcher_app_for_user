@@ -454,16 +454,24 @@ class _JoinNewFlatInSocietyState extends State<JoinNewFlatInSociety> {
               itemCount: getAllFlatList.length,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MyButton(
-              onPressed: () {
-                _joinSociety();
-              },
-              title: "Select",
-            ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: MyButton(
+          //     onPressed: () {
+          //       _joinSociety();
+          //     },
+          //     title: "Select",
+          //   ),
+          // )
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
+        child: MyButton(
+            onPressed: () {
+              _joinSociety();
+            },
+            title: "Select"),
       ),
     );
   }

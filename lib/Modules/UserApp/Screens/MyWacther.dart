@@ -316,7 +316,11 @@ class _MyWatcherState extends State<MyWatcher> {
                                     Navigator.push(
                                         context,
                                         PageTransition(
-                                            child: VehicleScreen(),
+                                            child: VehicleScreen(
+                                              myVehicleApi: (){
+                                                _getMyVehical();
+                                              },
+                                            ),
                                             type: PageTransitionType
                                                 .rightToLeft));
                                   });
@@ -575,8 +579,8 @@ class _MyWatcherState extends State<MyWatcher> {
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
           "societyId": sharedPrefs.societyId,
-          // "wingId" : sharedPrefs.wingId,
-          // "flatId" : sharedPrefs.flatId,
+          "wingId" : sharedPrefs.wingId,
+          "flatId" : sharedPrefs.flatId,
         };
 
         Services.responseHandler(
@@ -753,4 +757,6 @@ class _MyWatcherState extends State<MyWatcher> {
       );
     }
   }
+
+
 }
