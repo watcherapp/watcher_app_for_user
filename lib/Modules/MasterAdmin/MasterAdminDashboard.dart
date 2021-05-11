@@ -34,97 +34,22 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
           elevation: 0,
           backgroundColor: appPrimaryMaterialColor,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 6, right: 6),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: PropertyManagers(),
-                                  type: PageTransitionType.rightToLeft));
-                        },
-                        child: Container(
-                          height: 100,
-                          child: Card(
-                            elevation: 1,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "images/manager.png",
-                                  width: 34,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Text(
-                                    "Property Manager's",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontFamily: 'Montserrat'),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: CategoryScreen(),
-                                  type: PageTransitionType.rightToLeft));
-                        },
-                        child: Container(
-                          height: 100,
-                          child: Card(
-                            elevation: 1,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "images/Category.png",
-                                  width: 32,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Text(
-                                    "Category",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontFamily: 'Montserrat'),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 6, right: 6),
-                child: Row(
-                  children: [
-                    Expanded(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 6, right: 6),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: PropertyManagers(),
+                                type: PageTransitionType.rightToLeft));
+                      },
                       child: Container(
                         height: 100,
                         child: Card(
@@ -133,13 +58,13 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                "images/digital-marketing.png",
-                                width: 33,
+                                "images/manager.png",
+                                width: 34,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5.0),
                                 child: Text(
-                                  "Advertisement",
+                                  "Property Manager's",
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.black,
@@ -151,7 +76,16 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                         ),
                       ),
                     ),
-                    Expanded(
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: CategoryScreen(),
+                                type: PageTransitionType.rightToLeft));
+                      },
                       child: Container(
                         height: 100,
                         child: Card(
@@ -160,13 +94,13 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
-                                "images/Payment_setting.png",
+                                "images/Category.png",
                                 width: 32,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5.0),
                                 child: Text(
-                                  "Payment Setting",
+                                  "Category",
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.black,
@@ -178,64 +112,167 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0, left: 10, right: 6,bottom: 10),
-                child: Text(
-                  "Recent Requests",
-                  style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.black,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-              isLoading == true
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        valueColor: new AlwaysStoppedAnimation<Color>(
-                            appPrimaryMaterialColor),
-                      ),
-                    )
-                  : AllmanagerList.length > 0
-                      ? ListView(
-                        shrinkWrap: true,
-                          children: AllmanagerList.reversed
-                              .take(AllmanagerList.length)
-                              .map((propertyManagerData) {
-                      return PropertyManagetComponent(
-                          propertyManagerData: propertyManagerData);
-                        }).toList())
-                      : Text(
-                          "Data Not Found",
-                          style: TextStyle(fontSize: 13, color: Colors.grey),
+            ),
+            SizedBox(
+              height: 2,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 6, right: 6),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 100,
+                      child: Card(
+                        elevation: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "images/digital-marketing.png",
+                              width: 33,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                "Advertisement",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontFamily: 'Montserrat'),
+                              ),
+                            )
+                          ],
                         ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          child: PropertyManagers(),
-                          type: PageTransitionType.rightToLeft));
-                },
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Text(
-                      "See All",
-                      style: TextStyle(
-                          // fontFamily: 'Montserrat',
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 100,
+                      child: Card(
+                        elevation: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "images/Payment_setting.png",
+                              width: 32,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                "Payment Setting",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontFamily: 'Montserrat'),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 15.0, left: 10, right: 6, bottom: 10),
+                  child: Text(
+                    "Recent Requests",
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Container(
+                    height: 35,
+                    width: 70,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        // backgroundColor: appPrimaryMaterialColor[100],
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: PropertyManagers(),
+                                type: PageTransitionType.rightToLeft));
+                      },
+                      child: Text(
+                        "See All",
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: appPrimaryMaterialColor),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+            isLoading == true
+                ? Center(
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          appPrimaryMaterialColor),
+                    ),
+                  )
+                : AllmanagerList.length > 0
+                    ? Expanded(
+                        child: ListView(
+                            shrinkWrap: true,
+                            physics: BouncingScrollPhysics(),
+                            children: AllmanagerList.reversed
+                                .take(AllmanagerList.length)
+                                .map((propertyManagerData) {
+                              return PropertyManagetComponent(
+                                  propertyManagerData: propertyManagerData);
+                            }).toList()),
+                      )
+                    : Text(
+                        "Data Not Found",
+                        style: TextStyle(fontSize: 13, color: Colors.grey),
+                      ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Navigator.push(
+            //         context,
+            //         PageTransition(
+            //             child: PropertyManagers(),
+            //             type: PageTransitionType.rightToLeft));
+            //   },
+            //   child: Center(
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(top: 10.0),
+            //       child: Text(
+            //         "See All",
+            //         style: TextStyle(
+            //             // fontFamily: 'Montserrat',
+            //             fontSize: 13,
+            //             fontWeight: FontWeight.bold,
+            //             color: Colors.black),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+          ],
         ));
   }
 
@@ -254,6 +291,7 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                 apiName: "api/admin/getListOfRequestPropertyManager",
                 body: body)
             .then((responseData) {
+              print(responseData.Data.length);
           if (responseData.Data.length > 0) {
             setState(() {
               AllmanagerList = responseData.Data;
@@ -261,7 +299,6 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
             });
             print(responseData.Data);
             print("==============================>${AllmanagerList.length}");
-
           } else {
             print(responseData);
             setState(() {

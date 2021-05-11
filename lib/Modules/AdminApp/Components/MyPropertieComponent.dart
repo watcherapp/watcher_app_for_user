@@ -35,6 +35,9 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
     sharedPrefs.memberNo =
     "${widget.myPropertyData["MemberData"][0]["memberNo"]}";
 
+    sharedPrefs.mobileNo =
+    "${widget.myPropertyData["MemberData"][0]["mobileNo1"]}";
+
     //...................
     sharedPrefs.wingId =
         "${widget.myPropertyData["MemberData"][0]["society"]["wingId"]}";
@@ -42,11 +45,23 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
         "${widget.myPropertyData["MemberData"][0]["society"]["flatId"]}";
     sharedPrefs.userRole =
         "${widget.myPropertyData["MemberData"][0]["society"]["userRole"]}";
+    print(sharedPrefs.societyId);
+    print(sharedPrefs.societyCode);
+    print(sharedPrefs.societyName);
+    print(sharedPrefs.memberNo);
+    print(sharedPrefs.mobileNo);
+    print(sharedPrefs.wingId);
+    print(sharedPrefs.flatId);
+    print(sharedPrefs.userRole);
     if (sharedPrefs.userRole == "1") {
-      Navigator.pushReplacement(
-          context,
-          PageTransition(
-              child: AdminDashboard(), type: PageTransitionType.bottomToTop));
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => ShowDialog2(),
+      );
+      // Navigator.pushReplacement(
+      //     context,
+      //     PageTransition(
+      //         child: AdminDashboard(), type: PageTransitionType.bottomToTop));
     } else if (sharedPrefs.userRole == "2") {
       Navigator.pushReplacement(
           context,
@@ -287,6 +302,94 @@ class _ShowDialogState extends State<ShowDialog> {
                     color: Colors.green[400],
                     onPressed: () {
                       _leaveSociety();
+                    }),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class ShowDialog2 extends StatefulWidget {
+
+  @override
+  _ShowDialog2State createState() => _ShowDialog2State();
+}
+
+class _ShowDialog2State extends State<ShowDialog2> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Login As Admin/Member',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: appPrimaryMaterialColor,
+              ),
+            ),
+            // SizedBox(
+            //   width: 5,
+            // ),
+            // Icon(
+            //   Icons.report,
+            //   size: 33,
+            //   color: Colors.red,
+            // ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                RaisedButton(
+                    child: Text(" Admin ",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                        )),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    color: appPrimaryMaterialColor,
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              child: AdminDashboard(), type: PageTransitionType.bottomToTop));
+                    }),
+                RaisedButton(
+                    child: Text("Member",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                        )),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    color: appPrimaryMaterialColor,
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              child: UserDashboard(), type: PageTransitionType.bottomToTop));
                     }),
               ],
             ),

@@ -30,6 +30,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
   bool isStateLoading = false;
   bool isCityLoading = false;
   bool isLoading = false;
+  bool isSetUp = false;
   List stateList = [];
   List countryList = [];
   List societyTypeList = [];
@@ -48,6 +49,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
   FocusNode streetAddress = new FocusNode();
   FocusNode zipcode = new FocusNode();
   FocusNode submit = new FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -352,7 +354,18 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           "completeAddress": txtStreetName.text + " " + txtStreetAddress.text,
           "categoryId": selectedSocietyType
         };
-        print("$body");
+        print({
+          "secretaryId": "${sharedPrefs.memberId}",
+          "societyName": txtSocName.text,
+          "totalWings": txtWingNumber.text,
+          "country": selectedCountryName,
+          "state": selectedStateName,
+          "city": selectedCityName,
+          "lat": latitude,
+          "long": longitude,
+          "completeAddress": txtStreetName.text + " " + txtStreetAddress.text,
+          "categoryId": selectedSocietyType
+        });
         Services.responseHandler(
                 apiName: "api/society/createSociety", body: body)
             .then((responseData) {
@@ -367,8 +380,10 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                 context,
                 PageTransition(
                     child: SetupWings(
-                        wingsCount: int.parse(txtWingNumber.text),
-                        societyId: societyId),
+                      wingsCount: int.parse(txtWingNumber.text),
+                      societyId: societyId,
+                      // isSetUp: null,
+                    ),
                     type: PageTransitionType.rightToLeft));
           } else {
             print(responseData);

@@ -22,9 +22,9 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
 
   @override
   void initState() {
-    print("${widget.propertyManagerDetailData["_id"]}" +
-        "----------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +
-        "${widget.propertyManagerDetailData["PropertManager"][0]["_id"]}");
+    print("${widget.propertyManagerDetailData["_id"]}");
+    //     "----------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +
+    //     "${widget.propertyManagerDetailData["PropertManager"][0]["_id"]}");
   }
 
   @override

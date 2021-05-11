@@ -32,6 +32,7 @@ class _MyProfileState extends State<MyProfile> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
+        print(sharedPrefs.mobileNo);
         var body = {
           "mobileNo": sharedPrefs.mobileNo,
         };
@@ -40,8 +41,9 @@ class _MyProfileState extends State<MyProfile> {
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
-            dataList = responseData.Data;
             setState(() {
+              dataList = responseData.Data;
+              print(dataList);
               isLoading = false;
             });
           } else {
@@ -81,7 +83,7 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(leading: Container(),
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
         actions: [
@@ -143,7 +145,7 @@ class _MyProfileState extends State<MyProfile> {
                                     image: NetworkImage(
                                       API_URL + dataList[0]["memberImage"],
                                     ),
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.contain,
                                   ),
                                 ),
                               ),

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
@@ -13,8 +16,25 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   await sharedPrefs.init();
+  Platform.isAndroid ? OneSignal.shared.init(
+    "aef52e90-a64c-415a-81ad-9bc58b7c0e5e",
+    iOSSettings: {
+      OSiOSSettings.autoPrompt: false,
+      OSiOSSettings.inAppLaunchUrl: false,
+    },
+  ):OneSignal.shared.init(
+    "aef52e90-a64c-415a-81ad-9bc58b7c0e5e",
+    iOSSettings: {
+      OSiOSSettings.autoPrompt: true,
+      OSiOSSettings.inAppLaunchUrl: true,
+    },
+  );
+
+  OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.none);
   runApp(MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   @override

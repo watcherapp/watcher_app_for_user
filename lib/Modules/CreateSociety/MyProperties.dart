@@ -71,11 +71,16 @@ class _MyPropertiesState extends State<MyProperties> {
           height: 45,
           child: RaisedButton(
             onPressed: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   PageTransition(
                       child: ChooseCreateOrJoin(),
                       type: PageTransitionType.rightToLeft));
+              // Navigator.pushReplacement(
+              //     context,
+              //     PageTransition(
+              //         child: ChooseCreateOrJoin(),
+              //         type: PageTransitionType.rightToLeft));
             },
             textColor: Colors.white,
             shape:

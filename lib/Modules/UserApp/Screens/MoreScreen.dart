@@ -6,6 +6,7 @@ import 'package:watcher_app_for_user/Modules/UserApp/Screens/NoticesScreen.dart'
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/ComplainsScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AmenitiesScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/PollingScreen.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserEmergencyScreen.dart';
 
 class MoreScreen extends StatefulWidget {
   @override
@@ -48,6 +49,11 @@ class _MoreScreenState extends State<MoreScreen> {
       "label": " Blood Request",
       "img": "images/bloodDonation.png",
       "screenName" : BloodRequestScreen(),
+    },
+    {
+      "label": "Emergency",
+      "img": "images/alarm.png",
+      "screenName": UserEmergencyScreen(),
     },
   ];
 

@@ -56,6 +56,19 @@ class _SignUp3State extends State<SignUp3> {
 
   String selectedValue;
 
+  List wingList;
+  String wing_Type;
+  var wing = "";
+
+  List flatsList;
+  String flats_Type;
+  var flats = "";
+  bool isLoading = false;
+  bool isSet = false;
+
+  FocusNode myFlatNode;
+  FocusNode firstName;
+
   List<Gender> genderList = [
     Gender(icon: "images/male.png", name: "male", isSelected: false),
     Gender(icon: "images/female.png", name: "female", isSelected: false),
@@ -77,6 +90,12 @@ class _SignUp3State extends State<SignUp3> {
 
   String selectedGender = "";
 
+  checkFocus() {
+    if (firstName.hasFocus == true && selectedRole == "2") {
+      _getAllWings();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -87,6 +106,10 @@ class _SignUp3State extends State<SignUp3> {
     });
     print(widget.phoneNumber);
     getIdentityData();
+    // _getAllWings();
+    myFlatNode = FocusNode();
+    firstName = FocusNode();
+    firstName.addListener(() => checkFocus());
   }
 
   File _userProfile, _identityProof;
@@ -284,6 +307,7 @@ class _SignUp3State extends State<SignUp3> {
                                     height: 15,
                                   ),
                                   MyTextFormField(
+                                      focusNode: firstName,
                                       controller: txtFirstName,
                                       lable: "First Name",
                                       validator: (val) {
@@ -318,6 +342,168 @@ class _SignUp3State extends State<SignUp3> {
                                       lable: "Email",
                                       validator: validateEmail,
                                       hintText: "Enter email"),
+                                  selectedRole == "2"
+                                      ? Column(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 4.0,
+                                                          bottom: 6.0),
+                                                  child: Text("Select Wings",
+                                                      style: fontConstants
+                                                          .formFieldLabel),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 4.0,
+                                                          bottom: 6.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.grey[200],
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0)),
+                                                    child:
+                                                        DropdownButtonHideUnderline(
+                                                      child: ButtonTheme(
+                                                        alignedDropdown: true,
+                                                        child: DropdownButton<
+                                                            String>(
+                                                          isExpanded: true,
+                                                          value: wing_Type,
+                                                          iconSize: 30,
+                                                          icon: (null),
+                                                          style: TextStyle(
+                                                            color:
+                                                                Colors.black54,
+                                                            fontSize: 16,
+                                                          ),
+                                                          hint: Text(
+                                                            'Select Wings',
+                                                            style: fontConstants
+                                                                .formFieldLabel,
+                                                          ),
+                                                          onChanged: isSet ==
+                                                                  true
+                                                              ? null
+                                                              : (String
+                                                                  newValue) {
+                                                                  setState(() {
+                                                                    wing_Type =
+                                                                        newValue;
+                                                                    wing = newValue
+                                                                        .toString();
+                                                                    print(
+                                                                        wing_Type);
+                                                                    _getAllFlats(
+                                                                        wingId:
+                                                                            wing_Type);
+                                                                    // PostForGetAllFlatsFromWings(wing_Type);
+                                                                  });
+                                                                },
+                                                          items: wingList
+                                                                  ?.map((item) {
+                                                                return new DropdownMenuItem(
+                                                                  child: new Text(
+                                                                      item[
+                                                                          'wingName']),
+                                                                  value: item[
+                                                                          '_id']
+                                                                      .toString(),
+                                                                );
+                                                              })?.toList() ??
+                                                              [],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 4.0,
+                                                          bottom: 6.0),
+                                                  child: Text("Select Flats",
+                                                      style: fontConstants
+                                                          .formFieldLabel),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 4.0,
+                                                          bottom: 6.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.grey[200],
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0)),
+                                                    child:
+                                                        DropdownButtonHideUnderline(
+                                                      child: ButtonTheme(
+                                                        alignedDropdown: true,
+                                                        child: DropdownButton<
+                                                            String>(
+                                                          focusNode: myFlatNode,
+                                                          isExpanded: true,
+                                                          value: flats_Type,
+                                                          iconSize: 30,
+                                                          icon: (null),
+                                                          style: TextStyle(
+                                                            color:
+                                                                Colors.black54,
+                                                            fontSize: 16,
+                                                          ),
+                                                          hint: Text(
+                                                            'Select Flats',
+                                                            style: fontConstants
+                                                                .formFieldLabel,
+                                                          ),
+                                                          onChanged: (String
+                                                              newValue) {
+                                                            setState(() {
+                                                              isSet = true;
+                                                              flats_Type =
+                                                                  newValue;
+                                                              flats = newValue
+                                                                  .toString();
+                                                              print(flats_Type);
+                                                            });
+                                                          },
+                                                          items: flatsList
+                                                                  ?.map((item) {
+                                                                return new DropdownMenuItem(
+                                                                  child: new Text(
+                                                                      item['flatNo']
+                                                                          .toString()),
+                                                                  value: item[
+                                                                          '_id']
+                                                                      .toString(),
+                                                                );
+                                                              })?.toList() ??
+                                                              [],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      : Container(),
                                   SizedBox(
                                     height: 12,
                                   ),
@@ -875,36 +1061,67 @@ class _SignUp3State extends State<SignUp3> {
           identityFilePath = _identityFilePath;
           identityFileName = _identityFileName;
         }
+        var body;
+        print(selectedRole);
+        selectedRole == "2"
+            ? body = FormData.fromMap({
+                "firstName": txtFirstName.text,
+                "lastName": txtLastName.text,
+                "mobileNo1": widget.phoneNumber,
+                "emailId": txtEmail.text,
+                "password": txtPassword.text,
+                "userRole": selectedRole,
+                "societyCode": txtSocietyCode.text ?? "",
+                "wingId": wing_Type,
+                "flatId": flats_Type,
+                "address": "",
+                "fcmToken": "ssdfsd6sds8555sdsdsfdvdscdcDSfdfdefddccscddDD2",
+                "refferBy": "",
+                "deviceType": Platform.isAndroid ? "android" : "ios",
+                "gender": selectedGender,
+                "identityProof": selectedValue,
+                "identityImage":
+                    (identityFilePath != null && identityFilePath != '')
+                        ? await MultipartFile.fromFile(identityFilePath,
+                            filename: identityFileName.toString())
+                        : "",
+                "memberImage": (userFilePath != null && userFilePath != '')
+                    ? await MultipartFile.fromFile(userFilePath,
+                        filename: userFileName.toString())
+                    : "",
+              })
+            : body = FormData.fromMap({
+                "firstName": txtFirstName.text,
+                "lastName": txtLastName.text,
+                "mobileNo1": widget.phoneNumber,
+                "emailId": txtEmail.text,
+                "password": txtPassword.text,
+                "userRole": selectedRole,
+                "societyCode": txtSocietyCode.text ?? "",
+                "address": "",
+                "fcmToken": "ssdfsd6sds8555sdsdsfdvdscdcDSfdfdefddccscddDD2",
+                "refferBy": "",
+                "deviceType": Platform.isAndroid ? "android" : "ios",
+                "gender": selectedGender,
+                "identityProof": selectedValue,
+                "identityImage":
+                    (identityFilePath != null && identityFilePath != '')
+                        ? await MultipartFile.fromFile(identityFilePath,
+                            filename: identityFileName.toString())
+                        : "",
+                "memberImage": (userFilePath != null && userFilePath != '')
+                    ? await MultipartFile.fromFile(userFilePath,
+                        filename: userFileName.toString())
+                    : "",
+              });
 
-        var body = FormData.fromMap({
-          "firstName": txtFirstName.text,
-          "lastName": txtLastName.text,
-          "mobileNo1": widget.phoneNumber,
-          "emailId": txtEmail.text,
-          "password": txtPassword.text,
-          "userRole": selectedRole,
-          "societyCode": txtSocietyCode.text ?? "",
-          "address": "",
-          "fcmToken": "ssdfsd6sds8555sdsdsfdvdscdcDSfdfdefddccscddDD2",
-          "refferBy": "",
-          "deviceType": Platform.isAndroid ? "android" : "ios",
-          "gender": selectedGender,
-          "identityProof": selectedValue,
-          "identityImage": (identityFilePath != null && identityFilePath != '')
-              ? await MultipartFile.fromFile(identityFilePath,
-                  filename: identityFileName.toString())
-              : "",
-          "memberImage": (userFilePath != null && userFilePath != '')
-              ? await MultipartFile.fromFile(userFilePath,
-                  filename: userFileName.toString())
-              : "",
-        });
         log(body.fields.toString());
+        print(body.fields);
         Services.responseHandler(apiName: "api/member/signUp", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             LoadingIndicator.close(context);
-            Fluttertoast.showToast(msg: "Response ${responseData.Data}");
+            Fluttertoast.showToast(msg: "You are Register Successfully.");
             _saveDataToSession(responseData.Data);
           } else {
             print(responseData);
@@ -919,6 +1136,119 @@ class _SignUp3State extends State<SignUp3> {
     } catch (e) {
       LoadingIndicator.close(context);
       Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
+
+  _getAllWings() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "societyCode": txtSocietyCode.text,
+        };
+        print("$body");
+        Services.responseHandler(
+                apiName: "api/society/getAllWingsOfSociety", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            setState(() {
+              wingList = responseData.Data;
+              print("Wings----------------->$wingList");
+              isLoading = false;
+            });
+            _getAllFlats(wingId: wingList[0]["_id"]);
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
+    }
+  }
+
+  _getAllFlats({String wingId}) async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "societyId": wingList[0]["societyId"],
+          "wingId": wingId,
+        };
+        print("$body");
+        Services.responseHandler(
+                apiName: "api/society/getFlatsOfSocietyWing", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            print(responseData.Data);
+            flatsList = responseData.Data;
+            print("Flats----------------->$flatsList");
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
     }
   }
 }

@@ -17,14 +17,18 @@ import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWings.dart';
 class SetupWingsFinalStep extends StatefulWidget {
   int flatFormatId, totalFloor, totalCountPerFloor;
   String wingName, societyId, parkingSpot;
+  var wingCount,wingId;
 
-  SetupWingsFinalStep(
-      {this.flatFormatId,
-      this.totalFloor,
-      this.totalCountPerFloor,
-      this.wingName,
-      this.societyId,
-      this.parkingSpot});
+  SetupWingsFinalStep({
+    this.flatFormatId,
+    this.totalFloor,
+    this.totalCountPerFloor,
+    this.wingName,
+    this.societyId,
+    this.parkingSpot,
+    this.wingCount,
+    this.wingId,
+  });
 
   @override
   _SetupWingsFinalStepState createState() => _SetupWingsFinalStepState();
@@ -247,10 +251,12 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
+        print(widget.wingId);
         var body = {
           "secretaryId": "${sharedPrefs.memberId}",
           "societyId": "${widget.societyId}",
           "wingName": "${widget.wingName}",
+          "wingId": "${widget.wingId}",
           "totalFloor": "${widget.totalFloor}",
           "maxUnitPerFloor": "${widget.totalCountPerFloor}",
           "totalParkingSpot": "${widget.parkingSpot}",
@@ -259,8 +265,8 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         log("$body");
         Services.responseHandler(apiName: "api/society/setUpWing", body: body)
             .then((responseData) {
-          if (responseData.Data.length > 0) {
-            print(responseData.Data);
+          if (responseData.Data == 1) {
+            print("------------------->${responseData.Data}");
             LoadingIndicator.close(context);
             Fluttertoast.showToast(
                 msg: "Wing Created Successfully !",
@@ -269,7 +275,13 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
                 fontSize: 16.0);
             Navigator.of(context).pushAndRemoveUntil(
                 PageTransition(
-                    child: SetupWings(), type: PageTransitionType.rightToLeft),
+                    child: SetupWings(
+                      societyId: widget.societyId,
+                      wingsCount: widget.wingCount,
+                      // isSetUp: responseData.Data,
+                      // isSetUp: responseData.Data[0]["isSetup"],
+                    ),
+                    type: PageTransitionType.rightToLeft),
                 (Route<dynamic> route) => false);
           } else {
             print(responseData);

@@ -3,6 +3,11 @@ const String API_URL = "http://15.206.236.83/";
 const String Access_Token = "RvHiQ6J4QJoAMeA0ysCw-HJklmBHklmnknNJn-hghJUdksjH";
 // const societyId = "605583b2848881107c3fcf9d";
 
+  // onesignal
+// aef52e90-a64c-415a-81ad-9bc58b7c0e5e
+// OTliNzVmZmEtMWI5Mi00N2ZjLTlkMDQtMWY3OGM0Y2Q2MDdm
+
+
 class Messages {
   static const String message = "You Are Not Connected To Internet";
 }

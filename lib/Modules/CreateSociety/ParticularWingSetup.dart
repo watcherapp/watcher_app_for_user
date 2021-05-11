@@ -7,9 +7,14 @@ import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/SetupWingsFinalStep.dart';
 
 class ParticularWingSetup extends StatefulWidget {
-  var wingName, societyId;
+  var wingName, societyId, wingCount, wingId;
 
-  ParticularWingSetup({this.wingName, this.societyId});
+  ParticularWingSetup({
+    this.wingName,
+    this.societyId,
+    this.wingCount,
+    this.wingId,
+  });
 
   @override
   _ParticularWingSetupState createState() => _ParticularWingSetupState();
@@ -183,13 +188,16 @@ class _ParticularWingSetupState extends State<ParticularWingSetup> {
                       const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
                   child: MyButton(
                       onPressed: () {
+                        print(widget.wingId);
                         if (formKey.currentState.validate()) {
                           Navigator.push(
                               context,
                               PageTransition(
                                   child: SetupWingsFinalStep(
                                       societyId: widget.societyId,
+                                      wingCount: widget.wingCount,
                                       wingName: wingName,
+                                      wingId: widget.wingId,
                                       flatFormatId: currentIndex,
                                       parkingSpot: txtParkingSpot.text,
                                       totalFloor: int.parse(txtTotalFloor.text),
