@@ -15,8 +15,12 @@ import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 
 class SignUp1 extends StatefulWidget {
   String fromWhere;
+  var playerId;
 
-  SignUp1({this.fromWhere});
+  SignUp1({
+    this.fromWhere,
+    this.playerId,
+  });
 
   @override
   _SignUp1State createState() => _SignUp1State();
@@ -60,6 +64,7 @@ class _SignUp1State extends State<SignUp1> {
                     dialCode: dialCode,
                     mobileNo: txtMobile.text,
                     fromWhere: widget.fromWhere,
+                    playerId: widget.playerId,
                   ),
                   type: PageTransitionType.rightToLeft),
             );
@@ -211,6 +216,7 @@ class _SignUp1State extends State<SignUp1> {
                                       dialCode: dialCode,
                                       mobileNo: txtMobile.text,
                                       fromWhere: widget.fromWhere,
+                                      playerId: widget.playerId,
                                     ),
                                     type: PageTransitionType.rightToLeft,
                                   ),

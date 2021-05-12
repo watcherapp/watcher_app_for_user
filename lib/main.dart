@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Splash.dart';
-import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
 
 import 'Constants/appColors.dart';
 import 'Data/Providers/IndexCountProvider.dart';
@@ -35,8 +34,29 @@ Future<void> main() async {
 }
 
 
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-class MyApp extends StatelessWidget {
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    _handleSendNotification();
+  }
+
+
+  var playerId;
+  void _handleSendNotification() async {
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+
+    playerId = status.subscriptionStatus.userId;
+    print("playerid");
+    print(playerId);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -59,8 +79,11 @@ class MyApp extends StatelessWidget {
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
-        home: Splash(),
+        home: Splash(
+          playerId: playerId,
+        ),
       ),
     );
   }
+
 }

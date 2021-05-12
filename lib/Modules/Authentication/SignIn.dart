@@ -17,8 +17,13 @@ import 'package:watcher_app_for_user/Modules/Authentication/Registration/SignUp1
 import 'package:watcher_app_for_user/Modules/CreateSociety/MyProperties.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
 
-
 class SignIn extends StatefulWidget {
+  var playerId;
+
+  SignIn({
+    this.playerId,
+  });
+
   @override
   _SignInState createState() => _SignInState();
 }
@@ -99,6 +104,7 @@ class _SignInState extends State<SignIn> {
                                 PageTransition(
                                     child: SignUp1(
                                       fromWhere: fromWhere,
+                                      playerId: widget.playerId,
                                     ),
                                     type: PageTransitionType.rightToLeft));
                           },
@@ -130,7 +136,9 @@ class _SignInState extends State<SignIn> {
                                 Navigator.push(
                                     context,
                                     PageTransition(
-                                        child: SignUp1(),
+                                        child: SignUp1(
+                                          playerId: widget.playerId,
+                                        ),
                                         type: PageTransitionType.rightToLeft));
                               },
                               child: RichText(
@@ -199,8 +207,8 @@ class _SignInState extends State<SignIn> {
         var body = {
           "$key": txtEmailOrMobile.text,
           "password": txtPassword.text,
-          "deviceType": Platform.isAndroid ? "android" : "ios",
-          "fcmToken": "vgwcvd"
+          "deviceType": Platform.isAndroid ? "Android" : "IOS",
+          "playerId": "${widget.playerId}"
         };
         print("$body");
         Services.responseHandler(apiName: "api/member/memberSignIn", body: body)

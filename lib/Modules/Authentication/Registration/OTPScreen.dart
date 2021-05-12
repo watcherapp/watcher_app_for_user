@@ -18,12 +18,14 @@ class OTPScreen extends StatefulWidget {
   var mobileNo;
   var dialCode;
   String fromWhere;
+  var playerId;
 
   OTPScreen({
     this.otpData,
     this.mobileNo,
     this.dialCode,
     this.fromWhere,
+    this.playerId,
   });
 
   @override
@@ -75,7 +77,10 @@ class _OTPScreenState extends State<OTPScreen> {
                   Navigator.push(
                       context,
                       PageTransition(
-                          child: SignUp3(phoneNumber: widget.mobileNo),
+                          child: SignUp3(
+                            phoneNumber: widget.mobileNo,
+                            playerId: widget.playerId,
+                          ),
                           type: PageTransitionType.rightToLeft));
                 }
               }
@@ -146,6 +151,7 @@ class _OTPScreenState extends State<OTPScreen> {
               PageTransition(
                 child: SignUp3(
                   phoneNumber: myPhoneNumber,
+                  playerId: widget.playerId,
                 ),
                 type: PageTransitionType.rightToLeft,
               ),

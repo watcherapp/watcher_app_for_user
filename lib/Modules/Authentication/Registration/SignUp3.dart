@@ -26,9 +26,11 @@ import 'package:watcher_app_for_user/Modules/CreateSociety/MyProperties.dart';
 
 class SignUp3 extends StatefulWidget {
   String phoneNumber;
+  var playerId;
 
   SignUp3({
     this.phoneNumber,
+    this.playerId,
   });
 
   @override
@@ -1075,9 +1077,9 @@ class _SignUp3State extends State<SignUp3> {
                 "wingId": wing_Type,
                 "flatId": flats_Type,
                 "address": "",
-                "fcmToken": "ssdfsd6sds8555sdsdsfdvdscdcDSfdfdefddccscddDD2",
+                "playerId": "${widget.playerId}",
                 "refferBy": "",
-                "deviceType": Platform.isAndroid ? "android" : "ios",
+                "deviceType": Platform.isAndroid ? "Android" : "IOS",
                 "gender": selectedGender,
                 "identityProof": selectedValue,
                 "identityImage":
@@ -1099,9 +1101,9 @@ class _SignUp3State extends State<SignUp3> {
                 "userRole": selectedRole,
                 "societyCode": txtSocietyCode.text ?? "",
                 "address": "",
-                "fcmToken": "ssdfsd6sds8555sdsdsfdvdscdcDSfdfdefddccscddDD2",
+                "playerId": "${widget.playerId}",
                 "refferBy": "",
-                "deviceType": Platform.isAndroid ? "android" : "ios",
+                "deviceType": Platform.isAndroid ? "Android" : "IOS",
                 "gender": selectedGender,
                 "identityProof": selectedValue,
                 "identityImage":

@@ -9,6 +9,12 @@ import 'package:watcher_app_for_user/Modules/CreateSociety/MyProperties.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/MasterAdminDashboard.dart';
 
 class Splash extends StatefulWidget {
+  var playerId;
+
+  Splash({
+    this.playerId,
+  });
+
   @override
   _SplashState createState() => _SplashState();
 }
@@ -52,7 +58,10 @@ class _SplashState extends State<Splash> {
       Navigator.pushReplacement(
           context,
           PageTransition(
-              child: SignIn(), type: PageTransitionType.bottomToTop));
+              child: SignIn(
+                playerId: widget.playerId,
+              ),
+              type: PageTransitionType.bottomToTop));
     }
   }
 
