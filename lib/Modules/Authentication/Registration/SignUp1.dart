@@ -95,6 +95,70 @@ class _SignUp1State extends State<SignUp1> {
     }
   }
 
+  _verifyMemberDataF() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "mobileNo1": txtMobile.text,
+        };
+        print("$body");
+        Services.responseHandler(
+                apiName: "api/member/verifySignInData", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            print(responseData.Data);
+            Fluttertoast.showToast(
+              msg: "You are verified successfully.",
+            );
+            Navigator.push(
+              context,
+              PageTransition(
+                child: OTPScreen(
+                  dialCode: dialCode,
+                  mobileNo: txtMobile.text,
+                  fromWhere: widget.fromWhere,
+                  playerId: widget.playerId,
+                ),
+                type: PageTransitionType.rightToLeft,
+              ),
+            );
+            setState(() {
+              isLoading = false;
+            });
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        textColor: appPrimaryMaterialColor,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +168,12 @@ class _SignUp1State extends State<SignUp1> {
         key: _formKey,
         child: Column(
           children: [
-            CircleDesign(title: "Create account", backbutton: true),
+            CircleDesign(
+              title: widget.fromWhere == "fromForgotPassword"
+                  ? "Verify Mobile"
+                  : "Create account",
+              backbutton: true,
+            ),
             Expanded(
               child: Container(
                 height: double.infinity,
@@ -153,6 +222,7 @@ class _SignUp1State extends State<SignUp1> {
                             child: MyTextFormField(
                                 controller: txtMobile,
                                 lable: "Mobile No",
+                                maxLength: 10,
                                 keyboardType: TextInputType.number,
                                 validator: (val) {
                                   if (val.isEmpty) {
@@ -209,18 +279,7 @@ class _SignUp1State extends State<SignUp1> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               if (widget.fromWhere == "fromForgotPassword") {
-                                Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    child: OTPScreen(
-                                      dialCode: dialCode,
-                                      mobileNo: txtMobile.text,
-                                      fromWhere: widget.fromWhere,
-                                      playerId: widget.playerId,
-                                    ),
-                                    type: PageTransitionType.rightToLeft,
-                                  ),
-                                );
+                                _verifyMemberDataF();
                               } else {
                                 _verifyMember();
                               }
@@ -239,35 +298,38 @@ class _SignUp1State extends State<SignUp1> {
                       SizedBox(
                         height: 35,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: SignIn(),
-                                      type: PageTransitionType.bottomToTop));
-                            },
-                            child: RichText(
-                                text: TextSpan(
-                                    text: "Already have an account ? ",
-                                    style: TextStyle(
-                                        color: Colors.black54,
-                                        fontFamily: 'WorkSans',
-                                        fontSize: 18),
-                                    children: [
-                                  TextSpan(
-                                      text: "Sign in",
-                                      style: TextStyle(
-                                          color: appPrimaryMaterialColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17))
-                                ])),
-                          ),
-                        ],
-                      )
+                      widget.fromWhere == "fromForgotPassword"
+                          ? Container()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            child: SignIn(),
+                                            type: PageTransitionType
+                                                .bottomToTop));
+                                  },
+                                  child: RichText(
+                                      text: TextSpan(
+                                          text: "Already have an account ? ",
+                                          style: TextStyle(
+                                              color: Colors.black54,
+                                              fontFamily: 'WorkSans',
+                                              fontSize: 18),
+                                          children: [
+                                        TextSpan(
+                                            text: "Sign in",
+                                            style: TextStyle(
+                                                color: appPrimaryMaterialColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17))
+                                      ])),
+                                ),
+                              ],
+                            )
                     ],
                   ),
                 ),

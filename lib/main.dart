@@ -52,8 +52,7 @@ class _MyAppState extends State<MyApp> {
     var status = await OneSignal.shared.getPermissionSubscriptionState();
 
     playerId = status.subscriptionStatus.userId;
-    print("playerid");
-    print(playerId);
+    print("playerid--->${playerId}");
   }
 
 
