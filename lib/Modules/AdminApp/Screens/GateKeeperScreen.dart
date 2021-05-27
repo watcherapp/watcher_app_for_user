@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/GateKeeperProfileScreen.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class GateKeeperScreen extends StatefulWidget {
@@ -23,6 +25,14 @@ class _GateKeeperScreenState extends State<GateKeeperScreen> {
   void initState() {
     _getAllStaff();
     aa = ss.substring(0, 1);
+  }
+
+  void launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      launch(url);
+    } else {
+      throw "Could not launch $url";
+    }
   }
 
   _getAllStaff() async {
@@ -122,7 +132,8 @@ class _GateKeeperScreenState extends State<GateKeeperScreen> {
                   child: Card(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
@@ -149,42 +160,41 @@ class _GateKeeperScreenState extends State<GateKeeperScreen> {
                               //     ),
                               //   ),
                               // ),
-                              gateKeeperList[index]["staffImage"] == null ||
-                                  gateKeeperList[index]["staffImage"] ==
-                                      ""
+                              gateKeeperList[index]["watchmanImage"] == null ||
+                                      gateKeeperList[index]["watchmanImage"] == ""
                                   ? Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  // border: Border.all(
-                                  //     width: 1, color: Colors.grey),
-                                    borderRadius:
-                                    BorderRadius.circular(100.0),
-                                    color: appPrimaryMaterialColor),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                      "${gateKeeperList[index]["firstName"].toString().substring(0, 1).toUpperCase()}",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18)),
-                                ),
-                              )
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                          // border: Border.all(
+                                          //     width: 1, color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                          color: appPrimaryMaterialColor),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            "${gateKeeperList[index]["firstName"].toString().substring(0, 1).toUpperCase()}",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18)),
+                                      ),
+                                    )
                                   : Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                          API_URL + gateKeeperList[index]
-                                          ["staffImage"]),
-                                      fit: BoxFit.fill,
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(API_URL +
+                                                gateKeeperList[index]
+                                                    ["watchmanImage"]),
+                                            fit: BoxFit.fill,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                          color: appPrimaryMaterialColor),
                                     ),
-                                    borderRadius:
-                                    BorderRadius.circular(100.0),
-                                    color: appPrimaryMaterialColor),
-                              ),
                               // Image.network(
                               //   gateKeeperList[index]["staffImage"],
                               //   width: 50,
@@ -223,11 +233,11 @@ class _GateKeeperScreenState extends State<GateKeeperScreen> {
                               ),
                             ],
                           ),
-
                           Row(
                             children: [
                               IconButton(
                                 onPressed: () {
+                                  launchUrl("tel:${gateKeeperList[index]["mobileNo1"]}");
                                   print(gateKeeperList[index]["mobileNo1"]);
                                 },
                                 icon: Icon(
@@ -241,13 +251,15 @@ class _GateKeeperScreenState extends State<GateKeeperScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     PageTransition(
-                                  //         child: DailyHelperSubScreen(
-                                  //           helperData: amenitiesList[index],
-                                  //         ),
-                                  //         type: PageTransitionType.rightToLeft));
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          child: GateKeeperProfileScreen(
+                                            gatekeeperData:
+                                                gateKeeperList[index],
+                                          ),
+                                          type:
+                                              PageTransitionType.rightToLeft));
                                 },
                                 child: Container(
                                   height: 20,

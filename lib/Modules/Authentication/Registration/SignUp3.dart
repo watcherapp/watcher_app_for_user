@@ -21,6 +21,7 @@ import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/ClassList/Gender.dart';
 import 'package:watcher_app_for_user/Data/Providers/IndexCountProvider.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Data/ValidationClass.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/MyProperties.dart';
 
@@ -1018,8 +1019,19 @@ class _SignUp3State extends State<SignUp3> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(Session.memberId, sessionData[0]["_id"] ?? "");
     prefs.setString(Session.memberNo, sessionData[0]["memberNo"] ?? "");
+    prefs.setString(Session.mobileNo, sessionData[0]["mobileNo1"] ?? "");
     prefs.setString(
         Session.userRole, sessionData[0]["userRole"].toString() ?? "");
+    //smit
+    sharedPrefs.memberId = "${sessionData[0]["_id"]}";
+    // sharedPrefs.userRole = "${sessionData[0]["userRole"]}";
+    sharedPrefs.memberNo = "${sessionData[0]["memberNo"]}";
+    sharedPrefs.mobileNo = "${sessionData[0]["mobileNo1"]}";
+    print(sharedPrefs.memberId);
+    // print(sharedPrefs.userRole);
+    print(sharedPrefs.memberNo);
+    print(sharedPrefs.mobileNo);
+    //..................
     if (sessionData[0]["userRole"] == 1) {
       Navigator.pushReplacement(
           context,
@@ -1065,11 +1077,12 @@ class _SignUp3State extends State<SignUp3> {
         }
         var body;
         print(selectedRole);
+        print(widget.phoneNumber);
         selectedRole == "2"
             ? body = FormData.fromMap({
                 "firstName": txtFirstName.text,
                 "lastName": txtLastName.text,
-                "mobileNo1": widget.phoneNumber,
+                "mobileNo1": "${widget.phoneNumber}",
                 "emailId": txtEmail.text,
                 "password": txtPassword.text,
                 "userRole": selectedRole,
@@ -1095,7 +1108,7 @@ class _SignUp3State extends State<SignUp3> {
             : body = FormData.fromMap({
                 "firstName": txtFirstName.text,
                 "lastName": txtLastName.text,
-                "mobileNo1": widget.phoneNumber,
+                "mobileNo1": "${widget.phoneNumber}",
                 "emailId": txtEmail.text,
                 "password": txtPassword.text,
                 "userRole": selectedRole,
@@ -1123,6 +1136,7 @@ class _SignUp3State extends State<SignUp3> {
             .then((responseData) {
           if (responseData.Data.length > 0) {
             LoadingIndicator.close(context);
+            print("Register response------>${responseData.Data}");
             Fluttertoast.showToast(msg: "You are Register Successfully.");
             _saveDataToSession(responseData.Data);
           } else {

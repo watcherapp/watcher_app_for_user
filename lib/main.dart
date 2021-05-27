@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -15,24 +16,25 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   await sharedPrefs.init();
-  Platform.isAndroid ? OneSignal.shared.init(
-    "aef52e90-a64c-415a-81ad-9bc58b7c0e5e",
-    iOSSettings: {
-      OSiOSSettings.autoPrompt: false,
-      OSiOSSettings.inAppLaunchUrl: false,
-    },
-  ):OneSignal.shared.init(
-    "aef52e90-a64c-415a-81ad-9bc58b7c0e5e",
-    iOSSettings: {
-      OSiOSSettings.autoPrompt: true,
-      OSiOSSettings.inAppLaunchUrl: true,
-    },
-  );
+  Platform.isAndroid
+      ? OneSignal.shared.init(
+          "aef52e90-a64c-415a-81ad-9bc58b7c0e5e",
+          iOSSettings: {
+            OSiOSSettings.autoPrompt: false,
+            OSiOSSettings.inAppLaunchUrl: false,
+          },
+        )
+      : OneSignal.shared.init(
+          "aef52e90-a64c-415a-81ad-9bc58b7c0e5e",
+          iOSSettings: {
+            OSiOSSettings.autoPrompt: true,
+            OSiOSSettings.inAppLaunchUrl: true,
+          },
+        );
 
   OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.none);
   runApp(MyApp());
 }
-
 
 class MyApp extends StatefulWidget {
   @override
@@ -40,21 +42,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
+    super.initState();
     _handleSendNotification();
   }
 
-
   var playerId;
+
   void _handleSendNotification() async {
     var status = await OneSignal.shared.getPermissionSubscriptionState();
-
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
     playerId = status.subscriptionStatus.userId;
     print("playerid--->${playerId}");
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +80,9 @@ class _MyAppState extends State<MyApp> {
             primaryColor: appPrimaryMaterialColor,
             fontFamily: 'Montserrat'),
         home: Splash(
-          playerId: playerId,
-        ),
+            // playerId: playerId,
+            ),
       ),
     );
   }
-
 }

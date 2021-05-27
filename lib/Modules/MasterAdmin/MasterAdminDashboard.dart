@@ -29,7 +29,7 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Admin", style: TextStyle(fontFamily: 'Montserrat')),
+          title: Text("Master Admin", style: TextStyle(fontFamily: 'Montserrat')),
           centerTitle: true,
           elevation: 0,
           backgroundColor: appPrimaryMaterialColor,

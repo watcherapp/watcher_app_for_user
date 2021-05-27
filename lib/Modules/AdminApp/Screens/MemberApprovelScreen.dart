@@ -299,70 +299,72 @@ class MemberDirectoryComponent extends StatefulWidget {
 class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
   bool isLoading = false;
 
-  //baki 6e..............
-  _memberApprove({String approve}) async {
-    try {
-      setState(() {
-        isLoading = true;
-      });
-      final internetResult = await InternetAddress.lookup('google.com');
-      if (internetResult.isNotEmpty &&
-          internetResult[0].rawAddress.isNotEmpty) {
-        print(sharedPrefs.societyCode);
-        var body = {
-          "memberId": widget.memberData["_id"],
-          "isApprove": approve,
-          "societyId": sharedPrefs.societyId,
-          "wingId": widget.memberData["society"]["wingId"],
-          "flatId": widget.memberData["society"]["flatId"],
-          "propertyManagerId": sharedPrefs.memberId,
-        };
-        print("$body");
-        Services.responseHandler(apiName: "api/admin/approveMember", body: body)
-            .then((responseData) {
-          if (responseData.Data == 1) {
-            setState(() {
-              isLoading = false;
-            });
-            widget.memberDataApi();
-            Fluttertoast.showToast(
-              msg: "You Approve this member Successfully",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-            );
-          } else {
-            print(responseData);
-            setState(() {
-              isLoading = false;
-            });
-            Fluttertoast.showToast(
-              msg: "${responseData.Message}",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-            );
-          }
-        }).catchError((error) {
-          setState(() {
-            isLoading = false;
-          });
-          Fluttertoast.showToast(
-            msg: "Error $error",
-            backgroundColor: Colors.white,
-            textColor: appPrimaryMaterialColor,
-          );
-        });
-      }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      Fluttertoast.showToast(
-        msg: "You aren't connected to the Internet !",
-        backgroundColor: Colors.white,
-        textColor: appPrimaryMaterialColor,
-      );
-    }
-  }
+  // //baki 6e..............
+  // _memberApprove({bool approve}) async {
+  //   try {
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //     final internetResult = await InternetAddress.lookup('google.com');
+  //     if (internetResult.isNotEmpty &&
+  //         internetResult[0].rawAddress.isNotEmpty) {
+  //       print(sharedPrefs.societyCode);
+  //       print(approve);
+  //       var body = {
+  //         "memberId": widget.memberData["_id"],
+  //         "isApprove": true,
+  //         "societyId": sharedPrefs.societyId,
+  //         "wingId": widget.memberData["society"]["wingId"],
+  //         "flatId": widget.memberData["society"]["flatId"],
+  //         "propertyManagerId": sharedPrefs.memberId
+  //       };
+  //       print("$body");
+  //       Services.responseHandler(apiName: "api/admin/approveMember", body: body)
+  //           .then((responseData) {
+  //             print(responseData.Data);
+  //         if (responseData.Data == 1) {
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //           widget.memberDataApi();
+  //           Fluttertoast.showToast(
+  //             msg: "You Approve this member Successfully",
+  //             backgroundColor: Colors.white,
+  //             textColor: appPrimaryMaterialColor,
+  //           );
+  //         } else {
+  //           print(responseData);
+  //           setState(() {
+  //             isLoading = false;
+  //           });
+  //           Fluttertoast.showToast(
+  //             msg: "${responseData.Message}",
+  //             backgroundColor: Colors.white,
+  //             textColor: appPrimaryMaterialColor,
+  //           );
+  //         }
+  //       }).catchError((error) {
+  //         setState(() {
+  //           isLoading = false;
+  //         });
+  //         Fluttertoast.showToast(
+  //           msg: "Error $error",
+  //           backgroundColor: Colors.white,
+  //           textColor: appPrimaryMaterialColor,
+  //         );
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     Fluttertoast.showToast(
+  //       msg: "You aren't connected to the Internet !",
+  //       backgroundColor: Colors.white,
+  //       textColor: appPrimaryMaterialColor,
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -475,10 +477,8 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                             context: context,
                             builder: (BuildContext context) => ShowDialog(
                               memberData: widget.memberData,
-                              memberApproveApi: () {
-                                _memberApprove(
-                                  approve: "true",
-                                );
+                              memberDataApi: () {
+                                widget.memberDataApi();
                               },
                             ),
                           );
@@ -492,7 +492,7 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                     height: 30,
                     width: 110,
                     child: RaisedButton(
-                        child: Text("DisApprove",
+                        child: Text("Reject",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 13.4,
@@ -505,10 +505,8 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                             context: context,
                             builder: (BuildContext context) => ShowDialog2(
                               memberData: widget.memberData,
-                              memberApproveApi: () {
-                                _memberApprove(
-                                  approve: "false",
-                                );
+                              memberDataApi: () {
+                                widget.memberDataApi();
                               },
                             ),
                           );
@@ -528,11 +526,11 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
 
 class ShowDialog extends StatefulWidget {
   var memberData;
-  Function memberApproveApi;
+  Function memberDataApi;
 
   ShowDialog({
     this.memberData,
-    this.memberApproveApi,
+    this.memberDataApi,
   });
 
   @override
@@ -541,6 +539,72 @@ class ShowDialog extends StatefulWidget {
 
 class _ShowDialogState extends State<ShowDialog> {
   bool isLoading = false;
+
+  _memberApprove() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        print(sharedPrefs.societyCode);
+        var body = {
+          "memberId": widget.memberData["_id"],
+          "isApprove": true,
+          "societyId": sharedPrefs.societyId,
+          "wingId": widget.memberData["society"]["wingId"],
+          "flatId": widget.memberData["society"]["flatId"],
+          "propertyManagerId": sharedPrefs.memberId
+        };
+        print("$body");
+        Services.responseHandler(apiName: "api/admin/approveMember", body: body)
+            .then((responseData) {
+          print(responseData.Data);
+          if (responseData.Data == 1) {
+            setState(() {
+              isLoading = false;
+            });
+            Navigator.pop(context);
+            Fluttertoast.showToast(
+              msg: "You Approve this member Successfully",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+            widget.memberDataApi();
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -605,7 +669,7 @@ class _ShowDialogState extends State<ShowDialog> {
                         borderRadius: BorderRadius.circular(6)),
                     color: Colors.green[400],
                     onPressed: () {
-                      widget.memberApproveApi();
+                      _memberApprove();
                     }),
               ],
             ),
@@ -618,11 +682,11 @@ class _ShowDialogState extends State<ShowDialog> {
 
 class ShowDialog2 extends StatefulWidget {
   var memberData;
-  Function memberApproveApi;
+  Function memberDataApi;
 
   ShowDialog2({
     this.memberData,
-    this.memberApproveApi,
+    this.memberDataApi,
   });
 
   @override
@@ -630,7 +694,74 @@ class ShowDialog2 extends StatefulWidget {
 }
 
 class _ShowDialog2State extends State<ShowDialog2> {
+
   bool isLoading = false;
+
+  _memberApprove() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        print(sharedPrefs.societyCode);
+        var body = {
+          "memberId": widget.memberData["_id"],
+          "isApprove": false,
+          "societyId": sharedPrefs.societyId,
+          "wingId": widget.memberData["society"]["wingId"],
+          "flatId": widget.memberData["society"]["flatId"],
+          "propertyManagerId": sharedPrefs.memberId
+        };
+        print("$body");
+        Services.responseHandler(apiName: "api/admin/approveMember", body: body)
+            .then((responseData) {
+          print(responseData.Data);
+          if (responseData.Data == 1) {
+            setState(() {
+              isLoading = false;
+            });
+            widget.memberDataApi();
+            Fluttertoast.showToast(
+              msg: "You Reject this member Successfully",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+            Navigator.pop(context);
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -659,7 +790,7 @@ class _ShowDialog2State extends State<ShowDialog2> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Are you sure you want to DisApprove this flat.',
+              'Are you sure you want to Reject this flat.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
@@ -695,7 +826,7 @@ class _ShowDialog2State extends State<ShowDialog2> {
                         borderRadius: BorderRadius.circular(6)),
                     color: Colors.green[400],
                     onPressed: () {
-                      widget.memberApproveApi();
+                      _memberApprove();
                     }),
               ],
             ),

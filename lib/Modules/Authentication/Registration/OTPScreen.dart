@@ -150,7 +150,7 @@ class _OTPScreenState extends State<OTPScreen> {
               context,
               PageTransition(
                 child: SignUp3(
-                  phoneNumber: myPhoneNumber,
+                  phoneNumber: widget.mobileNo,
                   playerId: widget.playerId,
                 ),
                 type: PageTransitionType.rightToLeft,

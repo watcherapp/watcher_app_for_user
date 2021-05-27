@@ -265,6 +265,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
         log("$body");
         Services.responseHandler(apiName: "api/society/setUpWing", body: body)
             .then((responseData) {
+              print("---->${responseData.Data}");
           if (responseData.Data == 1) {
             print("------------------->${responseData.Data}");
             LoadingIndicator.close(context);
@@ -288,22 +289,14 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
             LoadingIndicator.close(context);
             Fluttertoast.showToast(
                 msg: "${responseData.Message}",
-                toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                // textColor: Colors.white,
                 fontSize: 16.0);
           }
         }).catchError((error) {
           LoadingIndicator.close(context);
           Fluttertoast.showToast(
               msg: "$error",
-              toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              // textColor: Colors.white,
               fontSize: 16.0);
         });
       }
@@ -311,11 +304,7 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
       LoadingIndicator.close(context);
       Fluttertoast.showToast(
           msg: "You aren't connected to the Internet !",
-          toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          // textColor: Colors.white,
           fontSize: 16.0);
     }
   }
