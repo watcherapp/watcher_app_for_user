@@ -138,6 +138,7 @@ class _UserDashboardState extends State<UserDashboard> {
         "Open Handler",
         snackPosition: SnackPosition.BOTTOM,
       );
+
       print("------------------------->Opened notification");
       print(result.notification.jsonRepresentation().replaceAll("\\n", "\n"));
       print("s");
