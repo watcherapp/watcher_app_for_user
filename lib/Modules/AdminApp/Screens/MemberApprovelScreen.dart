@@ -99,20 +99,29 @@ class _MemberApprovelScreenState extends State<MemberApprovelScreen> {
           "wingId": wingId,
         };
         print("$body");
+        getAllWingMemberData.clear();
         Services.responseHandler(
                 apiName: "api/member/getWingMembers", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
+            // // getAllWingMemberData = responseData.Data;
+            // List memberData = responseData.Data;
+            // print("Wings----------------->$memberData");
+            // print("Wings----------------->${memberData.length}");
+            for (int i = 0; i < responseData.Data.length; i++) {
+              print(responseData.Data[i]["society"]["isApprove"]);
+              if (responseData.Data[i]["society"]["isApprove"] == false) {
+                // print(i);
+                // print(responseData.Data[i]["society"]["isApprove"]);
+                getAllWingMemberData.add(responseData.Data[i]);
+                print(getAllWingMemberData);
+              }
+            }
+            print("=================================data===================================");
+            print(getAllWingMemberData.length);
+            print("getAllWingMemberData---------------${getAllWingMemberData}");
+            print("========================================================================");
             setState(() {
-              getAllWingMemberData = responseData.Data;
-              // print("Wings----------------->$dataList");
-              // for(int i=0;i< dataList.length; i++){
-              //   if(dataList[i]["society"]["isApprove"] == false){
-              //     getAllWingMemberData.add(dataList);
-              //   }
-              // }
-              print(
-                  "getAllWingMemberData---------------${getAllWingMemberData}");
               isLoading = false;
             });
           } else {
@@ -268,7 +277,7 @@ class _MemberApprovelScreenState extends State<MemberApprovelScreen> {
                           itemBuilder: (_, index) => MemberDirectoryComponent(
                             memberData: getAllWingMemberData[index],
                             memberDataApi: () {
-                              _getAllWingsMember();
+                              _getAllWingsMember(wingId: wingId);
                             },
                           ),
                           // itemCount: 8,
@@ -368,7 +377,7 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.memberData["society"]["isApprove"]);
+    // print(widget.memberData["society"]["isApprove"]);
     if (widget.memberData["society"]["isApprove"] == false) {
       return Container(
         height: 120,
@@ -436,19 +445,17 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                           height: 2,
                         ),
                         Text(
-                            widget.memberData[
-                            "FlatData"][0]["flatStatus"] ==
-                                "0"
-                                ? "Dead"
-                                : widget.memberData[
-                            "FlatData"][0]["flatStatus"] ==
-                                "1"
-                                ? "Closed"
-                                : widget.memberData[
-                            "FlatData"][0]["flatStatus"] ==
-                                "2"
-                                ? "Rent"
-                                : "Owner",
+                          widget.memberData["FlatData"][0]["flatStatus"] == "0"
+                              ? "Dead"
+                              : widget.memberData["FlatData"][0]
+                                          ["flatStatus"] ==
+                                      "1"
+                                  ? "Closed"
+                                  : widget.memberData["FlatData"][0]
+                                              ["flatStatus"] ==
+                                          "2"
+                                      ? "Rent"
+                                      : "Owner",
                         ),
                       ],
                     ),
@@ -694,7 +701,6 @@ class ShowDialog2 extends StatefulWidget {
 }
 
 class _ShowDialog2State extends State<ShowDialog2> {
-
   bool isLoading = false;
 
   _memberApprove() async {

@@ -80,6 +80,63 @@ class _MyProfileState extends State<MyProfile> {
     }
   }
 
+  _logOutMember() async {
+    print("Calling");
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "memberId": "${sharedPrefs.memberId}",
+          "playerId": "${sharedPrefs.playerId}",
+        };
+        print(
+            "------------------------------------------------------------->${body}");
+        Services.responseHandler(
+            apiName: "api/member/memberLogout", body: body)
+            .then((responseData) {
+          if (responseData.Data == 1) {
+            setState(() {
+              print(responseData.Data);
+              isLoading = false;
+            });
+            sharedPrefs.logout();
+            Navigator.of(context).pushAndRemoveUntil(
+                PageTransition(
+                    child: SignIn(), type: PageTransitionType.rightToLeft),
+                    (Route<dynamic> route) => false);
+            Fluttertoast.showToast(
+              msg:
+              "You are Logout Successfully",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(msg: "${error}");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "${Messages.message}");
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -287,12 +344,13 @@ class _MyProfileState extends State<MyProfile> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    sharedPrefs.logout();
-                    Navigator.of(context).pushAndRemoveUntil(
-                        PageTransition(
-                            child: SignIn(),
-                            type: PageTransitionType.rightToLeft),
-                        (Route<dynamic> route) => false);
+                    _logOutMember();
+                    // sharedPrefs.logout();
+                    // Navigator.of(context).pushAndRemoveUntil(
+                    //     PageTransition(
+                    //         child: SignIn(),
+                    //         type: PageTransitionType.rightToLeft),
+                    //     (Route<dynamic> route) => false);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(top: 6.0),

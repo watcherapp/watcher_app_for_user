@@ -346,90 +346,94 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
                   ),
                 ),
                 SizedBox(height: 35),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 38,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: appPrimaryMaterialColor,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                            ),
-                            onPressed: () {
-                              _getApprovalStatus(true);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.done,
-                                  color: Colors.white,
-                                  size: 19,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 3.0),
-                                  child: Text(
-                                    "ACCEPT",
-                                    style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
+                widget.propertyManagerDetailData["isApprove"] == true
+                    ? Container()
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 15.0, right: 15),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 38,
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: appPrimaryMaterialColor,
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                  onPressed: () {
+                                    _getApprovalStatus(true);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.done,
+                                        color: Colors.white,
+                                        size: 19,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 3.0),
+                                        child: Text(
+                                          "ACCEPT",
+                                          style: TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 38,
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: appPrimaryMaterialColor,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
+                            SizedBox(
+                              width: 15,
                             ),
-                            onPressed: () {
-                              _getApprovalStatus(false);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.close,
-                                  color: Colors.white,
-                                  size: 19,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 3.0),
-                                  child: Text(
-                                    "REJECT",
-                                    style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
+                            Expanded(
+                              child: Container(
+                                height: 38,
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: appPrimaryMaterialColor,
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                  ),
+                                  onPressed: () {
+                                    _getApprovalStatus(false);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.close,
+                                        color: Colors.white,
+                                        size: 19,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 3.0),
+                                        child: Text(
+                                          "REJECT",
+                                          style: TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
               ],
             )
           : Container(
@@ -461,6 +465,7 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
         };
         print(
             "====================================================>" + "status");
+        print(body);
         Services.responseHandler(
                 apiName: "api/admin/approvalOfPropertyManager", body: body)
             .then((responseData) {

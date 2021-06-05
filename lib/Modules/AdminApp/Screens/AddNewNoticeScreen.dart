@@ -52,12 +52,13 @@ class _AddNewNoticeScreenState extends State<AddNewNoticeScreen> {
           "noticeTitle": txtTitle.text,
           "noticeDescription": txtDiscription.text,
           "wingId": selctedWing,
+          "adminId" : sharedPrefs.memberId,
           "noticeImage": await MultipartFile.fromFile(
             _image.path,
             filename: fileName,
           ),
         });
-        print("$formData");
+        print("${formData.fields}");
         Services.responseHandler(apiName: "api/admin/addNotice", body: formData)
             .then((responseData) {
           if (responseData.Data.length > 0) {

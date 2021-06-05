@@ -91,21 +91,35 @@ class _InviteGuestComponentState extends State<InviteGuestComponent> {
                 child: Container(
                   width: 57.0,
                   height: 57.0,
-                  child: widget.guestData["guestImage"] == "" ||
-                          widget.guestData["guestImage"] == null
-                      ? Image.asset(
-                          'images/maleavtar.png',
-                        )
-                      : Image.network("${widget.guestData["guestImage"]}"),
+                  // child: widget.guestData["guestImage"] == "" ||
+                  //         widget.guestData["guestImage"] == null
+                  //     ? Image.asset(
+                  //         'images/maleavtar.png',
+                  //       )
+                  //     : Image.network("${widget.guestData["guestImage"]}"),
                   decoration: new BoxDecoration(
-                    color: Color(0x22888888),
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(90.0)),
-                    border: new Border.all(
-                      color: Colors.grey,
-                      width: 0.5,
+                      image: widget.guestData["guestImage"] == "" ||
+                          widget.guestData["guestImage"] == null
+                          ? DecorationImage(
+                        image: AssetImage(
+                          "images/maleavtar.png",
+                        ),
+                        // fit: BoxFit.cover,
+                      )
+                          : DecorationImage(
+                        image: NetworkImage(
+                          API_URL + "${widget.guestData["guestImage"]}",
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                      color: Color(0x22888888),
+                      borderRadius:
+                      new BorderRadius.all(new Radius.circular(90.0)),
+                      border: new Border.all(
+                        color: Colors.grey,
+                        width: 0.5,
+                      ),
                     ),
-                  ),
                 ),
               ),
               /* Image.asset(

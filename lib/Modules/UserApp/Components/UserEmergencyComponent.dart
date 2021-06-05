@@ -24,12 +24,35 @@ class _UserEmergencyComponentState extends State<UserEmergencyComponent> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-                padding: const EdgeInsets.only(left: 7.0),
-                child: Image.network(
-                 API_URL + "${widget.userEmergencyData["image"]}",
-                  width: 60,
-                  // height: 50,
-                )),
+              padding: const EdgeInsets.only(left: 7),
+              child: Container(
+                width: 60.0,
+                height: 60.0,
+                // : Image.network(api_url +
+                //     "${widget.visitorData['visitorImage']}",),
+                decoration: new BoxDecoration(
+                  color: Color(0x22888888),
+                  image: DecorationImage(
+                    image: NetworkImage(API_URL +
+                        "${widget.userEmergencyData['image']}"),
+                    fit: BoxFit.fill,
+                  ),
+                  borderRadius:
+                  new BorderRadius.all(new Radius.circular(10.0)),
+                  border: new Border.all(
+                    color: Colors.grey,
+                    width: 0.5,
+                  ),
+                ),
+              ),
+            ),
+            // Padding(
+            //     padding: const EdgeInsets.only(left: 7.0),
+            //     child: Image.network(
+            //      API_URL + "${widget.userEmergencyData["image"]}",
+            //       width: 60,
+            //       // height: 50,
+            //     )),
             Padding(
               padding: const EdgeInsets.only(left: 25.0),
               child: Container(

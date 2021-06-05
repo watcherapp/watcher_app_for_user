@@ -327,6 +327,7 @@ class _SelectWingAndFlatState extends State<SelectWingAndFlat> {
           ),
           Container(
             height: 50,
+            // height: MediaQuery.of(context).size.height * 0.07,
             child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               scrollDirection: Axis.horizontal,
@@ -359,7 +360,8 @@ class _SelectWingAndFlatState extends State<SelectWingAndFlat> {
                                   color: dataList[index]["Color"],
                                   borderRadius: BorderRadius.circular(4.0),
                                   border: Border.all(
-                                    color: Colors.white, //                   <--- border color
+                                    color: Colors
+                                        .white, //                   <--- border color
                                     width: 1.0,
                                   ),
                                 ),

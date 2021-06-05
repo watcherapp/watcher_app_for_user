@@ -1,7 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:video_player/video_player.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 
 class MyVisitorListComponent extends StatefulWidget {
+  var visitorData;
+  int index;
+
+  MyVisitorListComponent({
+    this.visitorData,
+    this.index,
+  });
+
   @override
   _MyVisitorListComponentState createState() => _MyVisitorListComponentState();
 }
@@ -10,14 +22,28 @@ class _MyVisitorListComponentState extends State<MyVisitorListComponent> {
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
+  var videoUrl;
+  bool isVolume = false;
+
+  DateTime selectedFromDate = DateTime.now();
+  var dateFormate = DateFormat('dd - MM -yyyy');
+
   @override
   void initState() {
+    print(widget.visitorData["guestVideo"]);
+    videoUrl = API_URL + widget.visitorData["guestVideo"];
+    print("video -->${videoUrl}");
     _controller = VideoPlayerController.network(
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+      '${videoUrl}',
     );
 
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.setLooping(true);
+
+    print("${widget.visitorData["guestVideo"]}");
+    print("${widget.visitorData["guestImage"]}");
+    print("${widget.visitorData["guestName"]}");
+    print(widget.index);
   }
 
   @override
@@ -30,6 +56,7 @@ class _MyVisitorListComponentState extends State<MyVisitorListComponent> {
 
   @override
   Widget build(BuildContext context) {
+    print("---------->${widget.visitorData}");
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Card(
@@ -44,11 +71,20 @@ class _MyVisitorListComponentState extends State<MyVisitorListComponent> {
                     padding: const EdgeInsets.only(left: 5.0),
                     child: Container(
                       width: 70,
+                      height: 70,
                       child: ClipOval(
-                        child: Image.network(
-                          "https://randomuser.me/api/portraits/men/9.jpg",
-                          fit: BoxFit.cover,
-                        ),
+                        child: widget.visitorData
+                                    ["guestImage"] !=
+                                ""
+                            ? Image.network(
+                                API_URL +
+                                    "${widget.visitorData["guestImage"]}",
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                "https://randomuser.me/api/portraits/men/9.jpg",
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                   ),
@@ -62,13 +98,14 @@ class _MyVisitorListComponentState extends State<MyVisitorListComponent> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Keval Mangroliya",
+                        Text(
+                            "${widget.visitorData["guestName"]}",
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.bold)),
                         Text("Meeting",
                             style:
                                 TextStyle(fontSize: 13, color: Colors.black87)),
-                        Text("17 - 02 - 2021",
+                        Text("${dateFormate.format(selectedFromDate)}",
                             style:
                                 TextStyle(fontSize: 12, color: Colors.black)),
                       ],
@@ -113,29 +150,39 @@ class _MyVisitorListComponentState extends State<MyVisitorListComponent> {
                 ],
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             Stack(
               alignment: Alignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 4.0, right: 4, top: 4,),
-                  child: FutureBuilder(
-                    future: _initializeVideoPlayerFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        // If the VideoPlayerController has finished initialization, use
-                        // the data it provides to limit the aspect ratio of the video.
-                        return AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          // Use the VideoPlayer widget to display the video.
-                          child: VideoPlayer(_controller),
-                        );
-                      } else {
-                        // If the VideoPlayerController is still initializing, show a
-                        // loading spinner.
-                        return Center(child: CircularProgressIndicator());
-                      }
-                    },
+                  padding: const EdgeInsets.only(
+                    left: 4.0,
+                    right: 4,
+                    top: 4,
+                  ),
+                  child: Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width * 1,
+                    child: FutureBuilder(
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          // If the VideoPlayerController has finished initialization, use
+                          // the data it provides to limit the aspect ratio of the video.
+                          return AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            // Use the VideoPlayer widget to display the video.
+                            child: VideoPlayer(_controller),
+                          );
+                        } else {
+                          // If the VideoPlayerController is still initializing, show a
+                          // loading spinner.
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
                   ),
                 ),
                 Center(
@@ -158,6 +205,25 @@ class _MyVisitorListComponentState extends State<MyVisitorListComponent> {
                         size: 46),
                   ),
                 ),
+                Positioned(
+                    top: 10,
+                    right: 10,
+                    child: IconButton(
+                        icon: Icon(
+                          isVolume == false
+                              ? Icons.volume_up
+                              : Icons.volume_off,
+                          color: Colors.black,
+                          size: 23,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isVolume = !isVolume;
+                            isVolume == false
+                                ? _controller.setVolume(100.0)
+                                : _controller.setVolume(0.0);
+                          });
+                        })),
                 /*  Align(
                   alignment: Alignment.center,
                   child: FlatButton(

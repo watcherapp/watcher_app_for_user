@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/GetPass.dart';
 
 class VisitorComponent extends StatefulWidget {
   var visitorData;
+
   VisitorComponent({this.visitorData});
 
   @override
@@ -15,6 +17,7 @@ class VisitorComponent extends StatefulWidget {
 class _VisitorComponentState extends State<VisitorComponent> {
   @override
   Widget build(BuildContext context) {
+    // print(widget.visitorData);
     return Padding(
       padding: const EdgeInsets.only(left: 2.0, right: 2.0),
       child: Card(
@@ -32,8 +35,30 @@ class _VisitorComponentState extends State<VisitorComponent> {
                 child: Container(
                   width: 57.0,
                   height: 57.0,
-                  child: Image.network("${widget.visitorData["guestImage"]}"),
+                  // child: widget.visitorData["guestImage"] == "" ||
+                  //         widget.visitorData["guestImage"] == null
+                  //     ? Image.asset(
+                  //         'images/maleavtar.png',
+                  //       )
+                  //     : Image.network(
+                  //         API_URL + "${widget.visitorData["guestImage"]}",
+                  //         fit: BoxFit.fill,
+                  //       ),
                   decoration: new BoxDecoration(
+                    image: widget.visitorData["guestImage"] == "" ||
+                            widget.visitorData["guestImage"] == null
+                        ? DecorationImage(
+                            image: AssetImage(
+                              "images/maleavtar.png",
+                            ),
+                            // fit: BoxFit.cover,
+                          )
+                        : DecorationImage(
+                            image: NetworkImage(
+                              API_URL + "${widget.visitorData["guestImage"]}",
+                            ),
+                            fit: BoxFit.cover,
+                          ),
                     color: Color(0x22888888),
                     borderRadius:
                         new BorderRadius.all(new Radius.circular(90.0)),
@@ -70,9 +95,14 @@ class _VisitorComponentState extends State<VisitorComponent> {
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
+                        padding: const EdgeInsets.only(top: 5.0),
                         child: Text("${widget.visitorData["mobileNo"]}",
                             style: TextStyle(fontSize: 15, color: Colors.grey)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 1.0),
+                        child: Text("${widget.visitorData["inDateTime"][0]}",
+                            style: TextStyle(fontSize: 12, color: Colors.grey)),
                       ),
                     ],
                   ),

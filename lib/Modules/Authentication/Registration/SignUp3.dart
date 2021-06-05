@@ -53,6 +53,9 @@ class _SignUp3State extends State<SignUp3> {
   GlobalKey<FormState> _firstStep = GlobalKey();
   GlobalKey<FormState> _passwordDetail = GlobalKey();
   bool isRoleSelected = false;
+  bool _passwordLength = false;
+  bool _passwordNumberSymbol = false;
+  bool _passwordUpperLower = false;
 
   List identityData = [];
   String selectedRole;
@@ -659,14 +662,24 @@ class _SignUp3State extends State<SignUp3> {
                                     child: Container(
                                       height: 129,
                                       width: 220,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: _identityProof != null
-                                                ? FileImage(_identityProof)
-                                                : AssetImage(
-                                                    "images/id-card.png")),
-                                        color: Color(0x22888888),
-                                      ),
+                                      decoration: _identityProof != null
+                                          ? BoxDecoration(
+                                              image: DecorationImage(
+                                                image:
+                                                    FileImage(_identityProof),
+                                                fit: BoxFit.fill,
+                                              ),
+                                              color: Color(0x22888888),
+                                            )
+                                          : BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                  "images/id-card.png",
+                                                ),
+                                                // fit: BoxFit.fill,
+                                              ),
+                                              color: Color(0x22888888),
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -691,10 +704,16 @@ class _SignUp3State extends State<SignUp3> {
                                   height: 15,
                                 ),
                                 MyTextFormField(
-                                    controller: txtPassword,
-                                    lable: "Create Password",
-                                    validator: validatePassword,
-                                    hintText: "Enter Password"),
+                                  controller: txtPassword,
+                                  lable: "Create Password",
+                                  validator: validatePassword,
+                                  hintText: "Enter Password",
+                                  onChanged: (String val) {
+                                    // if(val.length==10){
+                                    //}
+                                    containPassword();
+                                  },
+                                ),
                                 MyTextFormField(
                                     controller: txtConfirmPassword,
                                     lable: "Confirm Password",
@@ -729,24 +748,111 @@ class _SignUp3State extends State<SignUp3> {
                                     ],
                                   ),
                                 ),
+                                // Column(
+                                //   crossAxisAlignment: CrossAxisAlignment.start,
+                                //   children: [
+                                //     Text(
+                                //       "○ at least 8 characters",
+                                //       style: TextStyle(
+                                //           fontSize: 11, color: Colors.black87),
+                                //     ),
+                                //     Text(
+                                //       "○ at least 1 symbol like ( ! , \$ , # , & )",
+                                //       style: TextStyle(
+                                //           fontSize: 11, color: Colors.black87),
+                                //     ),
+                                //     Text(
+                                //       "○ both uppercase and lowercase",
+                                //       style: TextStyle(
+                                //         fontSize: 11,
+                                //         color: Colors.black87,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    /*Text(
                                       "○ at least 8 characters",
                                       style: TextStyle(
                                           fontSize: 11, color: Colors.black87),
+                                    ),*/
+                                    RichText(
+                                      text: TextSpan(
+                                        style: TextStyle(color: Colors.black87),
+                                        children: [
+                                          _passwordLength == false
+                                              ? WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.cancel_outlined,
+                                                    size: 15,
+                                                    color: Colors.red,
+                                                  ),
+                                                )
+                                              : WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.verified_outlined,
+                                                    size: 15,
+                                                    color: Colors.green,
+                                                  ),
+                                                ),
+                                          TextSpan(
+                                            text: " at least 8 characters",
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Text(
-                                      "○ at least 1 symbol like ( ! , \$ , # , & )",
-                                      style: TextStyle(
-                                          fontSize: 11, color: Colors.black87),
+                                    RichText(
+                                      text: TextSpan(
+                                        style: TextStyle(color: Colors.black87),
+                                        children: [
+                                          _passwordNumberSymbol == false
+                                              ? WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.cancel_outlined,
+                                                    size: 15,
+                                                    color: Colors.red,
+                                                  ),
+                                                )
+                                              : WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.verified_outlined,
+                                                    size: 15,
+                                                    color: Colors.green,
+                                                  ),
+                                                ),
+                                          TextSpan(
+                                            text:
+                                                " at least 1 number and 1 symbol like ( ! , \$ , # , & , @)",
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Text(
-                                      "○ both uppercase and lowercase",
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.black87,
+                                    RichText(
+                                      text: TextSpan(
+                                        style: TextStyle(color: Colors.black87),
+                                        children: [
+                                          _passwordUpperLower == false
+                                              ? WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.cancel_outlined,
+                                                    size: 15,
+                                                    color: Colors.red,
+                                                  ),
+                                                )
+                                              : WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.verified_outlined,
+                                                    size: 15,
+                                                    color: Colors.green,
+                                                  ),
+                                                ),
+                                          TextSpan(
+                                            text:
+                                                " both uppercase and lowercase",
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -755,7 +861,8 @@ class _SignUp3State extends State<SignUp3> {
                                   onPressed: () {
                                     if (_passwordDetail.currentState
                                         .validate()) {
-                                      _userSignUp();
+                                      checkPassword();
+                                      // _userSignUp();
                                     }
                                   },
                                   title: "Sign Up",
@@ -907,6 +1014,127 @@ class _SignUp3State extends State<SignUp3> {
                       : SizedBox()
                 ],
               ));
+  }
+
+  containPassword() {
+    var create_pass = txtPassword.text;
+
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    String lower_upper = r'^(?=.*?[A-Z])(?=.*?[a-z])';
+    String number_symbol = r'^(?=.*?[0-9])(?=.*?[!@#\$&*~])';
+
+    RegExp regExp = new RegExp(pattern);
+    var pwd_match = regExp.hasMatch(create_pass);
+
+    RegExp regExp_LU = new RegExp(lower_upper);
+    var pwd_matchLU = regExp_LU.hasMatch(create_pass);
+
+    RegExp regExp_SN = new RegExp(number_symbol);
+    var pwd_matchSN = regExp_SN.hasMatch(create_pass);
+
+    if (create_pass == '' && create_pass.isEmpty) {
+      setState(() {
+        _passwordUpperLower = false;
+        _passwordNumberSymbol = false;
+        _passwordLength = false;
+      });
+    }
+
+    if (pwd_matchLU == false) {
+      print("not lower upper");
+      setState(() {
+        _passwordUpperLower = false;
+      });
+    } else {
+      print("lower upper");
+      setState(() {
+        _passwordUpperLower = true;
+      });
+    }
+    if (pwd_matchSN == false) {
+      print("not symbol number");
+      setState(() {
+        _passwordNumberSymbol = false;
+      });
+    } else {
+      print("symbol number");
+      setState(() {
+        _passwordNumberSymbol = true;
+      });
+    }
+    if (create_pass.length < 8) {
+      print("not length");
+      setState(() {
+        _passwordLength = false;
+      });
+    } else {
+      print("Lenght");
+      setState(() {
+        _passwordLength = true;
+      });
+    }
+  }
+
+  checkPassword() {
+    var create_pass = txtPassword.text;
+    var confirm_pass = txtConfirmPassword.text;
+
+    if (create_pass == '' && create_pass.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter your password.",
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_LONG);
+      setState(() {
+        isLoading = true;
+        _passwordLength = false;
+        _passwordNumberSymbol = false;
+        _passwordUpperLower = false;
+      });
+    } else if (confirm_pass == '' && confirm_pass.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please enter confirm password.",
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_LONG);
+      setState(() {
+        isLoading = true;
+      });
+    } else if (create_pass != confirm_pass) {
+      Fluttertoast.showToast(
+          msg: "Password not matched.",
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_LONG);
+      setState(() {
+        isLoading = true;
+      });
+    } else {
+      String pattern =
+          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+
+      RegExp regExp = new RegExp(pattern);
+      var pwd_match = regExp.hasMatch(create_pass);
+
+      if (pwd_match == false) {
+        Fluttertoast.showToast(
+            msg: "Password does not match with the requirement.",
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            toastLength: Toast.LENGTH_LONG);
+
+        setState(() {
+          isLoading = true;
+        });
+      } else {
+        _userSignUp();
+      }
+    }
   }
 
   // Choose BottomSheet Select
@@ -1085,7 +1313,7 @@ class _SignUp3State extends State<SignUp3> {
                 "mobileNo1": "${widget.phoneNumber}",
                 "emailId": txtEmail.text,
                 "password": txtPassword.text,
-                "userRole": selectedRole,
+                "userRole": "${selectedRole}" ?? "1",
                 "societyCode": txtSocietyCode.text ?? "",
                 "wingId": wing_Type,
                 "flatId": flats_Type,

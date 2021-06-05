@@ -3,8 +3,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 
-
-
 class ComplainComponent extends StatefulWidget {
   var getAllComplain;
   Function getComplaindApi;
@@ -211,7 +209,7 @@ class _ComplainComponentState extends State<ComplainComponent> {
                                         top: 3.0, right: 20),
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         // Text(
                                         //   "Priority  :  ",
@@ -246,18 +244,18 @@ class _ComplainComponentState extends State<ComplainComponent> {
                                             ),
                                             Text(
                                               widget.getAllComplain[
-                                              "complainStatus"] ==
-                                                  "0"
+                                                          "complainStatus"] ==
+                                                      "0"
                                                   ? "REQUESTED"
                                                   : widget.getAllComplain[
-                                              "complainStatus"] ==
-                                                  "1"
-                                                  ? "REJECTED"
-                                                  : widget.getAllComplain[
-                                              "complainStatus"] ==
-                                                  "2"
-                                                  ? "START TAKING ACTIONS"
-                                                  : "RESOLVED",
+                                                              "complainStatus"] ==
+                                                          "1"
+                                                      ? "REJECTED"
+                                                      : widget.getAllComplain[
+                                                                  "complainStatus"] ==
+                                                              "2"
+                                                          ? "START TAKING ACTIONS"
+                                                          : "RESOLVED",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               //'${widget.notification["Title"]}',
@@ -275,8 +273,10 @@ class _ComplainComponentState extends State<ComplainComponent> {
                                               context,
                                               PageTransition(
                                                   child: ComplainDetail(
-                                                    complaintData: widget.getAllComplain,
-                                                    getComplainApi: widget.getComplaindApi,
+                                                    complaintData:
+                                                        widget.getAllComplain,
+                                                    getComplainApi:
+                                                        widget.getComplaindApi,
                                                   ),
                                                   type: PageTransitionType
                                                       .rightToLeft),
@@ -354,7 +354,6 @@ class _ComplainComponentState extends State<ComplainComponent> {
           ),
         ),
       ),
-
     );
   }
 }
@@ -374,7 +373,6 @@ class ComplainDetail extends StatefulWidget {
 
 class _ComplainDetailState extends State<ComplainDetail> {
   bool isLoading = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -403,7 +401,7 @@ class _ComplainDetailState extends State<ComplainDetail> {
                     //'${widget.notification["Title"]}',
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: 18,
+                        fontSize: 19,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w700),
                   ),
@@ -416,25 +414,99 @@ class _ComplainDetailState extends State<ComplainDetail> {
                   child: Image.network(
                     API_URL + widget.complaintData["attachment"],
                     height: 170,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(top: 25.0, left: 10, right: 10),
+                  const EdgeInsets.only(top: 25.0, left: 20, right: 10),
+                  child: Text(
+                    "Complain Date :-",
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700
+                      //        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0, left: 20, right: 10),
+                  child: Text(
+                    widget.complaintData["dateTime"][0],
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Montserrat',
+                      //        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                  const EdgeInsets.only(top: 25.0, left: 20, right: 10),
+                  child: Text(
+                    "Complain By :-",
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700
+                      //        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0, left: 20, right: 10),
+                  child: Text(
+                    "${widget.complaintData["memberId"]["firstName"]}  ${widget.complaintData["memberId"]["lastName"]}",
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Montserrat',
+                      //        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 25.0, left: 20, right: 10),
+                  child: Text(
+                    "Complain Description :-",
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700
+                        //        fontWeight: FontWeight.w500
+                        ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0, left: 20, right: 10),
                   child: Text(
                     widget.complaintData["discription"],
                     //'${widget.notification["Title"]}',
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 14,
+                      fontSize: 16,
                       fontFamily: 'Montserrat',
                       //        fontWeight: FontWeight.w500
                     ),
                   ),
-                ),
-                Container(
-                  height: 25,
                 ),
               ],
             ),

@@ -1,12 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class DailyHelperComponent extends StatefulWidget {
   var myStaffData;
+  Function staffApi;
 
   DailyHelperComponent({
     this.myStaffData,
+    this.staffApi,
   });
 
   @override
@@ -85,15 +92,184 @@ class _DailyHelperComponentState extends State<DailyHelperComponent> {
                 color: Colors.grey[200],
               ),
               IconButton(
-                  icon: Icon(
-                    Icons.share,
-                    color: appPrimaryMaterialColor,
-                    size: 22,
-                  ),
-                  onPressed: () {})
+                icon: Icon(
+                  Icons.delete_outline_outlined,
+                  color: appPrimaryMaterialColor,
+                  size: 22,
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => ShowDialog(
+                      staffData: widget.myStaffData,
+                      staffApi: () {
+                        widget.staffApi();
+                      },
+                    ),
+                  );
+                },
+              ),
+              // Container(
+              //   width: 1,
+              //   height: 18,
+              //   color: Colors.grey[200],
+              // ),
+              // IconButton(
+              //     icon: Icon(
+              //       Icons.share,
+              //       color: appPrimaryMaterialColor,
+              //       size: 22,
+              //     ),
+              //     onPressed: () {})
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+class ShowDialog extends StatefulWidget {
+  var staffData;
+  Function staffApi;
+
+  ShowDialog({
+    this.staffData,
+    this.staffApi,
+  });
+
+  @override
+  _ShowDialogState createState() => _ShowDialogState();
+}
+
+class _ShowDialogState extends State<ShowDialog> {
+  bool isLoading = false;
+
+  _removeStaff() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "staffId": "${widget.staffData["_id"]}",
+          "flatId": "${sharedPrefs.flatId}",
+          "wingId": "${sharedPrefs.wingId}"
+        };
+        print(body);
+        Services.responseHandler(apiName: "api/member/deleteMemberStaff", body: body)
+            .then((responseData) {
+          if (responseData.Data == 1) {
+            print(responseData.Data);
+            setState(() {
+              isLoading = false;
+            });
+            widget.staffApi();
+            Navigator.pop(context);
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              msg: "${responseData.Message}",
+              backgroundColor: Colors.white,
+              textColor: appPrimaryMaterialColor,
+            );
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(
+            msg: "Error $error",
+            backgroundColor: Colors.white,
+            textColor: appPrimaryMaterialColor,
+          );
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "You aren't connected to the Internet !",
+        backgroundColor: Colors.white,
+        textColor: appPrimaryMaterialColor,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Delete Staff',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: appPrimaryMaterialColor),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Are you sure you want to Delete this Staff.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                // color: appPrimaryMaterialColor,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                RaisedButton(
+                    child: Text("Cancel",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                        )),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    color: Colors.red[400].withOpacity(0.9),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      print("Cancel");
+                    }),
+                RaisedButton(
+                    child: Text("Yes",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                        )),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    color: Colors.green[400],
+                    onPressed: () {
+                      _removeStaff();
+                    }),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

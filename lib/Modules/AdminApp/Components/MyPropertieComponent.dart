@@ -15,7 +15,7 @@ class MyPropertiesComponent extends StatefulWidget {
   var myPropertyData;
   Function memberDataApi;
 
-  MyPropertiesComponent({this.myPropertyData,this.memberDataApi});
+  MyPropertiesComponent({this.myPropertyData, this.memberDataApi});
 
   @override
   _MyPropertiesComponentState createState() => _MyPropertiesComponentState();
@@ -33,18 +33,25 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
         "${widget.myPropertyData["SocietyData"][0]["societyName"]}";
 
     sharedPrefs.memberNo =
-    "${widget.myPropertyData["MemberData"][0]["memberNo"]}";
+        "${widget.myPropertyData["MemberData"][0]["memberNo"]}";
+
+    sharedPrefs.memberName =
+        "${widget.myPropertyData["MemberData"][0]["firstName"]} ${widget.myPropertyData["MemberData"][0]["lastName"]}";
 
     sharedPrefs.mobileNo =
-    "${widget.myPropertyData["MemberData"][0]["mobileNo1"]}";
+        "${widget.myPropertyData["MemberData"][0]["mobileNo1"]}";
+
 
     //...................
     sharedPrefs.wingId =
         "${widget.myPropertyData["MemberData"][0]["society"]["wingId"]}";
+
     sharedPrefs.flatId =
         "${widget.myPropertyData["MemberData"][0]["society"]["flatId"]}";
+
     sharedPrefs.userRole =
         "${widget.myPropertyData["MemberData"][0]["society"]["userRole"]}";
+
     print(sharedPrefs.societyId);
     print(sharedPrefs.societyCode);
     print(sharedPrefs.societyName);
@@ -74,16 +81,17 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(widget.myPropertyData["MemberData"][0]["society"]["isApprove"] == true){
+        if (widget.myPropertyData["MemberData"][0]["society"]["isApprove"] ==
+            true) {
           setPreferences();
-        }else{
+        } else {
           Fluttertoast.showToast(
-            msg: "You are not authorized to access this Please contact Admin of Society",
+            msg:
+                "You are not authorized to access this Please contact Admin of Society",
             backgroundColor: Colors.white,
             textColor: appPrimaryMaterialColor,
           );
         }
-
       },
       child: Card(
         elevation: 3,
@@ -148,7 +156,7 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
                       context: context,
                       builder: (BuildContext context) => ShowDialog(
                         memberData: widget.myPropertyData,
-                        memberApi: (){
+                        memberApi: () {
                           widget.memberDataApi();
                         },
                       ),
@@ -191,7 +199,8 @@ class _ShowDialogState extends State<ShowDialog> {
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
           "memberId": sharedPrefs.memberId,
-          "societyId": sharedPrefs.societyId,
+          "societyId": widget.memberData["MemberData"][0]["society"]
+              ["societyId"],
           "wingId": widget.memberData["MemberData"][0]["society"]["wingId"],
           "flatId": widget.memberData["MemberData"][0]["society"]["flatId"],
         };
@@ -254,10 +263,9 @@ class _ShowDialogState extends State<ShowDialog> {
             Text(
               'Leave the Flat  (${widget.memberData["WingData"][0]["wingName"]} - ${widget.memberData["flatNo"]})',
               style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: appPrimaryMaterialColor
-              ),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: appPrimaryMaterialColor),
             ),
           ],
         ),
@@ -312,16 +320,12 @@ class _ShowDialogState extends State<ShowDialog> {
   }
 }
 
-
 class ShowDialog2 extends StatefulWidget {
-
   @override
   _ShowDialog2State createState() => _ShowDialog2State();
 }
 
 class _ShowDialog2State extends State<ShowDialog2> {
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -374,7 +378,8 @@ class _ShowDialog2State extends State<ShowDialog2> {
                       Navigator.pushReplacement(
                           context,
                           PageTransition(
-                              child: AdminDashboard(), type: PageTransitionType.bottomToTop));
+                              child: AdminDashboard(),
+                              type: PageTransitionType.bottomToTop));
                     }),
                 RaisedButton(
                     child: Text("Member",
@@ -389,7 +394,8 @@ class _ShowDialog2State extends State<ShowDialog2> {
                       Navigator.pushReplacement(
                           context,
                           PageTransition(
-                              child: UserDashboard(), type: PageTransitionType.bottomToTop));
+                              child: UserDashboard(),
+                              type: PageTransitionType.bottomToTop));
                     }),
               ],
             ),

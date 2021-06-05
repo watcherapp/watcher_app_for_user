@@ -186,7 +186,11 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                 Navigator.push(
                     context,
                     PageTransition(
-                        child: AddEmergencyScreen(),
+                        child: AddEmergencyScreen(
+                          getAllEmergency: () {
+                            _getAllEmergency();
+                          },
+                        ),
                         type: PageTransitionType.rightToLeft));
                 setState(() {});
               },

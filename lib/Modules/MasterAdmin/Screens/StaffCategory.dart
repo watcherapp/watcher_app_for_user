@@ -34,7 +34,7 @@ class _StaffCategoryState extends State<StaffCategory> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Vendor Category",
+          "Staff Category",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
         centerTitle: true,

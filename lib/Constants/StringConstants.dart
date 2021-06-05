@@ -15,6 +15,7 @@ class Messages {
 class Session {
   static const String memberId = "MemberId";
   static const String memberNo = "MemberNo";
+  static const String memberName = "memberName";
   static const String deviceType = "deviceType";
   static const String userRole = "userRole";
   static const String societyId = "SocietyId";
@@ -23,4 +24,5 @@ class Session {
   static const String mobileNo = "MobileNo";
   static const String societyCode = "societyCode";
   static const String societyName = "societyName";
+  static const String playerId = "playerId";
 }

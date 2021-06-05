@@ -43,7 +43,7 @@ class _MyVisitorsState extends State<MyVisitors> {
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2018),
-        lastDate: DateTime(2101));
+        lastDate: DateTime.now());
 
     if (forDate == "fromDate") {
       if (picked != null && picked != selectedFromDateG)
@@ -73,7 +73,7 @@ class _MyVisitorsState extends State<MyVisitors> {
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2018),
-        lastDate: DateTime(2101));
+        lastDate: DateTime.now());
 
     if (forDate == "fromDate") {
       if (picked != null && picked != selectedFromDateS)
@@ -104,7 +104,7 @@ class _MyVisitorsState extends State<MyVisitors> {
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2018),
-        lastDate: DateTime(2101));
+        lastDate: DateTime.now());
 
     if (forDate == "fromDate") {
       if (picked != null && picked != selectedFromDateV)
@@ -746,26 +746,68 @@ class _MyVisitorsState extends State<MyVisitors> {
                                                             children: [
                                                               Text(
                                                                 "${guestList[index]["guestName"]}",
-                                                                style: TextStyle(
-                                                                    color:
-                                                                        appPrimaryMaterialColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        14),
+                                                                style:
+                                                                    TextStyle(
+                                                                  color:
+                                                                      appPrimaryMaterialColor,
+                                                                  fontFamily:
+                                                                      'WorkSans Bold',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 15,
+                                                                ),
                                                               ),
                                                               SizedBox(
                                                                 height: 5,
                                                               ),
                                                               Text(
                                                                 "${guestList[index]["mobileNo"]}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  fontFamily:
+                                                                      'WorkSans Bold',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w100,
+                                                                  fontSize: 14,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 2,
+                                                              ),
+                                                              Text(
+                                                                "${guestList[index]["FlatData"][0]["WingData"][0]["wingName"]} - ${guestList[index]["FlatData"][0]["flatNo"]}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  fontFamily:
+                                                                      'WorkSans Bold',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w100,
+                                                                  fontSize: 14,
+                                                                ),
                                                               ),
                                                               SizedBox(
                                                                 height: 2,
                                                               ),
                                                               Text(
                                                                 "${guestList[index]["vehicleNo"]}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  fontFamily:
+                                                                      'WorkSans Bold',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w100,
+                                                                  fontSize: 14,
+                                                                ),
                                                               ),
                                                               SizedBox(
                                                                 height: 2,
@@ -1104,126 +1146,126 @@ class _MyVisitorsState extends State<MyVisitors> {
                                       ? Center(
                                           child: Text("No Staff Entry Found"),
                                         )
-                                      : Column(
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                child: ListView.builder(
-                                                  itemBuilder: (_, index) =>
-                                                      Container(
-                                                    height: 100,
-                                                    child: Card(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(5.0),
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            staffList[index]["StaffData"][0]
+                                      : Expanded(
+                                          child: Container(
+                                            child: ListView.builder(
+                                              itemBuilder: (_, index) =>
+                                                  Container(
+                                                height: 100,
+                                                child: Card(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        staffList[index]["StaffData"]
+                                                                            [0][
+                                                                        "staffImage"] ==
+                                                                    null ||
+                                                                staffList[index]
                                                                             [
-                                                                            "staffImage"] ==
-                                                                        null ||
-                                                                    staffList[index]["StaffData"][0]
-                                                                            [
-                                                                            "staffImage"] ==
-                                                                        ""
-                                                                ? Image.asset(
-                                                                    'images/user.png',
-                                                                    width: 70,
-                                                                    height: 70,
-                                                                  )
-                                                                : Padding(
-                                                                    padding: const EdgeInsets
+                                                                            "StaffData"][0]
+                                                                        [
+                                                                        "staffImage"] ==
+                                                                    ""
+                                                            ? Image.asset(
+                                                                'images/user.png',
+                                                                width: 70,
+                                                                height: 70,
+                                                              )
+                                                            : Padding(
+                                                                padding:
+                                                                    const EdgeInsets
                                                                             .only(
                                                                         top:
                                                                             3.0),
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          70.0,
-                                                                      width: 70,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        // borderRadius: BorderRadius.circular(30),
-                                                                        color: Colors
-                                                                            .white,
-                                                                        shape: BoxShape
-                                                                            .circle,
-                                                                        border: Border.all(
-                                                                            width:
-                                                                                0.2,
-                                                                            color:
-                                                                                appPrimaryMaterialColor),
-                                                                        image:
-                                                                            DecorationImage(
-                                                                          image:
-                                                                              NetworkImage(
-                                                                            API_URL +
-                                                                                staffList[index]["StaffData"][0]["staffImage"],
-                                                                          ),
-                                                                          fit: BoxFit
-                                                                              .fill,
-                                                                        ),
+                                                                child:
+                                                                    Container(
+                                                                  height: 70.0,
+                                                                  width: 70,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    // borderRadius: BorderRadius.circular(30),
+                                                                    color: Colors
+                                                                        .white,
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    border: Border.all(
+                                                                        width:
+                                                                            0.2,
+                                                                        color:
+                                                                            appPrimaryMaterialColor),
+                                                                    image:
+                                                                        DecorationImage(
+                                                                      image:
+                                                                          NetworkImage(
+                                                                        API_URL +
+                                                                            staffList[index]["StaffData"][0]["staffImage"],
                                                                       ),
+                                                                      fit: BoxFit
+                                                                          .fill,
                                                                     ),
                                                                   ),
-                                                            SizedBox(
-                                                              width: 15,
-                                                            ),
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  "${staffList[index]["StaffData"][0]["firstName"]} ${staffList[index]["StaffData"][0]["lastName"]}",
-                                                                  style: TextStyle(
-                                                                      color:
-                                                                          appPrimaryMaterialColor,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          14),
                                                                 ),
-                                                                SizedBox(
-                                                                  height: 5,
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 2,
-                                                                ),
-                                                                Text(
-                                                                    '${staffList[index]["StaffData"][0]["mobileNo1"]}'),
-                                                                SizedBox(
-                                                                  height: 2,
-                                                                ),
-                                                              ],
+                                                              ),
+                                                        SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              "${staffList[index]["StaffData"][0]["firstName"]} ${staffList[index]["StaffData"][0]["lastName"]}",
+                                                              style: TextStyle(
+                                                                  color:
+                                                                      appPrimaryMaterialColor,
+                                                                  fontFamily:
+                                                                      'WorkSans Bold',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 14),
                                                             ),
                                                             SizedBox(
-                                                              width: 105,
+                                                              height: 5,
                                                             ),
-                                                            IconButton(
-                                                              icon: Icon(Icons
-                                                                  .message),
-                                                              iconSize: 25,
+                                                            SizedBox(
+                                                              height: 2,
+                                                            ),
+                                                            Text(
+                                                                '${staffList[index]["StaffData"][0]["mobileNo1"]}'),
+                                                            SizedBox(
+                                                              height: 2,
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
+                                                        SizedBox(
+                                                          width: 105,
+                                                        ),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                            Icons.message,
+                                                          ),
+                                                          iconSize: 25,
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                  // itemCount: 8,
-                                                  itemCount: staffList.length,
                                                 ),
                                               ),
+                                              // itemCount: 8,
+                                              itemCount: staffList.length,
                                             ),
-                                          ],
+                                          ),
                                         ),
                                 ],
                               ),
@@ -1542,135 +1584,130 @@ class _MyVisitorsState extends State<MyVisitors> {
                                                 Text("No Vendor Entry Found"),
                                           ),
                                         )
-                                      : Column(
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                child: ListView.builder(
-                                                  itemBuilder: (_, index) =>
-                                                      Container(
-                                                    height: 100,
-                                                    child: Card(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(5.0),
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            vendorList[index]["VendorData"][0]
+                                      : Expanded(
+                                          child: Container(
+                                            child: ListView.builder(
+                                              itemBuilder: (_, index) =>
+                                                  Container(
+                                                height: 100,
+                                                child: Card(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        vendorList[index]["VendorData"]
+                                                                            [0][
+                                                                        "vendorImage"] ==
+                                                                    null ||
+                                                                vendorList[index]
                                                                             [
-                                                                            "vendorImage"] ==
-                                                                        null ||
-                                                                    vendorList[index]["VendorData"][0]
-                                                                            [
-                                                                            "vendorImage"] ==
-                                                                        ""
-                                                                ? Image.asset(
-                                                                    'images/user.png',
-                                                                    width: 70,
-                                                                    height: 70,
-                                                                  )
-                                                                : Padding(
-                                                                    padding: const EdgeInsets
+                                                                            "VendorData"][0]
+                                                                        [
+                                                                        "vendorImage"] ==
+                                                                    ""
+                                                            ? Image.asset(
+                                                                'images/user.png',
+                                                                width: 70,
+                                                                height: 70,
+                                                              )
+                                                            : Padding(
+                                                                padding:
+                                                                    const EdgeInsets
                                                                             .only(
                                                                         top:
                                                                             3.0),
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          70.0,
-                                                                      width: 70,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        // borderRadius: BorderRadius.circular(30),
-                                                                        color: Colors
-                                                                            .white,
-                                                                        shape: BoxShape
-                                                                            .circle,
-                                                                        border: Border.all(
-                                                                            width:
-                                                                                0.2,
-                                                                            color:
-                                                                                appPrimaryMaterialColor),
-                                                                        image:
-                                                                            DecorationImage(
-                                                                          image:
-                                                                              NetworkImage(
-                                                                            API_URL +
-                                                                                vendorList[index]["VendorData"][0]["vendorImage"],
-                                                                          ),
-                                                                          fit: BoxFit
-                                                                              .fill,
-                                                                        ),
+                                                                child:
+                                                                    Container(
+                                                                  height: 70.0,
+                                                                  width: 70,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    // borderRadius: BorderRadius.circular(30),
+                                                                    color: Colors
+                                                                        .white,
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    border: Border.all(
+                                                                        width:
+                                                                            0.2,
+                                                                        color:
+                                                                            appPrimaryMaterialColor),
+                                                                    image:
+                                                                        DecorationImage(
+                                                                      image:
+                                                                          NetworkImage(
+                                                                        API_URL +
+                                                                            vendorList[index]["VendorData"][0]["vendorImage"],
                                                                       ),
+                                                                      fit: BoxFit
+                                                                          .fill,
                                                                     ),
                                                                   ),
-                                                            SizedBox(
-                                                              width: 15,
-                                                            ),
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  vendorList[index]
-                                                                          [
-                                                                          "VendorData"][0]
-                                                                      [
-                                                                      "vendorName"],
-                                                                  style: TextStyle(
-                                                                      color:
-                                                                          appPrimaryMaterialColor,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          14),
                                                                 ),
-                                                                SizedBox(
-                                                                  height: 5,
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 2,
-                                                                ),
-                                                                Text(
-                                                                  vendorList[index]
-                                                                          [
-                                                                          "VendorData"][0]
-                                                                      [
-                                                                      "mobileNo1"],
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 2,
-                                                                ),
-                                                              ],
+                                                              ),
+                                                        SizedBox(
+                                                          width: 15,
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              vendorList[index][
+                                                                      "VendorData"][0]
+                                                                  [
+                                                                  "vendorName"],
+                                                              style: TextStyle(
+                                                                  color:
+                                                                      appPrimaryMaterialColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 14),
                                                             ),
                                                             SizedBox(
-                                                              width: 105,
+                                                              height: 5,
                                                             ),
-                                                            IconButton(
-                                                              icon: Icon(Icons
-                                                                  .message),
-                                                              iconSize: 25,
+                                                            SizedBox(
+                                                              height: 2,
+                                                            ),
+                                                            Text(
+                                                              vendorList[index][
+                                                                      "VendorData"]
+                                                                  [
+                                                                  0]["mobileNo1"],
+                                                            ),
+                                                            SizedBox(
+                                                              height: 2,
                                                             ),
                                                           ],
                                                         ),
-                                                      ),
+                                                        SizedBox(
+                                                          width: 105,
+                                                        ),
+                                                        IconButton(
+                                                          icon: Icon(
+                                                              Icons.message),
+                                                          iconSize: 25,
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                  // itemCount: 8,
-                                                  itemCount: vendorList.length,
                                                 ),
                                               ),
+                                              // itemCount: 8,
+                                              itemCount: vendorList.length,
                                             ),
-                                          ],
+                                          ),
                                         ),
                                 ],
                               )

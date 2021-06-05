@@ -192,6 +192,8 @@ class _AddNewComplainScreenState extends State<AddNewComplainScreen> {
           "memberId": sharedPrefs.memberId,
           "subject": txtTitle.text,
           "discription": txtDiscription.text,
+          "wingId": sharedPrefs.wingId,
+          "flatId": sharedPrefs.flatId,
           "complainCategory": "6045e4db09e1991010527d88",
           "attachment": await MultipartFile.fromFile(
             _image.path,

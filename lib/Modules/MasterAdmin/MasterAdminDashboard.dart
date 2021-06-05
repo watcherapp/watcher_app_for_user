@@ -6,6 +6,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Components/PropertyManagerComponent.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Screens/CategoryScreen.dart';
 import 'package:watcher_app_for_user/Modules/MasterAdmin/Screens/PropertyManagers.dart';
@@ -29,10 +31,32 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Master Admin", style: TextStyle(fontFamily: 'Montserrat')),
+          title:
+              Text("Master Admin", style: TextStyle(fontFamily: 'Montserrat')),
           centerTitle: true,
           elevation: 0,
           backgroundColor: appPrimaryMaterialColor,
+          actions: [
+            GestureDetector(
+              onTap: () {
+                sharedPrefs.logout();
+                Navigator.of(context).pushAndRemoveUntil(
+                    PageTransition(
+                        child: SignIn(), type: PageTransitionType.rightToLeft),
+                    (Route<dynamic> route) => false);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 20,
+                ),
+                child: Image.asset(
+                  "images/logout.png",
+                  width: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,7 +315,7 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                 apiName: "api/admin/getListOfRequestPropertyManager",
                 body: body)
             .then((responseData) {
-              print(responseData.Data.length);
+          print(responseData.Data.length);
           if (responseData.Data.length > 0) {
             setState(() {
               AllmanagerList = responseData.Data;

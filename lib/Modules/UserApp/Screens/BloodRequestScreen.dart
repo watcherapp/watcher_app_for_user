@@ -193,6 +193,8 @@ class _BloodRequestSubScreenState extends State<BloodRequestSubScreen> {
         var body = {
           "requestMemberId": sharedPrefs.memberId,
           "societyId": sharedPrefs.societyId,
+          "wingId": sharedPrefs.wingId,
+          "flatId": sharedPrefs.flatId,
           "requestedBloodGroup": bloodGroop,
           "hospitalName": txtHospitalName.text,
           "hospitalEmail": txtHospitalEmail.text,

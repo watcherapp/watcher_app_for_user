@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
+import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class ComplainDetail extends StatefulWidget {
   var complaintData;
@@ -33,6 +34,7 @@ class _ComplainDetailState extends State<ComplainDetail> {
         var body = {
           "complainNo": widget.complaintData["complainNo"],
           "complainStatus": status,
+          "adminId" : sharedPrefs.memberId,
         };
         print("$body");
         print(status);
@@ -121,18 +123,95 @@ class _ComplainDetailState extends State<ComplainDetail> {
                   child: Image.network(
                    API_URL + widget.complaintData["attachment"],
                     height: 170,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.only(top: 25.0, left: 10, right: 10),
+                  const EdgeInsets.only(top: 25.0, left: 20, right: 10),
+                  child: Text(
+                    "Complain Date :-",
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700
+                      //        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0, left: 20, right: 10),
+                  child: Text(
+                    widget.complaintData["dateTime"][0],
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Montserrat',
+                      //        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                  const EdgeInsets.only(top: 25.0, left: 20, right: 10),
+                  child: Text(
+                    "Complain By :-",
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700
+                      //        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0, left: 20, right: 10),
+                  child: Text(
+                    "${widget.complaintData["MemberDetails"][0]["firstName"]}  ${widget.complaintData["MemberDetails"][0]["lastName"]}",
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Montserrat',
+                      //        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                  const EdgeInsets.only(top: 25.0, left: 20, right: 10),
+                  child: Text(
+                    "Complain Description :-",
+                    //'${widget.notification["Title"]}',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w700
+                      //        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0, left: 20, right: 10),
                   child: Text(
                     widget.complaintData["discription"],
                     //'${widget.notification["Title"]}',
                     textAlign: TextAlign.justify,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 14,
+                      fontSize: 16,
                       fontFamily: 'Montserrat',
                       //        fontWeight: FontWeight.w500
                     ),

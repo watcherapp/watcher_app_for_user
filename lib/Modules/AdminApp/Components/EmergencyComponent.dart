@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/UpdateEmergencyScreen.dart';
@@ -97,12 +98,35 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 7.0),
-                    child: Image.asset(
-                      "images/policeman.png",
-                      width: 60,
+                    padding: const EdgeInsets.only(left: 7),
+                    child: Container(
+                      width: 60.0,
+                      height: 60.0,
+                      // : Image.network(api_url +
+                      //     "${widget.visitorData['visitorImage']}",),
+                      decoration: new BoxDecoration(
+                        color: Color(0x22888888),
+                        image: DecorationImage(
+                          image: NetworkImage(API_URL +
+                              "${widget.allEmergencyList['image']}"),
+                          fit: BoxFit.fill,
+                        ),
+                        borderRadius:
+                        new BorderRadius.all(new Radius.circular(10.0)),
+                        border: new Border.all(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),
+                      ),
                     ),
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 7.0),
+                  //   child: Image.asset(
+                  //     "images/policeman.png",
+                  //     width: 60,
+                  //   ),
+                  // ),
                   /* Image.asset(
                   'images/maleavtar.png',
                   width: 70,
@@ -138,7 +162,7 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
                       ),
                     ),
                   ),
-                  Column(
+                  Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -161,6 +185,14 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
                             size: 21,
                             color: Colors.grey,
                           ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0,right: 10),
+                        child: Container(
+                          width: 1,
+                          height: 30,
+                          color: Colors.black12,
                         ),
                       ),
                       Padding(

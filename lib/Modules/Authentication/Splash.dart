@@ -29,7 +29,15 @@ class _SplashState extends State<Splash> {
 
   checkUserStatus() {
     if (sharedPrefs.memberId != "") {
-      if (sharedPrefs.userRole == "0") {
+      if (sharedPrefs.mobileNo == "9876543210") {
+        Navigator.pushReplacement(
+          context,
+          PageTransition(
+            child: MasterAdminDashboard(),
+            type: PageTransitionType.bottomToTop,
+          ),
+        );
+      } else if (sharedPrefs.userRole == "0") {
         Navigator.pushReplacement(
           context,
           PageTransition(

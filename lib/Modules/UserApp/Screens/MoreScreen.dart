@@ -31,6 +31,21 @@ class _MoreScreenState extends State<MoreScreen> {
       "screenName": PollingScreen()
     },
     {
+      "label": "Complains",
+      "img": "images/complain.png",
+      "screenName": ComplainsScreen()
+    },
+    {
+      "label": " Blood Request",
+      "img": "images/bloodDonation.png",
+      "screenName": BloodRequestScreen(),
+    },
+    {
+      "label": "Emergency",
+      "img": "images/alarm.png",
+      "screenName": UserEmergencyScreen(),
+    },
+    {
       "label": "Meetings",
       "img": "images/meeting.png",
       "screenName": NoticesScreen()
@@ -41,19 +56,9 @@ class _MoreScreenState extends State<MoreScreen> {
       "screenName": NoticesScreen()
     },
     {
-      "label": "Complains",
-      "img": "images/complain.png",
-      "screenName": ComplainsScreen()
-    },
-    {
-      "label": " Blood Request",
-      "img": "images/bloodDonation.png",
-      "screenName" : BloodRequestScreen(),
-    },
-    {
-      "label": "Emergency",
-      "img": "images/alarm.png",
-      "screenName": UserEmergencyScreen(),
+      "label": "Parking",
+      "img": "images/car.png",
+      "screenName": NoticesScreen(),
     },
   ];
 
@@ -72,52 +77,53 @@ class _MoreScreenState extends State<MoreScreen> {
           ),
           SizedBox(height: 15),
           GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(top: 8, left: 8, right: 8),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 1.2,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 3.0),
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: moreFields[index]["screenName"],
-                            type: PageTransitionType.rightToLeft));
-                  },
-                  child: Container(
-                      height: 130,
-                      child: Card(
-                        elevation: 1,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              moreFields[index]["img"],
-                              color: appPrimaryMaterialColor,
-                              width: 37,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.only(top: 8, left: 8, right: 8),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 1.2,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 3.0),
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: moreFields[index]["screenName"],
+                          type: PageTransitionType.rightToLeft));
+                },
+                child: Container(
+                    height: 130,
+                    child: Card(
+                      elevation: 1,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            moreFields[index]["img"],
+                            color: appPrimaryMaterialColor,
+                            width: 37,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Text(
+                              moreFields[index]["label"],
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                  //  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat'),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Text(
-                                moreFields[index]["label"],
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.black,
-                                    //  fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat'),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-                );
-              },
-              itemCount: moreFields.length),
+                          )
+                        ],
+                      ),
+                    )),
+              );
+            },
+            itemCount: moreFields.length,
+          ),
         ],
       ),
     );

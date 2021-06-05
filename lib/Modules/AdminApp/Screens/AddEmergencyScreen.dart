@@ -16,6 +16,12 @@ import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 
 class AddEmergencyScreen extends StatefulWidget {
+  Function getAllEmergency;
+
+  AddEmergencyScreen({
+    this.getAllEmergency,
+  });
+
   @override
   _AddEmergencyScreenState createState() => _AddEmergencyScreenState();
 }
@@ -48,18 +54,22 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
   // }
 
   Future<File> getImageFileFromAssets(String path) async {
+    print(path);
     final byteData = await rootBundle.load('$path');
-
-    var file = File('${(await getTemporaryDirectory()).path}/$path');
-    await file.writeAsBytes(
+    print("s");
+    var tempfile = File('${(await getTemporaryDirectory()).path}/$path');
+    print("--->${tempfile}");
+    print("ss");
+    var file = await tempfile.writeAsBytes(
       byteData.buffer.asUint8List(
         byteData.offsetInBytes,
         byteData.lengthInBytes,
       ),
     );
 
-    print(file);
-    // print(file.toString());
+    print("sss");
+    print("--->${file}");
+    print(file.toString());
   }
 
   void _settingModalBottomSheet() {
@@ -78,6 +88,54 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
     // _addEmergency();
   }
 
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  _imgFromCamera() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+  _imgFromGallery() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
   _addEmergency() async {
     try {
       setState(() {
@@ -86,22 +144,22 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        String fileName = imagePath.path
-            .split('/')
-            .last;
+        // String fileName = imagePath.path.split('/').last;
+        String fileName = _image.path.split('/').last;
 
         FormData formData = FormData.fromMap({
           "societyId": sharedPrefs.societyId,
           "contactName": txtName.text,
           "contactNo": txtNumber.text,
-          "Image": await MultipartFile.fromFile(
-            imagePath.path,
+          "image": await MultipartFile.fromFile(
+            // imagePath.path,
+            _image.path,
             filename: fileName,
           ),
         });
-        print("$formData");
+        print("${formData.fields}");
         Services.responseHandler(
-            apiName: "api/admin/addEmergencyNumber", body: formData)
+                apiName: "api/admin/addEmergencyNumber", body: formData)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -109,6 +167,11 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
             setState(() {
               isLoading = false;
             });
+            widget.getAllEmergency();
+            Fluttertoast.showToast(
+              msg: "Your Emergency added Successfully.",
+            );
+            Navigator.pop(context);
           } else {
             print(responseData);
             setState(() {
@@ -162,10 +225,15 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MyTextFormField(
-                  lable: "Emergency Name", hintText: "Enter Emergency name"),
+                controller: txtName,
+                lable: "Emergency Name",
+                hintText: "Enter Emergency name",
+              ),
               MyTextFormField(
-                  lable: "Emergency Number",
-                  hintText: "Enter Emergency number"),
+                controller: txtNumber,
+                lable: "Emergency Number",
+                hintText: "Enter Emergency number",
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: Text(
@@ -186,44 +254,92 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
                       padding: EdgeInsets.all(6.0),
                       child: GestureDetector(
                         onTap: () {
-                          _settingModalBottomSheet();
+                          _showPicker(context);
                         },
                         child: Center(
-                          child: imagePath != null
+                          child: _image != null
                               ? Container(
-                            height: 200.0,
-                            decoration: BoxDecoration(
-                              // borderRadius: BorderRadius.circular(30),
-                              shape: BoxShape.rectangle,
-                              /* border: Border.all(
+                                  height: 200.0,
+                                  decoration: BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(30),
+                                    shape: BoxShape.rectangle,
+                                    /* border: Border.all(
                                         width: 0.2,
                                         color: appPrimaryMaterialColor),*/
-                              image: DecorationImage(
-                                  image: FileImage(
-                                    imagePath,
+                                    image: DecorationImage(
+                                        image: FileImage(
+                                          _image,
+                                        ),
+                                        fit: BoxFit.contain),
                                   ),
-                                  fit: BoxFit.contain),
-                            ),
-                          )
+                                )
                               : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("images/id-card.png",
-                                  color: Colors.grey[300],
-                                  width: 40.0,
-                                  height: 40.0),
-                              Text(
-                                "Choose Image",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          ),
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset("images/id-card.png",
+                                        color: Colors.grey[300],
+                                        width: 40.0,
+                                        height: 40.0),
+                                    Text(
+                                      "Choose Image",
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
+                                ),
                         ),
                       )),
                 ),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 12.0),
+              //   child: Container(
+              //     height: 200,
+              //     child: DottedBorder(
+              //         color: Colors.grey,
+              //         dashPattern: [4],
+              //         padding: EdgeInsets.all(6.0),
+              //         child: GestureDetector(
+              //           onTap: () {
+              //             _settingModalBottomSheet();
+              //           },
+              //           child: Center(
+              //             child: imagePath != null
+              //                 ? Container(
+              //                     height: 200.0,
+              //                     decoration: BoxDecoration(
+              //                       // borderRadius: BorderRadius.circular(30),
+              //                       shape: BoxShape.rectangle,
+              //                       /* border: Border.all(
+              //                           width: 0.2,
+              //                           color: appPrimaryMaterialColor),*/
+              //                       image: DecorationImage(
+              //                           image: FileImage(
+              //                             imagePath,
+              //                           ),
+              //                           fit: BoxFit.contain),
+              //                     ),
+              //                   )
+              //                 : Column(
+              //                     mainAxisAlignment: MainAxisAlignment.center,
+              //                     children: [
+              //                       Image.asset("images/id-card.png",
+              //                           color: Colors.grey[300],
+              //                           width: 40.0,
+              //                           height: 40.0),
+              //                       Text(
+              //                         "Choose Image",
+              //                         style: TextStyle(
+              //                             color: Colors.grey,
+              //                             fontWeight: FontWeight.w500),
+              //                       )
+              //                     ],
+              //                   ),
+              //           ),
+              //         )),
+              //   ),
+              // ),
               SizedBox(
                 height: 70,
               ),
@@ -313,19 +429,17 @@ class _EmergencyBottomSheetState extends State<EmergencyBottomSheet> {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
+            print(Fields[index]["img"].toString());
             widget.setImagePath(
-                Fields[index]["img"].toString(),
-                );
-                Navigator.of(context).pop();
+              Fields[index]["img"].toString(),
+            );
+            Navigator.of(context).pop();
           },
           child: Padding(
             padding:
-            const EdgeInsets.only(top: 5.0, bottom: 5, right: 3, left: 3),
+                const EdgeInsets.only(top: 5.0, bottom: 5, right: 3, left: 3),
             child: Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.13,
+              height: MediaQuery.of(context).size.height * 0.13,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.grey, width: 0.5),

@@ -28,6 +28,7 @@ class _UserVisitorListState extends State<UserVisitorList> {
   List<Widget> tabs;
 
   bool isLoading = false;
+  bool isVisitorLoading = false;
   List allGuestList = [];
   List inviteGuestList = [];
   bool isOpen = false;
@@ -109,50 +110,56 @@ class _UserVisitorListState extends State<UserVisitorList> {
     ];
   }
 
+  //smit ama bhai work ma problem 6e ......................................................
   _getAllvisitor() async {
     try {
+      setState(() {
+        isVisitorLoading = true;
+      });
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        print(sharedPrefs.memberId);
-        print(selectedFromDate);
-        print(selectedToDate);
+        // print(sharedPrefs.memberId);
+        // print(selectedFromDate);
+        // print(selectedToDate);
         var body = {
-          "memberId": sharedPrefs.memberId,
+          // "memberId": sharedPrefs.memberId,
+          "flatId": sharedPrefs.flatId,
+          "wingId": sharedPrefs.wingId,
+          "societyId": sharedPrefs.societyId,
           "fromDate": dateFormate.format(selectedFromDate),
           "toDate": dateFormate.format(selectedToDate),
         };
+        print(body);
         log("MemberId ${sharedPrefs.memberId}");
-        setState(() {
-          isLoading = true;
-        });
         Services.responseHandler(
                 apiName: "api/member/getAllGuestList", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
-            setState(() {
-              allGuestList = responseData.Data;
-              isLoading = false;
-            });
+            print(responseData.Data);
+            allGuestList = responseData.Data;
             print("allGuestList-------------->${allGuestList}");
+            setState(() {
+              isVisitorLoading = false;
+            });
           } else {
             print(responseData);
             setState(() {
               allGuestList = responseData.Data;
-              isLoading = false;
+              isVisitorLoading = false;
             });
             Fluttertoast.showToast(msg: "${responseData.Message}");
           }
         }).catchError((error) {
           setState(() {
-            isLoading = false;
+            isVisitorLoading = false;
           });
           Fluttertoast.showToast(msg: "${error}");
         });
       }
     } catch (e) {
       setState(() {
-        isLoading = false;
+        isVisitorLoading = false;
       });
       Fluttertoast.showToast(msg: "${Messages.message}");
     }
@@ -160,6 +167,9 @@ class _UserVisitorListState extends State<UserVisitorList> {
 
   _getMemberInviteGuests() async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
@@ -168,9 +178,6 @@ class _UserVisitorListState extends State<UserVisitorList> {
           "memberId": sharedPrefs.memberId,
         };
         log("MemberId ${sharedPrefs.memberId}");
-        setState(() {
-          isLoading = true;
-        });
         Services.responseHandler(
                 apiName: "api/member/getMemberInviteGuestList", body: body)
             .then((responseData) {
@@ -862,7 +869,7 @@ class _UserVisitorListState extends State<UserVisitorList> {
                                   ),
                                 )
                               : SizedBox(),
-                          isLoading == true
+                          isVisitorLoading == true
                               ? Center(
                                   child: CircularProgressIndicator(
                                     valueColor:
@@ -881,6 +888,8 @@ class _UserVisitorListState extends State<UserVisitorList> {
                                           padding: EdgeInsets.zero,
                                           itemBuilder: (BuildContext context,
                                               int index) {
+                                            print(allGuestList.length);
+                                            print(allGuestList);
                                             return VisitorComponent(
                                               visitorData: allGuestList[index],
                                             );

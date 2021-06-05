@@ -66,7 +66,7 @@ class _UserEmergencyScreenState extends State<UserEmergencyScreen> {
                 apiName: "api/admin/getAllEmergencyContacts", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
-            print(responseData);
+            print(responseData.Data);
             setState(() {
               EmergencyList = responseData.Data;
               isSLoading = false;

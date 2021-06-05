@@ -177,18 +177,27 @@ class _SignInState extends State<SignIn> {
     sharedPrefs.userRole = "${sessionData[0]["userRole"]}";
     sharedPrefs.memberNo = "${sessionData[0]["memberNo"]}";
     sharedPrefs.mobileNo = "${sessionData[0]["mobileNo1"]}";
-    if (sessionData[0]["userRole"] == 0) {
+    if (sessionData[0]["mobileNo1"] == "9876543210") {
       Navigator.pushReplacement(
           context,
           PageTransition(
               child: MasterAdminDashboard(),
               type: PageTransitionType.leftToRight));
-    } else if (sessionData[0]["userRole"] == 1) {
+    } else if (sessionData[0]["society"][0]["userRole"] == 0) {
+      print("---->${sessionData[0]["society"][0]["userRole"]}");
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              child: MasterAdminDashboard(),
+              type: PageTransitionType.leftToRight));
+    } else if (sessionData[0]["society"][0]["userRole"] == 1) {
+      print("---->${sessionData[0]["society"][0]["userRole"]}");
       Navigator.pushReplacement(
           context,
           PageTransition(
               child: MyProperties(), type: PageTransitionType.leftToRight));
     } else {
+      print("---->${sessionData[0]["society"][0]["userRole"]}");
       Navigator.pushReplacement(
           context,
           PageTransition(
@@ -203,7 +212,7 @@ class _SignInState extends State<SignIn> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var key;
-        isNumeric(txtEmailOrMobile.text) ? key = "mobileNo1" : key = "email";
+        isNumeric(txtEmailOrMobile.text) ? key = "mobileNo1" : key = "emailId";
         var body = {
           "$key": txtEmailOrMobile.text,
           "password": txtPassword.text,

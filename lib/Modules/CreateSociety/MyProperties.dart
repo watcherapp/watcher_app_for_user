@@ -34,6 +34,7 @@ class _MyPropertiesState extends State<MyProperties> {
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
     playerId = status.subscriptionStatus.userId;
     print("playerid--->${playerId}");
+    sharedPrefs.playerId = "${playerId}";
   }
 
   _updatePlyerId() async {
@@ -52,7 +53,7 @@ class _MyPropertiesState extends State<MyProperties> {
         };
         print("$body");
         Services.responseHandler(
-            apiName: "api/member/updateMemberPlayerId", body: body)
+                apiName: "api/member/updateMemberPlayerId", body: body)
             .then((responseData) {
           if (responseData.Data == 1) {
             print("Presponse-->${responseData.Data}");
@@ -112,10 +113,9 @@ class _MyPropertiesState extends State<MyProperties> {
         };
         print("$body");
         Services.responseHandler(
-            apiName: "api/member/getMemberSociety", body: body)
+                apiName: "api/member/getMemberSociety", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
-
             setState(() {
               myPropertyList = responseData.Data;
               print("My Property------>${myPropertyList}");
@@ -243,6 +243,4 @@ class _MyPropertiesState extends State<MyProperties> {
       ),
     );
   }
-
-
 }
