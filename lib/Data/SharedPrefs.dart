@@ -16,7 +16,6 @@ class SharedPrefs {
       _sharedPrefs ??= await SharedPreferences.getInstance();
     }
   }
-
   String get memberId => _sharedPrefs.getString(Session.memberId) ?? "";
   String get mobileNo => _sharedPrefs.getString(Session.mobileNo) ?? "";
   String get memberNo => _sharedPrefs.getString(Session.memberNo) ?? "";

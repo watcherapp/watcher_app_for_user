@@ -27,6 +27,7 @@ import 'package:watcher_app_for_user/Modules/UserApp/Components/BottomNavigation
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVisitorListComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/ComplainsScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/NoticesScreen.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddDetailPage.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserEmergencyScreen.dart';
 
 class UserHomeScreen extends StatefulWidget {
@@ -150,17 +151,17 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
 
 
-  List quickActions = [
+ /* List quickActions = [
     {
       "image": "images/noticeboard.png",
       "title": "Notice",
       "screenName": NoticesScreen(),
     },
-    {
+ *//*   {
       "image": "images/alarm.png",
       "title": "Emergency",
       "screenName": UserEmergencyScreen(),
-    },
+    },*//*
     {
       "image": "images/complain.png",
       "title": "Complains",
@@ -171,7 +172,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       "title": "Advertisement",
       "screenName": NoticesScreen(),
     },
-  ];
+    {
+      "image": "images/alarm.png",
+      "title": "SOS",
+      "screenName": ShowDialog(),
+    },
+  ];*/
 
   @override
   Widget build(BuildContext context) {
@@ -198,12 +204,21 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).padding.top + 7,
                   ),
-                  SizedBox(
-                    height: 60,
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.network(
-                      "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg",
-                      fit: BoxFit.cover,
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: AddDetailPage(data: "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg",),
+                              type: PageTransitionType.fade));
+                    },
+                    child: SizedBox(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.network(
+                        "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg",
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -225,18 +240,27 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         indicatorBgPadding: 7.0,
                         images: bannerList
                             .map(
-                              (item) => Card(
-                                semanticContainer: true,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                child: Image.network(
-                                  "$item",
-                                  fit: BoxFit.fitWidth,
+                              (item) => InkWell(
+                                onTap: (){
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          child: AddDetailPage(data: item,),
+                                          type: PageTransitionType.fade));
+                                },
+                                child: Card(
+                                  semanticContainer: true,
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  child: Image.network(
+                                    "$item",
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6.0),
+                                  ),
+                                  elevation: 2,
+                                  margin: EdgeInsets.all(4),
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6.0),
-                                ),
-                                elevation: 2,
-                                margin: EdgeInsets.all(4),
                               ),
                             )
                             .toList(),
@@ -259,7 +283,170 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     child: ListView(
                       physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      children: quickActions.map((e) {
+                      children:[
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: UserEmergencyScreen(),
+                                    type: PageTransitionType.fade));
+                          },
+                          child: Card(
+                            elevation: 0,
+                            child: SizedBox(
+                              width: 85,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(
+                                  color: Colors.white,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "images/noticeboard.png",
+                                        width: 32,
+                                        color: appPrimaryMaterialColor,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Notice",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10,
+                                            color: Colors.black54),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: ComplainsScreen(),
+                                    type: PageTransitionType.fade));
+                          },
+                          child: Card(
+                            elevation: 0,
+                            child: SizedBox(
+                              width: 85,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(
+                                  color: Colors.white,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "images/complain.png",
+                                        width: 32,
+                                        color: appPrimaryMaterialColor,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Complains",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10,
+                                            color: Colors.black54),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: NoticesScreen(),
+                                    type: PageTransitionType.fade));
+                          },
+                          child: Card(
+                            elevation: 0,
+                            child: SizedBox(
+                              width: 85,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(
+                                  color: Colors.white,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "images/ad-campaign.png",
+                                        width: 32,
+                                        color: appPrimaryMaterialColor,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Advertisement",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10,
+                                            color: Colors.black54),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => ShowDialog());
+                          },
+                          child: Card(
+                            elevation: 0,
+                            child: SizedBox(
+                              width: 85,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(
+                                  color: Colors.white,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "images/alarm.png",
+                                        width: 32,
+                                        color: appPrimaryMaterialColor,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "SOS",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10,
+                                            color: Colors.black54),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ] /*quickActions.map((e) {
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -301,7 +488,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             ),
                           ),
                         );
-                      }).toList(),
+                      }).toList(),*/
+
                     ),
                   ),
                   Row(
@@ -425,14 +613,20 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         ),
                 ],
               ),
-              Positioned(
+            /*  Positioned(
                 bottom: MediaQuery.of(context).size.height * 0.01,
                 right: MediaQuery.of(context).size.width * 0.08,
                 child: FloatingActionButton(
                   onPressed: () {
-                    showDialog(
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: AddDetailPage(),
+                            type: PageTransitionType.fade));
+
+                   *//* showDialog(
                         context: context,
-                        builder: (BuildContext context) => ShowDialog());
+                        builder: (BuildContext context) => ShowDialog());*//*
                   },
                   backgroundColor: Colors.red[200],
                   child: Container(
@@ -450,7 +644,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             color: Colors.white),
                       ))),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),

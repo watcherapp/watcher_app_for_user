@@ -25,6 +25,7 @@ import 'package:watcher_app_for_user/Modules/UserApp/Components/DailyHelperCompo
 import 'package:watcher_app_for_user/Modules/UserApp/Components/FamilyMemberComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyResidentComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/MyVehicleComponent.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddDetailPage.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddFamilyMember.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/ComplainsScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/JoinNewFlatInSociety.dart';
@@ -291,12 +292,21 @@ class _MyWatcherState extends State<MyWatcher> {
               SizedBox(
                 height: MediaQuery.of(context).padding.top + 7,
               ),
-              SizedBox(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: Image.network(
-                  "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg",
-                  fit: BoxFit.cover,
+              InkWell(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: AddDetailPage(data: "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg",),
+                          type: PageTransitionType.fade));
+                },
+                child: SizedBox(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.network(
+                    "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg",
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               ismemberLoading

@@ -12,6 +12,7 @@ import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/BottomNavigationBarCustom.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/VisitorComponent.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/InviteGuestComponent.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddDetailPage.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/InviteGuest.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 
@@ -290,16 +291,18 @@ class _UserVisitorListState extends State<UserVisitorList> {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
-        // backgroundColor: Colors.grey[100],appBar: AppBar(
-        //         //   backgroundColor: Colors.white,
-        //         //   automaticallyImplyLeading: false,
-        //         //   elevation: 0.5,
-        //         //   centerTitle: true,
-        //         //   title: Text(
-        //         //     "Hey, " + "${sharedPrefs.memberName}",
-        //         //     style: TextStyle(color: Colors.black, fontSize: 17),
-        //         //   ),
-        //         // ),
+        // backgroundColor: Colors.grey[100],
+        // appBar: AppBar(
+        //   backgroundColor: Colors.white,
+        //   // automaticallyImplyLeading: false,
+        //   elevation: 0.0,
+        //   centerTitle: false,
+        //   // leading: Container(),
+        //   title: Image.network(
+        //     'https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg',
+        //     fit: BoxFit.fill,
+        //   ),
+        // ),
         backgroundColor: Colors.grey[200],
         //
         body: RefreshIndicator(
@@ -323,12 +326,24 @@ class _UserVisitorListState extends State<UserVisitorList> {
                 SizedBox(
                   height: MediaQuery.of(context).padding.top + 7,
                 ),
-                SizedBox(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.network(
-                    "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg",
-                    fit: BoxFit.cover,
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: AddDetailPage(
+                              data:
+                                  "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg",
+                            ),
+                            type: PageTransitionType.fade));
+                  },
+                  child: SizedBox(
+                    height: 60,
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.network(
+                      "https://i.pinimg.com/originals/14/14/5f/14145f84d1f7dbceddf9f6ffd9995594.jpg",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 SizedBox(
