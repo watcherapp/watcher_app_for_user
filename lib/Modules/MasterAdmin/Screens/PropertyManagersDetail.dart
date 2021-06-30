@@ -471,7 +471,10 @@ class _PropertyManagersDetailState extends State<PropertyManagersDetail> {
             .then((responseData) {
           if (responseData.Data == 1) {
             LoadingIndicator.close(context);
-            Fluttertoast.showToast(msg: "Request accept successfully");
+            Fluttertoast.showToast(msg: "Request accept successfully", backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,);
             Navigator.of(context).pop();
             print(responseData.Data);
           } else {

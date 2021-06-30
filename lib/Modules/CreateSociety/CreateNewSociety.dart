@@ -105,9 +105,9 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                   child: SearchableDropdown.single(
                     items: societyTypeList.map((value) {
                       return (DropdownMenuItem(
-                        child: Text(value["categoryName"]),
-                        value: value["_id"],
-                      ));
+                          child: Text(value["categoryName"]),
+                          value: value["_id"],
+                          ));
                     }).toList(),
                     value: selectedSocietyType,
                     hint: "Select Society Type",
@@ -196,79 +196,79 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                 isStateLoading == true
                     ? CircularProgressIndicator()
                     : Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6.0),
-                          color: Colors.grey[200],
-                        ),
-                        child: SearchableDropdown.single(
-                          items: stateList.map((value) {
-                            return (DropdownMenuItem(
-                              child: Text(value["name"]),
-                              value: value["isoCode"] + "@" + value["name"],
-                            ));
-                          }).toList(),
-                          value: selectedState,
-                          hint: "Select State",
-                          isCaseSensitiveSearch: false,
-                          style: TextStyle(fontSize: 15, color: Colors.black87),
-                          searchHint: "Select State",
-                          onChanged: (value) {
-                            setState(() {
-                              selectedState = value.toString().split("@")[0];
-                              selectedStateName =
-                                  value.toString().split("@")[1];
-                            });
-                            _getAllCity(
-                                selectedCountry: selectedCountry,
-                                selectedState: selectedState);
-                            // _getAllstate(selectedState);
-                          },
-                          dialogBox: true,
-                          displayClearIcon: false,
-                          isExpanded: true,
-                        ),
-                      ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    color: Colors.grey[200],
+                  ),
+                  child: SearchableDropdown.single(
+                    items: stateList.map((value) {
+                      return (DropdownMenuItem(
+                        child: Text(value["name"]),
+                        value: value["isoCode"] + "@" + value["name"],
+                      ));
+                    }).toList(),
+                    value: selectedState,
+                    hint: "Select State",
+                    isCaseSensitiveSearch: false,
+                    style: TextStyle(fontSize: 15, color: Colors.black87),
+                    searchHint: "Select State",
+                    onChanged: (value) {
+                      setState(() {
+                        selectedState = value.toString().split("@")[0];
+                        selectedStateName =
+                        value.toString().split("@")[1];
+                      });
+                      _getAllCity(
+                          selectedCountry: selectedCountry,
+                          selectedState: selectedState);
+                      // _getAllstate(selectedState);
+                    },
+                    dialogBox: true,
+                    displayClearIcon: false,
+                    isExpanded: true,
+                  ),
+                ),
                 SizedBox(height: 15),
                 Text("City", style: fontConstants.formFieldLabel),
                 SizedBox(height: 3),
                 isCityLoading == true
                     ? Center(
-                        child: CircularProgressIndicator(),
-                      )
+                  child: CircularProgressIndicator(),
+                )
                     : Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6.0),
-                          color: Colors.grey[200],
-                        ),
-                        child: SearchableDropdown.single(
-                          items: cityList.map((value) {
-                            return (DropdownMenuItem(
-                              child: Text(value["name"] ?? ""),
-                              value: value,
-                            ));
-                          }).toList(),
-                          value: selectedCity,
-                          hint: "Select City",
-                          isCaseSensitiveSearch: false,
-                          style: TextStyle(fontSize: 15, color: Colors.black87),
-                          searchHint: "Select City",
-                          onChanged: (value) {
-                            setState(() {
-                              selectedCityName = value["name"];
-                              latitude = value["latitude"];
-                              longitude = value["longitude"];
-                            });
-                            print(selectedCityName +
-                                " " +
-                                latitude +
-                                " " +
-                                longitude);
-                          },
-                          dialogBox: true,
-                          displayClearIcon: false,
-                          isExpanded: true,
-                        ),
-                      ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    color: Colors.grey[200],
+                  ),
+                  child: SearchableDropdown.single(
+                    items: cityList.map((value) {
+                      return (DropdownMenuItem(
+                        child: Text(value["name"] ?? ""),
+                        value: value,
+                      ));
+                    }).toList(),
+                    value: selectedCity,
+                    hint: "Select City",
+                    isCaseSensitiveSearch: false,
+                    style: TextStyle(fontSize: 15, color: Colors.black87),
+                    searchHint: "Select City",
+                    onChanged: (value) {
+                      setState(() {
+                        selectedCityName = value["name"];
+                        latitude = value["latitude"];
+                        longitude = value["longitude"];
+                      });
+                      print(selectedCityName +
+                          " " +
+                          latitude +
+                          " " +
+                          longitude);
+                    },
+                    dialogBox: true,
+                    displayClearIcon: false,
+                    isExpanded: true,
+                  ),
+                ),
                 MyTextFormField(
                     focusNode: streetName,
                     controller: txtStreetName,
@@ -367,7 +367,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           "categoryId": selectedSocietyType
         });
         Services.responseHandler(
-                apiName: "api/society/createSociety", body: body)
+            apiName: "api/society/createSociety", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -393,7 +393,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
+                backgroundColor: Color(0xFFFF4F4F),
                 // textColor: Colors.white,
                 fontSize: 16.0);
           }
@@ -404,7 +404,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
+              backgroundColor: Color(0xFFFF4F4F),
               // textColor: Colors.white,
               fontSize: 16.0);
         });
@@ -416,7 +416,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
+          backgroundColor: Color(0xFFFF4F4F),
           // textColor: Colors.white,
           fontSize: 16.0);
     }
@@ -436,7 +436,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
         ).then((responseData) {
           if (responseData.Data.length > 0) {
             print("getAllCountries -- >${responseData.Data}");
-            print("------------------------>$countryList");
+            print("countryList------------------------>$countryList");
             setState(() {
               isCountryLoading = false;
               countryList = responseData.Data;
@@ -451,7 +451,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
+                backgroundColor: Color(0xFFFF4F4F),
                 // textColor: Colors.white,
                 fontSize: 16.0);
           }
@@ -465,7 +465,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
+              backgroundColor: Color(0xFFFF4F4F),
               // textColor: Colors.white,
               fontSize: 16.0);
         });
@@ -480,7 +480,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
+          backgroundColor: Color(0xFFFF4F4F),
           // textColor: Colors.white,
           fontSize: 16.0);
     }
@@ -501,7 +501,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           if (responseData.Data.length > 0) {
             print("getAllSocietyCategory -- >${responseData.Data}");
             societyTypeList = responseData.Data;
-            print("------------------------>${societyTypeList}");
+            print("societyTypeList------------------------>${societyTypeList}");
             setState(() {
               isLoading = false;
             });
@@ -515,7 +515,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
+                backgroundColor: Color(0xFFFF4F4F),
                 // textColor: Colors.white,
                 fontSize: 16.0);
           }
@@ -529,7 +529,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
+              backgroundColor: Color(0xFFFF4F4F),
               // textColor: Colors.white,
               fontSize: 16.0);
         });
@@ -544,7 +544,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
+          backgroundColor: Color(0xFFFF4F4F),
           // textColor: Colors.white,
           fontSize: 16.0);
     }
@@ -584,7 +584,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
+                backgroundColor: Color(0xFFFF4F4F),
                 // textColor: Colors.white,
                 fontSize: 16.0);
           }
@@ -598,7 +598,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
+              backgroundColor: Color(0xFFFF4F4F),
               // textColor: Colors.white,
               fontSize: 16.0);
         });
@@ -613,7 +613,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
+          backgroundColor: Color(0xFFFF4F4F),
           // textColor: Colors.white,
           fontSize: 16.0);
     }
@@ -652,7 +652,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
+                backgroundColor: Color(0xFFFF4F4F),
                 // textColor: Colors.white,
                 fontSize: 16.0);
           }
@@ -665,7 +665,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
+              backgroundColor: Color(0xFFFF4F4F),
               // textColor: Colors.white,
               fontSize: 16.0);
         });
@@ -680,7 +680,7 @@ class _CreateNewSocietyState extends State<CreateNewSociety> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
+          backgroundColor: Color(0xFFFF4F4F),
           // textColor: Colors.white,
           fontSize: 16.0);
     }

@@ -53,6 +53,10 @@ class _AmenitiesDetailScreenState extends State<AmenitiesDetailScreen> {
             widget.amenitiesApi();
             Fluttertoast.showToast(
               msg: "Your Notice deleted Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
             setState(() {
@@ -129,7 +133,7 @@ class _AmenitiesDetailScreenState extends State<AmenitiesDetailScreen> {
   // //               toastLength: Toast.LENGTH_SHORT,
   // //               gravity: ToastGravity.BOTTOM,
   // //               timeInSecForIosWeb: 1,
-  // //               backgroundColor: Colors.red,
+  // //              backgroundColor: Color(0xFFFF4F4F),
   // //               // textColor: Colors.white,
   // //               fontSize: 16.0);
   // //         }
@@ -142,7 +146,7 @@ class _AmenitiesDetailScreenState extends State<AmenitiesDetailScreen> {
   // //             toastLength: Toast.LENGTH_SHORT,
   // //             gravity: ToastGravity.BOTTOM,
   // //             timeInSecForIosWeb: 1,
-  // //             backgroundColor: Colors.red,
+  // //            backgroundColor: Color(0xFFFF4F4F),
   // //             // textColor: Colors.white,
   // //             fontSize: 16.0);
   // //       });
@@ -156,7 +160,7 @@ class _AmenitiesDetailScreenState extends State<AmenitiesDetailScreen> {
   // //         toastLength: Toast.LENGTH_SHORT,
   // //         gravity: ToastGravity.BOTTOM,
   // //         timeInSecForIosWeb: 1,
-  // //         backgroundColor: Colors.red,
+  // //        backgroundColor: Color(0xFFFF4F4F),
   // //         // textColor: Colors.white,
   // //         fontSize: 16.0);
   // //   }

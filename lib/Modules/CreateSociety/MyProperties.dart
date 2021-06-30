@@ -8,6 +8,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/MyPropertieComponent.dart';
+import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
 import 'package:watcher_app_for_user/Modules/CreateSociety/ChooseCreateOrJoin.dart';
 
 class MyProperties extends StatefulWidget {
@@ -60,21 +61,21 @@ class _MyPropertiesState extends State<MyProperties> {
             setState(() {
               isLoading = false;
             });
-            Fluttertoast.showToast(
-              msg: "${responseData.Message}",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-            );
+            // Fluttertoast.showToast(
+            //   msg: "${responseData.Message}",
+            //   backgroundColor: Colors.white,
+            //   textColor: appPrimaryMaterialColor,
+            // );
           } else {
             print(responseData);
             setState(() {
               isLoading = false;
             });
-            Fluttertoast.showToast(
-              msg: "${responseData.Message}",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
-            );
+            // Fluttertoast.showToast(
+            //   msg: "${responseData.Message}",
+            //   backgroundColor: Colors.white,
+            //   textColor: appPrimaryMaterialColor,
+            // );
           }
         }).catchError((error) {
           setState(() {
@@ -164,38 +165,67 @@ class _MyPropertiesState extends State<MyProperties> {
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
         centerTitle: true,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              sharedPrefs.logout();
+              Navigator.of(context).pushAndRemoveUntil(
+                  PageTransition(
+                      child: SignIn(), type: PageTransitionType.rightToLeft),
+                  (Route<dynamic> route) => false);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(
+                right: 20,
+              ),
+              child: Image.asset(
+                "images/logout.png",
+                width: 20,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
-      body: isLoading == true
-          ? Center(
-              child: CircularProgressIndicator(
+      body: RefreshIndicator(
+        onRefresh: () {
+          return _getMyProperties();
+        },
+        color: appPrimaryMaterialColor,
+        child: isLoading == true
+            ? Center(
+                child: CircularProgressIndicator(
                   valueColor:
-                      new AlwaysStoppedAnimation(appPrimaryMaterialColor)))
-          : myPropertyList.length > 0
-              ? GridView.builder(
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  padding:
-                      EdgeInsets.only(top: 8, left: 3, right: 3, bottom: 3),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1.1,
-                      crossAxisSpacing: 1.0,
-                      mainAxisSpacing: 1.0),
-                  itemBuilder: (BuildContext context, int index) {
-                    return MyPropertiesComponent(
-                      myPropertyData: myPropertyList[index],
-                      memberDataApi: () {
-                        _getMyProperties();
-                      },
-                    );
-                  },
-                  itemCount: myPropertyList.length,
-                )
-              : Container(
-                  child: Center(
-                    child: Text("No Properties Found"),
-                  ),
+                      new AlwaysStoppedAnimation(appPrimaryMaterialColor),
                 ),
+              )
+            : myPropertyList.length > 0
+                ? GridView.builder(
+                    shrinkWrap: true,
+                    // physics: BouncingScrollPhysics(),
+                    padding:
+                        EdgeInsets.only(top: 8, left: 3, right: 3, bottom: 3),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.1,
+                        crossAxisSpacing: 1.0,
+                        mainAxisSpacing: 1.0),
+                    itemBuilder: (BuildContext context, int index) {
+                      return MyPropertiesComponent(
+                        myPropertyData: myPropertyList[index],
+                        memberDataApi: () {
+                          _getMyProperties();
+                        },
+                      );
+                    },
+                    itemCount: myPropertyList.length,
+                  )
+                : Container(
+                    child: Center(
+                      child: Text("No Properties Found"),
+                    ),
+                  ),
+      ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(12.0),
         child: SizedBox(

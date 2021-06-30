@@ -17,6 +17,7 @@ class MyTextFormField extends StatelessWidget {
   bool isPassword;
   Widget icon;
   int maxLines;
+  int minLines;
 
   MyTextFormField({
     this.keyboardType,
@@ -33,6 +34,7 @@ class MyTextFormField extends StatelessWidget {
     this.onChanged,
     this.hideShowText,
     this.maxLines,
+    this.minLines,
     this.icon,
   });
 
@@ -56,6 +58,8 @@ class MyTextFormField extends StatelessWidget {
               keyboardType: keyboardType,
               style: TextStyle(fontSize: 14),
               maxLength: maxLength,
+              maxLines: maxLines,
+              minLines: minLines,
               focusNode: focusNode,
               onChanged: onChanged,
               validator: validator,

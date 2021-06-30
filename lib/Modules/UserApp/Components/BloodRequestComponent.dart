@@ -45,6 +45,10 @@ class _BloodRequestComponentState extends State<BloodRequestComponent> {
             widget.BloodDataApi();
             Fluttertoast.showToast(
               msg: "Your BloodRequest Deleted Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
           } else {
             print(responseData);
@@ -144,7 +148,7 @@ class _BloodRequestComponentState extends State<BloodRequestComponent> {
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.17,
+                width: MediaQuery.of(context).size.width * 0.13,
               ),
               IconButton(
                 icon: Icon(Icons.info),
@@ -227,6 +231,13 @@ class _ShowDialogState extends State<ShowDialog> {
               isLoading = false;
             });
             Navigator.pop(context);
+            Fluttertoast.showToast(
+              msg: "Your Blood Request Add Successfully ",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
+            );
           } else {
             print(responseData);
             setState(() {
@@ -274,7 +285,7 @@ class _ShowDialogState extends State<ShowDialog> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Respose to Blood Request',
+              'Response to Blood Request',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -291,79 +302,81 @@ class _ShowDialogState extends State<ShowDialog> {
             // ),
           ],
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            MyTextFormField(
-                controller: txtDonarName,
-                lable: "Donar Name",
-                validator: (val) {
-                  if (val.isEmpty) {
-                    return "Please Enter Donar Name";
-                  }
-                  return "";
-                },
-                hintText: "Enter Donar Name"),
-            SizedBox(
-              height: 3,
-            ),
-            MyTextFormField(
-                controller: txtDonarEmail,
-                lable: "Donar Email",
-                validator: (val) {
-                  if (val.isEmpty) {
-                    return "Please Enter Donar Email";
-                  }
-                  return "";
-                },
-                hintText: "Enter Donar Email"),
-            SizedBox(
-              height: 3,
-            ),
-            MyTextFormField(
-                controller: txtDonarMoNo,
-                lable: "Donar Contect No",
-                validator: (val) {
-                  if (val.isEmpty) {
-                    return "Please Enter Donar Contect No";
-                  }
-                  return "";
-                },
-                hintText: "Enter Donar Contect No"),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                RaisedButton(
-                    child: Text("Cancel",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        )),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
-                    color: Colors.red[400].withOpacity(0.9),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      print("Cancel");
-                    }),
-                RaisedButton(
-                    child: Text("Submit",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        )),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
-                    color: Colors.green[400],
-                    onPressed: () {
-                      _responseBloodRequest();
-                    }),
-              ],
-            ),
-          ],
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MyTextFormField(
+                  controller: txtDonarName,
+                  lable: "Donar Name",
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Please Enter Donar Name";
+                    }
+                    return "";
+                  },
+                  hintText: "Enter Donar Name"),
+              SizedBox(
+                height: 3,
+              ),
+              MyTextFormField(
+                  controller: txtDonarEmail,
+                  lable: "Donar Email",
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Please Enter Donar Email";
+                    }
+                    return "";
+                  },
+                  hintText: "Enter Donar Email"),
+              SizedBox(
+                height: 3,
+              ),
+              MyTextFormField(
+                  controller: txtDonarMoNo,
+                  lable: "Donar Contect No",
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Please Enter Donar Contect No";
+                    }
+                    return "";
+                  },
+                  hintText: "Enter Donar Contect No"),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  RaisedButton(
+                      child: Text("Cancel",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                          )),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6)),
+                      color: Colors.red[400].withOpacity(0.9),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        print("Cancel");
+                      }),
+                  RaisedButton(
+                      child: Text("Submit",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                          )),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6)),
+                      color: Colors.green[400],
+                      onPressed: () {
+                        _responseBloodRequest();
+                      }),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

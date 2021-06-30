@@ -278,7 +278,7 @@ class _ComplainComponentState extends State<ComplainComponent> {
                                                     getComplainApi: widget.getComplaindApi,
                                                   ),
                                                   type: PageTransitionType
-                                                      .rightToLeft),
+                                                      .fade),
                                             );
                                           },
                                           child: Container(

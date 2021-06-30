@@ -33,10 +33,10 @@ class _PropertyManagersState extends State<PropertyManagers>
       "tabName": "Approved",
       "status": 1,
     },
-    {
-      "tabName": "Denied",
-      "status": 2,
-    },
+    // {
+    //   "tabName": "Denied",
+    //   "status": 2,
+    // },
     {
       "tabName": "All",
       "status": 3,
@@ -213,7 +213,7 @@ class _PropertyManagersState extends State<PropertyManagers>
               managerList = responseData.Data;
               isLoading = false;
             });
-            print(responseData.Data);
+            print("${status}---->${responseData.Data}");
           } else {
             print(responseData);
             setState(() {

@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/BottomNavigationBarCustom.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/UserEmergencyComponent.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/AddUserEmergencyScreen.dart';
 
 class UserEmergencyScreen extends StatefulWidget {
   @override
@@ -30,26 +33,62 @@ class _UserEmergencyScreenState extends State<UserEmergencyScreen> {
           "Emergency",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: isSLoading == true
-          ? Center(
+      body: RefreshIndicator(
+        onRefresh: () {
+          return _getAllUserEmergencyContact();
+        },
+        color: appPrimaryMaterialColor,
+        child: Stack(
+          children: [
+            isSLoading == true
+                ? Center(
               child: CircularProgressIndicator(
                 valueColor:
-                    new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+                new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
               ),
             )
-          : ListView.builder(
-              padding: EdgeInsets.only(top: 5, bottom: 18),
-              scrollDirection: Axis.vertical,
-              itemCount: EmergencyList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return UserEmergencyComponent(
-                  userEmergencyData: EmergencyList[index],
-                );
-              }),
+                : ListView.builder(
+                padding: EdgeInsets.only(top: 5, bottom: 18),
+                scrollDirection: Axis.vertical,
+                itemCount: EmergencyList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return UserEmergencyComponent(
+                    userEmergencyData: EmergencyList[index],
+                  );
+                }),
+            Positioned(
+              bottom: 30,
+              right: 10,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: AddUserEmergencyScreen(
+                            getAllEmergency: () {
+                              _getAllUserEmergencyContact();
+                            },
+                          ),
+                          type: PageTransitionType.rightToLeft));
+                  setState(() {});
+                },
+                icon: Icon(Icons.add),
+                label: Text("Add Emergency"),
+              ),
+            ),
+          ],
+        )
+      ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
     );
   }
 

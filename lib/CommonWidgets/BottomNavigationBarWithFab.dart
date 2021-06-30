@@ -24,6 +24,7 @@ class BottomNavigationBarWithFab extends StatefulWidget {
 
 class _BottomNavigationBarWithFabState
     extends State<BottomNavigationBarWithFab> {
+
   double opaCity = 0;
   @override
   Widget build(BuildContext context) {

@@ -24,18 +24,19 @@ class SelectWingAndFlat extends StatefulWidget {
 }
 
 class _SelectWingAndFlatState extends State<SelectWingAndFlat> {
+  ScrollController controller = new ScrollController();
   bool isLoading = false;
   String wingId;
   String flatId;
-  String flatStatus;
+  String flatStatus = "Owner";
   int selectedW = -1;
   int selectedF = -1;
-  int selectedS = -1;
+  int selectedS = 3;
   List getAllWingList = [];
   List getAllFlatList = [];
   List dataList = [
     {"label": "Dead", "Color": Colors.grey},
-    {"label": "Closed", "Color": Colors.redAccent},
+    {"label": "Vacant", "Color": Colors.redAccent},
     {"label": "Rent", "Color": Colors.lightGreen},
     {"label": "Owner", "Color": appPrimaryMaterialColor},
   ];
@@ -360,8 +361,8 @@ class _SelectWingAndFlatState extends State<SelectWingAndFlat> {
                                   color: dataList[index]["Color"],
                                   borderRadius: BorderRadius.circular(4.0),
                                   border: Border.all(
-                                    color: Colors
-                                        .white, //                   <--- border color
+                                    color: Colors.white,
+                                    //                   <--- border color
                                     width: 1.0,
                                   ),
                                 ),
@@ -407,59 +408,72 @@ class _SelectWingAndFlatState extends State<SelectWingAndFlat> {
                     ),
                   ),
                 )
-              : Container(
-                  height: MediaQuery.of(context).size.height * 0.52,
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 5),
-                    itemBuilder: (_, index) => GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedF = index;
-                          flatId = getAllFlatList[index]["_id"];
-                          print("${getAllFlatList[index]["_id"]}");
-                        });
-                      },
-                      child: Container(
-                        width: 70,
-                        child: Card(
-                          color: selectedF == index
-                              ? appPrimaryMaterialColor
-                              : Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8, left: 10, right: 10, bottom: 8),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text("${getAllFlatList[index]["flatNo"]}",
-                                  style: TextStyle(
-                                    color: selectedF == index
-                                        ? Colors.white
-                                        : appPrimaryMaterialColor,
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
-                                  )),
+              : Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Scrollbar(
+                    thickness: 3,
+                    isAlwaysShown: true,
+                    controller: controller,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5),
+                        itemBuilder: (_, index) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedF = index;
+                              flatId = getAllFlatList[index]["_id"];
+                              print("${getAllFlatList[index]["_id"]}");
+                            });
+                          },
+                          child: Container(
+                            width: 70,
+                            child: Card(
+                              color: selectedF == index
+                                  ? appPrimaryMaterialColor
+                                  : Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 8, left: 10, right: 10, bottom: 8),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text("${getAllFlatList[index]["flatNo"]}",
+                                      style: TextStyle(
+                                        color: selectedF == index
+                                            ? Colors.white
+                                            : appPrimaryMaterialColor,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 16,
+                                      )),
+                                ),
+                              ),
                             ),
+                            // decoration: BoxDecoration(
+                            //   color: selectedF == index
+                            //       ? appPrimaryMaterialColor
+                            //       : Colors.white,
+                            //   borderRadius: BorderRadius.circular(10),
+                            // ),
                           ),
+                          // child: FlatSelactionComponent2(
+                          //   floorData: getAllFlatList[index],
+                          //   onChange: () {
+                          //
+                          //   },
+                          // ),
                         ),
-                        // decoration: BoxDecoration(
-                        //   color: selectedF == index
-                        //       ? appPrimaryMaterialColor
-                        //       : Colors.white,
-                        //   borderRadius: BorderRadius.circular(10),
-                        // ),
+                        // itemCount: 8,
+                        itemCount: getAllFlatList.length,
                       ),
-                      // child: FlatSelactionComponent2(
-                      //   floorData: getAllFlatList[index],
-                      //   onChange: () {
-                      //
-                      //   },
-                      // ),
                     ),
-                    // itemCount: 8,
-                    itemCount: getAllFlatList.length,
                   ),
                 ),
+              ),
           // Padding(
           //   padding: const EdgeInsets.all(8.0),
           //   child: MyButton(
@@ -475,9 +489,124 @@ class _SelectWingAndFlatState extends State<SelectWingAndFlat> {
         padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
         child: MyButton(
             onPressed: () {
-              _joinSociety();
+              if (wingId == null) {
+                Fluttertoast.showToast(
+                  gravity: ToastGravity.TOP,
+                  textColor: Colors.white,
+                  backgroundColor: Color(0xFFFF4F4F),
+                  msg: "Please Select Wing of Society.",
+                );
+              } else if (flatId == null) {
+                Fluttertoast.showToast(
+                  gravity: ToastGravity.TOP,
+                  textColor: Colors.white,
+                  backgroundColor: Color(0xFFFF4F4F),
+                  msg: "Please Select Flat of Society.",
+                );
+              } else if (flatStatus == null) {
+                Fluttertoast.showToast(
+                  gravity: ToastGravity.TOP,
+                  textColor: Colors.white,
+                  backgroundColor: Color(0xFFFF4F4F),
+                  msg: "Please Select Residence type.",
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => ShowDialog(
+                    joinApi: () {
+                      _joinSociety();
+                    },
+                  ),
+                );
+              }
             },
-            title: "Select"),
+            title: "Join"),
+      ),
+    );
+  }
+}
+
+class ShowDialog extends StatefulWidget {
+  Function joinApi;
+
+  ShowDialog({
+    this.joinApi,
+  });
+
+  @override
+  _ShowDialogState createState() => _ShowDialogState();
+}
+
+class _ShowDialogState extends State<ShowDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Join the Society',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: appPrimaryMaterialColor),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Are you sure you want to Join this flat.',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                // color: appPrimaryMaterialColor,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                RaisedButton(
+                    child: Text("No",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                        )),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    color: Colors.red[400].withOpacity(0.9),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      print("No");
+                    }),
+                RaisedButton(
+                    child: Text("Yes",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                        )),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    color: Colors.green[400],
+                    onPressed: () {
+                      widget.joinApi();
+                    }),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

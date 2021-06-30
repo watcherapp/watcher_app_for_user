@@ -83,7 +83,10 @@ class _BusinessCategoryState extends State<BusinessCategory> {
                                       txtbusinessname.text = "";
                                     });
                                     Fluttertoast.showToast(
-                                        msg: "Data Added Successfully");
+                                        msg: "Data Added Successfully", backgroundColor: Colors.green,
+                                      // backgroundColor: Color(0xFFFF4F4F),
+                                      textColor: Colors.white,
+                                      gravity:ToastGravity.TOP,);
                                   }
                                 },
                                 child: Text(
@@ -132,7 +135,10 @@ class _BusinessCategoryState extends State<BusinessCategory> {
                                       //tempList.remove(txtguestname.text);
                                     });
                                     Fluttertoast.showToast(
-                                        msg: "Data Deleted Successfully");
+                                        msg: "Data Deleted Successfully", backgroundColor: Colors.green,
+                                      // backgroundColor: Color(0xFFFF4F4F),
+                                      textColor: Colors.white,
+                                      gravity:ToastGravity.TOP,);
                                   },
                                   child: Icon(
                                     Icons.remove_circle,

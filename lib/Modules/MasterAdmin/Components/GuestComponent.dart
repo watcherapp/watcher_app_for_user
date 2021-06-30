@@ -69,7 +69,10 @@ class _GuestComponentState extends State<GuestComponent> {
             .then((responseData) {
           if (responseData.Data != 0) {
             widget.onremove();
-            Fluttertoast.showToast(msg: "Category Deleted Successfully");
+            Fluttertoast.showToast(msg: "Category Deleted Successfully", backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,);
             setState(() {
               isremoveLoading = true;
             });

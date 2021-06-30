@@ -103,6 +103,10 @@ class _PollingQuestionComponentState extends State<PollingQuestionComponent> {
             widget.pollinQuestionApi();
             Fluttertoast.showToast(
               msg: "Your Polling deleted Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             setState(() {
               isDLoading = false;

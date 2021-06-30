@@ -12,6 +12,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 
 class UpdateEmergencyScreen extends StatefulWidget {
   var emergencyData;
@@ -103,7 +104,10 @@ class _UpdateEmergencyScreenState extends State<UpdateEmergencyScreen> {
           if (responseData.Data != 0) {
             print(responseData.Data);
             widget.GetData();
-            Fluttertoast.showToast(msg: "Your Emergency Updated Successfully");
+            Fluttertoast.showToast(msg: "Your Emergency Updated Successfully", backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,);
             setState(() {
               isLoading = false;
             });
@@ -149,6 +153,11 @@ class _UpdateEmergencyScreenState extends State<UpdateEmergencyScreen> {
           "Update Emergency",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
@@ -243,6 +252,7 @@ class _UpdateEmergencyScreenState extends State<UpdateEmergencyScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
     );
   }
 }

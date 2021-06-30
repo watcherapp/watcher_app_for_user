@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/DailyHelperScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/GateKeeperScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/GatesScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/GatePassScreen.dart';
 
 class WatcherScreen extends StatefulWidget {
   @override
@@ -19,12 +22,12 @@ class _WatcherScreenState extends State<WatcherScreen> {
     {
       "label": "Gates",
       "img": "images/gate.png",
-      "screenName": WatcherScreen(),
+      "screenName": GatesScreen(),
     },
     {
       "label": "GatePass",
       "img": "images/pass.png",
-      "screenName": WatcherScreen(),
+      "screenName": GatePassScreen(),
     },
     {
       "label": "Daily Helper",
@@ -41,6 +44,11 @@ class _WatcherScreenState extends State<WatcherScreen> {
           "Gate Keeper",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
@@ -128,6 +136,7 @@ class _WatcherScreenState extends State<WatcherScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
     );
   }
 
@@ -137,7 +146,7 @@ class _WatcherScreenState extends State<WatcherScreen> {
         Navigator.push(
             context,
             PageTransition(
-                child: screenName, type: PageTransitionType.rightToLeft));
+                child: screenName, type: PageTransitionType.fade));
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 5.0, bottom: 5, right: 3, left: 3),

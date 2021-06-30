@@ -14,6 +14,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Dialogs/MyDropdown.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 
 class AddNewNoticeScreen extends StatefulWidget {
   Function getAllNoticeApi;
@@ -66,6 +67,10 @@ class _AddNewNoticeScreenState extends State<AddNewNoticeScreen> {
             widget.getAllNoticeApi();
             Fluttertoast.showToast(
               msg: "Your Notice added Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
             setState(() {
@@ -358,7 +363,16 @@ class _AddNewNoticeScreenState extends State<AddNewNoticeScreen> {
                   MyButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        _addNewNotice();
+                        if (_image != null) {
+                          _addNewNotice();
+                        }else{
+                          Fluttertoast.showToast(
+                            gravity: ToastGravity.TOP,
+                            textColor: Colors.white,
+                           backgroundColor: Color(0xFFFF4F4F),
+                            msg: "Please Attach Notice Photo",
+                          );
+                        }
                       }
                     },
                     title:
@@ -377,6 +391,7 @@ class _AddNewNoticeScreenState extends State<AddNewNoticeScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
     );
   }
 }

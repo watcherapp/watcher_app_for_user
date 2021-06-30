@@ -43,7 +43,10 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
           if (responseData.Data != 0) {
             print(responseData.Data);
             widget.GetEmergencyApi();
-            Fluttertoast.showToast(msg: "Emergency Deleted Successfully");
+            Fluttertoast.showToast(msg: "Emergency Deleted Successfully", backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,);
             setState(() {
               isDeleteLoading = false;
             });
@@ -177,7 +180,7 @@ class _EmergencyComponentState extends State<EmergencyComponent> {
                                         widget.GetEmergencyApi();
                                       },
                                     ),
-                                    type: PageTransitionType.rightToLeft));
+                                    type: PageTransitionType.fade));
                             setState(() {});
                           },
                           child: Icon(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddPollingQuestion.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/NoticeBoardScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AmenitiesScreen.dart';
@@ -92,6 +93,7 @@ class _InteractionScreenState extends State<InteractionScreen> {
         },
         itemCount: interFields.length,
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
     );
   }
 
@@ -105,7 +107,7 @@ class _InteractionScreenState extends State<InteractionScreen> {
         Navigator.push(
             context,
             PageTransition(
-                child: screenName, type: PageTransitionType.rightToLeft));
+                child: screenName, type: PageTransitionType.fade));
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 5.0, bottom: 5, right: 4, left: 4),

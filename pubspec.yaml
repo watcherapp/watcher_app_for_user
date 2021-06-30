@@ -57,6 +57,17 @@ dependencies:
   url_launcher: ^5.7.10
   get: ^4.1.4
   vibration: ^1.7.3
+  pie_chart: ^3.1.1
+  fl_chart: ^0.36.1
+  multi_select_flutter: ^4.0.0
+  flutter_rating_bar: ^4.0.0
+
+
+
+  #chating
+  scoped_model: ^1.1.0
+  flutter_socket_io: ^0.6.0
+
 
   #onesignal
   onesignal_flutter: ^2.6.3

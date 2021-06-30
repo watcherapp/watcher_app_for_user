@@ -114,6 +114,10 @@ class _SignUp1State extends State<SignUp1> {
             print(responseData.Data);
             Fluttertoast.showToast(
               msg: "You are verified successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.push(
               context,

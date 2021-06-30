@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:watcher_app_for_user/CommonWidgets/LoadingIndicator.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Data/ValidationClass.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/ComplainComponent.dart';
 
 class ComplaintsScreen extends StatefulWidget {
@@ -25,6 +27,14 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
     {"icon": "", "date": ""},
     {"icon": "", "date": ""},
   ];
+  DateTime toDate = DateTime.now();
+  var dateFormate = DateFormat('yMMMMd');
+  var dateFormate2 = DateFormat('MMMMd');
+  var dateFormateD = DateFormat('dd/MM/yyyy');
+
+  DateTime yesterDayDate = DateTime.now().subtract(Duration(days: 1));
+  DateTime weekDate = DateTime.now().subtract(Duration(days: 7));
+  DateTime monthDate = DateTime.now().subtract(Duration(days: 30));
 
   // List<Widget> tabs = [
   //   Tab(
@@ -106,9 +116,13 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
   @override
   void initState() {
     _getAllComplains();
+    print(dateFormateD.format(toDate));
+    print(dateFormateD.format(yesterDayDate));
+    print(dateFormateD.format(weekDate));
+    print(dateFormateD.format(monthDate));
   }
 
-  _getAllComplains() async {
+  _getAllComplains({var toDate, var fromDate}) async {
     try {
       setState(() {
         isLoading = true;
@@ -116,13 +130,36 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        var body = {
-          "societyId": sharedPrefs.societyId,
-        };
+        var body;
+        if (fromDate != null && toDate != null) {
+          body = {
+            "societyId": sharedPrefs.societyId,
+            "fromDate": dateFormateD.format(fromDate),
+            "toDate": dateFormateD.format(toDate),
+          };
+        } else if (fromDate != null && toDate == null) {
+          body = {
+            "societyId": sharedPrefs.societyId,
+            "fromDate": dateFormateD.format(fromDate),
+            // "toDate": toDate,
+          };
+        } else if (fromDate == null && toDate != null) {
+          body = {
+            "societyId": sharedPrefs.societyId,
+            // "fromDate": fromDate,
+            "toDate": dateFormateD.format(toDate),
+          };
+        } else {
+          body = {
+            "societyId": sharedPrefs.societyId,
+          };
+        }
         print("$body");
+        getAllComplaintList.clear();
         Services.responseHandler(
                 apiName: "api/admin/getAllSocietyComplain", body: body)
             .then((responseData) {
+              print(responseData.Data.length);
           if (responseData.Data.length > 0) {
             print(responseData.Data);
             getAllComplaintList = responseData.Data;
@@ -187,13 +224,310 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
             onPressed: () {
               showModalBottomSheet(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
                   ),
                   context: context,
                   builder: (builder) {
                     return Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: BottomSheet(),
+                      child: Container(
+                        height: 300.0,
+                        color: Colors.transparent,
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.clear),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: 90,
+                                  ),
+                                  Text(
+                                    "Filter by Date",
+                                    style: TextStyle(
+                                      color: appPrimaryMaterialColor,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _getAllComplains(toDate: toDate);
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  color: Colors.transparent,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.date_range,
+                                          color: appPrimaryMaterialColor,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Today",
+                                              style: TextStyle(
+                                                color: appPrimaryMaterialColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "${dateFormate.format(toDate)}",
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: 12,
+                                                // fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _getAllComplains(toDate: yesterDayDate);
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  color: Colors.transparent,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      // mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          Icons.date_range,
+                                          color: appPrimaryMaterialColor,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Yesterday",
+                                              style: TextStyle(
+                                                color: appPrimaryMaterialColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "${dateFormate.format(toDate.subtract(Duration(days: 1)))}",
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: 12,
+                                                // fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _getAllComplains(
+                                    fromDate: weekDate,
+                                    toDate: toDate,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  color: Colors.transparent,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.date_range,
+                                          color: appPrimaryMaterialColor,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Last Week",
+                                              style: TextStyle(
+                                                color: appPrimaryMaterialColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "${dateFormate2.format(toDate.subtract(Duration(days: 1)))}-${dateFormate.format(toDate.subtract(Duration(days: 7)))}",
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: 12,
+                                                // fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _getAllComplains(
+                                    fromDate: monthDate,
+                                    toDate: toDate,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  color: Colors.transparent,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.date_range,
+                                          color: appPrimaryMaterialColor,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Last Month",
+                                              style: TextStyle(
+                                                color: appPrimaryMaterialColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "${dateFormate2.format(toDate.subtract(Duration(days: 1)))}-${dateFormate.format(toDate.subtract(Duration(days: 30)))}",
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: 12,
+                                                // fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              // Container(
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.all(8.0),
+                              //     child: Row(
+                              //       mainAxisAlignment: MainAxisAlignment.start,
+                              //       children: [
+                              //         Icon(
+                              //           Icons.date_range,
+                              //           color: appPrimaryMaterialColor,
+                              //         ),
+                              //         SizedBox(
+                              //           width: 10,
+                              //         ),
+                              //         Column(
+                              //           crossAxisAlignment: CrossAxisAlignment.start,
+                              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //           children: [
+                              //             Text(
+                              //               "Custom Range",
+                              //               style: TextStyle(
+                              //                 color: appPrimaryMaterialColor,
+                              //                 fontSize: 14,
+                              //                 fontWeight: FontWeight.w600,
+                              //               ),
+                              //             ),
+                              //             SizedBox(
+                              //               height: 5,
+                              //             ),
+                              //           ],
+                              //         )
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ),
                     );
                   });
             },
@@ -203,29 +537,38 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: isLoading == true
-          ? Center(
-              child: CircularProgressIndicator(
-              // backgroundColor: Colors.red,
-              valueColor:
-                  new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
-            ))
-          : getAllComplaintList.length == 0
-              ? Center(
-                  child: Text("No Complaints Found"),
-                )
-              : ListView.builder(
-                  padding: EdgeInsets.only(top: 5, bottom: 18),
-                  scrollDirection: Axis.vertical,
-                  itemCount: getAllComplaintList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ComplainComponent(
-                      getAllComplain: getAllComplaintList[index],
-                      getComplaindApi: () {
-                        _getAllComplains();
-                      },
-                    );
-                  }),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return _getAllComplains();
+        },
+        color: appPrimaryMaterialColor,
+        child: isLoading == true
+            ? Center(
+                child: CircularProgressIndicator(
+                //backgroundColor: Color(0xFFFF4F4F),
+                valueColor:
+                    new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+              ))
+            : getAllComplaintList.length == 0
+                ? Center(
+                    child: Text("No Complaints Found"),
+                  )
+                : ListView.builder(
+                    padding: EdgeInsets.only(top: 5, bottom: 18),
+                    scrollDirection: Axis.vertical,
+                    // reverse: true,
+                    itemCount: getAllComplaintList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ComplainComponent(
+                        getAllComplain: getAllComplaintList[getAllComplaintList.length-1-index],
+                        getComplaindApi: () {
+                          _getAllComplains();
+                        },
+                      );
+                    }),
+      ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
+      //
       // Column(
       //         children: [
       //           Padding(
@@ -278,11 +621,22 @@ class _ComplaintsScreenState extends State<ComplaintsScreen>
 }
 
 class BottomSheet extends StatefulWidget {
+  Function complainApi;
+
+  BottomSheet({
+    this.complainApi,
+  });
+
   @override
   _BottomSheetState createState() => _BottomSheetState();
 }
 
 class _BottomSheetState extends State<BottomSheet> {
+  DateTime toDate = DateTime.now();
+  var dateFormate = DateFormat('yMMMMd');
+  var dateFormate2 = DateFormat('MMMMd');
+  var dateFormateD = DateFormat('dd/MM/yyyy');
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -314,6 +668,7 @@ class _BottomSheetState extends State<BottomSheet> {
             ),
             GestureDetector(
               onTap: () {
+                widget.complainApi();
                 Navigator.pop(context);
               },
               child: Container(
@@ -347,7 +702,7 @@ class _BottomSheetState extends State<BottomSheet> {
                             height: 5,
                           ),
                           Text(
-                            "Aug 26",
+                            "${dateFormate.format(toDate)}",
                             style: TextStyle(
                               color: Colors.black54,
                               fontSize: 12,
@@ -400,7 +755,7 @@ class _BottomSheetState extends State<BottomSheet> {
                             height: 5,
                           ),
                           Text(
-                            "Aug 25",
+                            "${dateFormate.format(toDate.subtract(Duration(days: 1)))}",
                             style: TextStyle(
                               color: Colors.black54,
                               fontSize: 12,
@@ -452,7 +807,7 @@ class _BottomSheetState extends State<BottomSheet> {
                             height: 5,
                           ),
                           Text(
-                            "Aug 19-25",
+                            "${dateFormate2.format(toDate.subtract(Duration(days: 1)))}-${dateFormate.format(toDate.subtract(Duration(days: 7)))}",
                             style: TextStyle(
                               color: Colors.black54,
                               fontSize: 12,
@@ -504,7 +859,7 @@ class _BottomSheetState extends State<BottomSheet> {
                             height: 5,
                           ),
                           Text(
-                            "July 1-31",
+                            "${dateFormate2.format(toDate.subtract(Duration(days: 1)))}-${dateFormate.format(toDate.subtract(Duration(days: 30)))}",
                             style: TextStyle(
                               color: Colors.black54,
                               fontSize: 12,

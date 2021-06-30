@@ -245,8 +245,10 @@ class _ShowDialogState extends State<ShowDialog> {
             Navigator.pop(context);
             Fluttertoast.showToast(
               msg: "You Approve this Watchman Successfully",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
           } else {

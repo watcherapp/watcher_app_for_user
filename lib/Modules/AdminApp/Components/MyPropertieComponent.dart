@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/AdminDashboard.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserHomeScreen.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 
 enum OwnerType { Owner, Admin }
@@ -30,7 +33,7 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
         "${widget.myPropertyData["MemberData"][0]["society"]["societyCode"]}";
 
     sharedPrefs.societyName =
-        "${widget.myPropertyData["SocietyData"][0]["societyName"]}";
+        "${widget.myPropertyData["SocietyData"][0]["societyName"]} , ${widget.myPropertyData["SocietyData"][0]["city"]} , ${widget.myPropertyData["SocietyData"][0]["state"]} , ${widget.myPropertyData["SocietyData"][0]["country"]}";
 
     sharedPrefs.memberNo =
         "${widget.myPropertyData["MemberData"][0]["memberNo"]}";
@@ -60,21 +63,26 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
     print(sharedPrefs.wingId);
     print(sharedPrefs.flatId);
     print(sharedPrefs.userRole);
-    if (sharedPrefs.userRole == "1") {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) => ShowDialog2(),
-      );
+    // if (sharedPrefs.userRole == "1") {
+    //   showDialog(
+    //     context: context,
+    //     builder: (BuildContext context) => ShowDialog2(),
+    //   );
+    //   // Navigator.pushReplacement(
+    //   //     context,
+    //   //     PageTransition(
+    //   //         child: AdminDashboard(), type: PageTransitionType.bottomToTop));
+    // } else if (sharedPrefs.userRole == "2") {
+
       // Navigator.pushReplacement(
       //     context,
       //     PageTransition(
-      //         child: AdminDashboard(), type: PageTransitionType.bottomToTop));
-    } else if (sharedPrefs.userRole == "2") {
+      //         child: UserDashboard(), type: PageTransitionType.bottomToTop));
       Navigator.pushReplacement(
           context,
           PageTransition(
-              child: UserDashboard(), type: PageTransitionType.bottomToTop));
-    }
+              child: MyWatcher(), type: PageTransitionType.bottomToTop));
+    // }
   }
 
   @override
@@ -85,12 +93,20 @@ class _MyPropertiesComponentState extends State<MyPropertiesComponent> {
             true) {
           setPreferences();
         } else {
-          Fluttertoast.showToast(
-            msg:
-                "You are not authorized to access this Please contact Admin of Society",
+          Get.snackbar(
+            "Member Approval",
+            "You are not authorized to access this Please contact Admin of Society",
+            snackPosition: SnackPosition.TOP,
+            duration: Duration(seconds: 5),
             backgroundColor: Colors.white,
-            textColor: appPrimaryMaterialColor,
+            colorText: appPrimaryMaterialColor,
           );
+          // Fluttertoast.showToast(
+          //   msg:
+          //       "You are not authorized to access this Please contact Admin of Society",
+          //   backgroundColor: Colors.white,
+          //   textColor: appPrimaryMaterialColor,
+          // );
         }
       },
       child: Card(
@@ -279,6 +295,7 @@ class _ShowDialogState extends State<ShowDialog> {
                 fontWeight: FontWeight.bold,
                 // color: appPrimaryMaterialColor,
               ),
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 20,
@@ -319,89 +336,89 @@ class _ShowDialogState extends State<ShowDialog> {
     );
   }
 }
-
-class ShowDialog2 extends StatefulWidget {
-  @override
-  _ShowDialog2State createState() => _ShowDialog2State();
-}
-
-class _ShowDialog2State extends State<ShowDialog2> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-        ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Login As Admin/Member',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: appPrimaryMaterialColor,
-              ),
-            ),
-            // SizedBox(
-            //   width: 5,
-            // ),
-            // Icon(
-            //   Icons.report,
-            //   size: 33,
-            //   color: Colors.red,
-            // ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                RaisedButton(
-                    child: Text(" Admin ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        )),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
-                    color: appPrimaryMaterialColor,
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          PageTransition(
-                              child: AdminDashboard(),
-                              type: PageTransitionType.bottomToTop));
-                    }),
-                RaisedButton(
-                    child: Text("Member",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        )),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
-                    color: appPrimaryMaterialColor,
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          PageTransition(
-                              child: UserDashboard(),
-                              type: PageTransitionType.bottomToTop));
-                    }),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//
+// class ShowDialog2 extends StatefulWidget {
+//   @override
+//   _ShowDialog2State createState() => _ShowDialog2State();
+// }
+//
+// class _ShowDialog2State extends State<ShowDialog2> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: AlertDialog(
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.all(
+//             Radius.circular(10.0),
+//           ),
+//         ),
+//         title: Row(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Text(
+//               'Login As Admin/Member',
+//               style: TextStyle(
+//                 fontSize: 16,
+//                 fontWeight: FontWeight.bold,
+//                 color: appPrimaryMaterialColor,
+//               ),
+//             ),
+//             // SizedBox(
+//             //   width: 5,
+//             // ),
+//             // Icon(
+//             //   Icons.report,
+//             //   size: 33,
+//             //   color: Colors.red,
+//             // ),
+//           ],
+//         ),
+//         content: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             SizedBox(
+//               height: 20,
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceAround,
+//               children: [
+//                 RaisedButton(
+//                     child: Text(" Admin ",
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: 17,
+//                         )),
+//                     shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(6)),
+//                     color: appPrimaryMaterialColor,
+//                     onPressed: () {
+//                       Navigator.pushReplacement(
+//                           context,
+//                           PageTransition(
+//                               child: AdminDashboard(),
+//                               type: PageTransitionType.bottomToTop));
+//                     }),
+//                 RaisedButton(
+//                     child: Text("Member",
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: 17,
+//                         )),
+//                     shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(6)),
+//                     color: appPrimaryMaterialColor,
+//                     onPressed: () {
+//                       Navigator.pushReplacement(
+//                           context,
+//                           PageTransition(
+//                               child: UserDashboard(),
+//                               type: PageTransitionType.bottomToTop));
+//                     }),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

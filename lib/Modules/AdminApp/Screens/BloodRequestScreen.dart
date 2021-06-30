@@ -8,6 +8,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 
 class BloodRequestScreen extends StatefulWidget {
   @override
@@ -89,61 +90,74 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
       ),
-      body: Stack(
-        children: [
-          isLoading == true
-              ? Center(
-                  child: CircularProgressIndicator(
-                    // backgroundColor: Colors.red,
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        appPrimaryMaterialColor),
-                  ),
-                )
-              : bloodRequestList.length > 0
-                  ? ListView.builder(
-                      itemCount: bloodRequestList.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.only(
-                          right: 5,
-                          left: 5,
-                        ),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: BloodRequestComponent(
-                            BloodDataApi: () {
-                              _getAllBloodRequest();
-                            },
-                            BloodDataList: bloodRequestList[index],
+      body: RefreshIndicator(
+        onRefresh: () {
+          return _getAllBloodRequest();
+        },
+        color: appPrimaryMaterialColor,
+        child: Stack(
+          children: [
+            isLoading == true
+                ? Center(
+                    child: CircularProgressIndicator(
+                      //backgroundColor: Color(0xFFFF4F4F),
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          appPrimaryMaterialColor),
+                    ),
+                  )
+                : bloodRequestList.length > 0
+                    ? ListView.builder(
+                        itemCount: bloodRequestList.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(
+                            right: 5,
+                            left: 5,
+                          ),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: BloodRequestComponent(
+                              BloodDataApi: () {
+                                _getAllBloodRequest();
+                              },
+                              BloodDataList: bloodRequestList[index],
+                            ),
                           ),
                         ),
+                      )
+                    : Center(
+                        child: Text("No Blood Request Found"),
                       ),
-                    )
-                  : Center(
-                      child: Text("No Blood Request Found"),
-                    ),
-          Positioned(
-            bottom: 30,
-            right: 10,
-            child: FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: BloodRequestSubScreen(
-                          getBloodReqData: () {
-                            _getAllBloodRequest();
-                          },
-                        ),
-                        type: PageTransitionType.rightToLeft));
-                setState(() {});
-              },
-              icon: Icon(Icons.add),
-              label: Text("Add Request"),
+            Positioned(
+              bottom: 30,
+              right: 10,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: BloodRequestSubScreen(
+                            getBloodReqData: () {
+                              _getAllBloodRequest();
+                            },
+                          ),
+                          type: PageTransitionType.fade));
+                  setState(() {});
+                },
+                icon: Icon(Icons.add),
+                label: Text("Add Request"),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
+
     );
   }
 }
@@ -186,6 +200,10 @@ class _BloodRequestComponentState extends State<BloodRequestComponent> {
             widget.BloodDataApi();
             Fluttertoast.showToast(
               msg: "Your BloodRequest Deleted Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
           } else {
             print(responseData);
@@ -285,7 +303,7 @@ class _BloodRequestComponentState extends State<BloodRequestComponent> {
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.17,
+                width: MediaQuery.of(context).size.width * 0.13,
               ),
               IconButton(
                 icon: Icon(Icons.info),
@@ -409,7 +427,7 @@ class _ShowDialogState extends State<ShowDialog> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Respose to Blood Request',
+              'Response to Blood Request',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -426,79 +444,81 @@ class _ShowDialogState extends State<ShowDialog> {
             // ),
           ],
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            MyTextFormField(
-                controller: txtDonarName,
-                lable: "Donar Name",
-                validator: (val) {
-                  if (val.isEmpty) {
-                    return "Please Enter Donar Name";
-                  }
-                  return "";
-                },
-                hintText: "Enter Donar Name"),
-            SizedBox(
-              height: 3,
-            ),
-            MyTextFormField(
-                controller: txtDonarEmail,
-                lable: "Donar Email",
-                validator: (val) {
-                  if (val.isEmpty) {
-                    return "Please Enter Donar Email";
-                  }
-                  return "";
-                },
-                hintText: "Enter Donar Email"),
-            SizedBox(
-              height: 3,
-            ),
-            MyTextFormField(
-                controller: txtDonarMoNo,
-                lable: "Donar Contect No",
-                validator: (val) {
-                  if (val.isEmpty) {
-                    return "Please Enter Donar Contect No";
-                  }
-                  return "";
-                },
-                hintText: "Enter Donar Contect No"),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                RaisedButton(
-                    child: Text("Cancel",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        )),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
-                    color: Colors.red[400].withOpacity(0.9),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      print("Cancel");
-                    }),
-                RaisedButton(
-                    child: Text("Submit",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        )),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
-                    color: Colors.green[400],
-                    onPressed: () {
-                      _responseBloodRequest();
-                    }),
-              ],
-            ),
-          ],
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MyTextFormField(
+                  controller: txtDonarName,
+                  lable: "Donar Name",
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Please Enter Donar Name";
+                    }
+                    return "";
+                  },
+                  hintText: "Enter Donar Name"),
+              SizedBox(
+                height: 3,
+              ),
+              MyTextFormField(
+                  controller: txtDonarEmail,
+                  lable: "Donar Email",
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Please Enter Donar Email";
+                    }
+                    return "";
+                  },
+                  hintText: "Enter Donar Email"),
+              SizedBox(
+                height: 3,
+              ),
+              MyTextFormField(
+                  controller: txtDonarMoNo,
+                  lable: "Donar Contect No",
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return "Please Enter Donar Contect No";
+                    }
+                    return "";
+                  },
+                  hintText: "Enter Donar Contect No"),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  RaisedButton(
+                      child: Text("Cancel",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                          )),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6)),
+                      color: Colors.red[400].withOpacity(0.9),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        print("Cancel");
+                      }),
+                  RaisedButton(
+                      child: Text("Submit",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                          )),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6)),
+                      color: Colors.green[400],
+                      onPressed: () {
+                        _responseBloodRequest();
+                      }),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -568,8 +588,10 @@ class _BloodRequestSubScreenState extends State<BloodRequestSubScreen> {
             widget.getBloodReqData();
             Fluttertoast.showToast(
               msg: "Your Blood Request Add Successfully ",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
           } else {
@@ -616,7 +638,7 @@ class _BloodRequestSubScreenState extends State<BloodRequestSubScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               }),
-          title: Text("Blood Request"),
+          title: Text("Add Blood Request"),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -732,6 +754,8 @@ class _BloodRequestSubScreenState extends State<BloodRequestSubScreen> {
               ),
             ),
           ),
-        ));
+        ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
+    );
   }
 }

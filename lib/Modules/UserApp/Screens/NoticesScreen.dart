@@ -6,6 +6,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/BottomNavigationBarCustom.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/NoticesComponent.dart';
 
 class NoticesScreen extends StatefulWidget {
@@ -14,11 +15,9 @@ class NoticesScreen extends StatefulWidget {
 }
 
 class _NoticesScreenState extends State<NoticesScreen> {
+  List noticesList = [];
 
-  List noticesList=[];
-
-  bool  isSLoading = false;
-
+  bool isSLoading = false;
 
   @override
   void initState() {
@@ -34,42 +33,52 @@ class _NoticesScreenState extends State<NoticesScreen> {
           "Notice Board",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body:
-      isSLoading==true?
-      Center(
-        child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(
-              appPrimaryMaterialColor),
-        ),
-      )
-          :ListView.builder(
-          padding: EdgeInsets.only(bottom: 15),
-          shrinkWrap: true,
-          itemCount: noticesList.length,
-          itemBuilder: (context, index) {
-            return NoticesComponent(
-              noticeData: noticesList[index],
-            );
-          }),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return _getAllSocietyNotice();
+        },
+        color: appPrimaryMaterialColor,
+        child: isSLoading == true
+            ? Center(
+                child: CircularProgressIndicator(
+                  valueColor:
+                      new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+                ),
+              )
+            : ListView.builder(
+                padding: EdgeInsets.only(bottom: 15),
+                shrinkWrap: true,
+                itemCount: noticesList.length,
+                itemBuilder: (context, index) {
+                  return NoticesComponent(
+                    noticeData: noticesList[index],
+                  );
+                }),
+      ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
     );
   }
+
   _getAllSocietyNotice() async {
     try {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        var body = {
-          "societyId": "${sharedPrefs.societyId}"
-        };
+        var body = {"societyId": "${sharedPrefs.societyId}"};
         setState(() {
           isSLoading = true;
         });
         Services.responseHandler(
-            apiName: "api/admin/getSocietyNotice", body: body)
+                apiName: "api/admin/getSocietyNotice", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);

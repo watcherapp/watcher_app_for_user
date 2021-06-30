@@ -6,6 +6,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddPollingQuestion.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/BottomNavigationBarCustom.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/PollingComponent.dart';
 
 class PollingScreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _PollingScreenState extends State<PollingScreen> {
         };
         print("$body");
         Services.responseHandler(
-                apiName: "api/member/getAllPollingQuestion", body: body)
+                apiName: "api/admin/getAllPollingQuestion", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             setState(() {
@@ -86,37 +87,50 @@ class _PollingScreenState extends State<PollingScreen> {
             "Polling",
             style: TextStyle(fontFamily: 'Montserrat'),
           ),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
           centerTitle: true,
           elevation: 0,
           backgroundColor: appPrimaryMaterialColor,
         ),
-        body: Stack(
-          children: [
-            isLoading
-                ? Center(
-                    child: CircularProgressIndicator(
-                      valueColor: new AlwaysStoppedAnimation<Color>(
-                          appPrimaryMaterialColor),
-                    ),
-                  )
-                : pollingDataList.length == 0
-                    ? Center(
-                        child: Text("No Pollings Found"),
-                      )
-                    : ListView.builder(
-                        padding: EdgeInsets.only(bottom: 15),
-                        shrinkWrap: true,
-                        itemCount: pollingDataList.length,
-                        itemBuilder: (context, index) {
-                          return PollingComponent(
-                            index: index + 1,
-                            pollingData: pollingDataList[index],
-                            getPollingApi: () {
-                              _getAllPollings();
-                            },
-                          );
-                        }),
-          ],
-        ));
+        body: RefreshIndicator(
+          onRefresh: () {
+            return _getAllPollings();
+          },
+          color: appPrimaryMaterialColor,
+          child: Stack(
+            children: [
+              isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            appPrimaryMaterialColor),
+                      ),
+                    )
+                  : pollingDataList.length == 0
+                      ? Center(
+                          child: Text("No Pollings Found"),
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.only(bottom: 15),
+                          shrinkWrap: true,
+                          itemCount: pollingDataList.length,
+                          itemBuilder: (context, index) {
+                            return PollingComponent(
+                              index: index + 1,
+                              pollingData: pollingDataList[index],
+                              getPollingApi: () {
+                                _getAllPollings();
+                              },
+                            );
+                          }),
+            ],
+          ),
+        ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
+    );
   }
 }

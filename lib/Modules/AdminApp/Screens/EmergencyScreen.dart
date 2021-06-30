@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/EmergencyComponent.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddEmergencyScreen.dart';
 
@@ -153,53 +154,60 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: Stack(
-        children: [
-          isLoading == true
-              ? Center(
-                  child: CircularProgressIndicator(
-                  // backgroundColor: Colors.red,
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                      appPrimaryMaterialColor),
-                ))
-              : allEmergencyList.length > 0
-                  ? ListView.builder(
-                      padding: EdgeInsets.only(top: 5, bottom: 18),
-                      scrollDirection: Axis.vertical,
-                      itemCount: allEmergencyList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return EmergencyComponent(
-                          allEmergencyList: allEmergencyList[index],
-                          GetEmergencyApi: () {
-                            _getAllEmergency();
-                          },
-                        );
-                      })
-                  : Center(
-                      child: Text("No Emergency Found"),
-                    ),
-          Positioned(
-            bottom: 30,
-            right: 10,
-            child: FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: AddEmergencyScreen(
-                          getAllEmergency: () {
-                            _getAllEmergency();
-                          },
-                        ),
-                        type: PageTransitionType.rightToLeft));
-                setState(() {});
-              },
-              icon: Icon(Icons.add),
-              label: Text("Add Emergency"),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return _getAllEmergency();
+        },
+        color: appPrimaryMaterialColor,
+        child: Stack(
+          children: [
+            isLoading == true
+                ? Center(
+                    child: CircularProgressIndicator(
+                    //backgroundColor: Color(0xFFFF4F4F),
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                        appPrimaryMaterialColor),
+                  ))
+                : allEmergencyList.length > 0
+                    ? ListView.builder(
+                        padding: EdgeInsets.only(top: 5, bottom: 18),
+                        scrollDirection: Axis.vertical,
+                        itemCount: allEmergencyList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return EmergencyComponent(
+                            allEmergencyList: allEmergencyList[index],
+                            GetEmergencyApi: () {
+                              _getAllEmergency();
+                            },
+                          );
+                        })
+                    : Center(
+                        child: Text("No Emergency Found"),
+                      ),
+            Positioned(
+              bottom: 30,
+              right: 10,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: AddEmergencyScreen(
+                            getAllEmergency: () {
+                              _getAllEmergency();
+                            },
+                          ),
+                          type: PageTransitionType.fade));
+                  setState(() {});
+                },
+                icon: Icon(Icons.add),
+                label: Text("Add Emergency"),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
 
       // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       // floatingActionButton: Padding(

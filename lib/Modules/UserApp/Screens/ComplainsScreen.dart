@@ -12,6 +12,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/BottomNavigationBarCustom.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Components/ComplainComponent.dart';
 
 class ComplainsScreen extends StatefulWidget {
@@ -105,52 +106,59 @@ class _ComplainsScreenState extends State<ComplainsScreen> {
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: Stack(
-        children: [
-          isLoading == true
-              ? Center(
-              child: CircularProgressIndicator(
-                // backgroundColor: Colors.red,
-                valueColor:
-                new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
-              ))
-              : getAllComplaintList.length == 0
-              ? Center(
-            child: Text("No Complaints Found"),
-          )
-              : ListView.builder(
-              padding: EdgeInsets.only(top: 5, bottom: 18),
-              scrollDirection: Axis.vertical,
-              itemCount: getAllComplaintList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ComplainComponent(
-                  getAllComplain: getAllComplaintList[index],
-                  getComplaindApi: () {
-                    _getAllComplains();
-                  },
-                );
-              }),
-          Positioned(
-            bottom: 30,
-            right: 30,
-            child: FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: AddNewComplainScreen(
-                          getAllComplainsApi: (){
-                            _getAllComplains();
-                          },
-                        ),
-                        type: PageTransitionType.rightToLeft));
-              },
-              icon: Icon(Icons.add),
-              label: Text("Add Complain"),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return _getAllComplains();
+        },
+        color: appPrimaryMaterialColor,
+        child: Stack(
+          children: [
+            isLoading == true
+                ? Center(
+                child: CircularProgressIndicator(
+                  //backgroundColor: Color(0xFFFF4F4F),
+                  valueColor:
+                  new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+                ))
+                : getAllComplaintList.length == 0
+                ? Center(
+              child: Text("No Complaints Found"),
+            )
+                : ListView.builder(
+                padding: EdgeInsets.only(top: 5, bottom: 18),
+                scrollDirection: Axis.vertical,
+                itemCount: getAllComplaintList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ComplainComponent(
+                    getAllComplain: getAllComplaintList[index],
+                    getComplaindApi: () {
+                      _getAllComplains();
+                    },
+                  );
+                }),
+            Positioned(
+              bottom: 30,
+              right: 30,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: AddNewComplainScreen(
+                            getAllComplainsApi: (){
+                              _getAllComplains();
+                            },
+                          ),
+                          type: PageTransitionType.fade));
+                },
+                icon: Icon(Icons.add),
+                label: Text("Add Complain"),
+              ),
             ),
-          ),
-        ],
-      )
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
     );
   }
 }
@@ -208,6 +216,10 @@ class _AddNewComplainScreenState extends State<AddNewComplainScreen> {
             widget.getAllComplainsApi();
             Fluttertoast.showToast(
               msg: "Your Complain added Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
             setState(() {
@@ -389,7 +401,16 @@ class _AddNewComplainScreenState extends State<AddNewComplainScreen> {
                   MyButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        _addNewComplain();
+                        if (_image != null) {
+                          _addNewComplain();
+                        }else{
+                          Fluttertoast.showToast(
+                            gravity: ToastGravity.TOP,
+                            textColor: Colors.white,
+                           backgroundColor: Color(0xFFFF4F4F),
+                            msg: "Please Attach Complain Photo",
+                          );
+                        }
                       }
                     },
                     title:
@@ -408,6 +429,7 @@ class _AddNewComplainScreenState extends State<AddNewComplainScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
     );
   }
 }

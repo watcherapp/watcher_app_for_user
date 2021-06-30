@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:watcher_app_for_user/CommonWidgets/DialogOpenFormField.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Dialogs/MyDropdown.dart';
 
 class UpdateMemberProfile extends StatefulWidget {
   List profileData;
@@ -28,9 +31,53 @@ class _UpdateMemberProfileState extends State<UpdateMemberProfile> {
   TextEditingController txtMName = new TextEditingController();
   TextEditingController txtLName;
   TextEditingController txtAlterMoNo = new TextEditingController();
+  DateTime txtDob;
+  var fromDate = DateFormat('dd / MM / yyyy');
+  var fromDate2 = DateFormat('dd/MM/yyyy');
+
+  showToDatePickerG(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: widget.profileData[0]["dateOfBirth"] == null
+            ? DateTime.now()
+            : txtDob,
+        firstDate: DateTime(1910),
+        lastDate: DateTime(2121));
+
+    if (picked != null && picked != txtDob)
+      setState(() {
+        txtDob = picked;
+      });
+  }
+
+  String dateData;
+  String mydate;
+
+  String funDateI() {
+    dateData = "${widget.profileData[0]["dateOfBirth"]}";
+    print(dateData);
+    var date_date = dateData.split('/');
+
+    mydate = date_date[2] + "-" + date_date[1] + "-" + date_date[0];
+    print("I-->${mydate}");
+    txtDob = DateTime.parse(mydate);
+  }
 
   bool isLoading = false;
   String img;
+  List bloodGroupList = [
+    "A+",
+    "B+",
+    "AB+",
+    "O+",
+    "A-",
+    "B-",
+    "AB-",
+    "O-",
+  ];
+  String bloodGroup;
+  var today = new DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   @override
   void initState() {
@@ -38,7 +85,14 @@ class _UpdateMemberProfileState extends State<UpdateMemberProfile> {
         text: "${widget.profileData[0]["firstName"]}");
     txtLName =
         new TextEditingController(text: "${widget.profileData[0]["lastName"]}");
-
+    bloodGroup = "${widget.profileData[0]["bloodGroup"]}";
+    if (widget.profileData[0]["dateOfBirth"] != null) {
+      funDateI();
+    }
+    // txtDob = DateTime.parse("${widget.profileData[0]["dateOfBirth"]}");
+    // var fromDate3 = DateFormat('yyyy-MM-dd');
+    // var date = fromDate3.format(widget.profileData[0]["dateOfBirth"]);
+    // txtDob = DateTime.parse("2020-01-02 03:04:05");
   }
 
   File _image;
@@ -192,12 +246,14 @@ class _UpdateMemberProfileState extends State<UpdateMemberProfile> {
           "middleName": txtMName.text,
           "lastName": txtLName.text,
           "mobileNo2": txtAlterMoNo.text,
+          "bloodGroup": bloodGroup,
+          "dateOfBirth": fromDate2.format(txtDob),
           "memberImage": (filePath != null && filePath != '')
               ? await MultipartFile.fromFile(filePath,
-              filename: filename.toString())
+                  filename: filename.toString())
               : null,
         });
-        print("$formData");
+        print("${formData.fields}");
 
         Services.responseHandler(
                 apiName: "api/member/updateMemberDetails", body: formData)
@@ -207,6 +263,10 @@ class _UpdateMemberProfileState extends State<UpdateMemberProfile> {
             widget.myProfileFun();
             Fluttertoast.showToast(
               msg: "Your Profile Updated Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
             setState(() {
@@ -403,12 +463,147 @@ class _UpdateMemberProfileState extends State<UpdateMemberProfile> {
                       lable: "Alternative Mobile Number",
                       validator: (val) {
                         if (val.isEmpty) {
-                          return "Please Enter Last Name";
+                          return "Please Enter Alternative Mobile Number";
                         }
                         return "";
                       },
-                      hintText: "Enter last name"),
+                      hintText: "Enter Alternative Mobile Number"),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 0.0, right: 0, top: 20),
+                  child: DialogOpenFormField(
+                      lable: "Blood Group",
+                      hintLable: "Select Blood Group",
+                      value: bloodGroup,
+                      onTap: () {
+                        // print("click");
+                        FocusScope.of(context).unfocus();
+                        showDialog(
+                          context: context,
+                          builder: (context) => Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: MyDropDown(
+                              dropDownTitle: "Blood Group",
+                              dropDownData: bloodGroupList,
+                              isSearchable: false,
+                              onSelectValue: (value) {
+                                setState(() {
+                                  bloodGroup = value;
+                                });
+                              },
+                              // onSelectValue: ,
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+                // GestureDetector(
+                //   onTap: (){
+                //     showModalBottomSheet(
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(10.0),
+                //         ),
+                //         context: context,
+                //         builder: (builder) {
+                //           return Padding(
+                //             padding: const EdgeInsets.all(10.0),
+                //             child: CupertinoDatePicker(
+                //               minimumDate: today,
+                //               mode: CupertinoDatePickerMode.date,
+                //               // initialDateTime: DateTime(1969, 1, 1),
+                //               onDateTimeChanged: (DateTime newDateTime) {
+                //                 print("dateTime: ${newDateTime}");
+                //                 txtDob = newDateTime as TextEditingController;
+                //               },
+                //             ),
+                //           );
+                //         });
+                //     // Container(
+                //     //   height: 200,
+                //     //   child:
+                //     // );
+                //   },
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(top: 10.0),
+                //     child: MyTextFormField(
+                //         controller: txtDob,
+                //         lable: "Date of Birth",
+                //         validator: (val) {
+                //           if (val.isEmpty) {
+                //             return "Please Enter Date of Birth";
+                //           }
+                //           return "";
+                //         },
+                //         hintText: "Enter last name"),
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 0.0, top: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Date of Birth",
+                        style: fontConstants.formFieldLabel,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            showToDatePickerG(context);
+                            // showModalBottomSheet(
+                            //             shape: RoundedRectangleBorder(
+                            //               borderRadius: BorderRadius.circular(10.0),
+                            //             ),
+                            //             context: context,
+                            //             builder: (builder) {
+                            //               return Padding(
+                            //                 padding: const EdgeInsets.all(10.0),
+                            //                 child: CupertinoDatePicker(
+                            //                   // minimumDate: today,
+                            //                   mode: CupertinoDatePickerMode.date,
+                            //                   initialDateTime: DateTime(1969, 1, 1),
+                            //                   onDateTimeChanged: (DateTime newDateTime) {
+                            //                     txtDob = newDateTime;
+                            //                     print("dateTime: ${txtDob}");
+                            //                   },
+                            //                 ),
+                            //               );
+                            //             });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                color: Colors.grey[200]),
+                            height: 48,
+                            width: MediaQuery.of(context).size.width,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: txtDob != null
+                                    ? Text(
+                                        fromDate.format(txtDob),
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                        ),
+                                      )
+                                    : Text(
+                                        "Please Select Your Date of Birth",
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            fontSize: 13, color: Colors.grey),
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+
                 // Padding(
                 //   padding: const EdgeInsets.only(top: 10.0),
                 //   child: Row(

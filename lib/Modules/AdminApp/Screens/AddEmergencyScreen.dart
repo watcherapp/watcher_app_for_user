@@ -14,6 +14,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 
 class AddEmergencyScreen extends StatefulWidget {
   Function getAllEmergency;
@@ -34,6 +35,8 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
 
   TextEditingController txtName = new TextEditingController();
   TextEditingController txtNumber = new TextEditingController();
+
+  GlobalKey<FormState> _formKey = GlobalKey();
 
   // Future getFromCamera() async {
   //   var image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -170,6 +173,10 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
             widget.getAllEmergency();
             Fluttertoast.showToast(
               msg: "Your Emergency added Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
           } else {
@@ -214,6 +221,11 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
           "Add Emergency",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
@@ -221,141 +233,157 @@ class _AddEmergencyScreenState extends State<AddEmergencyScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: paddingConstant.authScreenContentPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MyTextFormField(
-                controller: txtName,
-                lable: "Emergency Name",
-                hintText: "Enter Emergency name",
-              ),
-              MyTextFormField(
-                controller: txtNumber,
-                lable: "Emergency Number",
-                hintText: "Enter Emergency number",
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Text(
-                  "Image",
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MyTextFormField(
+                  controller: txtName,
+                  lable: "Emergency Name",
+                  hintText: "Enter Emergency name",
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 12.0),
-                child: Container(
-                  height: 200,
-                  child: DottedBorder(
-                      color: Colors.grey,
-                      dashPattern: [4],
-                      padding: EdgeInsets.all(6.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          _showPicker(context);
-                        },
-                        child: Center(
-                          child: _image != null
-                              ? Container(
-                                  height: 200.0,
-                                  decoration: BoxDecoration(
-                                    // borderRadius: BorderRadius.circular(30),
-                                    shape: BoxShape.rectangle,
-                                    /* border: Border.all(
-                                        width: 0.2,
-                                        color: appPrimaryMaterialColor),*/
-                                    image: DecorationImage(
-                                        image: FileImage(
-                                          _image,
-                                        ),
-                                        fit: BoxFit.contain),
+                MyTextFormField(
+                  controller: txtNumber,
+                  lable: "Emergency Number",
+                  hintText: "Enter Emergency number",
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    "Image",
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: Container(
+                    height: 200,
+                    child: DottedBorder(
+                        color: Colors.grey,
+                        dashPattern: [4],
+                        padding: EdgeInsets.all(6.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            _showPicker(context);
+                          },
+                          child: Center(
+                            child: _image != null
+                                ? Container(
+                                    height: 200.0,
+                                    decoration: BoxDecoration(
+                                      // borderRadius: BorderRadius.circular(30),
+                                      shape: BoxShape.rectangle,
+                                      /* border: Border.all(
+                                          width: 0.2,
+                                          color: appPrimaryMaterialColor),*/
+                                      image: DecorationImage(
+                                          image: FileImage(
+                                            _image,
+                                          ),
+                                          fit: BoxFit.contain),
+                                    ),
+                                  )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset("images/id-card.png",
+                                          color: Colors.grey[300],
+                                          width: 40.0,
+                                          height: 40.0),
+                                      Text(
+                                        "Choose Image",
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
                                   ),
-                                )
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset("images/id-card.png",
-                                        color: Colors.grey[300],
-                                        width: 40.0,
-                                        height: 40.0),
-                                    Text(
-                                      "Choose Image",
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                ),
-                        ),
-                      )),
+                          ),
+                        )),
+                  ),
                 ),
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 12.0),
-              //   child: Container(
-              //     height: 200,
-              //     child: DottedBorder(
-              //         color: Colors.grey,
-              //         dashPattern: [4],
-              //         padding: EdgeInsets.all(6.0),
-              //         child: GestureDetector(
-              //           onTap: () {
-              //             _settingModalBottomSheet();
-              //           },
-              //           child: Center(
-              //             child: imagePath != null
-              //                 ? Container(
-              //                     height: 200.0,
-              //                     decoration: BoxDecoration(
-              //                       // borderRadius: BorderRadius.circular(30),
-              //                       shape: BoxShape.rectangle,
-              //                       /* border: Border.all(
-              //                           width: 0.2,
-              //                           color: appPrimaryMaterialColor),*/
-              //                       image: DecorationImage(
-              //                           image: FileImage(
-              //                             imagePath,
-              //                           ),
-              //                           fit: BoxFit.contain),
-              //                     ),
-              //                   )
-              //                 : Column(
-              //                     mainAxisAlignment: MainAxisAlignment.center,
-              //                     children: [
-              //                       Image.asset("images/id-card.png",
-              //                           color: Colors.grey[300],
-              //                           width: 40.0,
-              //                           height: 40.0),
-              //                       Text(
-              //                         "Choose Image",
-              //                         style: TextStyle(
-              //                             color: Colors.grey,
-              //                             fontWeight: FontWeight.w500),
-              //                       )
-              //                     ],
-              //                   ),
-              //           ),
-              //         )),
-              //   ),
-              // ),
-              SizedBox(
-                height: 70,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: MyButton(
-                  onPressed: () {
-                    _addEmergency();
-                  },
-                  title: "Add",
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 12.0),
+                //   child: Container(
+                //     height: 200,
+                //     child: DottedBorder(
+                //         color: Colors.grey,
+                //         dashPattern: [4],
+                //         padding: EdgeInsets.all(6.0),
+                //         child: GestureDetector(
+                //           onTap: () {
+                //             _settingModalBottomSheet();
+                //           },
+                //           child: Center(
+                //             child: imagePath != null
+                //                 ? Container(
+                //                     height: 200.0,
+                //                     decoration: BoxDecoration(
+                //                       // borderRadius: BorderRadius.circular(30),
+                //                       shape: BoxShape.rectangle,
+                //                       /* border: Border.all(
+                //                           width: 0.2,
+                //                           color: appPrimaryMaterialColor),*/
+                //                       image: DecorationImage(
+                //                           image: FileImage(
+                //                             imagePath,
+                //                           ),
+                //                           fit: BoxFit.contain),
+                //                     ),
+                //                   )
+                //                 : Column(
+                //                     mainAxisAlignment: MainAxisAlignment.center,
+                //                     children: [
+                //                       Image.asset("images/id-card.png",
+                //                           color: Colors.grey[300],
+                //                           width: 40.0,
+                //                           height: 40.0),
+                //                       Text(
+                //                         "Choose Image",
+                //                         style: TextStyle(
+                //                             color: Colors.grey,
+                //                             fontWeight: FontWeight.w500),
+                //                       )
+                //                     ],
+                //                   ),
+                //           ),
+                //         )),
+                //   ),
+                // ),
+                SizedBox(
+                  height: 70,
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: MyButton(
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        if (_image != null) {
+                          _addEmergency();
+                        }else{
+                          Fluttertoast.showToast(
+                            gravity: ToastGravity.TOP,
+                            textColor: Colors.white,
+                           backgroundColor: Color(0xFFFF4F4F),
+                            msg: "Please Attach Emergency Photo",
+                          );
+                        }
+                      }
+                    },
+                    title: "Add",
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
+
     );
   }
 }

@@ -168,7 +168,6 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
   //   }
   // }
 
-
   //this is not working
   _addFamilyMember() async {
     try {
@@ -186,7 +185,7 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
           "parentId": "${sharedPrefs.memberId}",
           "firstName": "${txtFirstame.text}",
           "lastName": txtLastname.text,
-          "relation" : txtRelation.text,
+          "relation": txtRelation.text,
           "mobileNo1": txtMobileNo.text,
           "emailId": txtEmailId.text,
           "gender": "${selectedGender}",
@@ -218,7 +217,10 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
             print(responseData.Data);
             print("sss");
             widget.memberApi();
-            Fluttertoast.showToast(msg: "Family Member Added Successfully");
+            Fluttertoast.showToast(msg: "Family Member Added Successfully", backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,);
             Navigator.pop(context);
             setState(() {
               isLoading = false;
@@ -526,7 +528,6 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
                     FocusScope.of(context).requestFocus(mobileNo);
                   },
                   hintText: "Enter Relation with Member",
-
                 ),
                 MyTextFormField(
                   controller: txtMobileNo,
@@ -577,7 +578,16 @@ class _AddFamilyMemberState extends State<AddFamilyMember> {
             focusNode: save,
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                _addFamilyMember();
+                if (_image != null) {
+                  _addFamilyMember();
+                }else{
+                  Fluttertoast.showToast(
+                    gravity: ToastGravity.TOP,
+                    textColor: Colors.white,
+                   backgroundColor: Color(0xFFFF4F4F),
+                    msg: "Please Attach Profile Photo",
+                  );
+                }
               }
             },
             title: "Save"),

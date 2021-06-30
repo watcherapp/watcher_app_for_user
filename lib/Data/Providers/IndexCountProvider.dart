@@ -9,6 +9,8 @@ class IndexCountProvider with ChangeNotifier {
   get bottomBarCurrentIndex => _bottomBarCurrentIndex;
   set bottomBarCurrentIndex(int index) {
     _bottomBarCurrentIndex = index;
+
+    print(_bottomBarCurrentIndex);
     notifyListeners();
   }
 
@@ -17,6 +19,7 @@ class IndexCountProvider with ChangeNotifier {
   get stepCurrentIndex => _stepCurrentIndex;
   set stepCurrentIndex(int index) {
     _stepCurrentIndex = index;
+    print(_stepCurrentIndex);
     notifyListeners();
   }
 

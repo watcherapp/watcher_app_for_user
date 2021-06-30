@@ -200,14 +200,14 @@ class _InviteGuestState extends State<InviteGuest> {
                   focusNode: emailId,
                   controller: txtEmailId,
                   textInputAction: TextInputAction.next,
-                  lable: "Email",
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "mobile number can't be empty";
-                    } else {
-                      return null;
-                    }
-                  },
+                  lable: "Email   ( optional )",
+                  // validator: (value) {
+                  //   if (value.isEmpty) {
+                  //     return "Email can't be empty";
+                  //   } else {
+                  //     return null;
+                  //   }
+                  // },
                   onFieldSubmitted: (term) {
                     emailId.unfocus();
                     FocusScope.of(context).requestFocus(save);
@@ -248,50 +248,50 @@ class _InviteGuestState extends State<InviteGuest> {
                         ),
                       )
                     : Padding(
-                  padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(8.0)),
-                    child: DropdownButtonHideUnderline(
-                      child: ButtonTheme(
-                        alignedDropdown: true,
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          value: selectedPurpose,
-                          iconSize: 30,
-                          icon: (null),
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 14,
+                        padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: DropdownButtonHideUnderline(
+                            child: ButtonTheme(
+                              alignedDropdown: true,
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                value: selectedPurpose,
+                                iconSize: 30,
+                                icon: (null),
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 14,
+                                ),
+                                hint: Text(
+                                  'Select Purpose Type',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 13),
+                                ),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    var locality = '';
+                                    selectedPurpose = newValue;
+                                    locality = newValue.toString();
+                                    print(selectedPurpose);
+                                  });
+                                },
+                                items: purposeList?.map((item) {
+                                      return new DropdownMenuItem(
+                                        child: new Text(item["purposeName"]),
+                                        value: item["_id"].toString(),
+                                      );
+                                    })?.toList() ??
+                                    [],
+                              ),
+                            ),
                           ),
-                          hint: Text(
-                            'Select Purpose Type',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontFamily: 'Montserrat',
-                                fontSize: 13),
-                          ),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              var locality = '';
-                              selectedPurpose = newValue;
-                              locality = newValue.toString();
-                              print(selectedPurpose);
-                            });
-                          },
-                          items: purposeList?.map((item) {
-                            return new DropdownMenuItem(
-                              child: new Text(item["purposeName"]),
-                              value: item["_id"].toString(),
-                            );
-                          })?.toList() ??
-                              [],
                         ),
                       ),
-                    ),
-                  ),
-                ),
                 //by megha...........................
                 // Padding(
                 //         padding: const EdgeInsets.only(left: 4.0, right: 4),
@@ -452,74 +452,76 @@ class _InviteGuestState extends State<InviteGuest> {
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Valid From",
-                              style: fontConstants.formFieldLabel),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                showFromDatePicker(context);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    color: Colors.grey[200]),
-                                height: 35,
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Center(
-                                    child: Text(
-                                  selectedFromDate != null
-                                      ? fromDate.format(selectedFromDate)
-                                      : "Select Date",
-                                )),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Valid To", style: fontConstants.formFieldLabel),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                showToDatePicker(context);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    color: Colors.grey[200]),
-                                height: 35,
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Center(
-                                  child: Text(
-                                    selectedToDate != null
-                                        ? toDate.format(selectedToDate)
-                                        : "Select Date",
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                //smit........................................
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Flexible(
+                //       child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Text("Valid From",
+                //               style: fontConstants.formFieldLabel),
+                //           Padding(
+                //             padding: const EdgeInsets.only(top: 8.0),
+                //             child: GestureDetector(
+                //               onTap: () {
+                //                 showFromDatePicker(context);
+                //               },
+                //               child: Container(
+                //                 decoration: BoxDecoration(
+                //                     borderRadius: BorderRadius.circular(8.0),
+                //                     color: Colors.grey[200]),
+                //                 height: 35,
+                //                 width: MediaQuery.of(context).size.width / 2,
+                //                 child: Center(
+                //                     child: Text(
+                //                   selectedFromDate != null
+                //                       ? fromDate.format(selectedFromDate)
+                //                       : "Select Date",
+                //                 )),
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       width: 20,
+                //     ),
+                //     Flexible(
+                //       child: Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Text("Valid To", style: fontConstants.formFieldLabel),
+                //           Padding(
+                //             padding: const EdgeInsets.only(top: 8.0),
+                //             child: GestureDetector(
+                //               onTap: () {
+                //                 showToDatePicker(context);
+                //               },
+                //               child: Container(
+                //                 decoration: BoxDecoration(
+                //                     borderRadius: BorderRadius.circular(8.0),
+                //                     color: Colors.grey[200]),
+                //                 height: 35,
+                //                 width: MediaQuery.of(context).size.width / 2,
+                //                 child: Center(
+                //                   child: Text(
+                //                     selectedToDate != null
+                //                         ? toDate.format(selectedToDate)
+                //                         : "Select Date",
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                //........................................................
                 /* SizedBox(
                   height: 20,
                 ),
@@ -570,9 +572,9 @@ class _InviteGuestState extends State<InviteGuest> {
 
                   ],
                 ),*/
-                SizedBox(
-                  height: 15,
-                ),
+                // SizedBox(
+                //   height: 15,
+                // ),
 
                 /*  Padding(
                   padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
@@ -649,8 +651,8 @@ class _InviteGuestState extends State<InviteGuest> {
       final internetResult = await InternetAddress.lookup('google.com');
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
-        print(dateFormate.format(selectedFromDate));
-        print(dateFormate.format(selectedToDate));
+        // print(dateFormate.format(selectedFromDate));
+        // print(dateFormate.format(selectedToDate));
         print(txtGuestName.text);
         print(txtNumOfGuest.text);
         print(txtEmailId.text);
@@ -665,8 +667,8 @@ class _InviteGuestState extends State<InviteGuest> {
         var body = {
           "memberId": "${sharedPrefs.memberId}",
           "societyId": "${sharedPrefs.societyId}",
-          "validFrom": "${dateFormate.format(selectedFromDate)}",
-          "validTo": "${dateFormate.format(selectedToDate)}",
+          // "validFrom": "${dateFormate.format(selectedFromDate)}",
+          // "validTo": "${dateFormate.format(selectedToDate)}",
           "purposeId": "${selectedPurpose}",
           "guestType": "${selectGuest}",
           "Name": "${txtGuestName.text}",
@@ -686,7 +688,13 @@ class _InviteGuestState extends State<InviteGuest> {
               isLoading = false;
             });
             widget.onSaved();
-            Fluttertoast.showToast(msg: "Guest Added Successfully");
+            Fluttertoast.showToast(
+              msg: "Guest Added Successfully",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity: ToastGravity.TOP,
+            );
             Navigator.pop(context);
           } else {
             print(responseData);
@@ -725,7 +733,13 @@ class _InviteGuestState extends State<InviteGuest> {
               purposeList = responseData.Data;
               isPurposeLoading = false;
             });
-            Fluttertoast.showToast(msg: "Purpose Added Successfully");
+            // Fluttertoast.showToast(
+            //   msg: "Purpose Added Successfully",
+            //   backgroundColor: Colors.green,
+            //   // backgroundColor: Color(0xFFFF4F4F),
+            //   textColor: Colors.white,
+            //   gravity: ToastGravity.TOP,
+            // );
             //Navigator.pop(context);
           } else {
             print(responseData);
@@ -733,7 +747,7 @@ class _InviteGuestState extends State<InviteGuest> {
               purposeList = responseData.Data;
               isPurposeLoading = false;
             });
-            Fluttertoast.showToast(msg: "Response ${responseData.Message}");
+            // Fluttertoast.showToast(msg: "Response ${responseData.Message}");
           }
         }).catchError((error) {
           setState(() {
@@ -765,7 +779,13 @@ class _InviteGuestState extends State<InviteGuest> {
               guestList = responseData.Data;
               isGuestType = false;
             });
-            Fluttertoast.showToast(msg: "Guest Type Added Successfully");
+            // Fluttertoast.showToast(
+            //   msg: "Guest Type Added Successfully",
+            //   backgroundColor: Colors.green,
+            //   // backgroundColor: Color(0xFFFF4F4F),
+            //   textColor: Colors.white,
+            //   gravity: ToastGravity.TOP,
+            // );
             //Navigator.pop(context);
           } else {
             print(responseData);
@@ -773,7 +793,7 @@ class _InviteGuestState extends State<InviteGuest> {
               guestList = responseData.Data;
               isGuestType = false;
             });
-            Fluttertoast.showToast(msg: "Response ${responseData.Message}");
+            // Fluttertoast.showToast(msg: "Response ${responseData.Message}");
           }
         }).catchError((error) {
           setState(() {

@@ -13,19 +13,23 @@ import 'package:watcher_app_for_user/Modules/CreateSociety/MyProperties.dart';
 class JoinNewFlatInSociety extends StatefulWidget {
   Function memberPropertyApi;
 
-  JoinNewFlatInSociety({this.memberPropertyApi,});
+  JoinNewFlatInSociety({
+    this.memberPropertyApi,
+  });
+
   @override
   _JoinNewFlatInSocietyState createState() => _JoinNewFlatInSocietyState();
 }
 
 class _JoinNewFlatInSocietyState extends State<JoinNewFlatInSociety> {
+  ScrollController controller = new ScrollController();
   bool isLoading = false;
   String wingId;
   String flatId;
   String flatStatus;
   int selectedW = -1;
   int selectedF = -1;
-  int selectedS = -1;
+  int selectedS = 3;
   List getAllWingList = [];
   List getAllFlatList = [];
   List dataList = [
@@ -55,7 +59,7 @@ class _JoinNewFlatInSocietyState extends State<JoinNewFlatInSociety> {
         };
         print("$body");
         Services.responseHandler(
-            apiName: "api/society/getAllWingsOfSociety", body: body)
+                apiName: "api/society/getAllWingsOfSociety", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             setState(() {
@@ -112,7 +116,7 @@ class _JoinNewFlatInSocietyState extends State<JoinNewFlatInSociety> {
         };
         print("$body");
         Services.responseHandler(
-            apiName: "api/society/getFlatsOfSocietyWing", body: body)
+                apiName: "api/society/getFlatsOfSocietyWing", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -185,8 +189,10 @@ class _JoinNewFlatInSocietyState extends State<JoinNewFlatInSociety> {
             widget.memberPropertyApi();
             Fluttertoast.showToast(
               msg: "You have successfully registered in new Flat",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity: ToastGravity.TOP,
             );
           } else {
             print(responseData);
@@ -287,14 +293,14 @@ class _JoinNewFlatInSocietyState extends State<JoinNewFlatInSociety> {
                             child: Align(
                               alignment: Alignment.center,
                               child:
-                              Text("${getAllWingList[index]["wingName"]}",
-                                  style: TextStyle(
-                                    color: selectedW == index
-                                        ? Colors.white
-                                        : appPrimaryMaterialColor,
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
-                                  )),
+                                  Text("${getAllWingList[index]["wingName"]}",
+                                      style: TextStyle(
+                                        color: selectedW == index
+                                            ? Colors.white
+                                            : appPrimaryMaterialColor,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 16,
+                                      )),
                             ),
                           ),
                         ),
@@ -355,7 +361,8 @@ class _JoinNewFlatInSocietyState extends State<JoinNewFlatInSociety> {
                                   color: dataList[index]["Color"],
                                   borderRadius: BorderRadius.circular(4.0),
                                   border: Border.all(
-                                    color: Colors.white, //                   <--- border color
+                                    color: Colors.white,
+                                    //                   <--- border color
                                     width: 1.0,
                                   ),
                                 ),
@@ -392,68 +399,81 @@ class _JoinNewFlatInSocietyState extends State<JoinNewFlatInSociety> {
           // FlatStatusColorsWithLabel(),
           isLoading
               ? Padding(
-            padding: const EdgeInsets.only(top: 100),
-            child: Center(
-              child: CircularProgressIndicator(
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                    appPrimaryMaterialColor),
-                //backgroundColor: Colors.white54,
-              ),
-            ),
-          )
-              : Container(
-            height: MediaQuery.of(context).size.height * 0.52,
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5),
-              itemBuilder: (_, index) => GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedF = index;
-                    flatId = getAllFlatList[index]["_id"];
-                    print("${getAllFlatList[index]["_id"]}");
-                  });
-                },
-                child: Container(
-                  width: 70,
-                  child: Card(
-                    color: selectedF == index
-                        ? appPrimaryMaterialColor
-                        : Colors.white,
+                  padding: const EdgeInsets.only(top: 100),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          appPrimaryMaterialColor),
+                      //backgroundColor: Colors.white54,
+                    ),
+                  ),
+                )
+              : Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Scrollbar(
+                    thickness: 3,
+                    isAlwaysShown: true,
+                    controller: controller,
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 8, left: 10, right: 10, bottom: 8),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text("${getAllFlatList[index]["flatNo"]}",
-                            style: TextStyle(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 5),
+                        itemBuilder: (_, index) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedF = index;
+                              flatId = getAllFlatList[index]["_id"];
+                              print("${getAllFlatList[index]["_id"]}");
+                            });
+                          },
+                          child: Container(
+                            width: 70,
+                            child: Card(
                               color: selectedF == index
-                                  ? Colors.white
-                                  : appPrimaryMaterialColor,
-                              fontFamily: 'Montserrat',
-                              fontSize: 16,
-                            )),
+                                  ? appPrimaryMaterialColor
+                                  : Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 8, left: 10, right: 10, bottom: 8),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text("${getAllFlatList[index]["flatNo"]}",
+                                      style: TextStyle(
+                                        color: selectedF == index
+                                            ? Colors.white
+                                            : appPrimaryMaterialColor,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 16,
+                                      )),
+                                ),
+                              ),
+                            ),
+                            // decoration: BoxDecoration(
+                            //   color: selectedF == index
+                            //       ? appPrimaryMaterialColor
+                            //       : Colors.white,
+                            //   borderRadius: BorderRadius.circular(10),
+                            // ),
+                          ),
+                          // child: FlatSelactionComponent2(
+                          //   floorData: getAllFlatList[index],
+                          //   onChange: () {
+                          //
+                          //   },
+                          // ),
+                        ),
+                        // itemCount: 8,
+                        itemCount: getAllFlatList.length,
                       ),
                     ),
                   ),
-                  // decoration: BoxDecoration(
-                  //   color: selectedF == index
-                  //       ? appPrimaryMaterialColor
-                  //       : Colors.white,
-                  //   borderRadius: BorderRadius.circular(10),
-                  // ),
                 ),
-                // child: FlatSelactionComponent2(
-                //   floorData: getAllFlatList[index],
-                //   onChange: () {
-                //
-                //   },
-                // ),
               ),
-              // itemCount: 8,
-              itemCount: getAllFlatList.length,
-            ),
-          ),
           // Padding(
           //   padding: const EdgeInsets.all(8.0),
           //   child: MyButton(
@@ -469,7 +489,30 @@ class _JoinNewFlatInSocietyState extends State<JoinNewFlatInSociety> {
         padding: const EdgeInsets.only(bottom: 8.0, right: 8.0, left: 8.0),
         child: MyButton(
             onPressed: () {
-              _joinSociety();
+              if (wingId == null) {
+                Fluttertoast.showToast(
+                  gravity: ToastGravity.TOP,
+                  textColor: Colors.white,
+                  backgroundColor: Color(0xFFFF4F4F),
+                  msg: "Please Select Wing of Society.",
+                );
+              } else if (flatId == null) {
+                Fluttertoast.showToast(
+                  gravity: ToastGravity.TOP,
+                  textColor: Colors.white,
+                  backgroundColor: Color(0xFFFF4F4F),
+                  msg: "Please Select Flat of Society.",
+                );
+              } else if (flatStatus == null) {
+                Fluttertoast.showToast(
+                  gravity: ToastGravity.TOP,
+                  textColor: Colors.white,
+                  backgroundColor: Color(0xFFFF4F4F),
+                  msg: "Please Select Residence type.",
+                );
+              } else {
+                _joinSociety();
+              }
             },
             title: "Select"),
       ),

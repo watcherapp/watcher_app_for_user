@@ -9,6 +9,7 @@ import 'package:flutter/rendering.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/BottomNavigationBarCustom.dart';
 
 class GetPass extends StatefulWidget {
   var myGuestData;
@@ -46,223 +47,236 @@ class _GetPassState extends State<GetPass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: appPrimaryMaterialColor,
+        ),
         body: RepaintBoundary(
           key: _containerKey,
           child: Container(
+            height: MediaQuery.of(context).size.height,
             color: appPrimaryMaterialColor,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FlutterTicketWidget(
-                    isCornerRounded: true,
-                    width: MediaQuery.of(context).size.width,
-                    height: 510,
-                    child: Column(
-                      children: [
-                        Container(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "GATE PASS",
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      color: appPrimaryMaterialColor,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 1,
-                                color: Colors.grey[200],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              QrImage(
-                                data: '${widget.myGuestData["entryNo"]}',
-                                version: 1,
-                                size: 150,
-                                gapless: false,
-                                errorStateBuilder: (cxt, err) {
-                                  return Container(
-                                    child: Center(
-                                      child: Text(
-                                        "Uh oh! Something went wrong...",
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              DottedBorder(
-                                  dashPattern: [4],
-                                  padding: EdgeInsets.all(6.0),
-                                  child: Text(
-                                    "${widget.myGuestData["entryNo"]}",
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        color: appPrimaryMaterialColor,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 3),
-                                  )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  text:
-                                      "${widget.myGuestData["MemberData"][0]["firstName"]}  ${widget.myGuestData["MemberData"][0]["lastName"]}\n${widget.myGuestData["WingData"][0]["wingName"]}-${widget.myGuestData["FlatData"][0]["flatNo"]}\n",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: appPrimaryMaterialColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Montserrat'),
-                                  children: [
-                                    TextSpan(
-                                        text: 'has invited you',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.normal,
-                                            fontFamily: 'Montserrat')),
-                                  ],
-                                ),
-                              ),
-                              Divider(
-                                endIndent: 10,
-                                indent: 10,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FlutterTicketWidget(
+                      isCornerRounded: true,
+                      width: MediaQuery.of(context).size.width,
+                      height: 510,
+                      child: Column(
+                        children: [
+                          Container(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text("Valid From",
-                                            style: fontConstants.labelFonts),
-                                        Text(
-                                          "${widget.myGuestData["validFrom"]}",
-                                          style: fontConstants.valueFonts,
-                                        ),
-                                        Text(
-                                          "12 AM",
-                                          style: fontConstants.activeFonts,
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text("Valid to",
-                                            style: fontConstants.labelFonts),
-                                        Text(
-                                          "${widget.myGuestData["validTo"]}",
-                                          style: fontConstants.valueFonts,
-                                        ),
-                                        Text(
-                                          "12 AM",
-                                          style: fontConstants.activeFonts,
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Image.asset(
-                                  "images/Watcherlogo.png",
-                                  width: 60,
-                                ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(
-                                      text: "Please show this",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey,
-                                          fontFamily: 'Montserrat'),
-                                      children: [
-                                        TextSpan(
-                                            text: " QR Code ",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold)),
-                                        TextSpan(
-                                          text:
-                                              "to Security Guard at the Society Gate for hassle free entry",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ],
-                                    ),
+                                  child: Text(
+                                    "GATE PASS",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        color: appPrimaryMaterialColor,
+                                        fontWeight: FontWeight.bold),
                                   ),
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 1,
+                                  color: Colors.grey[200],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                QrImage(
+                                  data: '${widget.myGuestData["entryNo"]}',
+                                  version: 1,
+                                  size: 150,
+                                  gapless: false,
+                                  errorStateBuilder: (cxt, err) {
+                                    return Container(
+                                      child: Center(
+                                        child: Text(
+                                          "Uh oh! Something went wrong...",
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                DottedBorder(
+                                    dashPattern: [4],
+                                    padding: EdgeInsets.all(6.0),
+                                    child: Text(
+                                      "${widget.myGuestData["entryNo"]}",
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          color: appPrimaryMaterialColor,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: 3),
+                                    )),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    text:
+                                        "${widget.myGuestData["MemberData"][0]["firstName"]}  ${widget.myGuestData["MemberData"][0]["lastName"]}\n${widget.myGuestData["WingData"][0]["wingName"]}-${widget.myGuestData["FlatData"][0]["flatNo"]}\n",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: appPrimaryMaterialColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat'),
+                                    children: [
+                                      TextSpan(
+                                          text: 'has invited you',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.normal,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
+                                ),
+                                Divider(
+                                  endIndent: 10,
+                                  indent: 10,
                                 ),
                               ],
                             ),
                           ),
-                        )
-                      ],
+                          Expanded(
+                            child: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text("Valid From",
+                                              style: fontConstants.labelFonts),
+                                          Text(
+                                            "${widget.myGuestData["validFrom"]}",
+                                            style: fontConstants.valueFonts,
+                                          ),
+                                          Text(
+                                            "12 AM",
+                                            style: fontConstants.activeFonts,
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text("Valid to",
+                                              style: fontConstants.labelFonts),
+                                          Text(
+                                            "${widget.myGuestData["validTo"]}",
+                                            style: fontConstants.valueFonts,
+                                          ),
+                                          Text(
+                                            "12 AM",
+                                            style: fontConstants.activeFonts,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  Image.asset(
+                                    "images/Watcherlogo.png",
+                                    width: 60,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        text: "Please show this",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                            fontFamily: 'Montserrat'),
+                                        children: [
+                                          TextSpan(
+                                              text: " QR Code ",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold)),
+                                          TextSpan(
+                                            text:
+                                                "to Security Guard at the Society Gate for hassle free entry",
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: appPrimaryMaterialColor,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: OutlineButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6)),
-              highlightedBorderColor: Colors.white,
-              borderSide: BorderSide(color: Colors.white, width: 1.5),
-              onPressed: () {
-                convertWidgetToImage();
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.share_sharp,
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text("Share",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16)),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: OutlineButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6)),
+                      highlightedBorderColor: Colors.white,
+                      borderSide: BorderSide(color: Colors.white, width: 1.5),
+                      onPressed: () {
+                        convertWidgetToImage();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.share_sharp,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Share",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16)),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
           ),
-        ));
+        ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
+    );
   }
 }
 

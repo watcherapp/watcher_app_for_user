@@ -46,8 +46,10 @@ class _InviteGuestComponentState extends State<InviteGuestComponent> {
             widget.invitedGuestApi();
             Fluttertoast.showToast(
               msg: "Your Invited Guest Deleted Successfully.",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
           } else {

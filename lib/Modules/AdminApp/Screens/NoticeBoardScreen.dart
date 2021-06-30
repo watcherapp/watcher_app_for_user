@@ -8,6 +8,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AddNewNoticeScreen.dart';
 
 class NoticeBoardScreen extends StatefulWidget {
@@ -97,157 +98,166 @@ class _NoticeBoardScreenState extends State<NoticeBoardScreen> {
           elevation: 0,
           backgroundColor: appPrimaryMaterialColor,
         ),
-        body: Stack(
-          children: [
-            isLoading
-                ? Center(
-                    child: CircularProgressIndicator(
-                      valueColor: new AlwaysStoppedAnimation<Color>(
-                          appPrimaryMaterialColor),
-                      //backgroundColor: Colors.white54,
-                    ),
-                  )
-                : noticeList.length > 0
-                    ? ListView.builder(
-                        itemCount: noticeList.length,
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.only(
-                            right: 5,
-                            left: 5,
-                          ),
-                          child: NoticesComponent(
-                            noticeData: noticeList[index],
-                            noticeApi: (){
-                              _getAllNotice();
-                            },
-                          ),
-                          // child: Card(
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(8.0),
-                          //     child: Column(
-                          //       crossAxisAlignment: CrossAxisAlignment.start,
-                          //       children: [
-                          //         Text(
-                          //           // "Swimming Pool",
-                          //           noticeList[index]["noticeTitle"],
-                          //           style: TextStyle(
-                          //             color: appPrimaryMaterialColor,
-                          //             fontWeight: FontWeight.bold,
-                          //             fontSize: 15,
-                          //           ),
-                          //         ),
-                          //         Divider(
-                          //           color: Colors.grey,
-                          //         ),
-                          //         Text(
-                          //           noticeList[index]["noticeDescription"],
-                          //           // "Notice about swimming pool which not clean from 1 week that it is hard to swim in that pool so do somthing about that",
-                          //           style: TextStyle(
-                          //             color: Colors.grey[600],
-                          //             fontWeight: FontWeight.bold,
-                          //             fontSize: 15,
-                          //           ),
-                          //         ),
-                          //         SizedBox(
-                          //           height: 10,
-                          //         ),
-                          //         GestureDetector(
-                          //           onTap: () {
-                          //             Navigator.push(
-                          //                 context,
-                          //                 PageTransition(
-                          //                     child: NoticeBoardSubScreen(
-                          //                       noticeData: noticeList[index],
-                          //                       AllNoticeApi: () {
-                          //                         _getAllNotice();
-                          //                       },
-                          //                     ),
-                          //                     type: PageTransitionType
-                          //                         .rightToLeft));
-                          //           },
-                          //           child: Container(
-                          //             width: 100,
-                          //             height: 35,
-                          //             decoration: BoxDecoration(
-                          //                 color: appPrimaryMaterialColor
-                          //                     .withOpacity(0.2),
-                          //                 borderRadius:
-                          //                     BorderRadius.circular(6.0)),
-                          //             child: Padding(
-                          //               padding: const EdgeInsets.all(8.0),
-                          //               child: Text(
-                          //                 " View More",
-                          //                 style: TextStyle(
-                          //                   color: appPrimaryMaterialColor,
-                          //                   fontSize: 14,
-                          //                   fontWeight: FontWeight.bold,
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //         // Padding(
-                          //         //   padding: const EdgeInsets.only(top: 10.0),
-                          //         //   child: SizedBox(
-                          //         //     width: 100,
-                          //         //     height: 35,
-                          //         //     child: RaisedButton(
-                          //         //       child: Text(
-                          //         //         "View More",
-                          //         //         style: TextStyle(
-                          //         //           color: Colors.white,
-                          //         //           fontSize: 12,
-                          //         //           fontWeight: FontWeight.bold,
-                          //         //         ),
-                          //         //       ),
-                          //         //       shape: RoundedRectangleBorder(
-                          //         //           borderRadius: BorderRadius.circular(6)),
-                          //         //       color: appPrimaryMaterialColor.withOpacity(0.8),
-                          //         //       onPressed: () {
-                          //         //         Navigator.push(
-                          //         //             context,
-                          //         //             PageTransition(
-                          //         //                 child: NoticeBoardSubScreen(
-                          //         //                   noticeData: noticeList[index],
-                          //         //                   AllNoticeApi: (){
-                          //         //                     _getAllNotice();
-                          //         //                   },
-                          //         //                 ),
-                          //         //                 type: PageTransitionType.rightToLeft));
-                          //         //       },
-                          //         //     ),
-                          //         //   ),
-                          //         // ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
-                        ),
-                      )
-                    : Center(
-                        child: Text("No Notice Found"),
+        body: RefreshIndicator(
+          onRefresh: () {
+            return _getAllNotice();
+          },
+          color: appPrimaryMaterialColor,
+          child: Stack(
+            children: [
+              isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            appPrimaryMaterialColor),
+                        //backgroundColor: Colors.white54,
                       ),
-            Positioned(
-              bottom: 30,
-              right: 30,
-              child: FloatingActionButton.extended(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          child: AddNewNoticeScreen(
-                            getAllNoticeApi: () {
-                              _getAllNotice();
-                            },
+                    )
+                  : noticeList.length > 0
+                      ? ListView.builder(
+                          itemCount: noticeList.length,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.only(
+                              right: 5,
+                              left: 5,
+                            ),
+                            child: NoticesComponent(
+                              noticeData: noticeList[index],
+                              noticeApi: (){
+                                _getAllNotice();
+                              },
+                            ),
+                            // child: Card(
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.all(8.0),
+                            //     child: Column(
+                            //       crossAxisAlignment: CrossAxisAlignment.start,
+                            //       children: [
+                            //         Text(
+                            //           // "Swimming Pool",
+                            //           noticeList[index]["noticeTitle"],
+                            //           style: TextStyle(
+                            //             color: appPrimaryMaterialColor,
+                            //             fontWeight: FontWeight.bold,
+                            //             fontSize: 15,
+                            //           ),
+                            //         ),
+                            //         Divider(
+                            //           color: Colors.grey,
+                            //         ),
+                            //         Text(
+                            //           noticeList[index]["noticeDescription"],
+                            //           // "Notice about swimming pool which not clean from 1 week that it is hard to swim in that pool so do somthing about that",
+                            //           style: TextStyle(
+                            //             color: Colors.grey[600],
+                            //             fontWeight: FontWeight.bold,
+                            //             fontSize: 15,
+                            //           ),
+                            //         ),
+                            //         SizedBox(
+                            //           height: 10,
+                            //         ),
+                            //         GestureDetector(
+                            //           onTap: () {
+                            //             Navigator.push(
+                            //                 context,
+                            //                 PageTransition(
+                            //                     child: NoticeBoardSubScreen(
+                            //                       noticeData: noticeList[index],
+                            //                       AllNoticeApi: () {
+                            //                         _getAllNotice();
+                            //                       },
+                            //                     ),
+                            //                     type: PageTransitionType
+                            //                         .rightToLeft));
+                            //           },
+                            //           child: Container(
+                            //             width: 100,
+                            //             height: 35,
+                            //             decoration: BoxDecoration(
+                            //                 color: appPrimaryMaterialColor
+                            //                     .withOpacity(0.2),
+                            //                 borderRadius:
+                            //                     BorderRadius.circular(6.0)),
+                            //             child: Padding(
+                            //               padding: const EdgeInsets.all(8.0),
+                            //               child: Text(
+                            //                 " View More",
+                            //                 style: TextStyle(
+                            //                   color: appPrimaryMaterialColor,
+                            //                   fontSize: 14,
+                            //                   fontWeight: FontWeight.bold,
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         // Padding(
+                            //         //   padding: const EdgeInsets.only(top: 10.0),
+                            //         //   child: SizedBox(
+                            //         //     width: 100,
+                            //         //     height: 35,
+                            //         //     child: RaisedButton(
+                            //         //       child: Text(
+                            //         //         "View More",
+                            //         //         style: TextStyle(
+                            //         //           color: Colors.white,
+                            //         //           fontSize: 12,
+                            //         //           fontWeight: FontWeight.bold,
+                            //         //         ),
+                            //         //       ),
+                            //         //       shape: RoundedRectangleBorder(
+                            //         //           borderRadius: BorderRadius.circular(6)),
+                            //         //       color: appPrimaryMaterialColor.withOpacity(0.8),
+                            //         //       onPressed: () {
+                            //         //         Navigator.push(
+                            //         //             context,
+                            //         //             PageTransition(
+                            //         //                 child: NoticeBoardSubScreen(
+                            //         //                   noticeData: noticeList[index],
+                            //         //                   AllNoticeApi: (){
+                            //         //                     _getAllNotice();
+                            //         //                   },
+                            //         //                 ),
+                            //         //                 type: PageTransitionType.rightToLeft));
+                            //         //       },
+                            //         //     ),
+                            //         //   ),
+                            //         // ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                           ),
-                          type: PageTransitionType.rightToLeft));
-                },
-                icon: Icon(Icons.add),
-                label: Text("Add New Notice"),
+                        )
+                      : Center(
+                          child: Text("No Notice Found"),
+                        ),
+              Positioned(
+                bottom: 30,
+                right: 30,
+                child: FloatingActionButton.extended(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: AddNewNoticeScreen(
+                              getAllNoticeApi: () {
+                                _getAllNotice();
+                              },
+                            ),
+                            type: PageTransitionType.fade));
+                  },
+                  icon: Icon(Icons.add),
+                  label: Text("Add New Notice"),
+                ),
               ),
-            ),
-          ],
-        ));
+            ],
+          ),
+        ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
+
+    );
   }
 }
 
@@ -404,7 +414,7 @@ class _NoticesComponentState extends State<NoticesComponent> {
                                 },
                               ),
                               type: PageTransitionType
-                                  .rightToLeft));
+                                  .fade));
                     },
                     child: Container(
                       width: 100,
@@ -547,6 +557,10 @@ class _NoticeBoardSubScreenState extends State<NoticeBoardSubScreen> {
             widget.AllNoticeApi();
             Fluttertoast.showToast(
               msg: "Your Notice deleted Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
             setState(() {
@@ -627,18 +641,17 @@ class _NoticeBoardSubScreenState extends State<NoticeBoardSubScreen> {
               SizedBox(
                 height: 15,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.noticeData["noticeTitle"],
-                    style: TextStyle(
-                      color: appPrimaryMaterialColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  widget.noticeData["noticeTitle"],
+                  style: TextStyle(
+                    color: appPrimaryMaterialColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
-                ],
+                  textAlign: TextAlign.center,
+                ),
               ),
               Divider(
                 color: Colors.grey,

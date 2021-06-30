@@ -69,7 +69,10 @@ class _VendorComponentState extends State<VendorComponent> {
             .then((responseData) {
           if (responseData.Data != 0) {
             widget.onremove();
-            Fluttertoast.showToast(msg: "Category Deleted Successfully");
+            Fluttertoast.showToast(msg: "Category Deleted Successfully", backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,);
             setState(() {
               isDLoading = false;
             });

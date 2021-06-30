@@ -272,7 +272,10 @@ class _SetupWingsFinalStepState extends State<SetupWingsFinalStep> {
             Fluttertoast.showToast(
                 msg: "Wing Created Successfully !",
                 toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
+                backgroundColor: Colors.green,
+                // backgroundColor: Color(0xFFFF4F4F),
+                textColor: Colors.white,
+                gravity:ToastGravity.TOP,
                 fontSize: 16.0);
             Navigator.of(context).pushAndRemoveUntil(
                 PageTransition(

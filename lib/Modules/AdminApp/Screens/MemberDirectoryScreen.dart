@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:watcher_app_for_user/CommonWidgets/MyButton.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/MemberDirectoryComponent.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
@@ -96,6 +97,7 @@ class _MemberDirectoryScreenState extends State<MemberDirectoryScreen> {
           "wingId": wingId,
         };
         print("$body");
+        getAllWingMemberData.clear();
         Services.responseHandler(
                 apiName: "api/member/getWingMembers", body: body)
             .then((responseData) {
@@ -319,111 +321,31 @@ class _MemberDirectoryScreenState extends State<MemberDirectoryScreen> {
                     ),
                   ),
                 )
-              : Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 5,right: 5),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: (_, index) => Container(
-                      height: 120,
-                      child: MemberDirectoryComponent(
-                        memberData: getAllWingMemberData[index],
-                        memberDataApi: (){
-                          _getAllWingsMember();
-                        },
+              : getAllWingMemberData.length > 0
+                  ? Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (_, index) => Container(
+                            height: MediaQuery.of(context).size.height * 0.12,
+                            child: MemberDirectoryComponent(
+                              memberData: getAllWingMemberData[index],
+                              memberDataApi: () {
+                                _getAllWingsMember();
+                              },
+                            ),
+                          ),
+                          // itemCount: 8,
+                          itemCount: getAllWingMemberData.length,
+                        ),
                       ),
-                      // child: Card(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(5.0),
-                      //     child: Row(
-                      //       children: [
-                      //         SizedBox(
-                      //           width: 10,
-                      //         ),
-                      //         getAllWingMemberData[index]["memberImage"] ==
-                      //                     null ||
-                      //                 getAllWingMemberData[index]
-                      //                         ["memberImage"] ==
-                      //                     ""
-                      //             ? Image.asset(
-                      //                 'images/user.png',
-                      //                 width: 70,
-                      //                 height: 70,
-                      //               )
-                      //             : Padding(
-                      //                 padding:
-                      //                     const EdgeInsets.only(top: 3.0),
-                      //                 child: Container(
-                      //                   height: 70.0,
-                      //                   width: 70,
-                      //                   decoration: BoxDecoration(
-                      //                     // borderRadius: BorderRadius.circular(30),
-                      //                     color: Colors.white,
-                      //                     shape: BoxShape.circle,
-                      //                     border: Border.all(
-                      //                         width: 0.2,
-                      //                         color: appPrimaryMaterialColor),
-                      //                     image: DecorationImage(
-                      //                       image: NetworkImage(
-                      //                         API_URL +
-                      //                             getAllWingMemberData[index]
-                      //                                 ["memberImage"],
-                      //                       ),
-                      //                       fit: BoxFit.fill,
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //         SizedBox(
-                      //           width: 15,
-                      //         ),
-                      //         Column(
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           mainAxisAlignment: MainAxisAlignment.center,
-                      //           children: [
-                      //             Text(
-                      //               "${getAllWingMemberData[index]["firstName"]} ${getAllWingMemberData[index]["lastName"]}",
-                      //               style: TextStyle(
-                      //                   color: appPrimaryMaterialColor,
-                      //                   fontWeight: FontWeight.bold,
-                      //                   fontSize: 14),
-                      //             ),
-                      //             SizedBox(
-                      //               height: 5,
-                      //             ),
-                      //             Text(
-                      //                 "${getAllWingMemberData[index]["FlatData"][0]["flatNo"]}"),
-                      //             SizedBox(
-                      //               height: 2,
-                      //             ),
-                      //             Text(
-                      //                 '${getAllWingMemberData[index]["mobileNo1"]}'),
-                      //             SizedBox(
-                      //               height: 2,
-                      //             ),
-                      //             Text('Resident'),
-                      //           ],
-                      //         ),
-                      //         SizedBox(
-                      //           width: 105,
-                      //         ),
-                      //         IconButton(
-                      //           icon: Icon(Icons.message),
-                      //           iconSize: 25,
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                    ),
-                    // itemCount: 8,
-                    itemCount: getAllWingMemberData.length,
-                  ),
-                ),
-              ),
-          // Card(
+                    )
+                  : Center(
+                      child: Text("No Member Found"),
+                    ), // Card(
           //   child: Padding(
           //     padding: const EdgeInsets.all(5.0),
           //     child: ListTile(
@@ -463,6 +385,7 @@ class _MemberDirectoryScreenState extends State<MemberDirectoryScreen> {
           // ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
     );
   }
 }

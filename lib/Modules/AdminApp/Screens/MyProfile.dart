@@ -7,8 +7,12 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/UpdateProfile.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/SignIn.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/MyWacther.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Screens/UserHomeScreen.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/UserDashboard.dart';
 
 class MyProfile extends StatefulWidget {
   @override
@@ -111,8 +115,10 @@ class _MyProfileState extends State<MyProfile> {
             Fluttertoast.showToast(
               msg:
               "You are Logout Successfully",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
           } else {
             print(responseData);
@@ -140,9 +146,18 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leading: Container(),
+      appBar: AppBar(
+        leading: Container(),
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
+        // backgroundColor: Colors.white,
+        //   automaticallyImplyLeading: false,
+        //   elevation: 0.5,
+        //   centerTitle: true,
+        //   title: Text(
+        //     "Hey, " + "${sharedPrefs.memberName}",
+        //     style: TextStyle(color: Colors.black, fontSize: 17),
+        //   ),
         actions: [
           GestureDetector(
             onTap: () {
@@ -155,7 +170,7 @@ class _MyProfileState extends State<MyProfile> {
                           _getAllMemberData();
                         },
                       ),
-                      type: PageTransitionType.rightToLeft));
+                      type: PageTransitionType.fade));
             },
             child: Padding(
                 padding: const EdgeInsets.only(right: 13.0),
@@ -170,7 +185,7 @@ class _MyProfileState extends State<MyProfile> {
       body: isLoading == true
           ? Center(
               child: CircularProgressIndicator(
-                // backgroundColor: Colors.red,
+                //backgroundColor: Color(0xFFFF4F4F),
                 valueColor:
                     new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
               ),
@@ -220,7 +235,7 @@ class _MyProfileState extends State<MyProfile> {
                     ],
                   ),
                   color: appPrimaryMaterialColor,
-                  height: MediaQuery.of(context).size.height / 3.2,
+                  height: MediaQuery.of(context).size.height / 4.2,
                   width: MediaQuery.of(context).size.width,
                 ),
                 Padding(
@@ -343,6 +358,47 @@ class _MyProfileState extends State<MyProfile> {
                   ),
                 ),
                 GestureDetector(
+                  onTap: (){
+                    //smit...............
+                    // Navigator.pushReplacement(
+                    //     context,
+                    //     PageTransition(
+                    //         child: UserDashboard(),
+                    //         type: PageTransitionType.bottomToTop));
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            child: MyWatcher(),
+                            type: PageTransitionType.bottomToTop));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 6.0),
+                    child: ListTile(
+                      leading: Image.asset(
+                        "images/switch.png",
+                        width: 20,
+                        color: appPrimaryMaterialColor,
+                      ),
+                      title: Text(
+                        "Switch to Member",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Montserrat',
+                          fontSize: 14,
+                          // color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Divider(
+                    height: 0.5,
+                    color: Colors.grey,
+                  ),
+                ),
+                GestureDetector(
                   onTap: () {
                     _logOutMember();
                     // sharedPrefs.logout();
@@ -381,6 +437,7 @@ class _MyProfileState extends State<MyProfile> {
                 ),
               ],
             ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
     );
   }
 }

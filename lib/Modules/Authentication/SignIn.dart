@@ -72,19 +72,19 @@ class _SignInState extends State<SignIn> {
                       ),
                       // Email or Mobile Number
                       MyTextFormField(
-                          controller: txtEmailOrMobile,
-                          lable: "Mobile No or email",
-                          validator: validateEmail,
-                          hintText: "Enter mobile or email"),
-
+                        controller: txtEmailOrMobile,
+                        lable: "Mobile No or email",
+                        validator: validateEmail,
+                        hintText: "Enter mobile or email",
+                      ),
                       //Password FormField
-
                       MyTextFormField(
                         controller: txtPassword,
                         lable: "Password",
                         hintText: "Enter Password",
                         isPassword: password,
                         validator: validatePassword,
+                        maxLines: 1,
                         hideShowText: InkWell(
                           onTap: () {
                             setState(() {
@@ -183,21 +183,27 @@ class _SignInState extends State<SignIn> {
           PageTransition(
               child: MasterAdminDashboard(),
               type: PageTransitionType.leftToRight));
-    } else if (sessionData[0]["society"][0]["userRole"] == 0) {
-      print("---->${sessionData[0]["society"][0]["userRole"]}");
-      Navigator.pushReplacement(
-          context,
-          PageTransition(
-              child: MasterAdminDashboard(),
-              type: PageTransitionType.leftToRight));
-    } else if (sessionData[0]["society"][0]["userRole"] == 1) {
-      print("---->${sessionData[0]["society"][0]["userRole"]}");
-      Navigator.pushReplacement(
-          context,
-          PageTransition(
-              child: MyProperties(), type: PageTransitionType.leftToRight));
-    } else {
-      print("---->${sessionData[0]["society"][0]["userRole"]}");
+    }
+    //smit.................................
+
+    // else if (sessionData[0]["society"][0]["userRole"] == 0) {
+    //   print("---->${sessionData[0]["society"][0]["userRole"]}");
+    //   Navigator.pushReplacement(
+    //       context,
+    //       PageTransition(
+    //           child: MasterAdminDashboard(),
+    //           type: PageTransitionType.leftToRight));
+    // } else if (sessionData[0]["society"][0]["userRole"] == 1) {
+    //   print("---->${sessionData[0]["society"][0]["userRole"]}");
+    //   Navigator.pushReplacement(
+    //       context,
+    //       PageTransition(
+    //           child: MyProperties(), type: PageTransitionType.leftToRight));
+    // }
+
+    //..........................................
+    else {
+      // print("---->${sessionData[0]["society"][0]["userRole"]}");
       Navigator.pushReplacement(
           context,
           PageTransition(
@@ -228,15 +234,24 @@ class _SignInState extends State<SignIn> {
             _saveDataToSession(responseData.Data);
           } else {
             print(responseData);
+            print("s");
             LoadingIndicator.close(context);
-            Fluttertoast.showToast(msg: "${responseData.Message}");
+            Fluttertoast.showToast(
+              gravity: ToastGravity.TOP,
+              textColor: Colors.white,
+              backgroundColor: Color(0xFFFF4F4F),
+              msg: "${responseData.Message}",
+            );
+            // Fluttertoast.showToast(msg: "${responseData.Message}");
           }
         }).catchError((error) {
+          print("ss");
           LoadingIndicator.close(context);
           Fluttertoast.showToast(msg: "$error");
         });
       }
     } catch (e) {
+      print("sss");
       LoadingIndicator.close(context);
       Fluttertoast.showToast(msg: "$e");
     }

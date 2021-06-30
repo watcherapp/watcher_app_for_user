@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
@@ -20,6 +21,14 @@ class FamilyMemberComponent extends StatefulWidget {
 }
 
 class _FamilyMemberComponentState extends State<FamilyMemberComponent> {
+  void launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      launch(url);
+    } else {
+      throw "Could not launch $url";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -73,12 +82,15 @@ class _FamilyMemberComponentState extends State<FamilyMemberComponent> {
           Row(
             children: [
               IconButton(
-                  icon: Icon(
-                    Icons.call,
-                    color: Colors.green,
-                    size: 22,
-                  ),
-                  onPressed: () {}),
+                icon: Icon(
+                  Icons.call,
+                  color: Colors.green,
+                  size: 22,
+                ),
+                onPressed: () {
+                  launchUrl("tel:${widget.familyDataList["mobileNo1"]}");
+                },
+              ),
               // Container(
               //   width: 1,
               //   height: 18,
@@ -147,10 +159,11 @@ class _ShowDialogState extends State<ShowDialog> {
       if (internetResult.isNotEmpty &&
           internetResult[0].rawAddress.isNotEmpty) {
         var body = {
-          "familyMemberId":"${widget.memberData["_id"]}",
+          "familyMemberId": "${widget.memberData["_id"]}",
         };
         print(body);
-        Services.responseHandler(apiName: "api/member/removeFamilyMember", body: body)
+        Services.responseHandler(
+                apiName: "api/member/removeFamilyMember", body: body)
             .then((responseData) {
           if (responseData.Data == 1) {
             print(responseData.Data);

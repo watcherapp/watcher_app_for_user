@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Dialogs/EntryConformationPopup.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ComplaintsScreen.dart';
 import 'package:watcher_app_for_user/Modules/Authentication/Splash.dart';
 import 'package:watcher_app_for_user/Modules/UserApp/Screens/ComplainsScreen.dart';
@@ -85,74 +86,93 @@ class _MyAppState extends State<MyApp> {
       Vibration.vibrate(
         duration: 700,
       );
-      if (data["NotificationType"].toString() == "ComplainResponse") {
-        // Get.snackbar(
-        //   "New Complain",
-        //   "New Complain has been added",
-        //   snackPosition: SnackPosition.BOTTOM,
-        //   duration: Duration(seconds: 5),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   onTap:(contex){
-        //     Get.to(
-        //           () => ComplainsScreen(),
-        //     );
-        //   },
-        // );
-        // Fluttertoast.showToast(
-        //   msg: "Your Complain Response",
-        //   backgroundColor: Colors.red,
-        //   textColor: appPrimaryMaterialColor,
-        // );
-      } else if (data["NotificationType"].toString() == "NewComplain") {
-        //...............................
-        sharedPrefs.societyId = "${data["societyId"]}";
-        sharedPrefs.societyCode = "${data["societyCode"]}";
-        sharedPrefs.societyName = "${data["societyName"]}";
-        sharedPrefs.memberNo = "${data["memberNo"]}";
-        sharedPrefs.memberName = "${data["MemberName"]}";
-        sharedPrefs.mobileNo = "${data["mobileNo"]}";
-        sharedPrefs.wingId = "${data["wingId"]}";
-        sharedPrefs.flatId = "${data["flatId"]}";
+      print(
+          "Receivedhandler=================${data["NotificationType"].toString()}==========================fromMain");
+      if (data != null) {
+        print("receive from main");
+        if (data["NotificationType"].toString() == "ComplainResponse") {
+          // Get.snackbar(
+          //   "New Complain",
+          //   "New Complain has been added",
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   duration: Duration(seconds: 5),
+          //  backgroundColor: Color(0xFFFF4F4F),
+          //   colorText: Colors.white,
+          //   onTap:(contex){
+          //     Get.to(
+          //           () => ComplainsScreen(),
+          //     );
+          //   },
+          // );
+          // Fluttertoast.showToast(
+          //   msg: "Your Complain Response",
+          //  backgroundColor: Color(0xFFFF4F4F),
+          //   textColor: appPrimaryMaterialColor,
+          // );
+        }
+        else if (data["NotificationType"].toString() == "NewComplain") {
+          //...............................
+          sharedPrefs.societyId = "${data["societyId"]}";
+          sharedPrefs.societyCode = "${data["societyCode"]}";
+          sharedPrefs.societyName = "${data["societyName"]}";
+          sharedPrefs.memberNo = "${data["memberNo"]}";
+          sharedPrefs.memberName = "${data["MemberName"]}";
+          sharedPrefs.mobileNo = "${data["mobileNo"]}";
+          sharedPrefs.wingId = "${data["wingId"]}";
+          sharedPrefs.flatId = "${data["flatId"]}";
 
-        //..............................
-        Get.snackbar(
-          "New Complain",
-          "New Complain has been added",
-          snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 5),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          onTap:(contex){
-            Get.to(
-                  () => ComplainsScreen(),
-            );
-          },
-        );
-        // Fluttertoast.showToast(
-        //   msg: "New Complain has been added",
-        //   backgroundColor: Colors.red,
-        //   textColor: appPrimaryMaterialColor,
-        // );
-      } else if (data["NotificationType"].toString() == "AddNotice") {
-        // Get.snackbar(
-        //   "New Complain",
-        //   "New Complain has been added",
-        //   snackPosition: SnackPosition.BOTTOM,
-        //   duration: Duration(seconds: 5),
-        //   backgroundColor: Colors.red,
-        //   colorText: Colors.white,
-        //   onTap:(contex){
-        //     Get.to(
-        //           () => ComplainsScreen(),
-        //     );
-        //   },
-        // );
-        // Fluttertoast.showToast(
-        //   msg: "New Notice has been added",
-        //   backgroundColor: Colors.red,
-        //   textColor: appPrimaryMaterialColor,
-        // );
+          //..............................
+          Get.snackbar(
+            "New Complain",
+            "New Complain has been added",
+            snackPosition: SnackPosition.BOTTOM,
+            duration: Duration(seconds: 5),
+            backgroundColor: Color(0xFFFF4F4F),
+            colorText: Colors.white,
+            onTap: (contex) {
+              Get.to(
+                    () => ComplainsScreen(),
+              );
+            },
+          );
+          // Fluttertoast.showToast(
+          //   msg: "New Complain has been added",
+          //  backgroundColor: Color(0xFFFF4F4F),
+          //   textColor: appPrimaryMaterialColor,
+          // );
+        }
+        else if (data["NotificationType"].toString() == "AddNotice") {
+          // Get.snackbar(
+          //   "New Complain",
+          //   "New Complain has been added",
+          //   snackPosition: SnackPosition.BOTTOM,
+          //   duration: Duration(seconds: 5),
+          //  backgroundColor: Color(0xFFFF4F4F),
+          //   colorText: Colors.white,
+          //   onTap:(contex){
+          //     Get.to(
+          //           () => ComplainsScreen(),
+          //     );
+          //   },
+          // );
+          // Fluttertoast.showToast(
+          //   msg: "New Notice has been added",
+          //  backgroundColor: Color(0xFFFF4F4F),
+          //   textColor: appPrimaryMaterialColor,
+          // );
+        }
+        else if (data["NotificationType"].toString() == "VisitorEntry") {
+          print("watchmanId-->${data["watchmanId"].toString()}");
+          print("Name-->${data["Name"].toString()}");
+          print("ContactNo-->${data["ContactNo"].toString()}");
+          print("Image-->${data["Image"].toString()}");
+          print("EntryNo-->${data["EntryNo"].toString()}");
+          Get.to(
+                () => EntryConfirmationPopup(
+              visitorData: data,
+            ),
+          );
+        }
       }
     });
 
@@ -161,8 +181,8 @@ class _MyAppState extends State<MyApp> {
         (OSNotificationOpenedResult result) async {
       // will be called whenever a notification is opened/button pressed.
       print("---------------------------------");
-      Get.snackbar("One Signal", "Open Handler",
-          snackPosition: SnackPosition.BOTTOM);
+      // Get.snackbar("One Signal", "Open Handler",
+      //     snackPosition: SnackPosition.BOTTOM);
       print("Opened notification");
       print(result.notification.jsonRepresentation().replaceAll("\\n", "\n"));
       print("s");
@@ -171,19 +191,20 @@ class _MyAppState extends State<MyApp> {
       dynamic data = result.notification.payload.additionalData;
       print("sss");
       print(
-          "=================${data["NotificationType"].toString()}==========================");
+          "Openhandler=================${data["NotificationType"].toString()}==========================fromMain");
       //...............................
-      sharedPrefs.societyId = "${data["societyId"]}";
-      sharedPrefs.societyCode = "${data["societyCode"]}";
-      sharedPrefs.societyName = "${data["societyName"]}";
-      sharedPrefs.memberNo = "${data["memberNo"]}";
-      sharedPrefs.memberName = "${data["MemberName"]}";
-      sharedPrefs.mobileNo = "${data["mobileNo"]}";
-      sharedPrefs.wingId = "${data["wingId"]}";
-      sharedPrefs.flatId = "${data["flatId"]}";
+      // sharedPrefs.societyId = "${data["societyId"]}";
+      // sharedPrefs.societyCode = "${data["societyCode"]}";
+      // sharedPrefs.societyName = "${data["societyName"]}";
+      // sharedPrefs.memberNo = "${data["memberNo"]}";
+      // sharedPrefs.memberName = "${data["MemberName"]}";
+      // sharedPrefs.mobileNo = "${data["mobileNo"]}";
+      // sharedPrefs.wingId = "${data["wingId"]}";
+      // sharedPrefs.flatId = "${data["flatId"]}";
 
       //..............................
       if (data != null) {
+        print("open from main");
         if (data["NotificationType"].toString() == "ComplainResponse") {
           // Get.to(
           //   () => ComplainsScreen(),
@@ -191,6 +212,17 @@ class _MyAppState extends State<MyApp> {
         } else if (data["NotificationType"].toString() == "NewComplain") {
           Get.to(
             () => ComplaintsScreen(),
+          );
+        }else if (data["NotificationType"].toString() == "VisitorEntry") {
+          print("watchmanId-->${data["watchmanId"].toString()}");
+          print("Name-->${data["Name"].toString()}");
+          print("ContactNo-->${data["ContactNo"].toString()}");
+          print("Image-->${data["Image"].toString()}");
+          print("EntryNo-->${data["EntryNo"].toString()}");
+          Get.to(
+                () => EntryConfirmationPopup(
+                  visitorData: data,
+                ),
           );
         }
       }
@@ -237,6 +269,7 @@ class _MyAppState extends State<MyApp> {
             floatingActionButtonTheme: FloatingActionButtonThemeData(
                 backgroundColor: appPrimaryMaterialColor),
             primaryColor: appPrimaryMaterialColor,
+            // highlightColor: Color(0xffffc600),
             fontFamily: 'Montserrat'),
         home: Splash(
             // playerId: playerId,

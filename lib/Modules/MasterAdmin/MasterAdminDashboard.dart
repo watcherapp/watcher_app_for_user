@@ -270,9 +270,11 @@ class _MasterAdminDashboardState extends State<MasterAdminDashboard> {
                                   propertyManagerData: propertyManagerData);
                             }).toList()),
                       )
-                    : Text(
-                        "Data Not Found",
-                        style: TextStyle(fontSize: 13, color: Colors.grey),
+                    : Center(
+                        child: Text(
+                          "Data Not Found",
+                          style: TextStyle(fontSize: 13, color: Colors.grey),
+                        ),
                       ),
             // GestureDetector(
             //   onTap: () {

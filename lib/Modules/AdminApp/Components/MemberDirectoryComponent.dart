@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 
 class MemberDirectoryComponent extends StatefulWidget {
   var memberData;
@@ -23,6 +25,15 @@ class MemberDirectoryComponent extends StatefulWidget {
 }
 
 class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
+
+  void launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      launch(url);
+    } else {
+      throw "Could not launch $url";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -69,21 +80,41 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "${widget.memberData["firstName"]} ${widget.memberData["lastName"]}",
-                      style: TextStyle(
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.42,
+                      child: Text(
+                        "${widget.memberData["firstName"]} ${widget.memberData["lastName"]}",
+                        style: TextStyle(
                           color: appPrimaryMaterialColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 14),
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Text("${widget.memberData["FlatData"][0]["flatNo"]}"),
+                    Text(
+                      "${widget.memberData["FlatData"][0]["flatNo"]}",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontFamily: 'WorkSans Bold',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                    ),
                     SizedBox(
                       height: 2,
                     ),
-                    Text('${widget.memberData["mobileNo1"]}'),
+                    Text(
+                      '${widget.memberData["mobileNo1"]}',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontFamily: 'WorkSans Bold',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                    ),
                     SizedBox(
                       height: 2,
                     ),
@@ -98,18 +129,30 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                                       "2"
                                   ? "Rent"
                                   : "Owner",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontFamily: 'WorkSans Bold',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),
-                // SizedBox(
-                //   width: 105,
-                // ),
-              ],
-            ),
-            Positioned(
-                right: 10.0,
-                top: 30.0,
-                child: IconButton(
+                SizedBox(
+                  width: 8,
+                ),
+                IconButton(
+                  onPressed: () {
+                    launchUrl("tel:${{widget.memberData["mobileNo1"]}}");
+                    print(widget.memberData["mobileNo1"]);
+                  },
+                  icon: Icon(
+                    Icons.call,
+                    color: Colors.green,
+                  ),
+                  iconSize: 25,
+                ),
+                IconButton(
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -121,11 +164,16 @@ class _MemberDirectoryComponentState extends State<MemberDirectoryComponent> {
                                 widget.memberDataApi();
                               },
                             ),
-                            type: PageTransitionType.rightToLeft));
+                            type: PageTransitionType.fade));
                   },
                   icon: Icon(Icons.message),
                   iconSize: 25,
-                )),
+                )
+                // SizedBox(
+                //   width: 105,
+                // ),
+              ],
+            ),
           ],
         ),
       ),
@@ -329,6 +377,12 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+        centerTitle: true,
         // actions: [
         //   GestureDetector(
         //     onTap: () {
@@ -341,7 +395,7 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
       body: isLoading == true
           ? Center(
               child: CircularProgressIndicator(
-                // backgroundColor: Colors.red,
+                //backgroundColor: Color(0xFFFF4F4F),
                 valueColor:
                     new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
               ),
@@ -433,7 +487,7 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
                     ],
                   ),
                   color: appPrimaryMaterialColor,
-                  height: MediaQuery.of(context).size.height / 3.2,
+                  height: MediaQuery.of(context).size.height / 3.3,
                   width: MediaQuery.of(context).size.width,
                 ),
                 Padding(
@@ -531,6 +585,7 @@ class _MemberAllInfoState extends State<MemberAllInfo> {
                 ),
               ],
             ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
     );
   }
 }

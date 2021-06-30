@@ -16,6 +16,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 
 class AddNewAmenities extends StatefulWidget {
   Function AllAmenitiesApi;
@@ -261,6 +262,10 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
               widget.AllAmenitiesApi();
               Fluttertoast.showToast(
                 msg: "Your Amenities added Successfully.",
+                backgroundColor: Colors.green,
+                // backgroundColor: Color(0xFFFF4F4F),
+                textColor: Colors.white,
+                gravity: ToastGravity.TOP,
               );
               Navigator.pop(context);
             } else {
@@ -294,7 +299,7 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
     } else
       Fluttertoast.showToast(
           msg: "Please Select Images",
-          backgroundColor: Colors.red,
+         backgroundColor: Color(0xFFFF4F4F),
           gravity: ToastGravity.TOP,
           textColor: Colors.white);
   }
@@ -561,8 +566,16 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         // _apiCall();
-                        print("d");
-                        _addNewAmenity3();
+                        if (images != null) {
+                          _addNewAmenity3();
+                        } else {
+                          Fluttertoast.showToast(
+                            gravity: ToastGravity.TOP,
+                            textColor: Colors.white,
+                           backgroundColor: Color(0xFFFF4F4F),
+                            msg: "Please Attach Amenities Photos",
+                          );
+                        }
                       }
                     },
                     title: "Add New",
@@ -573,6 +586,7 @@ class _AddNewAmenitiesState extends State<AddNewAmenities> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
     );
   }
 }

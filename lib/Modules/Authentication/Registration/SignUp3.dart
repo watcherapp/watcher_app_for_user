@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -5,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -47,18 +49,20 @@ class _SignUp3State extends State<SignUp3> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
   TextEditingController txtConfirmPassword = TextEditingController();
-  TextEditingController txtSocietyCode = TextEditingController();
+  TextEditingController txtSocietyCode;
 
   GlobalKey<FormState> _basicDetail = GlobalKey();
   GlobalKey<FormState> _firstStep = GlobalKey();
   GlobalKey<FormState> _passwordDetail = GlobalKey();
+  bool password = true;
+  bool password2 = true;
   bool isRoleSelected = false;
   bool _passwordLength = false;
   bool _passwordNumberSymbol = false;
   bool _passwordUpperLower = false;
 
   List identityData = [];
-  String selectedRole;
+  String selectedRole = "1";
 
   String selectedValue;
 
@@ -70,6 +74,7 @@ class _SignUp3State extends State<SignUp3> {
   String flats_Type;
   var flats = "";
   bool isLoading = false;
+  bool societyCode = false;
   bool isSet = false;
 
   FocusNode myFlatNode;
@@ -105,14 +110,21 @@ class _SignUp3State extends State<SignUp3> {
   @override
   void initState() {
     super.initState();
+
+    txtSocietyCode = new TextEditingController(
+        text: "SOC-");
+
     setState(() {
       genderList.forEach((gender) => gender.isSelected = false);
       genderList[0].isSelected = true;
       selectedGender = genderList[0].name;
     });
+
+
     print(widget.phoneNumber);
     getIdentityData();
     // _getAllWings();
+
     myFlatNode = FocusNode();
     firstName = FocusNode();
     firstName.addListener(() => checkFocus());
@@ -344,10 +356,12 @@ class _SignUp3State extends State<SignUp3> {
                                       },
                                       hintText: "Enter last name"),
                                   MyTextFormField(
-                                      controller: txtEmail,
-                                      lable: "Email",
-                                      validator: validateEmail,
-                                      hintText: "Enter email"),
+                                    controller: txtEmail,
+                                    keyboardType: TextInputType.emailAddress,
+                                    lable: "Email",
+                                    validator: validateEmail,
+                                    hintText: "Enter email",
+                                  ),
                                   selectedRole == "2"
                                       ? Column(
                                           children: [
@@ -708,6 +722,19 @@ class _SignUp3State extends State<SignUp3> {
                                   lable: "Create Password",
                                   validator: validatePassword,
                                   hintText: "Enter Password",
+                                  isPassword: password,
+                                  maxLines: 1,
+                                  hideShowText: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        password = !password;
+                                      });
+                                    },
+                                    child: Text("${!password ? "Hide" : "Show"}",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: appPrimaryMaterialColor)),
+                                  ),
                                   onChanged: (String val) {
                                     // if(val.length==10){
                                     //}
@@ -717,6 +744,19 @@ class _SignUp3State extends State<SignUp3> {
                                 MyTextFormField(
                                     controller: txtConfirmPassword,
                                     lable: "Confirm Password",
+                                    isPassword: password2,
+                                    maxLines: 1,
+                                    hideShowText: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          password2 = !password2;
+                                        });
+                                      },
+                                      child: Text("${!password2 ? "Hide" : "Show"}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: appPrimaryMaterialColor)),
+                                    ),
                                     validator: (val) {
                                       if (txtPassword.text != val) {
                                         return "Pasword does not match";
@@ -929,8 +969,16 @@ class _SignUp3State extends State<SignUp3> {
                             backgroundColor: appPrimaryMaterialColor,
                             onPressed: () {
                               if (selectedRole == "2") {
+                                _checkSocietyCode();
+                                print(societyCode);
                                 if (_firstStep.currentState.validate()) {
-                                  provider.stepCurrentIndex = 1;
+                                  print(societyCode);
+                                  Timer(Duration(seconds: 2), () async {
+                                    if (societyCode == true) {
+                                      print(societyCode);
+                                      provider.stepCurrentIndex = 1;
+                                    }
+                                  });
                                 }
                               } else {
                                 provider.stepCurrentIndex = 1;
@@ -968,24 +1016,34 @@ class _SignUp3State extends State<SignUp3> {
                                     backgroundColor: appPrimaryMaterialColor,
                                     mini: true,
                                     onPressed: () {
+                                      print(selectedValue);
+                                      print(_identityProof);
                                       if (selectedValue != null) {
-                                        if (_identityProof != null) {
+                                        if (_identityProof != null &&
+                                            _userProfile != null) {
                                           provider.stepCurrentIndex = 3;
+                                        } else if (_userProfile == null) {
+                                          Fluttertoast.showToast(
+                                            gravity: ToastGravity.TOP,
+                                            textColor: Colors.white,
+                                           backgroundColor: Color(0xFFFF4F4F),
+                                            msg: "Please Attach Profile Photo",
+                                          );
                                         } else {
                                           Fluttertoast.showToast(
-                                              gravity: ToastGravity.TOP,
-                                              textColor: Colors.white,
-                                              backgroundColor: Colors.red,
-                                              msg:
-                                                  "Please Attach Identity Proof");
+                                            gravity: ToastGravity.TOP,
+                                            textColor: Colors.white,
+                                           backgroundColor: Color(0xFFFF4F4F),
+                                            msg: "Please Attach Identity Proof",
+                                          );
                                         }
                                       } else {
                                         Fluttertoast.showToast(
-                                            gravity: ToastGravity.TOP,
-                                            textColor: Colors.white,
-                                            backgroundColor: Colors.red,
-                                            msg:
-                                                "Please Select Type of Identity");
+                                          gravity: ToastGravity.TOP,
+                                          textColor: Colors.white,
+                                         backgroundColor: Color(0xFFFF4F4F),
+                                          msg: "Please Select Type of Identity",
+                                        );
                                       }
                                     },
                                     heroTag: null,
@@ -1084,7 +1142,7 @@ class _SignUp3State extends State<SignUp3> {
       Fluttertoast.showToast(
           msg: "Please enter your password.",
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
+         backgroundColor: Color(0xFFFF4F4F),
           textColor: Colors.white,
           toastLength: Toast.LENGTH_LONG);
       setState(() {
@@ -1097,7 +1155,7 @@ class _SignUp3State extends State<SignUp3> {
       Fluttertoast.showToast(
           msg: "Please enter confirm password.",
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
+         backgroundColor: Color(0xFFFF4F4F),
           textColor: Colors.white,
           toastLength: Toast.LENGTH_LONG);
       setState(() {
@@ -1107,7 +1165,7 @@ class _SignUp3State extends State<SignUp3> {
       Fluttertoast.showToast(
           msg: "Password not matched.",
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
+         backgroundColor: Color(0xFFFF4F4F),
           textColor: Colors.white,
           toastLength: Toast.LENGTH_LONG);
       setState(() {
@@ -1124,7 +1182,7 @@ class _SignUp3State extends State<SignUp3> {
         Fluttertoast.showToast(
             msg: "Password does not match with the requirement.",
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Colors.red,
+           backgroundColor: Color(0xFFFF4F4F),
             textColor: Colors.white,
             toastLength: Toast.LENGTH_LONG);
 
@@ -1134,6 +1192,56 @@ class _SignUp3State extends State<SignUp3> {
       } else {
         _userSignUp();
       }
+    }
+  }
+
+  _checkSocietyCode() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      final internetResult = await InternetAddress.lookup('google.com');
+      if (internetResult.isNotEmpty &&
+          internetResult[0].rawAddress.isNotEmpty) {
+        var body = {
+          "societyCode": txtSocietyCode.text,
+        };
+        print("$body");
+        societyCode = false;
+        Services.responseHandler(apiName: "api/member/checkSocietyCode", body: body)
+            .then((responseData) {
+          if (responseData.Data.length > 0) {
+            print(responseData.Data);
+            setState(() {
+              societyCode = true;
+              isLoading = false;
+            });
+            print("--->${societyCode}");
+          } else {
+            print(responseData);
+            setState(() {
+              isLoading = false;
+            });
+            Fluttertoast.showToast(
+              gravity: ToastGravity.TOP,
+              textColor: Colors.white,
+              backgroundColor: Color(0xFFFF4F4F),
+              msg: "Invalid Society code",
+            );
+            // Fluttertoast.showToast(msg: "${responseData.Message}");
+          }
+        }).catchError((error) {
+          setState(() {
+            isLoading = false;
+          });
+          Fluttertoast.showToast(msg: "$error");
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "$e");
     }
   }
 
@@ -1273,6 +1381,7 @@ class _SignUp3State extends State<SignUp3> {
     }
   }
 
+  //signup.................
   _userSignUp() async {
     try {
       LoadingIndicator.show(context);
@@ -1313,7 +1422,8 @@ class _SignUp3State extends State<SignUp3> {
                 "mobileNo1": "${widget.phoneNumber}",
                 "emailId": txtEmail.text,
                 "password": txtPassword.text,
-                "userRole": "${selectedRole}" ?? "1",
+                "userRole": "${selectedRole}",
+                // "userRole": "${selectedRole}" == null ? "1" : "${selectedRole}",
                 "societyCode": txtSocietyCode.text ?? "",
                 "wingId": wing_Type,
                 "flatId": flats_Type,
@@ -1339,7 +1449,8 @@ class _SignUp3State extends State<SignUp3> {
                 "mobileNo1": "${widget.phoneNumber}",
                 "emailId": txtEmail.text,
                 "password": txtPassword.text,
-                "userRole": selectedRole,
+                "userRole": "${selectedRole}",
+                // "userRole": "${selectedRole}" == null ? "1" : "${selectedRole}",
                 "societyCode": txtSocietyCode.text ?? "",
                 "address": "",
                 "playerId": "${widget.playerId}",
@@ -1365,7 +1476,10 @@ class _SignUp3State extends State<SignUp3> {
           if (responseData.Data.length > 0) {
             LoadingIndicator.close(context);
             print("Register response------>${responseData.Data}");
-            Fluttertoast.showToast(msg: "You are Register Successfully.");
+            Fluttertoast.showToast(msg: "You are Register Successfully.", backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,);
             _saveDataToSession(responseData.Data);
           } else {
             print(responseData);
@@ -1383,6 +1497,7 @@ class _SignUp3State extends State<SignUp3> {
     }
   }
 
+  //wings.................
   _getAllWings() async {
     try {
       setState(() {
@@ -1404,7 +1519,7 @@ class _SignUp3State extends State<SignUp3> {
               print("Wings----------------->$wingList");
               isLoading = false;
             });
-            _getAllFlats(wingId: wingList[0]["_id"]);
+            // _getAllFlats(wingId: wingList[0]["_id"]);
           } else {
             print(responseData);
             setState(() {
@@ -1439,6 +1554,7 @@ class _SignUp3State extends State<SignUp3> {
     }
   }
 
+  //flats............
   _getAllFlats({String wingId}) async {
     try {
       setState(() {

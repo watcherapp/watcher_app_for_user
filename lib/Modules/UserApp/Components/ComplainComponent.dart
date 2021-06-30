@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/BottomNavigationBarCustom.dart';
 
 class ComplainComponent extends StatefulWidget {
   var getAllComplain;
@@ -382,6 +383,11 @@ class _ComplainDetailState extends State<ComplainDetail> {
           "Complaints Detail",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
@@ -513,6 +519,7 @@ class _ComplainDetailState extends State<ComplainDetail> {
           )
         ],
       ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
     );
   }
 }

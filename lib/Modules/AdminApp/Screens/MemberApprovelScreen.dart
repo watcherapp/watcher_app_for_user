@@ -7,6 +7,7 @@ import 'package:watcher_app_for_user/Constants/StringConstants.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Components/MemberDirectoryComponent.dart';
 
 class MemberApprovelScreen extends StatefulWidget {
@@ -161,10 +162,27 @@ class _MemberApprovelScreenState extends State<MemberApprovelScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.notifications_active_rounded),
+        //     onPressed: () {},
+        //   ),
+        // ],
+        title: Text(
+          "Member Approval Screen",
+        ),
+      ),
       body: Column(
         children: [
           SizedBox(
-            height: 30,
+            height: 10,
           ),
           Text(
             "Select Building",
@@ -287,6 +305,7 @@ class _MemberApprovelScreenState extends State<MemberApprovelScreen> {
                     ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
     );
   }
 }
@@ -575,8 +594,10 @@ class _ShowDialogState extends State<ShowDialog> {
             Navigator.pop(context);
             Fluttertoast.showToast(
               msg: "You Approve this member Successfully",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             widget.memberDataApi();
           } else {
@@ -640,7 +661,7 @@ class _ShowDialogState extends State<ShowDialog> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Are you sure you want to Approve this flat.',
+              'Are you sure you want to Approve ${widget.memberData["firstName"]} ${widget.memberData["lastName"]} for this flat.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
@@ -731,8 +752,10 @@ class _ShowDialog2State extends State<ShowDialog2> {
             widget.memberDataApi();
             Fluttertoast.showToast(
               msg: "You Reject this member Successfully",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
           } else {
@@ -796,7 +819,7 @@ class _ShowDialog2State extends State<ShowDialog2> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Are you sure you want to Reject this flat.',
+              'Are you sure you want to Reject ${widget.memberData["firstName"]} ${widget.memberData["lastName"]} for this flat.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,

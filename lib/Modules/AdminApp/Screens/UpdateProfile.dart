@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Constants/fontStyles.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Components/BottomNavigationBarCustomForAdmin.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyProfile.dart';
 
 class UpdateProfile extends StatefulWidget {
@@ -209,6 +209,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
             widget.myProfileFun();
             Fluttertoast.showToast(
               msg: "Your Profile Updated Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
             setState(() {
@@ -252,8 +256,14 @@ class _UpdateProfileState extends State<UpdateProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: appPrimaryMaterialColor,
         title: Text(
           "Update Profile",
           style: TextStyle(fontFamily: 'Montserrat'),
@@ -472,31 +482,55 @@ class _UpdateProfileState extends State<UpdateProfile> {
               ],
             ),
           ),
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: SizedBox(
+              height: 45,
+              child: RaisedButton(
+                onPressed: () {
+                  _updateProfile();
+                },
+                textColor: Colors.white,
+                shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                color: appPrimaryMaterialColor,
+                child: Text(
+                  'Save',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat'),
+                ),
+              ),
+            ),
+          )
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(12.0),
-        child: SizedBox(
-          height: 45,
-          child: RaisedButton(
-            onPressed: () {
-              _updateProfile();
-            },
-            textColor: Colors.white,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-            color: appPrimaryMaterialColor,
-            child: Text(
-              'Save',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Montserrat'),
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: BottomNavigationBarCustomForAdmin(),
+      // bottomNavigationBar: Padding(
+      //   padding: EdgeInsets.all(12.0),
+      //   child: SizedBox(
+      //     height: 45,
+      //     child: RaisedButton(
+      //       onPressed: () {
+      //         _updateProfile();
+      //       },
+      //       textColor: Colors.white,
+      //       shape:
+      //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      //       color: appPrimaryMaterialColor,
+      //       child: Text(
+      //         'Save',
+      //         style: TextStyle(
+      //             color: Colors.white,
+      //             fontSize: 15,
+      //             fontWeight: FontWeight.bold,
+      //             fontFamily: 'Montserrat'),
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

@@ -36,7 +36,8 @@ class _AddMyStaffState extends State<AddMyStaff> {
   File _staffProfile;
   File _image;
   File _imageId1;
-  File _imageId2;
+
+  // File _imageId2;
 
   TextEditingController txtFname = new TextEditingController();
   TextEditingController txtLname = new TextEditingController();
@@ -104,35 +105,35 @@ class _AddMyStaffState extends State<AddMyStaff> {
         });
   }
 
-  void _showPicker2(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
-                      onTap: () {
-                        _imgFromGallery2();
-                        Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera2();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+  // void _showPicker2(context) {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (BuildContext bc) {
+  //         return SafeArea(
+  //           child: Container(
+  //             child: new Wrap(
+  //               children: <Widget>[
+  //                 new ListTile(
+  //                     leading: new Icon(Icons.photo_library),
+  //                     title: new Text('Photo Library'),
+  //                     onTap: () {
+  //                       _imgFromGallery2();
+  //                       Navigator.of(context).pop();
+  //                     }),
+  //                 new ListTile(
+  //                   leading: new Icon(Icons.photo_camera),
+  //                   title: new Text('Camera'),
+  //                   onTap: () {
+  //                     _imgFromCamera2();
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 
   _imgFromCamera() async {
     File image = await ImagePicker.pickImage(
@@ -151,14 +152,14 @@ class _AddMyStaffState extends State<AddMyStaff> {
     });
   }
 
-  _imgFromCamera2() async {
-    File imageId2 = await ImagePicker.pickImage(
-        source: ImageSource.camera, imageQuality: 50);
-
-    setState(() {
-      _imageId2 = imageId2;
-    });
-  }
+  // _imgFromCamera2() async {
+  //   File imageId2 = await ImagePicker.pickImage(
+  //       source: ImageSource.camera, imageQuality: 50);
+  //
+  //   setState(() {
+  //     _imageId2 = imageId2;
+  //   });
+  // }
 
   _imgFromGallery() async {
     File image = await ImagePicker.pickImage(
@@ -178,14 +179,14 @@ class _AddMyStaffState extends State<AddMyStaff> {
     });
   }
 
-  _imgFromGallery2() async {
-    File imageId2 = await ImagePicker.pickImage(
-        source: ImageSource.gallery, imageQuality: 50);
-
-    setState(() {
-      _imageId2 = imageId2;
-    });
-  }
+  // _imgFromGallery2() async {
+  //   File imageId2 = await ImagePicker.pickImage(
+  //       source: ImageSource.gallery, imageQuality: 50);
+  //
+  //   setState(() {
+  //     _imageId2 = imageId2;
+  //   });
+  // }
 
   @override
   void initState() {
@@ -234,6 +235,10 @@ class _AddMyStaffState extends State<AddMyStaff> {
             widget.staffDataApi();
             Fluttertoast.showToast(
               msg: "Your Staff added Successfully.",
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
             setState(() {
@@ -656,11 +661,17 @@ class _AddMyStaffState extends State<AddMyStaff> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(child: containerdash1),
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 5,
+                      ),
+                      child: containerdash1,
+                    )),
                     Container(
                       width: 10,
                     ),
-                    Expanded(child: containerdash2),
+                    // Expanded(child: containerdash2),
                   ],
                 ),
                 SizedBox(
@@ -672,7 +683,37 @@ class _AddMyStaffState extends State<AddMyStaff> {
                       title: "Add Staff",
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
-                          _addMyStaff();
+                          if (_image == null) {
+                            Fluttertoast.showToast(
+                              gravity: ToastGravity.TOP,
+                              textColor: Colors.white,
+                             backgroundColor: Color(0xFFFF4F4F),
+                              msg: "Please Attach Profile Photo",
+                            );
+                          } else if (selctedCategory == null) {
+                            Fluttertoast.showToast(
+                              gravity: ToastGravity.TOP,
+                              textColor: Colors.white,
+                             backgroundColor: Color(0xFFFF4F4F),
+                              msg: "Please Select Category of Staff",
+                            );
+                          } else if (selctedId == null) {
+                            Fluttertoast.showToast(
+                              gravity: ToastGravity.TOP,
+                              textColor: Colors.white,
+                             backgroundColor: Color(0xFFFF4F4F),
+                              msg: "Please Select Identity Category of Staff",
+                            );
+                          } else if (_imageId1 == null) {
+                            Fluttertoast.showToast(
+                              gravity: ToastGravity.TOP,
+                              textColor: Colors.white,
+                             backgroundColor: Color(0xFFFF4F4F),
+                              msg: "Please Attach Id Proof Photo",
+                            );
+                          } else {
+                            _addMyStaff();
+                          }
                         }
                         /*  Navigator.push(
                             context,
@@ -700,8 +741,8 @@ class _AddMyStaffState extends State<AddMyStaff> {
             _showPicker1(context);
           },
           child: Container(
-            height: 110,
-            // width: MediaQuery.of(context).size.width / 2.2,
+            height: 140,
+            // width: MediaQuery.of(context).size.width * 1,
             decoration: ShapeDecoration(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4)),
@@ -751,65 +792,65 @@ class _AddMyStaffState extends State<AddMyStaff> {
     );
   }
 
-  Widget get containerdash2 {
-    return Center(
-      child: DottedBorder(
-        borderType: BorderType.Rect,
-        dashPattern: [5, 5, 5, 5],
-        color: Colors.grey[400],
-        child: GestureDetector(
-          onTap: () {
-            _showPicker2(context);
-          },
-          child: Container(
-            height: 110,
-            // width: MediaQuery.of(context).size.width / 2.2,
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4)),
-              color: Color(0x22888888),
-            ),
-            child: _imageId2 != null
-                ? Center(
-                    child: Image.file(
-                      _imageId2,
-                    ),
-                  )
-                : Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 32.0,
-                          height: 32.0,
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.black54,
-                            size: 25,
-                          ),
-                          decoration: new BoxDecoration(
-                            // color: Colors.grey[300],
-                            borderRadius:
-                                new BorderRadius.all(new Radius.circular(90.0)),
-                            border:
-                                new Border.all(color: Colors.grey, width: 1),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 3.0),
-                          child: Text("Back",
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-          ),
-        ),
-      ),
-    );
-  }
+// Widget get containerdash2 {
+//   return Center(
+//     child: DottedBorder(
+//       borderType: BorderType.Rect,
+//       dashPattern: [5, 5, 5, 5],
+//       color: Colors.grey[400],
+//       child: GestureDetector(
+//         onTap: () {
+//           _showPicker2(context);
+//         },
+//         child: Container(
+//           height: 110,
+//           // width: MediaQuery.of(context).size.width / 2.2,
+//           decoration: ShapeDecoration(
+//             shape: RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(4)),
+//             color: Color(0x22888888),
+//           ),
+//           child: _imageId2 != null
+//               ? Center(
+//                   child: Image.file(
+//                     _imageId2,
+//                   ),
+//                 )
+//               : Center(
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       Container(
+//                         width: 32.0,
+//                         height: 32.0,
+//                         child: Icon(
+//                           Icons.add,
+//                           color: Colors.black54,
+//                           size: 25,
+//                         ),
+//                         decoration: new BoxDecoration(
+//                           // color: Colors.grey[300],
+//                           borderRadius:
+//                               new BorderRadius.all(new Radius.circular(90.0)),
+//                           border:
+//                               new Border.all(color: Colors.grey, width: 1),
+//                         ),
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.only(top: 3.0),
+//                         child: Text("Back",
+//                             style: TextStyle(
+//                               color: Colors.black54,
+//                               fontSize: 13,
+//                               fontWeight: FontWeight.w600,
+//                             )),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//         ),
+//       ),
+//     ),
+//   );
+// }
 }

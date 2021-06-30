@@ -36,7 +36,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
 
   @override
   void initState() {
-    _myParkingSlots();
+    // _myParkingSlots();
   }
 
   _myParkingSlots() async {
@@ -71,7 +71,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
             setState(() {
               isLoading = false;
             });
-            Fluttertoast.showToast(msg: "${responseData.Message}");
+            // Fluttertoast.showToast(msg: "${responseData.Message}");
           }
         }).catchError((error) {
           setState(() {
@@ -111,8 +111,10 @@ class _VehicleScreenState extends State<VehicleScreen> {
             print(responseData.Data);
             Fluttertoast.showToast(
               msg: "Your Vehicle Added Successfully.",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             widget.myVehicleApi();
             Navigator.pop(context);

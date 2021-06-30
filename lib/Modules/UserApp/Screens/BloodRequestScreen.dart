@@ -9,6 +9,7 @@ import 'package:watcher_app_for_user/CommonWidgets/MyTextFormField.dart';
 import 'package:watcher_app_for_user/Constants/appColors.dart';
 import 'package:watcher_app_for_user/Data/Services.dart';
 import 'package:watcher_app_for_user/Data/SharedPrefs.dart';
+import 'package:watcher_app_for_user/Modules/UserApp/Components/BottomNavigationBarCustom.dart';
 
 class BloodRequestScreen extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
           "societyId": sharedPrefs.societyId,
         };
         Services.responseHandler(
-            apiName: "api/member/getAllBloodRequest", body: body)
+                apiName: "api/member/getAllBloodRequest", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -79,7 +80,6 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,65 +88,76 @@ class _BloodRequestScreenState extends State<BloodRequestScreen> {
           "All Blood Request",
           style: TextStyle(fontFamily: 'Montserrat'),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         centerTitle: true,
         elevation: 0,
         backgroundColor: appPrimaryMaterialColor,
       ),
-      body: Stack(
-        children: [
-          isLoading == true
-              ? Center(
-            child: CircularProgressIndicator(
-              // backgroundColor: Colors.red,
-              valueColor: new AlwaysStoppedAnimation<Color>(
-                  appPrimaryMaterialColor),
-            ),
-          )
-              : bloodRequestList.length > 0
-              ? ListView.builder(
-            itemCount: bloodRequestList.length,
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.only(
-                right: 5,
-                left: 5,
-              ),
-              child: GestureDetector(
-                onTap: () {},
-                child: BloodRequestComponent(
-                  BloodDataApi: (){
-                    _getAllBloodRequest();
-                  },
-                  BloodDataList: bloodRequestList[index],
-                ),
-              ),
-            ),
-          )
-              : Center(
-            child: Text("No Blood Request Found"),
-          ),
-          Positioned(
-            bottom: 30,
-            right: 10,
-            child: FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        child: BloodRequestSubScreen(
-                          getBloodReqData: (){
-                            _getAllBloodRequest(
-                            );
-                          },
+      body: RefreshIndicator(
+        onRefresh: () {
+          return _getAllBloodRequest();
+        },
+        color: appPrimaryMaterialColor,
+        child: Stack(
+          children: [
+            isLoading == true
+                ? Center(
+                    child: CircularProgressIndicator(
+                      //backgroundColor: Color(0xFFFF4F4F),
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          appPrimaryMaterialColor),
+                    ),
+                  )
+                : bloodRequestList.length > 0
+                    ? ListView.builder(
+                        itemCount: bloodRequestList.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(
+                            right: 5,
+                            left: 5,
+                          ),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: BloodRequestComponent(
+                              BloodDataApi: () {
+                                _getAllBloodRequest();
+                              },
+                              BloodDataList: bloodRequestList[index],
+                            ),
+                          ),
                         ),
-                        type: PageTransitionType.rightToLeft));
-                setState(() {});
-              },
-              icon: Icon(Icons.add),
-              label: Text("Add Request"),
+                      )
+                    : Center(
+                        child: Text("No Blood Request Found"),
+                      ),
+            Positioned(
+              bottom: 30,
+              right: 10,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: BloodRequestSubScreen(
+                            getBloodReqData: () {
+                              _getAllBloodRequest();
+                            },
+                          ),
+                          type: PageTransitionType.rightToLeft));
+                  setState(() {});
+                },
+                icon: Icon(Icons.add),
+                label: Text("Add Request"),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
     );
   }
 }
@@ -204,7 +215,7 @@ class _BloodRequestSubScreenState extends State<BloodRequestSubScreen> {
           "long": "72.05415210",
         };
         Services.responseHandler(
-            apiName: "api/member/addBloodRequest", body: body)
+                apiName: "api/member/addBloodRequest", body: body)
             .then((responseData) {
           if (responseData.Data.length > 0) {
             print(responseData.Data);
@@ -214,8 +225,10 @@ class _BloodRequestSubScreenState extends State<BloodRequestSubScreen> {
             widget.getBloodReqData();
             Fluttertoast.showToast(
               msg: "Your Blood Request Add Successfully ",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity: ToastGravity.TOP,
             );
             Navigator.pop(context);
           } else {
@@ -255,135 +268,134 @@ class _BloodRequestSubScreenState extends State<BloodRequestSubScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_rounded),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-          title: Text("Blood Request"),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            child: SingleChildScrollView(
-              child: Column(
-                // mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Select Blood Group",
-                    style: TextStyle(
-                        color: appPrimaryMaterialColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 200,
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4),
-                      itemBuilder: (_, index) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isSelected = index;
-                          });
-                          bloodGroop = bloodGroupList[index];
-                          print(bloodGroop);
-                          // print("${bloodGroupList[index]}");
-                        },
-                        child: Card(
-                            color: isSelected == index
-                                ? appPrimaryMaterialColor
-                                : Colors.white,
-                            child: new Center(
-                              child: new Text(
-                                bloodGroupList[index],
-                                style: TextStyle(
-                                  color: isSelected == index
-                                      ? Colors.white
-                                      : appPrimaryMaterialColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+        title: Text("Blood Request"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              // mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "Select Blood Group",
+                  style: TextStyle(
+                      color: appPrimaryMaterialColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 200,
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4),
+                    itemBuilder: (_, index) => GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isSelected = index;
+                        });
+                        bloodGroop = bloodGroupList[index];
+                        print(bloodGroop);
+                        // print("${bloodGroupList[index]}");
+                      },
+                      child: Card(
+                          color: isSelected == index
+                              ? appPrimaryMaterialColor
+                              : Colors.white,
+                          child: new Center(
+                            child: new Text(
+                              bloodGroupList[index],
+                              style: TextStyle(
+                                color: isSelected == index
+                                    ? Colors.white
+                                    : appPrimaryMaterialColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
                               ),
-                            )),
-                      ),
-                      itemCount: 8,
+                            ),
+                          )),
                     ),
+                    itemCount: 8,
                   ),
-                  MyTextFormField(
-                      controller: txtHospitalName,
-                      lable: "Hospital Name",
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "Please Enter Hospital Name";
-                        }
-                        return "";
-                      },
-                      hintText: "Enter Hospital Name"),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  MyTextFormField(
-                      controller: txtHospitalEmail,
-                      lable: "Hospital Email",
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "Please Enter Hospital Email";
-                        }
-                        return "";
-                      },
-                      hintText: "Enter Hospital Email"),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  MyTextFormField(
-                      controller: txtHospitalMoNo,
-                      lable: "Hospital Contect No",
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "Please Enter Hospital Contect No";
-                        }
-                        return "";
-                      },
-                      hintText: "Enter Hospital Contect No"),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  MyTextFormField(
-                      controller: txtHospitalAdress,
-                      lable: "Hospital Address",
-                      validator: (val) {
-                        if (val.isEmpty) {
-                          return "Please Enter Hospital Address";
-                        }
-                        return "";
-                      },
-                      hintText: "Enter Hospital Address"),
-                  MyButton(
-                    onPressed: () {
-                      _addBloodRequest();
+                ),
+                MyTextFormField(
+                    controller: txtHospitalName,
+                    lable: "Hospital Name",
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter Hospital Name";
+                      }
+                      return "";
                     },
-                    title: "Make Blood Request",
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
+                    hintText: "Enter Hospital Name"),
+                SizedBox(
+                  height: 3,
+                ),
+                MyTextFormField(
+                    controller: txtHospitalEmail,
+                    lable: "Hospital Email",
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter Hospital Email";
+                      }
+                      return "";
+                    },
+                    hintText: "Enter Hospital Email"),
+                SizedBox(
+                  height: 3,
+                ),
+                MyTextFormField(
+                    controller: txtHospitalMoNo,
+                    lable: "Hospital Contect No",
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter Hospital Contect No";
+                      }
+                      return "";
+                    },
+                    hintText: "Enter Hospital Contect No"),
+                SizedBox(
+                  height: 3,
+                ),
+                MyTextFormField(
+                    controller: txtHospitalAdress,
+                    lable: "Hospital Address",
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        return "Please Enter Hospital Address";
+                      }
+                      return "";
+                    },
+                    hintText: "Enter Hospital Address"),
+                MyButton(
+                  onPressed: () {
+                    _addBloodRequest();
+                  },
+                  title: "Make Blood Request",
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
+    );
   }
 }
-
-
-
 
 // import 'dart:io';
 //

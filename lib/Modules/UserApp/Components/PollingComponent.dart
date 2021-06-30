@@ -28,19 +28,50 @@ class _PollingComponentState extends State<PollingComponent> {
   bool _submited = false;
   bool isLoading = false;
   int answerIndex;
+  var answerData;
 
   _onSelected(int index) {
     setState(() => _selectedIndex = index);
   }
 
-  _checkanswer() {
+  // _checkanswer() {
+  //   for (int i = 0; i < widget.pollingData["PollOptions"].length; i++) {
+  //     if (widget.pollingData["PollOptions"][i]["IsSelected"] == true) {
+  //       setState(() {
+  //         _submited = true;
+  //         answerIndex = i;
+  //       });
+  //       break;
+  //     }
+  //   }
+  // }
+
+
+  @override
+  void initState() {
+    _checkanswer2();
+  }
+
+  _checkanswer2() {
     for (int i = 0; i < widget.pollingData["PollOptions"].length; i++) {
-      if (widget.pollingData["PollOptions"][i]["IsSelected"] == true) {
-        setState(() {
-          _submited = true;
-          answerIndex = i;
-        });
-        break;
+      print("L----->${widget.pollingData["PollOptions"][i]["PollAnswer"]}");
+      print("O----->${widget.pollingData["PollOptions"][i]}");
+      print("O----->${widget.pollingData["PollOptions"][i]["ResponseCount"]}");
+      for (int j = 0; j < widget.pollingData["PollOptions"][i]["PollAnswer"].length; j++) {
+        if(widget
+            .pollingData["PollOptions"][i]["PollAnswer"][j]["Member"].length > 0) {
+          if (widget
+              .pollingData["PollOptions"][i]["PollAnswer"][j]["Member"][0]["_id"] ==
+              sharedPrefs.memberId) {
+            _submited = true;
+            answerData = widget
+                .pollingData["PollOptions"][i]["pollOption"];
+            print("------------->${widget
+                .pollingData["PollOptions"][i]["pollOption"]}");
+            print(i);
+            print(j);
+          }
+        }
       }
     }
   }
@@ -69,8 +100,10 @@ class _PollingComponentState extends State<PollingComponent> {
             });
             Fluttertoast.showToast(
               msg: "Your answer Submitted Successfully",
-              backgroundColor: Colors.white,
-              textColor: appPrimaryMaterialColor,
+              backgroundColor: Colors.green,
+              // backgroundColor: Color(0xFFFF4F4F),
+              textColor: Colors.white,
+              gravity:ToastGravity.TOP,
             );
             Navigator.pop(context);
           } else {
@@ -133,7 +166,7 @@ class _PollingComponentState extends State<PollingComponent> {
                       color: Color.fromRGBO(81, 92, 111, 1))),
             ),
             _submited
-                ? MyAnswerComponent(widget.pollingData, answerIndex)
+                ? MyAnswerComponent(answerData, answerIndex)
                 : Padding(
                     padding:
                         const EdgeInsets.only(left: 4.0, bottom: 6.0, top: 4),
@@ -378,7 +411,7 @@ class _MyAnswerComponentState extends State<MyAnswerComponent> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
-                      "${widget.PollingData["PollingOptionList"][widget.index]["Title"]}",
+                      "${widget.PollingData}",
                       style: TextStyle(
                           fontWeight: FontWeight.w600, color: Colors.black54),
                     ),

@@ -13,10 +13,16 @@ import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MemberApprovelScre
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/EmergencyScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/InteractionScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MemberDirectoryScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AdvertisementScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/HelpDeskScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyProfile.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyVisitors.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ParkingScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ManagementScreen.dart';
 import 'package:watcher_app_for_user/Modules/AdminApp/Screens/WatcherScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/ChattingScreeen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/AdminHomeScreen.dart';
+import 'package:watcher_app_for_user/Modules/AdminApp/Screens/MyWatcherScreen.dart';
 
 class AdminDashboard extends StatefulWidget {
   @override
@@ -25,67 +31,60 @@ class AdminDashboard extends StatefulWidget {
 
 class _AdminDashboardState extends State<AdminDashboard> {
   List screenList = [
-    Container(
-      child: Center(
-        child: Text(
-          "Watcher",
-          style: TextStyle(
-              color: appPrimaryMaterialColor, fontWeight: FontWeight.bold),
-        ),
-      ),
-    ),
+    MyWatcherScreen(),
     MyVisitors(),
-    AdminDashbordComponent(),
-    MemberApprovelScreen(),
+    AdminHomeScreen(),
+    ChattingScreeen(),
     MyProfile(),
   ];
-  List dashFields = [
-    {
-      "label": "Complaints",
-      "img": "images/complain.png",
-      "screenName": ComplaintsScreen(),
-    },
-    {
-      "label": "Directory",
-      "img": "images/directory1.png",
-      "screenName": InteractionScreen(),
-    },
-    {
-      "label": "Parking",
-      "img": "images/car.png",
-      "screenName": ParkingScreen(),
-    },
-    {
-      "label": "My Building",
-      "img": "images/building.png",
-      "screenName": InteractionScreen(),
-    },
-    {
-      "label": "Emergency",
-      "img": "images/alarm.png",
-      "screenName": EmergencyScreen(),
-    },
-    {
-      "label": "Advertisement",
-      "img": "images/ad-campaign.png",
-      "screenName": InteractionScreen(),
-    },
-    {
-      "label": "Management",
-      "img": "images/team.png",
-      "screenName": InteractionScreen(),
-    },
-    {
-      "label": "Interaction",
-      "img": "images/chat.png",
-      "screenName": InteractionScreen(),
-    },
-    {
-      "label": "Help Desk",
-      "img": "images/communications.png",
-      "screenName": InteractionScreen(),
-    },
-  ];
+
+  // List dashFields = [
+  //   {
+  //     "label": "Complaints",
+  //     "img": "images/complain.png",
+  //     "screenName": ComplaintsScreen(),
+  //   },
+  //   {
+  //     "label": "Directory",
+  //     "img": "images/directory1.png",
+  //     "screenName": InteractionScreen(),
+  //   },
+  //   {
+  //     "label": "Parking",
+  //     "img": "images/car.png",
+  //     "screenName": ParkingScreen(),
+  //   },
+  //   {
+  //     "label": "My Building",
+  //     "img": "images/building.png",
+  //     "screenName": InteractionScreen(),
+  //   },
+  //   {
+  //     "label": "Emergency",
+  //     "img": "images/alarm.png",
+  //     "screenName": EmergencyScreen(),
+  //   },
+  //   {
+  //     "label": "Advertisement",
+  //     "img": "images/ad-campaign.png",
+  //     "screenName": AdvertisementScreen(),
+  //   },
+  //   {
+  //     "label": "Management",
+  //     "img": "images/team.png",
+  //     "screenName": ManagementScreen(),
+  //   },
+  //   {
+  //     "label": "Interaction",
+  //     "img": "images/chat.png",
+  //     "screenName": InteractionScreen(),
+  //   },
+  //   {
+  //     "label": "Help Desk",
+  //     "img": "images/communications.png",
+  //     "screenName": HelpDeskScreen(),
+  //   },
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -324,6 +323,16 @@ class _AdminDashboardState extends State<AdminDashboard> {
       //     ],
       //   ),
       // ),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        elevation: 0.5,
+        centerTitle: true,
+        title: Text(
+          "Hey, " + "${sharedPrefs.memberName}",
+          style: TextStyle(color: Colors.black, fontSize: 17),
+        ),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -622,7 +631,7 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
     {
       "label": "My Building",
       "img": "images/building.png",
-      "screenName": MemberDirectoryScreen(),
+      "screenName": MemberApprovelScreen(),
     },
     {
       "label": "Emergency",
@@ -632,12 +641,12 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
     {
       "label": "Advertisement",
       "img": "images/ad-campaign.png",
-      "screenName": InteractionScreen(),
+      "screenName": AdvertisementScreen(),
     },
     {
       "label": "Management",
       "img": "images/team.png",
-      "screenName": InteractionScreen(),
+      "screenName": ManagementScreen(),
     },
     {
       "label": "Interaction",
@@ -647,7 +656,7 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
     {
       "label": "Help Desk",
       "img": "images/communications.png",
-      "screenName": InteractionScreen(),
+      "screenName": HelpDeskScreen(),
     },
   ];
 
@@ -706,9 +715,9 @@ class _AdminDashbordComponentState extends State<AdminDashbordComponent> {
                     ],
                   )),
             ),*/
-            SizedBox(
-              height: 20,
-            ),
+            // SizedBox(
+            //   height: 20,
+            // ),
             GestureDetector(
               onTap: () {
                 Share.share(
